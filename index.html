@@ -1203,22 +1203,25 @@
                 { threshold: 95, text: '100% — Siap memasuki galaksi Zizuy ✨' }
             ];
 
-            const duration = 2200;
+            const duration = 2000;
             const start = performance.now();
 
             function step(now) {
-                const t = Math.min(1, (now - start) / duration);
+                const currentTime = (typeof now === 'number' && now > 0) ? now : performance.now();
+                const t = Math.min(1, Math.max(0, (currentTime - start) / duration));
                 // Smooth cubic ease-in-out
                 const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-                const pct = Math.round(eased * 100);
+                const pct = Math.min(100, Math.round(eased * 100));
 
-                percentEl.textContent = `${pct}%`;
-                barEl.style.width = `${pct}%`;
+                if (percentEl) percentEl.textContent = `${pct}%`;
+                if (barEl) barEl.style.width = `${pct}%`;
 
-                for (let i = stages.length - 1; i >= 0; i--) {
-                    if (pct >= stages[i].threshold) {
-                        statusEl.textContent = stages[i].text;
-                        break;
+                if (statusEl) {
+                    for (let i = stages.length - 1; i >= 0; i--) {
+                        if (pct >= stages[i].threshold) {
+                            statusEl.textContent = stages[i].text;
+                            break;
+                        }
                     }
                 }
 
@@ -1235,7 +1238,7 @@
                         hideElement(preloader);
                         // Trigger smooth fade-in of Happy Birthday title & auto-dismiss hint
                         triggerIntroAppear();
-                    }, 260);
+                    }, 200);
                 }
             }
 
@@ -2791,7 +2794,6 @@ int main() {
             showToast(`Foto #${photoNum} dihapus (kembali ke SVG bawaan).`);
             playCyberTone(440, 'sine', 0.12);
         };
-        };
 
         window.exportEditorConfig = function() {
             const jsonStr = JSON.stringify(CONTENT_MODES, null, 2);
@@ -3329,7 +3331,10 @@ int main() {
             initFireflies();
         });
 
-        window.onload = function() {
+        function startApp() {
+            if (window._appInitialized) return;
+            window._appInitialized = true;
+
             runPreloaderSequence();
 
             updateChronoTimer();
@@ -3352,7 +3357,14 @@ int main() {
 
             initFireflies();
             requestAnimationFrame(animateFireflies);
-        };
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            startApp();
+        } else {
+            document.addEventListener('DOMContentLoaded', startApp);
+            window.addEventListener('load', startApp);
+        }
     </script>
 
     <!-- ===================================================================
