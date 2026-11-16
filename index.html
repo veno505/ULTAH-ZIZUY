@@ -224,6 +224,121 @@
             border-left: 1px dashed rgba(255, 255, 255, 0.25);
             border-right: 1px dashed rgba(255, 255, 255, 0.25);
         }
+
+        /* Smooth Discrete Entry & Exit Transitions (Fade-In & Fade-Out) */
+        .stage-layer {
+            display: flex;
+            opacity: 1;
+            scale: 1;
+            translate: 0 0;
+            transition:
+                display 0.85s,
+                opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+                scale 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+                translate 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+            transition-behavior: allow-discrete;
+            will-change: opacity, transform;
+        }
+        @starting-style {
+            .stage-layer {
+                opacity: 0;
+                scale: 0.97;
+                translate: 0 12px;
+            }
+        }
+        .stage-layer:where([hidden], [data-closing]) {
+            opacity: 0;
+            scale: 1.03;
+            translate: 0 -10px;
+            pointer-events: none;
+        }
+        .stage-layer[hidden] {
+            display: none;
+        }
+
+        /* Discrete UI Box Fade (Joke Output, Quest Reaction, Late Banner) */
+        .discrete-fade {
+            display: flex;
+            opacity: 1;
+            translate: 0 0;
+            transition:
+                display 0.45s,
+                opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                translate 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            transition-behavior: allow-discrete;
+        }
+        @starting-style {
+            .discrete-fade {
+                opacity: 0;
+                translate: 0 10px;
+            }
+        }
+        .discrete-fade:where([hidden], [data-closing]) {
+            opacity: 0;
+            translate: 0 10px;
+        }
+        .discrete-fade[hidden] {
+            display: none;
+        }
+
+        /* Smooth Scroll Fade-In & Fade-Out Reveal */
+        .reveal-on-scroll {
+            opacity: 0;
+            translate: 0 28px;
+            scale: 0.985;
+            transition:
+                opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                translate 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                scale 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-on-scroll.in-view {
+            opacity: 1;
+            translate: 0 0;
+            scale: 1;
+        }
+
+        /* Preloader Orbit Ring */
+        @keyframes orbitSpin {
+            to { transform: rotate3d(1, 0.4, 0.2, 360deg); }
+        }
+        @keyframes orbitSpinReverse {
+            to { transform: rotate3d(-0.5, 1, 0.3, 360deg); }
+        }
+        .galaxy-ring-1 {
+            transform: rotate3d(1, 0.4, 0.2, 0deg);
+            @media (prefers-reduced-motion: no-preference) {
+                animation: orbitSpin 7s linear infinite;
+            }
+        }
+        .galaxy-ring-2 {
+            transform: rotate3d(-0.5, 1, 0.3, 0deg);
+            @media (prefers-reduced-motion: no-preference) {
+                animation: orbitSpinReverse 9s linear infinite;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .stage-layer,
+            .discrete-fade,
+            .reveal-on-scroll {
+                translate: none;
+                scale: none;
+                transition-duration: 0.15s;
+            }
+            @starting-style {
+                .stage-layer,
+                .discrete-fade {
+                    translate: none;
+                    scale: none;
+                }
+            }
+            .stage-layer:where([hidden], [data-closing]),
+            .discrete-fade:where([hidden], [data-closing]) {
+                translate: none;
+                scale: none;
+            }
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-cyberRose selection:text-white">
@@ -232,10 +347,48 @@
     <div class="noise-overlay"></div>
 
     <!-- ===================================================================
-         F-01: BINARY VORTEX HEART INTRO GATE (zizuy_v19.exe)
+         F-00: PRE-INTRO GALAXY BOOT LOADER (0% -> 100% WITH FADE IN/OUT)
          =================================================================== -->
-    <section id="intro-gate" class="fixed inset-0 z-50 bg-obsidian flex flex-col justify-between items-center p-5 sm:p-8 overflow-hidden transition-opacity duration-700">
-        <!-- Interactive HTML5 Canvas for 60fps Binary Vortex Heart -->
+    <section id="pre-loader" class="stage-layer fixed inset-0 z-[60] bg-[#05040A] flex-col justify-center items-center p-6 overflow-hidden select-none">
+        <!-- Soft 3D Galaxy Glow Backdrop -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] sm:w-[520px] h-[360px] sm:h-[520px] rounded-full bg-gradient-to-tr from-cyberRose/25 via-nebulaViolet/25 to-electricCyan/25 blur-[95px]"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-sm flex flex-col items-center text-center">
+            <!-- 3D Galaxy Rings & Heart Core -->
+            <div class="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center mb-7">
+                <div class="galaxy-ring-1 absolute inset-0 rounded-full border-2 border-cyberRose/60 shadow-[0_0_25px_rgba(255,42,133,0.45)]"></div>
+                <div class="galaxy-ring-2 absolute inset-2 rounded-full border-2 border-electricCyan/60 shadow-[0_0_25px_rgba(0,229,255,0.4)]"></div>
+                <div class="absolute inset-5 rounded-full border border-nebulaViolet/50 bg-velvet/70 backdrop-blur-md flex flex-col items-center justify-center shadow-inner">
+                    <span class="text-cyberRose text-lg leading-none mb-0.5 glow-rose">♥</span>
+                    <span id="preloader-percent" class="font-display font-extrabold text-2xl sm:text-3xl text-starlight tracking-tight">0%</span>
+                </div>
+            </div>
+
+            <!-- Boot Tag -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 font-mono text-[11px] text-electricCyan tracking-widest uppercase mb-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyberRose animate-ping"></span>
+                <span>GALAXY ENGINE // ZIZUY v19.0</span>
+            </div>
+
+            <!-- Smooth Progress Bar -->
+            <div class="w-full h-2 rounded-full bg-white/10 overflow-hidden p-[1px] border border-white/10 mb-3">
+                <div id="preloader-bar" class="h-full rounded-full bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan transition-[width] duration-75" style="width: 0%"></div>
+            </div>
+
+            <!-- Dynamic Loading Status -->
+            <p id="preloader-status" class="font-mono text-xs text-mutedLavender min-h-[20px]">
+                Menginisialisasi ruang galaksi 3D...
+            </p>
+        </div>
+    </section>
+
+    <!-- ===================================================================
+         F-01: 3D GALAXY & WIDE BINARY HEART INTRO GATE (zizuy_v19.exe)
+         =================================================================== -->
+    <section id="intro-gate" hidden class="stage-layer fixed inset-0 z-50 bg-[#05040A] flex-col justify-between items-center p-5 sm:p-8 overflow-hidden">
+        <!-- Interactive HTML5 Canvas for 60fps 3D Galaxy & Wide Binary Heart -->
         <canvas id="vortex-canvas" class="absolute inset-0 w-full h-full block cursor-crosshair"></canvas>
 
         <!-- Top Terminal Status Bar -->
@@ -244,7 +397,7 @@
                 <span class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
                 <span class="text-starlight font-medium">zizuy_v19.exe</span>
                 <span class="text-white/30">|</span>
-                <span class="text-electricCyan">PID: 231107</span>
+                <span class="text-electricCyan">3D_GALAXY_CORE</span>
             </div>
             <div class="hidden sm:flex items-center gap-3 bg-velvet/80 border border-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-md">
                 <span>TARGET: <strong class="text-starlight">AZIZAH NAZWA NOVITA</strong></span>
@@ -254,18 +407,18 @@
         </div>
 
         <!-- Center Floating Prompt (Pointer-events-none so canvas stays interactive) -->
-        <div class="relative z-10 pointer-events-none text-center my-auto px-4 max-w-lg">
-            <div class="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 font-mono text-[11px] tracking-widest uppercase text-electricCyan mb-3">
-                Sentuh layar / gerakkan kursor di sekitar hati biner
+        <div class="relative z-10 pointer-events-none text-center mt-2 px-4 max-w-lg">
+            <div class="inline-block px-3.5 py-1 rounded-full bg-velvet/60 border border-white/15 backdrop-blur-md font-mono text-[11px] tracking-widest uppercase text-electricCyan">
+                Sentuh / gerakkan kursor untuk memutar galaksi &amp; hati 3D
             </div>
         </div>
 
         <!-- Bottom Action Gate -->
         <div class="relative z-10 w-full max-w-md flex flex-col items-center text-center pb-4 sm:pb-6">
-            <p class="font-mono text-xs text-mutedLavender mb-3 tracking-wide">
-                [01011010] Memori Semester 1 siap dikompilasi...
+            <p class="font-mono text-xs text-starlight/80 mb-3 tracking-wide">
+                [01011010] Galaksi Memori Semester 1 siap dibuka...
             </p>
-            <button id="run-exe-btn" class="spring-btn group relative w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan p-[1.5px] shadow-[0_0_35px_rgba(255,42,133,0.4)] hover:shadow-[0_0_50px_rgba(0,229,255,0.6)]">
+            <button id="run-exe-btn" class="spring-btn group relative w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan p-[1.5px] shadow-[0_0_35px_rgba(255,42,133,0.45)] hover:shadow-[0_0_55px_rgba(0,229,255,0.65)]">
                 <div class="bg-obsidian/90 group-hover:bg-obsidian/70 transition-colors rounded-[15px] px-7 py-3.5 flex items-center justify-center gap-3">
                     <span class="w-2.5 h-2.5 rounded-full bg-cyberRose group-hover:bg-electricCyan transition-colors"></span>
                     <span class="font-mono font-bold text-sm sm:text-base text-starlight tracking-wide">
@@ -274,7 +427,7 @@
                     <span class="font-mono text-electricCyan group-hover:translate-x-1 transition-transform">-&gt;</span>
                 </div>
             </button>
-            <span class="font-hand text-lg text-mutedLavender/80 mt-2">
+            <span class="font-hand text-lg text-starlight/85 mt-2">
                 Dibuat khusus buat ulang tahun ke-19 Zizuy ✨
             </span>
         </div>
@@ -283,7 +436,9 @@
     <!-- ===================================================================
          MAIN EXPERIENCE WRAPPER
          =================================================================== -->
-    <div id="main-app" class="relative min-h-screen opacity-0 pointer-events-none transition-opacity duration-1000">
+    <div id="main-app" hidden class="stage-layer relative min-h-screen flex-col">
+        <!-- Fixed Lightweight 3D Galaxy Starfield Background for Main Content -->
+        <canvas id="bg-galaxy-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-75"></canvas>
         
         <!-- Ambient Glowing Background Orbs -->
         <div class="ambient-orb w-80 h-80 bg-cyberRose top-16 -left-24"></div>
@@ -308,7 +463,10 @@
                     <a href="#scrapbook" class="px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors">02.Struk&Foto</a>
                     <a href="#quest-section" class="px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors">03.Quest</a>
                     <a href="#letter-section" class="px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors">04.Surat</a>
-                    <button id="replay-intro-btn" title="Putar Ulang Hati Biner" class="ml-1 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/50 text-cyberRose transition-all flex items-center gap-1">
+                    <button id="toggle-motion-btn" type="button" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-mutedLavender hover:text-starlight transition-colors flex items-center gap-1">
+                        <span id="toggle-motion-label">Pause Motion</span>
+                    </button>
+                    <button id="replay-intro-btn" type="button" title="Putar Ulang Hati Biner" class="ml-1 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/50 text-cyberRose transition-all flex items-center gap-1">
                         <span>♥</span>
                         <span class="hidden sm:inline">Intro</span>
                     </button>
@@ -319,7 +477,7 @@
         <!-- ===============================================================
              SECTION 1: HERO & DUAL-STATE CHRONO-SHIFT TIMER (F-02)
              =============================================================== -->
-        <section id="hero-timer" class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-20 md:pt-16 md:pb-28">
+        <section id="hero-timer" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-20 md:pt-16 md:pb-28">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                 
                 <!-- Left Column: Artistic Title & "Undefined Status, High-Priority Variable" -->
@@ -371,7 +529,7 @@
 <span class="text-nebulaViolet">if</span> (target === <span class="text-electricCyan">"Zizuy"</span>) {
   memory.setPriority(<span class="text-cyberRose">"ALWAYS_NUMBER_ONE"</span>);
 }</code></pre>
-                        <div id="compile-output" class="hidden mt-3 pt-2.5 border-t border-white/10 font-mono text-xs text-electricCyan flex items-center gap-2">
+                        <div id="compile-output" hidden class="discrete-fade mt-3 pt-2.5 border-t border-white/10 font-mono text-xs text-electricCyan items-center gap-2">
                             <span>✓ Output:</span>
                             <span id="compile-output-text">Status memang belum dideklarasikan, tapi Zizuy udah ngabisin 99.9% RAM pikiran!</span>
                         </div>
@@ -443,7 +601,7 @@
                         </div>
 
                         <!-- Conditional Late-Open Banner (Shown automatically when T_now >= 23 Nov 2026 OR in preview mode) -->
-                        <div id="late-banner" class="hidden rounded-2xl bg-electricCyan/10 border border-electricCyan/30 p-4 mb-4 transition-all">
+                        <div id="late-banner" hidden class="discrete-fade rounded-2xl bg-electricCyan/10 border border-electricCyan/30 p-4 mb-4">
                             <div class="flex items-start gap-3">
                                 <span class="text-xl">🎉</span>
                                 <p class="text-xs sm:text-sm text-starlight leading-relaxed">
@@ -469,7 +627,7 @@
         <!-- ===============================================================
              SECTION 2: DIGITAL SCRAPBOOK — MEMORY RECEIPT (F-03) & POLAROID DECK (F-04)
              =============================================================== -->
-        <section id="scrapbook" class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 border-t border-white/5">
+        <section id="scrapbook" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 border-t border-white/5">
             <!-- Section Header -->
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
                 <div>
@@ -730,7 +888,7 @@
         <!-- ===============================================================
              SECTION 3: ZIZUY'S QUEST CHOICE — MINI RPG VISUAL NOVEL (F-05)
              =============================================================== -->
-        <section id="quest-section" class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-24 border-t border-white/5">
+        <section id="quest-section" class="reveal-on-scroll relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-24 border-t border-white/5">
             <!-- Section Header -->
             <div class="text-center max-w-2xl mx-auto mb-10">
                 <div class="inline-flex items-center gap-2 font-mono text-xs text-electricCyan uppercase tracking-widest mb-2">
@@ -787,7 +945,7 @@
         <!-- ===============================================================
              SECTION 4: THE UNCOMPILED LETTER & BINARY FIREFLIES (F-06)
              =============================================================== -->
-        <section id="letter-section" class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-28 border-t border-white/5">
+        <section id="letter-section" class="reveal-on-scroll relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-28 border-t border-white/5">
             <!-- Binary Firefly Background Canvas -->
             <div class="relative rounded-3xl velvet-card-rose p-6 sm:p-10 md:p-14 overflow-hidden">
                 <canvas id="firefly-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-65"></canvas>
@@ -920,32 +1078,180 @@
         }
 
         /* -----------------------------------------------------------------
-           F-01: BINARY LOVE VORTEX (60FPS HTML5 CANVAS INTRO)
-           Parametric Heart Equations from WDD Section 3.3.A:
-           x(t) = 16 * sin^3(t)
-           y(t) = 13 * cos(t) - 5 * cos(2t) - 2 * cos(3t) - cos(4t)
+           DISCRETE ENTRY & EXIT TRANSITION HELPERS (FADE IN / FADE OUT)
+           ----------------------------------------------------------------- */
+        let supportsDisplayTransition;
+        function canTransitionDisplay() {
+            if (supportsDisplayTransition !== undefined) return supportsDisplayTransition;
+            if (!window.CSS?.supports?.('transition-behavior', 'allow-discrete') || !document.body) {
+                return false;
+            }
+            const probe = document.createElement('div');
+            probe.style.cssText = 'transition: display 1s allow-discrete !important; display: block;';
+            document.body.appendChild(probe);
+            getComputedStyle(probe).display;
+            probe.style.display = 'none';
+            supportsDisplayTransition = getComputedStyle(probe).display === 'block';
+            probe.remove();
+            return supportsDisplayTransition;
+        }
+
+        async function hideElement(el) {
+            if (!el || el.hidden) return;
+            if (canTransitionDisplay()) {
+                el.hidden = true;
+            } else {
+                el.setAttribute('data-closing', '');
+            }
+
+            const animations = el.getAnimations();
+            if (animations.length > 0) {
+                await Promise.race([
+                    Promise.allSettled(animations.map((a) => a.finished)),
+                    new Promise((r) => setTimeout(r, 1200)),
+                ]);
+            }
+
+            if (el.hasAttribute('data-closing')) {
+                el.removeAttribute('data-closing');
+                el.hidden = true;
+            }
+        }
+
+        function showElement(el) {
+            if (!el) return;
+            el.removeAttribute('data-closing');
+            el.hidden = false;
+        }
+
+        /* -----------------------------------------------------------------
+           F-00: PRE-INTRO GALAXY BOOT LOADER (0% -> 100%)
+           ----------------------------------------------------------------- */
+        let motionPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function runPreloaderSequence() {
+            const preloader = document.getElementById('pre-loader');
+            const percentEl = document.getElementById('preloader-percent');
+            const barEl = document.getElementById('preloader-bar');
+            const statusEl = document.getElementById('preloader-status');
+            const introGate = document.getElementById('intro-gate');
+
+            const stages = [
+                { threshold: 0, text: 'Menginisialisasi ruang galaksi 3D (Pink • Biru • Ungu)...' },
+                { threshold: 32, text: 'Menyusun partikel Love 3D & bintang biner...' },
+                { threshold: 68, text: 'Mengompilasi memori ulang tahun ke-19 Zizuy...' },
+                { threshold: 95, text: '100% — Siap memasuki galaksi Zizuy ✨' }
+            ];
+
+            const duration = 2200;
+            const start = performance.now();
+
+            function step(now) {
+                const t = Math.min(1, (now - start) / duration);
+                // Smooth cubic ease-in-out
+                const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                const pct = Math.round(eased * 100);
+
+                percentEl.textContent = `${pct}%`;
+                barEl.style.width = `${pct}%`;
+
+                for (let i = stages.length - 1; i >= 0; i--) {
+                    if (pct >= stages[i].threshold) {
+                        statusEl.textContent = stages[i].text;
+                        break;
+                    }
+                }
+
+                if (t < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    setTimeout(() => {
+                        // Fade-in Intro Gate & Fade-out Preloader
+                        introActive = true;
+                        startTime = performance.now();
+                        initVortexParticles();
+                        showElement(introGate);
+                        requestAnimationFrame(renderVortex);
+                        hideElement(preloader);
+                    }, 260);
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        /* -----------------------------------------------------------------
+           F-01: 3D GALAXY NEBULA & WIDE 3D BINARY LOVE HEART (60FPS CANVAS)
+           Wide Heart Parametric Curve + 3D Perspective Projection
            ----------------------------------------------------------------- */
         const vortexCanvas = document.getElementById('vortex-canvas');
         const vCtx = vortexCanvas.getContext('2d');
         let vWidth = window.innerWidth;
         let vHeight = window.innerHeight;
-        let introActive = true;
+        let introActive = false;
         let introExploding = false;
         let particles = [];
-        const PARTICLE_Colors = ['#FF2A85', '#00E5FF', '#8B5CF6', '#FF6B9E'];
+        let galaxyStars = [];
+        let nebulaSprites = [];
+        const PARTICLE_Colors = ['#FF2A85', '#00E5FF', '#A855F7', '#FF73B3', '#38BDF8'];
 
         const pointer = {
             x: -9999,
             y: -9999,
-            radius: 110
+            normX: 0,
+            normY: 0,
+            radius: 120
         };
 
-        function getHeartPoint(t, scale) {
-            const x = 16 * Math.pow(Math.sin(t), 3);
-            const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        // Pre-render soft nebula cloud sprites once for locked 60fps performance
+        function createNebulaSprite(colorInner, colorMid) {
+            const off = document.createElement('canvas');
+            off.width = 256;
+            off.height = 256;
+            const oCtx = off.getContext('2d');
+            const g = oCtx.createRadialGradient(128, 128, 8, 128, 128, 124);
+            g.addColorStop(0, colorInner);
+            g.addColorStop(0.45, colorMid);
+            g.addColorStop(1, 'rgba(7, 6, 11, 0)');
+            oCtx.fillStyle = g;
+            oCtx.fillRect(0, 0, 256, 256);
+            return off;
+        }
+
+        function initNebulaSprites() {
+            nebulaSprites = [
+                {
+                    canvas: createNebulaSprite('rgba(255, 42, 133, 0.34)', 'rgba(255, 42, 133, 0.10)'),
+                    angle: 0,
+                    dist: 0.22,
+                    scale: 2.6,
+                    speed: 0.18
+                },
+                {
+                    canvas: createNebulaSprite('rgba(139, 92, 246, 0.36)', 'rgba(139, 92, 246, 0.12)'),
+                    angle: 2.1,
+                    dist: 0.25,
+                    scale: 2.9,
+                    speed: -0.14
+                },
+                {
+                    canvas: createNebulaSprite('rgba(0, 229, 255, 0.30)', 'rgba(56, 189, 248, 0.09)'),
+                    angle: 4.2,
+                    dist: 0.24,
+                    scale: 2.5,
+                    speed: 0.15
+                }
+            ];
+        }
+
+        // Wider, fuller, non-skinny parametric heart curve
+        function getWideHeartPoint(t, scaleX, scaleY) {
+            // Boosted horizontal lobe & waist fullness (+38% wider than classic curve)
+            const x = 21.8 * Math.pow(Math.sin(t), 3) + 2.6 * Math.sin(t);
+            const y = -(13.2 * Math.cos(t) - 4.6 * Math.cos(2 * t) - 1.8 * Math.cos(3 * t) - 0.8 * Math.cos(4 * t));
             return {
-                x: x * scale,
-                y: y * scale
+                x: x * scaleX,
+                y: y * scaleY
             };
         }
 
@@ -957,28 +1263,52 @@
             vortexCanvas.height = vHeight * dpr;
             vCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-            const count = vWidth < 640 ? 220 : 380;
+            if (nebulaSprites.length === 0) initNebulaSprites();
+
+            const count = vWidth < 640 ? 250 : 420;
             particles = [];
 
             for (let i = 0; i < count; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const startRadius = Math.max(vWidth, vHeight) * (0.35 + Math.random() * 0.55);
+                // Multi-layer volume so the heart is thick, wide, and 3D
+                const layerRing = 0.68 + Math.pow(Math.random(), 0.75) * 0.42;
                 particles.push({
-                    char: Math.random() > 0.5 ? '1' : '0',
+                    char: i % 7 === 0 ? '♥' : (Math.random() > 0.5 ? '1' : '0'),
                     t: (i / count) * Math.PI * 2,
-                    tSpeed: 0.004 + Math.random() * 0.006,
+                    tSpeed: 0.0035 + Math.random() * 0.005,
+                    layerScale: layerRing,
+                    zBase: (Math.random() - 0.5) * 110,
                     orbitRadius: startRadius,
                     orbitAngle: angle,
-                    orbitSpeed: 0.025 + Math.random() * 0.02,
+                    orbitSpeed: 0.022 + Math.random() * 0.018,
                     x: vWidth / 2 + Math.cos(angle) * startRadius,
                     y: vHeight / 2 + Math.sin(angle) * startRadius,
                     vx: 0,
                     vy: 0,
-                    radialOffset: (Math.random() - 0.5) * 22,
+                    radialOffset: (Math.random() - 0.5) * 18,
                     color: PARTICLE_Colors[i % PARTICLE_Colors.length],
                     size: vWidth < 640 ? (10 + Math.floor(Math.random() * 5)) : (11 + Math.floor(Math.random() * 6)),
-                    alpha: 0.35 + Math.random() * 0.65,
+                    alpha: 0.4 + Math.random() * 0.6,
                     lerpFactor: 0
+                });
+            }
+
+            // Initialize 3D Galaxy spiral & depth starfield
+            const starCount = vWidth < 640 ? 110 : 180;
+            galaxyStars = [];
+            for (let i = 0; i < starCount; i++) {
+                const armAngle = (i / starCount) * Math.PI * 6 + (Math.random() - 0.5) * 0.8;
+                const radius3D = 60 + Math.random() * Math.max(vWidth, vHeight) * 0.75;
+                galaxyStars.push({
+                    angle: armAngle,
+                    radius: radius3D,
+                    yOffset: (Math.random() - 0.5) * 360,
+                    z: Math.random() * 700 + 50,
+                    speedZ: 1.2 + Math.random() * 2.2,
+                    rotSpeed: 0.0015 + Math.random() * 0.002,
+                    color: PARTICLE_Colors[i % PARTICLE_Colors.length],
+                    size: 1 + Math.random() * 2.2
                 });
             }
         }
@@ -988,24 +1318,64 @@
             if (!introActive) return;
 
             const elapsed = (now - startTime) * 0.001;
-            // Subtle trail effect for smooth 3D vortex motion
-            vCtx.fillStyle = 'rgba(7, 6, 11, 0.24)';
-            vCtx.fillRect(0, 0, vWidth, vHeight);
-
             const centerX = vWidth / 2;
-            const centerY = vHeight / 2 - (vWidth < 640 ? 15 : 10);
-            const baseScale = Math.min(vWidth, vHeight) / (vWidth < 640 ? 43 : 38);
-            // Gentle heartbeat pulse: sin(w*t)
-            const pulse = 1 + 0.055 * Math.sin(elapsed * 3.4);
-            const currentScale = baseScale * pulse;
+            const centerY = vHeight / 2 - (vWidth < 640 ? 12 : 8);
 
-            // Soft center aura
-            const grad = vCtx.createRadialGradient(centerX, centerY, 10, centerX, centerY, baseScale * 18);
-            grad.addColorStop(0, 'rgba(255, 42, 133, 0.09)');
-            grad.addColorStop(0.5, 'rgba(139, 92, 246, 0.04)');
-            grad.addColorStop(1, 'rgba(7, 6, 11, 0)');
-            vCtx.fillStyle = grad;
+            // Deep galaxy base coat with smooth motion trail
+            vCtx.fillStyle = 'rgba(5, 4, 12, 0.30)';
             vCtx.fillRect(0, 0, vWidth, vHeight);
+
+            // 1. Render 3D Rotating Pink-Blue-Purple Galaxy Nebula Clouds
+            const minDim = Math.min(vWidth, vHeight);
+            vCtx.save();
+            vCtx.globalCompositeOperation = 'screen';
+            for (let i = 0; i < nebulaSprites.length; i++) {
+                const nb = nebulaSprites[i];
+                const a = nb.angle + elapsed * nb.speed;
+                const nx = centerX + Math.cos(a) * (minDim * nb.dist) + pointer.normX * 28;
+                const ny = centerY + Math.sin(a * 0.8) * (minDim * nb.dist * 0.65) + pointer.normY * 22;
+                const size = minDim * nb.scale * 0.42;
+                vCtx.drawImage(nb.canvas, nx - size / 2, ny - size / 2, size, size);
+            }
+            vCtx.restore();
+
+            // 2. Render 3D Perspective Galaxy Starfield
+            const fov = 420;
+            for (let i = 0; i < galaxyStars.length; i++) {
+                const s = galaxyStars[i];
+                if (!motionPaused) {
+                    s.angle += s.rotSpeed;
+                    s.z -= introExploding ? s.speedZ * 12 : s.speedZ;
+                    if (s.z <= 20) s.z = 750;
+                }
+                const scale3D = fov / (fov + s.z);
+                const sx = centerX + (Math.cos(s.angle) * s.radius + pointer.normX * 60) * scale3D;
+                const sy = centerY + (Math.sin(s.angle) * s.radius * 0.55 + s.yOffset * 0.35 + pointer.normY * 45) * scale3D;
+
+                if (sx >= 0 && sx <= vWidth && sy >= 0 && sy <= vHeight) {
+                    const r = Math.max(0.6, s.size * scale3D * 1.4);
+                    vCtx.beginPath();
+                    vCtx.fillStyle = s.color;
+                    vCtx.globalAlpha = Math.min(0.9, scale3D * 1.1);
+                    vCtx.arc(sx, sy, r, 0, Math.PI * 2);
+                    vCtx.fill();
+                }
+            }
+
+            // 3. Render Wide 3D Binary Love Heart
+            const baseScale = Math.min(vWidth * 0.9, vHeight * 0.82) / (vWidth < 640 ? 40 : 34);
+            const pulse = motionPaused ? 1 : (1 + 0.06 * Math.sin(elapsed * 3.2));
+            // Extra horizontal width scale so the heart looks wide, plush, and never skinny
+            const scaleX = baseScale * 1.24 * pulse;
+            const scaleY = baseScale * 0.96 * pulse;
+
+            // 3D rotation angles (auto-orbit + interactive cursor/touch tilt)
+            const rotY = (motionPaused ? 0 : Math.sin(elapsed * 0.75) * 0.26) + pointer.normX * 0.38;
+            const rotX = (motionPaused ? 0 : Math.cos(elapsed * 0.55) * 0.12) - pointer.normY * 0.25;
+            const cosY = Math.cos(rotY);
+            const sinY = Math.sin(rotY);
+            const cosX = Math.cos(rotX);
+            const sinX = Math.sin(rotX);
 
             vCtx.textAlign = 'center';
             vCtx.textBaseline = 'middle';
@@ -1016,22 +1386,32 @@
                 if (introExploding) {
                     p.x += p.vx;
                     p.y += p.vy;
-                    p.alpha *= 0.95;
+                    p.alpha *= 0.94;
                 } else {
-                    // Advance parameter t along heart path
-                    p.t += p.tSpeed;
-                    p.orbitAngle += p.orbitSpeed;
+                    if (!motionPaused) {
+                        p.t += p.tSpeed;
+                        p.orbitAngle += p.orbitSpeed;
+                    }
+                    p.lerpFactor = Math.min(1, p.lerpFactor + 0.014);
 
-                    // Smoothly transition from circular vortex into parametric heart
-                    p.lerpFactor = Math.min(1, p.lerpFactor + 0.012);
+                    const heartPos = getWideHeartPoint(p.t, scaleX * p.layerScale, scaleY * p.layerScale);
+                    const waveZ = Math.sin(elapsed * 2.2 + p.t * 3) * 18;
+                    const rawX = heartPos.x + Math.cos(p.t) * p.radialOffset;
+                    const rawY = heartPos.y + Math.sin(p.t) * p.radialOffset;
+                    const rawZ = p.zBase + waveZ;
 
-                    const heartPos = getHeartPoint(p.t, currentScale);
-                    const waveOffset = Math.sin(elapsed * 2.5 + p.t * 4) * 5;
-                    const targetHeartX = centerX + heartPos.x + Math.cos(p.t) * (p.radialOffset + waveOffset);
-                    const targetHeartY = centerY + heartPos.y + Math.sin(p.t) * (p.radialOffset + waveOffset);
+                    // 3D Rotation Matrix (Y then X) + Perspective Projection
+                    const x1 = rawX * cosY - rawZ * sinY;
+                    const z1 = rawX * sinY + rawZ * cosY;
+                    const y2 = rawY * cosX - z1 * sinX;
+                    const z2 = rawY * sinX + z1 * cosX;
 
-                    // Shrinking vortex spiral position
-                    p.orbitRadius *= 0.965;
+                    const persp = fov / (fov + z2 + 120);
+                    const targetHeartX = centerX + x1 * persp;
+                    const targetHeartY = centerY + y2 * persp;
+
+                    // Shrinking galaxy vortex spiral on entry
+                    p.orbitRadius *= 0.962;
                     const vortexX = centerX + Math.cos(p.orbitAngle) * p.orbitRadius;
                     const vortexY = centerY + Math.sin(p.orbitAngle) * p.orbitRadius;
 
@@ -1052,8 +1432,8 @@
                     }
 
                     // Spring physics toward destination
-                    p.vx = (p.vx + (destX - p.x) * 0.09) * 0.82;
-                    p.vy = (p.vy + (destY - p.y) * 0.09) * 0.82;
+                    p.vx = (p.vx + (destX - p.x) * 0.095) * 0.82;
+                    p.vy = (p.vy + (destY - p.y) * 0.095) * 0.82;
 
                     p.x += p.vx;
                     p.y += p.vy;
@@ -1067,31 +1447,36 @@
 
             vCtx.globalAlpha = 1;
 
-            // Draw subtle center label inside the heart once formed
-            if (!introExploding && elapsed > 1.2) {
-                const textAlpha = Math.min(0.85, (elapsed - 1.2) * 0.5);
+            // Draw center label inside the 3D heart once formed
+            if (!introExploding && elapsed > 1.0) {
+                const textAlpha = Math.min(0.92, (elapsed - 1.0) * 0.6);
                 vCtx.save();
                 vCtx.globalAlpha = textAlpha;
-                vCtx.font = `800 ${vWidth < 640 ? 20 : 26}px "Syne", sans-serif`;
+                vCtx.font = `800 ${vWidth < 640 ? 22 : 28}px "Syne", sans-serif`;
                 vCtx.fillStyle = '#F4F4F6';
-                vCtx.fillText('ZIZUY // 19', centerX, centerY - 6);
-                vCtx.font = `400 ${vWidth < 640 ? 11 : 12}px "JetBrains Mono", monospace`;
+                vCtx.fillText('ZIZUY // 19', centerX + pointer.normX * 10, centerY - 6 + pointer.normY * 8);
+                vCtx.font = `500 ${vWidth < 640 ? 11 : 13}px "JetBrains Mono", monospace`;
                 vCtx.fillStyle = '#00E5FF';
-                vCtx.fillText('23.11.2026', centerX, centerY + 18);
+                vCtx.fillText('23.11.2026 ✨', centerX + pointer.normX * 10, centerY + 19 + pointer.normY * 8);
                 vCtx.restore();
             }
 
             requestAnimationFrame(renderVortex);
         }
 
-        // Pointer listeners for Vortex Canvas
+        // Pointer listeners for 3D tilt & ripple
         window.addEventListener('mousemove', (e) => {
+            pointer.normX = (e.clientX / window.innerWidth - 0.5) * 2;
+            pointer.normY = (e.clientY / window.innerHeight - 0.5) * 2;
             if (!introActive) return;
             pointer.x = e.clientX;
             pointer.y = e.clientY;
         });
         window.addEventListener('touchmove', (e) => {
-            if (!introActive || !e.touches[0]) return;
+            if (!e.touches[0]) return;
+            pointer.normX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
+            pointer.normY = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
+            if (!introActive) return;
             pointer.x = e.touches[0].clientX;
             pointer.y = e.touches[0].clientY;
         }, { passive: true });
@@ -1100,7 +1485,7 @@
             pointer.y = -9999;
         });
 
-        // Enter Main Website Button ("Run zizuy_v19.exe")
+        // Enter Main Website Button ("Run zizuy_v19.exe") -> Smooth Fade-Out & Fade-In
         document.getElementById('run-exe-btn').addEventListener('click', () => {
             playCyberTone(587.33, 'sine', 0.14);
             setTimeout(() => playCyberTone(880, 'triangle', 0.25), 110);
@@ -1118,12 +1503,13 @@
             const gate = document.getElementById('intro-gate');
             const mainApp = document.getElementById('main-app');
             setTimeout(() => {
-                gate.classList.add('opacity-0', 'pointer-events-none');
-                mainApp.classList.remove('opacity-0', 'pointer-events-none');
-                setTimeout(() => {
+                showElement(mainApp);
+                initBgGalaxy();
+                initFireflies();
+                hideElement(gate).then(() => {
                     introActive = false;
-                }, 650);
-            }, 360);
+                });
+            }, 320);
         });
 
         // Replay Intro Button from Navbar
@@ -1134,7 +1520,7 @@
             startTime = performance.now();
             initVortexParticles();
             const gate = document.getElementById('intro-gate');
-            gate.classList.remove('opacity-0', 'pointer-events-none');
+            showElement(gate);
             requestAnimationFrame(renderVortex);
         });
 
@@ -1193,7 +1579,7 @@
                 timerBadgeText.textContent = 'COMPILING ZIZUY LEVEL 19...';
                 timerHeading.textContent = 'Hitung Mundur Menuju 19 Tahun';
                 timerSubtext.textContent = 'Menuju 23 November 2026 (00:00 WIB). Begitu lewat, otomatis berubah jadi PLUS (+)!';
-                lateBanner.classList.add('hidden');
+                hideElement(lateBanner);
             } else {
                 // CONDITION 2: After 23 Nov 2026 00:00 WIB / Telat Buka (Elapsed Plus Mode '+')
                 timerSign.textContent = '+';
@@ -1204,7 +1590,7 @@
                 timerBadgeText.textContent = 'LEVEL 19 UNLOCKED & RUNNING (+)';
                 timerHeading.textContent = 'Waktu Berjalan Sejak Resmi 19 Tahun';
                 timerSubtext.textContent = 'Count-up real-time sejak 23 November 2026 pukul 00:00 WIB.';
-                lateBanner.classList.remove('hidden');
+                showElement(lateBanner);
             }
         }
 
@@ -1236,7 +1622,7 @@
             playCyberTone(783.99, 'triangle', 0.14);
             const outBox = document.getElementById('compile-output');
             const outTxt = document.getElementById('compile-output-text');
-            outBox.classList.remove('hidden');
+            showElement(outBox);
             outTxt.textContent = jokeMessages[jokeIdx % jokeMessages.length];
             jokeIdx++;
         });
@@ -1688,22 +2074,98 @@
         }
 
         function animateFireflies() {
-            ffCtx.clearRect(0, 0, ffCanvas.width, ffCanvas.height);
-            ffCtx.font = '600 11px "JetBrains Mono", monospace';
-            for (let i = 0; i < fireflies.length; i++) {
-                const f = fireflies[i];
-                f.x += f.vx;
-                f.y += f.vy;
-                if (f.y < -10) {
-                    f.y = ffCanvas.height + 10;
-                    f.x = Math.random() * ffCanvas.width;
+            if (!motionPaused) {
+                ffCtx.clearRect(0, 0, ffCanvas.width, ffCanvas.height);
+                ffCtx.font = '600 11px "JetBrains Mono", monospace';
+                for (let i = 0; i < fireflies.length; i++) {
+                    const f = fireflies[i];
+                    f.x += f.vx;
+                    f.y += f.vy;
+                    if (f.y < -10) {
+                        f.y = ffCanvas.height + 10;
+                        f.x = Math.random() * ffCanvas.width;
+                    }
+                    ffCtx.fillStyle = f.color;
+                    ffCtx.globalAlpha = f.alpha;
+                    ffCtx.fillText(f.char, f.x, f.y);
                 }
-                ffCtx.fillStyle = f.color;
-                ffCtx.globalAlpha = f.alpha;
-                ffCtx.fillText(f.char, f.x, f.y);
+                ffCtx.globalAlpha = 1;
             }
-            ffCtx.globalAlpha = 1;
             requestAnimationFrame(animateFireflies);
+        }
+
+        /* -----------------------------------------------------------------
+           F-07: AMBIENT 3D GALAXY BACKGROUND FOR MAIN APP & SCROLL REVEAL
+           ----------------------------------------------------------------- */
+        const bgCanvas = document.getElementById('bg-galaxy-canvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        let bgStars = [];
+
+        function initBgGalaxy() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+            const count = window.innerWidth < 640 ? 55 : 95;
+            bgStars = [];
+            for (let i = 0; i < count; i++) {
+                bgStars.push({
+                    x: (Math.random() - 0.5) * bgCanvas.width * 1.5,
+                    y: (Math.random() - 0.5) * bgCanvas.height * 1.5,
+                    z: Math.random() * 600 + 80,
+                    speedZ: 0.45 + Math.random() * 0.85,
+                    color: PARTICLE_Colors[i % PARTICLE_Colors.length],
+                    size: 1 + Math.random() * 1.8
+                });
+            }
+        }
+
+        function animateBgGalaxy() {
+            if (!introActive && !motionPaused) {
+                bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+                const cx = bgCanvas.width / 2;
+                const cy = bgCanvas.height / 2;
+                const fov = 380;
+
+                for (let i = 0; i < bgStars.length; i++) {
+                    const s = bgStars[i];
+                    s.z -= s.speedZ;
+                    if (s.z <= 20) s.z = 680;
+                    const scale = fov / (fov + s.z);
+                    const sx = cx + (s.x + pointer.normX * 35) * scale;
+                    const sy = cy + (s.y + pointer.normY * 25) * scale;
+                    if (sx >= 0 && sx <= bgCanvas.width && sy >= 0 && sy <= bgCanvas.height) {
+                        bgCtx.beginPath();
+                        bgCtx.fillStyle = s.color;
+                        bgCtx.globalAlpha = Math.min(0.65, scale * 0.85);
+                        bgCtx.arc(sx, sy, Math.max(0.6, s.size * scale), 0, Math.PI * 2);
+                        bgCtx.fill();
+                    }
+                }
+                bgCtx.globalAlpha = 1;
+            }
+            requestAnimationFrame(animateBgGalaxy);
+        }
+
+        // Pause / Play Ambient Motion Control (WCAG 2.2.2 Compliance)
+        document.getElementById('toggle-motion-btn').addEventListener('click', () => {
+            motionPaused = !motionPaused;
+            document.getElementById('toggle-motion-label').textContent = motionPaused ? 'Play Motion' : 'Pause Motion';
+            showToast(motionPaused ? 'Animasi latar dijeda.' : 'Animasi latar dilanjutkan.');
+        });
+
+        // Smooth Fade-In & Fade-Out on Scroll (IntersectionObserver)
+        function setupScrollReveal() {
+            const revealItems = document.querySelectorAll('.reveal-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        entry.target.classList.remove('in-view');
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            revealItems.forEach((el) => observer.observe(el));
         }
 
         /* -----------------------------------------------------------------
@@ -1711,17 +2173,21 @@
            ----------------------------------------------------------------- */
         window.addEventListener('resize', () => {
             if (introActive) initVortexParticles();
+            initBgGalaxy();
             initFireflies();
         });
 
         window.onload = function() {
-            initVortexParticles();
-            requestAnimationFrame(renderVortex);
+            runPreloaderSequence();
 
             updateChronoTimer();
             setInterval(updateChronoTimer, 1000);
 
             renderQuestStage();
+            setupScrollReveal();
+
+            initBgGalaxy();
+            requestAnimationFrame(animateBgGalaxy);
 
             initFireflies();
             requestAnimationFrame(animateFireflies);
