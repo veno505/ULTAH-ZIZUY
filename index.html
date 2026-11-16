@@ -78,7 +78,7 @@
             scrollbar-width: none;
         }
 
-        /* 3.4 Pedoman Desain Humanized: Film Noise Grain Overlay (3% Opacity) */
+        /* 3.4 Pedoman Desain Humanized: Film Noise Grain Overlay (3% Opacity, GPU Accelerated) */
         .noise-overlay {
             position: fixed;
             inset: 0;
@@ -87,32 +87,36 @@
             pointer-events: none;
             z-index: 9999;
             opacity: 0.035;
+            transform: translateZ(0);
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Velvet Glass Card Surface */
+        /* Velvet Glass Card Surface (Optimized 60fps Blur) */
         .velvet-card {
-            background: rgba(19, 17, 28, 0.72);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(16, 14, 25, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
+            transform: translateZ(0);
         }
 
         .velvet-card-rose {
-            background: rgba(19, 17, 28, 0.78);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(19, 14, 25, 0.90);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 42, 133, 0.28);
-            box-shadow: 0 20px 50px rgba(255, 42, 133, 0.08);
+            box-shadow: 0 15px 35px rgba(255, 42, 133, 0.08);
+            transform: translateZ(0);
         }
 
         .velvet-card-cyan {
-            background: rgba(19, 17, 28, 0.78);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(14, 18, 28, 0.90);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 229, 255, 0.28);
-            box-shadow: 0 20px 50px rgba(0, 229, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 229, 255, 0.08);
+            transform: translateZ(0);
         }
 
         /* Spring Physics Transitions */
@@ -182,14 +186,22 @@
             text-shadow: 0 0 24px rgba(139, 92, 246, 0.65);
         }
 
-        /* Ambient Background Blobs */
+        /* Ambient Background Blobs (GPU-friendly Radial Gradients, Zero Blur Cost) */
         .ambient-orb {
             position: absolute;
             border-radius: 9999px;
-            filter: blur(110px);
             pointer-events: none;
             z-index: 0;
-            opacity: 0.35;
+            transform: translateZ(0);
+        }
+        .ambient-orb-rose {
+            background: radial-gradient(circle, rgba(255, 42, 133, 0.28) 0%, rgba(255, 42, 133, 0.08) 42%, transparent 70%);
+        }
+        .ambient-orb-violet {
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.28) 0%, rgba(139, 92, 246, 0.08) 42%, transparent 70%);
+        }
+        .ambient-orb-cyan {
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.28) 0%, rgba(0, 229, 255, 0.08) 42%, transparent 70%);
         }
 
         /* Custom Scrollbar */
@@ -464,10 +476,10 @@
         <!-- Fixed Lightweight 3D Galaxy Starfield Background for Main Content -->
         <canvas id="bg-galaxy-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-75"></canvas>
         
-        <!-- Ambient Glowing Background Orbs -->
-        <div class="ambient-orb w-80 h-80 bg-cyberRose top-16 -left-24"></div>
-        <div class="ambient-orb w-96 h-96 bg-nebulaViolet top-[32%] right-0"></div>
-        <div class="ambient-orb w-80 h-80 bg-electricCyan bottom-40 -left-20"></div>
+        <!-- Ambient Glowing Background Orbs (GPU-accelerated Gradients) -->
+        <div class="ambient-orb ambient-orb-rose w-72 sm:w-96 h-72 sm:h-96 top-16 -left-24"></div>
+        <div class="ambient-orb ambient-orb-violet w-80 sm:w-[28rem] h-80 sm:h-[28rem] top-[32%] right-0"></div>
+        <div class="ambient-orb ambient-orb-cyan w-72 sm:w-96 h-72 sm:h-96 bottom-40 -left-20"></div>
 
         <!-- Sticky Top Navigation Bar (Mobile-first responsive) -->
         <header class="sticky top-0 z-40 backdrop-blur-xl bg-obsidian/80 border-b border-white/10">
@@ -1373,14 +1385,14 @@
         function initVortexParticles() {
             vWidth = window.innerWidth;
             vHeight = window.innerHeight;
-            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
             vortexCanvas.width = vWidth * dpr;
             vortexCanvas.height = vHeight * dpr;
             vCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
             if (nebulaSprites.length === 0) initNebulaSprites();
 
-            const count = vWidth < 640 ? 250 : 420;
+            const count = vWidth < 640 ? 150 : 250;
             particles = [];
 
             for (let i = 0; i < count; i++) {
@@ -1403,14 +1415,14 @@
                     vy: 0,
                     radialOffset: (Math.random() - 0.5) * 18,
                     color: PARTICLE_Colors[i % PARTICLE_Colors.length],
-                    size: vWidth < 640 ? (10 + Math.floor(Math.random() * 5)) : (11 + Math.floor(Math.random() * 6)),
-                    alpha: 0.4 + Math.random() * 0.6,
+                    size: vWidth < 640 ? 11 : 12,
+                    alpha: 0.45 + Math.random() * 0.55,
                     lerpFactor: 0
                 });
             }
 
             // Initialize 3D Galaxy spiral & depth starfield
-            const starCount = vWidth < 640 ? 110 : 180;
+            const starCount = vWidth < 640 ? 60 : 95;
             galaxyStars = [];
             for (let i = 0; i < starCount; i++) {
                 const armAngle = (i / starCount) * Math.PI * 6 + (Math.random() - 0.5) * 0.8;
@@ -1494,6 +1506,7 @@
 
             vCtx.textAlign = 'center';
             vCtx.textBaseline = 'middle';
+            vCtx.font = vWidth < 640 ? '700 11px "JetBrains Mono", monospace' : '700 12px "JetBrains Mono", monospace';
 
             for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
@@ -1554,7 +1567,6 @@
                     p.y += p.vy;
                 }
 
-                vCtx.font = `700 ${p.size}px "JetBrains Mono", monospace`;
                 vCtx.fillStyle = p.color;
                 vCtx.globalAlpha = Math.max(0, p.alpha);
                 vCtx.fillText(p.char, p.x, p.y);
@@ -1630,13 +1642,13 @@
             const gate = document.getElementById('intro-gate');
             const mainApp = document.getElementById('main-app');
             setTimeout(() => {
+                introActive = false;
                 showElement(mainApp);
                 initBgGalaxy();
                 initFireflies();
-                hideElement(gate).then(() => {
-                    introActive = false;
-                });
-            }, 320);
+                setupFirefliesObserver();
+                hideElement(gate);
+            }, 280);
         });
 
         // Replay Intro Button from Navbar
@@ -3227,25 +3239,44 @@ int main() {
             }
         }
 
+        let firefliesInView = false;
+        let firefliesRafId = null;
+
         function animateFireflies() {
-            if (!motionPaused) {
-                ffCtx.clearRect(0, 0, ffCanvas.width, ffCanvas.height);
-                ffCtx.font = '600 11px "JetBrains Mono", monospace';
-                for (let i = 0; i < fireflies.length; i++) {
-                    const f = fireflies[i];
-                    f.x += f.vx;
-                    f.y += f.vy;
-                    if (f.y < -10) {
-                        f.y = ffCanvas.height + 10;
-                        f.x = Math.random() * ffCanvas.width;
-                    }
-                    ffCtx.fillStyle = f.color;
-                    ffCtx.globalAlpha = f.alpha;
-                    ffCtx.fillText(f.char, f.x, f.y);
-                }
-                ffCtx.globalAlpha = 1;
+            if (!firefliesInView || motionPaused) {
+                firefliesRafId = null;
+                return;
             }
-            requestAnimationFrame(animateFireflies);
+            ffCtx.clearRect(0, 0, ffCanvas.width, ffCanvas.height);
+            ffCtx.font = '600 11px "JetBrains Mono", monospace';
+            for (let i = 0; i < fireflies.length; i++) {
+                const f = fireflies[i];
+                f.x += f.vx;
+                f.y += f.vy;
+                if (f.y < -10) {
+                    f.y = ffCanvas.height + 10;
+                    f.x = Math.random() * ffCanvas.width;
+                }
+                ffCtx.fillStyle = f.color;
+                ffCtx.globalAlpha = f.alpha;
+                ffCtx.fillText(f.char, f.x, f.y);
+            }
+            ffCtx.globalAlpha = 1;
+            firefliesRafId = requestAnimationFrame(animateFireflies);
+        }
+
+        function setupFirefliesObserver() {
+            const letterSec = document.getElementById('uncompiled-letter');
+            if (!letterSec) return;
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    firefliesInView = e.isIntersecting;
+                    if (firefliesInView && !firefliesRafId && !motionPaused) {
+                        firefliesRafId = requestAnimationFrame(animateFireflies);
+                    }
+                });
+            }, { threshold: 0.05 });
+            obs.observe(letterSec);
         }
 
         /* -----------------------------------------------------------------
@@ -3258,22 +3289,22 @@ int main() {
         function initBgGalaxy() {
             bgCanvas.width = window.innerWidth;
             bgCanvas.height = window.innerHeight;
-            const count = window.innerWidth < 640 ? 55 : 95;
+            const count = window.innerWidth < 640 ? 28 : 45;
             bgStars = [];
             for (let i = 0; i < count; i++) {
                 bgStars.push({
-                    x: (Math.random() - 0.5) * bgCanvas.width * 1.5,
-                    y: (Math.random() - 0.5) * bgCanvas.height * 1.5,
+                    x: (Math.random() - 0.5) * bgCanvas.width * 1.4,
+                    y: (Math.random() - 0.5) * bgCanvas.height * 1.4,
                     z: Math.random() * 600 + 80,
-                    speedZ: 0.45 + Math.random() * 0.85,
+                    speedZ: 0.35 + Math.random() * 0.65,
                     color: PARTICLE_Colors[i % PARTICLE_Colors.length],
-                    size: 1 + Math.random() * 1.8
+                    size: 1 + Math.random() * 1.5
                 });
             }
         }
 
         function animateBgGalaxy() {
-            if (!introActive && !motionPaused) {
+            if (!introActive && !motionPaused && !document.hidden) {
                 bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
                 const cx = bgCanvas.width / 2;
                 const cy = bgCanvas.height / 2;
@@ -3284,14 +3315,13 @@ int main() {
                     s.z -= s.speedZ;
                     if (s.z <= 20) s.z = 680;
                     const scale = fov / (fov + s.z);
-                    const sx = cx + (s.x + pointer.normX * 35) * scale;
-                    const sy = cy + (s.y + pointer.normY * 25) * scale;
+                    const sx = cx + (s.x + pointer.normX * 24) * scale;
+                    const sy = cy + (s.y + pointer.normY * 18) * scale;
                     if (sx >= 0 && sx <= bgCanvas.width && sy >= 0 && sy <= bgCanvas.height) {
-                        bgCtx.beginPath();
+                        const sz = Math.max(1, s.size * scale);
                         bgCtx.fillStyle = s.color;
                         bgCtx.globalAlpha = Math.min(0.65, scale * 0.85);
-                        bgCtx.arc(sx, sy, Math.max(0.6, s.size * scale), 0, Math.PI * 2);
-                        bgCtx.fill();
+                        bgCtx.fillRect(sx - sz / 2, sy - sz / 2, sz, sz);
                     }
                 }
                 bgCtx.globalAlpha = 1;
@@ -3306,18 +3336,16 @@ int main() {
             showToast(motionPaused ? 'Animasi latar dijeda.' : 'Animasi latar dilanjutkan.');
         });
 
-        // Smooth Fade-In & Fade-Out on Scroll (IntersectionObserver)
+        // Smooth Fade-In on Scroll (Zero Jank IntersectionObserver)
         function setupScrollReveal() {
             const revealItems = document.querySelectorAll('.reveal-on-scroll');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
-                    } else {
-                        entry.target.classList.remove('in-view');
                     }
                 });
-            }, { threshold: 0.12 });
+            }, { threshold: 0.08 });
 
             revealItems.forEach((el) => observer.observe(el));
         }
@@ -3356,7 +3384,7 @@ int main() {
             requestAnimationFrame(animateBgGalaxy);
 
             initFireflies();
-            requestAnimationFrame(animateFireflies);
+            setupFirefliesObserver();
         }
 
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
