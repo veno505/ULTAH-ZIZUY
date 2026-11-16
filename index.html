@@ -1026,11 +1026,14 @@
                 <div class="flex items-center gap-2.5 sm:gap-3">
                     <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-electricCyan/20 text-electricCyan font-mono font-bold text-xs sm:text-sm flex items-center justify-center border border-electricCyan/40">V</span>
                     <div>
-                        <h3 class="font-display font-bold text-sm sm:text-base md:text-lg text-starlight flex items-center gap-2">
-                            Veno's Live Word &amp; Content Editor
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h3 class="font-display font-bold text-sm sm:text-base md:text-lg text-starlight">
+                                Veno's Live Word &amp; Content Editor
+                            </h3>
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyberRose/20 text-cyberRose border border-cyberRose/40">Zizuy v19.0</span>
-                        </h3>
-                        <p class="text-[10px] sm:text-[11px] font-mono text-mutedLavender">Ubah kata-kata, ucapan, struk, polaroid, &amp; surat sesukamu secara real-time</p>
+                            <span id="cloud-sync-status-badge" class="font-mono text-[9px] px-2 py-0.5 rounded-full bg-electricCyan/15 text-electricCyan border border-electricCyan/30">☁️ Realtime Cloud Sync</span>
+                        </div>
+                        <p class="text-[10px] sm:text-[11px] font-mono text-mutedLavender mt-0.5">Ubah kata-kata, ucapan, struk, polaroid, foto, &amp; surat — auto update ke semua perangkat</p>
                     </div>
                 </div>
                 <button onclick="closeEditorPanel()" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-white/5 hover:bg-white/15 text-mutedLavender hover:text-white font-mono text-xs flex items-center justify-center border border-white/10 transition-colors">
@@ -2055,6 +2058,129 @@ int main() {
             console.warn('Could not restore custom content:', e);
         }
 
+        window.CONTENT_MODES = CONTENT_MODES;
+        window.DEFAULT_CONTENT_MODES = DEFAULT_CONTENT_MODES;
+
+        // Custom Polaroid Photos (cross-device syncable)
+        let customPhotos = {
+            photo1: '',
+            photo2: '',
+            photo3: ''
+        };
+        try {
+            const savedPhotos = localStorage.getItem('zizuy_custom_photos');
+            if (savedPhotos) {
+                customPhotos = Object.assign({}, customPhotos, JSON.parse(savedPhotos));
+            }
+        } catch (e) {}
+        window.customPhotos = customPhotos;
+
+        function applyPolaroidPhotos() {
+            [1, 2, 3].forEach(idx => {
+                const imgEl = document.getElementById(`pol-img-${idx}`);
+                const svgEl = document.getElementById(`pol-svg-${idx}`);
+                const photo = customPhotos[`photo${idx}`];
+                if (imgEl && svgEl) {
+                    if (photo) {
+                        imgEl.src = photo;
+                        imgEl.classList.remove('hidden');
+                        svgEl.classList.add('hidden');
+                    } else {
+                        imgEl.src = '';
+                        imgEl.classList.add('hidden');
+                        svgEl.classList.remove('hidden');
+                    }
+                }
+            });
+        }
+        window.applyPolaroidPhotos = applyPolaroidPhotos;
+
+        // Image compression helper (800x800, quality 0.8) for fast cross-device cloud sync
+        function compressImageFile(file, maxWidth = 800, maxHeight = 800, quality = 0.8) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxWidth || h > maxHeight) {
+                            if (w > h) {
+                                h = Math.round((h * maxWidth) / w);
+                                w = maxWidth;
+                            } else {
+                                w = Math.round((w * maxHeight) / h);
+                                h = maxHeight;
+                            }
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+                        resolve(compressedDataUrl);
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+        window.compressImageFile = compressImageFile;
+
+        // Cloud sync dispatcher
+        let cloudSaveDebounce = null;
+        window.saveToCloudFirestore = function(extraPayload = {}) {
+            clearTimeout(cloudSaveDebounce);
+            cloudSaveDebounce = setTimeout(() => {
+                if (typeof window._firebaseSaveDoc === 'function') {
+                    window._firebaseSaveDoc(extraPayload);
+                }
+            }, 300);
+        };
+
+        // Cloud sync receiver (called when other devices push updates)
+        window.syncFromCloudData = function(cloudData, isSelf) {
+            let changed = false;
+            if (cloudData.content) {
+                if (cloudData.content.romance) {
+                    CONTENT_MODES.romance = Object.assign({}, DEFAULT_CONTENT_MODES.romance, cloudData.content.romance);
+                    changed = true;
+                }
+                if (cloudData.content.friend) {
+                    CONTENT_MODES.friend = Object.assign({}, DEFAULT_CONTENT_MODES.friend, cloudData.content.friend);
+                    changed = true;
+                }
+                try {
+                    localStorage.setItem('zizuy_custom_content', JSON.stringify(CONTENT_MODES));
+                } catch (e) {}
+            }
+            if (cloudData.photos) {
+                customPhotos = Object.assign({}, customPhotos, cloudData.photos);
+                window.customPhotos = customPhotos;
+                try {
+                    localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
+                } catch (e) {}
+                applyPolaroidPhotos();
+                changed = true;
+            }
+            if (changed) {
+                setAppMode(currentAppMode, false);
+                const modal = document.getElementById('editor-panel-modal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    renderEditorForm();
+                }
+                if (!isSelf) {
+                    showToast('☁️ Update otomatis diterima dari perangkat lain! ✨');
+                    playCyberTone(783.99, 'sine', 0.15);
+                }
+            }
+            const badge = document.getElementById('cloud-sync-status-badge');
+            if (badge) badge.textContent = '☁️ Realtime Cloud Sync Active';
+        };
+
         let currentAppMode = 'romance';
 
         function setAppMode(mode, showNotification = true) {
@@ -2358,38 +2484,76 @@ int main() {
                     </div>
                 </div>
 
-                <!-- 3. Polaroid Deck -->
+                <!-- 3. Polaroid Deck & Foto -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
-                    <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                        <span class="font-mono text-xs font-bold text-starlight uppercase">★ 3. Polaroid Deck (3 Kartu Foto)</span>
-                        <span class="font-mono text-[10px] text-mutedLavender">Caption &amp; quote setiap foto</span>
+                    <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-white/10">
+                        <div>
+                            <span class="font-mono text-xs font-bold text-starlight uppercase">★ 3. Polaroid Deck &amp; Foto Kenangan</span>
+                            <span class="font-mono text-[10px] text-mutedLavender block sm:inline sm:ml-2">Upload foto asli atau ganti quote</span>
+                        </div>
+                        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40">
+                            ☁️ Auto-Sync Semua Perangkat
+                        </span>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        ${(data.polaroids || []).map((p, idx) => `
-                            <div class="p-3 bg-black/50 border border-white/10 rounded-xl space-y-2">
-                                <span class="font-mono text-[10px] text-electricCyan font-bold">Foto #${idx + 1}</span>
-                                <div>
-                                    <label class="block font-mono text-[10px] text-mutedLavender">Badge</label>
-                                    <input id="edit-pol-badge-${idx}" type="text" value="${escapeEditorHtml(p.badge)}" 
-                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                        ${(data.polaroids || []).map((p, idx) => {
+                            const photoNum = idx + 1;
+                            const curPhoto = customPhotos[`photo${photoNum}`] || '';
+                            const isDataUrl = curPhoto.startsWith('data:');
+                            return `
+                                <div class="p-3.5 bg-black/50 border border-white/10 rounded-xl space-y-2.5">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-mono text-xs text-electricCyan font-bold">Foto #${photoNum}</span>
+                                        ${curPhoto ? `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40">✓ Foto Aktif</span>` : `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-mutedLavender">SVG Bawaan</span>`}
+                                    </div>
+
+                                    <!-- Thumbnail Preview Box -->
+                                    <div class="relative aspect-[4/3] w-full rounded-lg overflow-hidden bg-black/60 border border-white/15">
+                                        <img id="edit-pol-thumb-${photoNum}" src="${curPhoto}" alt="Preview Foto #${photoNum}" class="${curPhoto ? '' : 'hidden'} w-full h-full object-cover">
+                                        <div id="edit-pol-thumb-empty-${photoNum}" class="${curPhoto ? 'hidden' : 'flex'} w-full h-full flex-col items-center justify-center p-2 text-center text-mutedLavender">
+                                            <span class="text-2xl mb-1">📷</span>
+                                            <span class="text-[10px] font-mono">Belum ada foto</span>
+                                            <span class="text-[9px] text-mutedLavender/70">(Menampilkan ilustrasi SVG)</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Upload & Photo Input Controls -->
+                                    <div class="space-y-1.5">
+                                        <label class="block font-mono text-[10px] text-starlight font-bold">Pilih / Ganti Foto:</label>
+                                        <label class="flex items-center justify-center gap-1.5 w-full py-1.5 px-3 rounded-lg bg-electricCyan/15 hover:bg-electricCyan/25 text-electricCyan border border-electricCyan/30 font-mono text-[11px] cursor-pointer transition-colors">
+                                            <span>📁 Upload Foto (HP / Laptop)</span>
+                                            <input type="file" accept="image/*" class="hidden" onchange="handleEditorPhotoUpload(event, ${photoNum})">
+                                        </label>
+                                        <input type="text" value="${escapeEditorHtml(!isDataUrl ? curPhoto : '')}" placeholder="Atau paste link URL gambar web" onchange="handleEditorPhotoUrl(${photoNum}, this.value)" class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-lg px-2 py-1.5 text-[11px] text-starlight focus:outline-none transition-colors">
+                                        ${curPhoto ? `<button type="button" onclick="handleRemovePhoto(${photoNum})" class="w-full py-1 text-[10px] font-mono text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 transition-colors">🗑 Hapus Foto (Gunakan SVG Bawaan)</button>` : ''}
+                                    </div>
+
+                                    <!-- Text Caption & Quote -->
+                                    <div class="space-y-1.5 pt-2 border-t border-white/10">
+                                        <div>
+                                            <label class="block font-mono text-[10px] text-mutedLavender">Badge</label>
+                                            <input id="edit-pol-badge-${idx}" type="text" value="${escapeEditorHtml(p.badge)}" 
+                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block font-mono text-[10px] text-mutedLavender">Judul</label>
+                                            <input id="edit-pol-title-${idx}" type="text" value="${escapeEditorHtml(p.title)}" 
+                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block font-mono text-[10px] text-mutedLavender">Subjudul</label>
+                                            <input id="edit-pol-sub-${idx}" type="text" value="${escapeEditorHtml(p.sub)}" 
+                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block font-mono text-[10px] text-mutedLavender">Quote Teks</label>
+                                            <textarea id="edit-pol-quote-${idx}" rows="2" 
+                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none leading-snug">${escapeEditorHtml(p.quote)}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="block font-mono text-[10px] text-mutedLavender">Judul</label>
-                                    <input id="edit-pol-title-${idx}" type="text" value="${escapeEditorHtml(p.title)}" 
-                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
-                                </div>
-                                <div>
-                                    <label class="block font-mono text-[10px] text-mutedLavender">Subjudul</label>
-                                    <input id="edit-pol-sub-${idx}" type="text" value="${escapeEditorHtml(p.sub)}" 
-                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
-                                </div>
-                                <div>
-                                    <label class="block font-mono text-[10px] text-mutedLavender">Quote Teks</label>
-                                    <textarea id="edit-pol-quote-${idx}" rows="2" 
-                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none leading-snug">${escapeEditorHtml(p.quote)}</textarea>
-                                </div>
-                            </div>
-                        `).join('')}
+                            `;
+                        }).join('')}
                     </div>
                 </div>
 
@@ -2548,22 +2712,85 @@ int main() {
 
             // Immediately apply to live page
             setAppMode(currentAppMode, false);
+            applyPolaroidPhotos();
+
+            // Broadcast & save to Cloud Firestore across all devices
+            saveToCloudFirestore({ content: CONTENT_MODES, photos: customPhotos });
+
             playCyberTone(880, 'triangle', 0.2);
-            showToast('Teks & ucapan berhasil disimpan dan diterapkan langsung! ✨');
+            showToast('Teks & foto berhasil disimpan dan otomatis tersinkron ke semua perangkat! ☁️✨');
             closeEditorPanel();
         };
 
         window.resetEditorToDefault = function() {
-            if (confirm('Yakin ingin mereset semua kata & ucapan kembali ke bawaan default?')) {
+            if (confirm('Yakin ingin mereset semua kata, ucapan, & foto kembali ke bawaan default?')) {
                 try {
                     localStorage.removeItem('zizuy_custom_content');
+                    localStorage.removeItem('zizuy_custom_photos');
                 } catch (e) {}
                 CONTENT_MODES = JSON.parse(JSON.stringify(DEFAULT_CONTENT_MODES));
+                window.CONTENT_MODES = CONTENT_MODES;
+                customPhotos = { photo1: '', photo2: '', photo3: '' };
+                window.customPhotos = customPhotos;
+                applyPolaroidPhotos();
                 setAppMode(currentAppMode, false);
                 renderEditorForm();
+                saveToCloudFirestore({ content: CONTENT_MODES, photos: customPhotos });
                 playCyberTone(440, 'sine', 0.15);
-                showToast('Semua teks telah direset ke default bawaan.');
+                showToast('Semua teks & foto telah direset ke default bawaan.');
             }
+        };
+
+        // Photo handlers for Editor Panel
+        window.handleEditorPhotoUpload = async function(event, photoNum) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            try {
+                showToast(`Memproses & mengompres Foto #${photoNum}...`);
+                const compressedBase64 = await compressImageFile(file, 800, 800, 0.8);
+                customPhotos[`photo${photoNum}`] = compressedBase64;
+                window.customPhotos = customPhotos;
+                try {
+                    localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
+                } catch (e) {}
+                applyPolaroidPhotos();
+                renderEditorForm();
+                saveToCloudFirestore({ photos: customPhotos });
+                showToast(`Foto #${photoNum} berhasil dipasang & tersinkron ke cloud! ☁️`);
+                playCyberTone(880, 'triangle', 0.18);
+            } catch (err) {
+                console.error('Error uploading photo:', err);
+                showToast('Gagal memproses file foto.');
+            }
+        };
+
+        window.handleEditorPhotoUrl = function(photoNum, url) {
+            const trimmed = (url || '').trim();
+            if (!trimmed) return;
+            customPhotos[`photo${photoNum}`] = trimmed;
+            window.customPhotos = customPhotos;
+            try {
+                localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
+            } catch (e) {}
+            applyPolaroidPhotos();
+            renderEditorForm();
+            saveToCloudFirestore({ photos: customPhotos });
+            showToast(`URL Foto #${photoNum} berhasil disimpan & disinkronkan! ☁️`);
+            playCyberTone(783.99, 'triangle', 0.14);
+        };
+
+        window.handleRemovePhoto = function(photoNum) {
+            customPhotos[`photo${photoNum}`] = '';
+            window.customPhotos = customPhotos;
+            try {
+                localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
+            } catch (e) {}
+            applyPolaroidPhotos();
+            renderEditorForm();
+            saveToCloudFirestore({ photos: customPhotos });
+            showToast(`Foto #${photoNum} dihapus (kembali ke SVG bawaan).`);
+            playCyberTone(440, 'sine', 0.12);
+        };
         };
 
         window.exportEditorConfig = function() {
@@ -2720,20 +2947,26 @@ int main() {
             showToast('Tumpukan polaroid dirapikan kembali!');
         });
 
-        // Optional Photo Replacement for Polaroids
-        window.replacePolaroidImage = function(event, index) {
+        // Photo Replacement directly on Polaroid Cards (with auto-compression & cloud sync)
+        window.replacePolaroidImage = async function(event, index) {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imgEl = document.getElementById(`pol-img-${index}`);
-                const svgEl = document.getElementById(`pol-svg-${index}`);
-                imgEl.src = e.target.result;
-                imgEl.classList.remove('hidden');
-                svgEl.classList.add('hidden');
-                showToast(`Foto Polaroid #${index} berhasil dipasang!`);
-            };
-            reader.readAsDataURL(file);
+            try {
+                showToast(`Memproses & mengompres Foto #${index}...`);
+                const compressedBase64 = await compressImageFile(file, 800, 800, 0.8);
+                customPhotos[`photo${index}`] = compressedBase64;
+                window.customPhotos = customPhotos;
+                try {
+                    localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
+                } catch (e) {}
+                applyPolaroidPhotos();
+                saveToCloudFirestore({ photos: customPhotos });
+                showToast(`Foto Polaroid #${index} berhasil dipasang & tersinkron ke semua perangkat! ☁️`);
+                playCyberTone(880, 'triangle', 0.18);
+            } catch (err) {
+                console.error('Error replacing polaroid photo:', err);
+                showToast('Gagal memproses file foto.');
+            }
         };
 
         /* -----------------------------------------------------------------
@@ -3109,6 +3342,9 @@ int main() {
             } catch (e) {}
             setAppMode(savedMode, false);
 
+            // Apply saved Polaroid Photos
+            applyPolaroidPhotos();
+
             setupScrollReveal();
 
             initBgGalaxy();
@@ -3117,6 +3353,66 @@ int main() {
             initFireflies();
             requestAnimationFrame(animateFireflies);
         };
+    </script>
+
+    <!-- ===================================================================
+         REAL-TIME CLOUD FIRESTORE AUTO-SYNC (CROSS-DEVICE SYNCHRONIZATION)
+         =================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBRqtDo6I0JRBxV-2Cr4D0W8xRr0rDYXpI",
+            authDomain: "keuangan-project-91d0a.firebaseapp.com",
+            projectId: "keuangan-project-91d0a",
+            storageBucket: "keuangan-project-91d0a.firebasestorage.app",
+            messagingSenderId: "412887443168",
+            appId: "1:412887443168:web:bb38eb69e2b677df805285",
+            measurementId: "G-95KQYRMYCC"
+        };
+
+        const myDeviceId = 'dev_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+
+        try {
+            const firebaseApp = initializeApp(firebaseConfig);
+            const db = getFirestore(firebaseApp);
+            const ZIZUY_DOC_REF = doc(db, 'uangku_data', 'ultah_zizuy_v19');
+
+            // Expose save function to window
+            window._firebaseSaveDoc = async function(extraPayload = {}) {
+                try {
+                    const payload = {
+                        content: window.CONTENT_MODES || {},
+                        photos: window.customPhotos || {},
+                        lastUpdated: new Date().toISOString(),
+                        updatedByDevice: myDeviceId,
+                        ...extraPayload
+                    };
+                    await setDoc(ZIZUY_DOC_REF, payload, { merge: true });
+                    const badge = document.getElementById('cloud-sync-status-badge');
+                    if (badge) badge.textContent = '☁️ Synced to Cloud';
+                } catch (err) {
+                    console.warn('Firebase save error:', err);
+                }
+            };
+
+            // Real-time listener for incoming updates from any device
+            onSnapshot(ZIZUY_DOC_REF, (snap) => {
+                if (snap.exists()) {
+                    const cloudData = snap.data();
+                    if (cloudData && typeof window.syncFromCloudData === 'function') {
+                        window.syncFromCloudData(cloudData, cloudData.updatedByDevice === myDeviceId);
+                    }
+                }
+            }, (error) => {
+                console.warn('Firebase onSnapshot error:', error);
+            });
+
+            console.log('Firebase Cloud Auto-Sync active on doc: uangku_data/ultah_zizuy_v19');
+        } catch (e) {
+            console.warn('Firebase init exception:', e);
+        }
     </script>
 </body>
 </html>
