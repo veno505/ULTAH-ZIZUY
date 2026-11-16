@@ -502,6 +502,11 @@
                     <button id="toggle-motion-btn" type="button" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-mutedLavender hover:text-starlight transition-colors flex items-center gap-1 shrink-0 whitespace-nowrap">
                         <span id="toggle-motion-label">Motion</span>
                     </button>
+                    <!-- Mode Switcher Toggle Button in Header -->
+                    <button id="toggle-mode-btn" type="button" onclick="toggleAppMode()" title="Ganti Mode (Santai Bestie / Romance)" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-cyberRose/15 hover:bg-cyberRose/25 border border-cyberRose/40 text-cyberRose transition-all flex items-center gap-1 shrink-0 whitespace-nowrap font-mono">
+                        <span id="toggle-mode-icon">💕</span>
+                        <span id="toggle-mode-text" class="hidden xs:inline">Romance</span>
+                    </button>
                     <button id="replay-intro-btn" type="button" title="Putar Ulang Hati Biner" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/50 text-cyberRose transition-all flex items-center gap-1 shrink-0 whitespace-nowrap">
                         <span>♥</span>
                         <span class="hidden sm:inline">Intro</span>
@@ -516,12 +521,26 @@
         <section id="hero-timer" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-12 sm:pb-20 md:pt-16 md:pb-28">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
                 
-                <!-- Left Column: Artistic Title & "Undefined Status, High-Priority Variable" -->
+                <!-- Left Column: Artistic Title & Mode Switcher -->
                 <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+                    
+                    <!-- Quick Mode Switcher Selector -->
+                    <div class="inline-flex max-w-full items-center gap-1.5 p-1 rounded-2xl bg-velvet/90 border border-white/15 backdrop-blur-md text-[11px] sm:text-xs font-mono">
+                        <span class="text-mutedLavender px-2 py-0.5 hidden xs:inline">Mode Ucapan:</span>
+                        <button id="mode-btn-friend" type="button" onclick="setAppMode('friend')" class="px-2.5 sm:px-3 py-1 rounded-xl transition-all duration-300 flex items-center gap-1.5 text-mutedLavender hover:text-starlight">
+                            <span>👥</span>
+                            <span>Santai (Bestie)</span>
+                        </button>
+                        <button id="mode-btn-romance" type="button" onclick="setAppMode('romance')" class="px-2.5 sm:px-3 py-1 rounded-xl transition-all duration-300 flex items-center gap-1.5 bg-cyberRose text-white font-bold shadow-[0_0_15px_rgba(255,42,133,0.4)]">
+                            <span>💕</span>
+                            <span>Romance</span>
+                        </button>
+                    </div>
+
                     <!-- Dynamic Status Pill -->
                     <div class="inline-flex max-w-full items-center gap-2 px-3 py-1.5 rounded-full bg-velvet border border-white/10 text-[11px] sm:text-xs">
-                        <span class="w-2 h-2 rounded-full bg-electricCyan animate-pulse shrink-0"></span>
-                        <span class="font-mono text-electricCyan tracking-wide truncate">
+                        <span id="hero-status-dot" class="w-2 h-2 rounded-full bg-electricCyan animate-pulse shrink-0"></span>
+                        <span id="hero-status-pill-text" class="font-mono text-electricCyan tracking-wide truncate">
                             let statusKita = undefined; // tapi prioritas utama
                         </span>
                     </div>
@@ -541,24 +560,24 @@
                         </h1>
                     </div>
 
-                    <p class="text-sm sm:text-base md:text-lg text-mutedLavender leading-relaxed max-w-2xl">
+                    <p id="hero-description" class="text-sm sm:text-base md:text-lg text-mutedLavender leading-relaxed max-w-2xl">
                         Di antara tumpukan tugas koding Semester 1, algoritma yang kadang bikin pusing, dan jutaan kali pertanyaan <span class="text-starlight font-medium italic">"hari ini mau makan di mana?"</span>—web kecil ini sengaja dikompilasi khusus buat merayakan seseorang yang selalu bikin hari-hari belakangan ini jauh lebih seru.
                     </p>
 
-                    <!-- Interactive Mini Terminal Card: High-Priority Variable -->
+                    <!-- Interactive Mini Terminal Card -->
                     <div class="velvet-card rounded-2xl p-3.5 sm:p-5 border border-white/10 max-w-xl">
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10 gap-2">
                             <div class="flex items-center gap-1.5">
                                 <span class="w-2.5 h-2.5 rounded-full bg-cyberRose/80"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-nebulaViolet/80"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-electricCyan/80"></span>
-                                <span class="font-mono text-xs text-mutedLavender ml-2">priority_check.js</span>
+                                <span id="code-card-title" class="font-mono text-xs text-mutedLavender ml-2">priority_check.js</span>
                             </div>
                             <button id="compile-joke-btn" class="font-mono text-[10px] sm:text-[11px] px-2.5 py-1 rounded bg-cyberRose/15 text-cyberRose border border-cyberRose/30 hover:bg-cyberRose hover:text-white transition-colors shrink-0">
                                 Jalankan Test -&gt;
                             </button>
                         </div>
-                        <pre class="font-mono text-[11px] sm:text-xs md:text-sm leading-relaxed overflow-x-auto text-starlight/90 no-scrollbar"><code><span class="text-nebulaViolet">const</span> target = <span class="text-electricCyan">"Azizah Nazwa Novita (Zizuy)"</span>;
+                        <pre class="font-mono text-[11px] sm:text-xs md:text-sm leading-relaxed overflow-x-auto text-starlight/90 no-scrollbar"><code id="code-snippet-box"><span class="text-nebulaViolet">const</span> target = <span class="text-electricCyan">"Azizah Nazwa Novita (Zizuy)"</span>;
 <span class="text-nebulaViolet">let</span> status = <span class="text-cyberRose">undefined</span>; <span class="text-mutedLavender">// ngalir aja dulu</span>
 <span class="text-nebulaViolet">const</span> kenyamananMainBerdua = <span class="text-electricCyan">Infinity</span>;
 
@@ -698,10 +717,10 @@
                                 <div class="text-sm sm:text-lg font-bold tracking-wider text-starlight">
                                     INFORMATIKA MART // SEM-01
                                 </div>
-                                <div class="text-[10px] sm:text-[11px] text-mutedLavender mt-0.5">
+                                <div id="receipt-branch" class="text-[10px] sm:text-[11px] text-mutedLavender mt-0.5">
                                     CABANG JALAN BERDUA • SHIFT MALAM &amp; SIANG
                                 </div>
-                                <div class="text-[10px] sm:text-[11px] text-electricCyan mt-1">
+                                <div id="receipt-customer" class="text-[10px] sm:text-[11px] text-electricCyan mt-1">
                                     CUSTOMER: AZIZAH NAZWA NOVITA (ZIZUY)
                                 </div>
                             </div>
@@ -709,66 +728,17 @@
                             <!-- Receipt Metadata -->
                             <div class="flex justify-between text-[10px] sm:text-[11px] text-mutedLavender mb-3 sm:mb-4">
                                 <span>NO: #ZUY-19-2026</span>
-                                <span>KASIR: ANAK_IT_01</span>
+                                <span id="receipt-cashier">KASIR: ANAK_IT_01</span>
                             </div>
 
-                            <!-- Line Items -->
-                            <div class="space-y-2.5 sm:space-y-3 border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4">
-                                <div class="flex justify-between items-start gap-2">
-                                    <div class="pr-2">
-                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">1. Wacana Doang</div>
-                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">Langsung gas berangkat terus</div>
-                                    </div>
-                                    <span class="text-electricCyan font-bold shrink-0 text-[11px] sm:text-xs">0 KALI</span>
-                                </div>
-
-                                <div class="flex justify-between items-start gap-2">
-                                    <div class="pr-2">
-                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">2. Debat "Makan Apa Kita?"</div>
-                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">Ujung-ujungnya muter jalan dulu</div>
-                                    </div>
-                                    <span class="text-cyberRose font-bold shrink-0 text-[11px] sm:text-xs">99+ KALI</span>
-                                </div>
-
-                                <div class="flex justify-between items-start gap-2">
-                                    <div class="pr-2">
-                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">3. Survival Kuliah &amp; Laprak</div>
-                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">S1 Informatika Semester 1</div>
-                                    </div>
-                                    <span class="text-starlight font-bold shrink-0 text-[11px] sm:text-xs">100% AMAN</span>
-                                </div>
-
-                                <div class="flex justify-between items-start gap-2">
-                                    <div class="pr-2">
-                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">4. Efek Bikin Salah Tingkah</div>
-                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">Tiap lagi ngobrol &amp; ketawa bareng</div>
-                                    </div>
-                                    <span class="text-cyberRose font-bold shrink-0 text-[11px] sm:text-xs">CRITICAL</span>
-                                </div>
-
-                                <div class="flex justify-between items-start gap-2">
-                                    <div class="pr-2">
-                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">5. Status Hubungan</div>
-                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">Tipe data belum dideklarasikan</div>
-                                    </div>
-                                    <span class="text-nebulaViolet font-bold shrink-0 text-[11px] sm:text-xs">NYAMAN_AJA</span>
-                                </div>
+                            <!-- Line Items (Populated dynamically by setAppMode) -->
+                            <div id="receipt-items-container" class="space-y-2.5 sm:space-y-3 border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4">
+                                <!-- Rendered dynamically -->
                             </div>
 
-                            <!-- Totals -->
-                            <div class="space-y-1.5 border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4 text-[11px] sm:text-xs">
-                                <div class="flex justify-between">
-                                    <span class="text-mutedLavender">SUBTOTAL KESERUAN</span>
-                                    <span class="font-bold text-starlight">∞ (TAK TERHINGGA)</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-mutedLavender">DISKON CANGGUNG</span>
-                                    <span class="text-electricCyan">- 100%</span>
-                                </div>
-                                <div class="flex justify-between text-xs sm:text-sm font-bold pt-1 text-cyberRose">
-                                    <span>TOTAL PRIORITAS</span>
-                                    <span>HIGH_PRIORITY ♥</span>
-                                </div>
+                            <!-- Totals (Populated dynamically by setAppMode) -->
+                            <div id="receipt-totals-container" class="space-y-1.5 border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4 text-[11px] sm:text-xs">
+                                <!-- Rendered dynamically -->
                             </div>
 
                             <!-- Interactive Stamp Area -->
@@ -783,7 +753,7 @@
                                         <rect x="4" y="2" width="3" height="36"/><rect x="10" y="2" width="1.5" height="36"/><rect x="15" y="2" width="4" height="36"/><rect x="22" y="2" width="2" height="36"/><rect x="28" y="2" width="5" height="36"/><rect x="36" y="2" width="1.5" height="36"/><rect x="40" y="2" width="3" height="36"/><rect x="47" y="2" width="2" height="36"/><rect x="52" y="2" width="6" height="36"/><rect x="61" y="2" width="1.5" height="36"/><rect x="66" y="2" width="3" height="36"/><rect x="72" y="2" width="4" height="36"/><rect x="80" y="2" width="2" height="36"/><rect x="85" y="2" width="5" height="36"/><rect x="93" y="2" width="1.5" height="36"/><rect x="98" y="2" width="4" height="36"/><rect x="105" y="2" width="2" height="36"/><rect x="110" y="2" width="6" height="36"/><rect x="119" y="2" width="2" height="36"/><rect x="124" y="2" width="3" height="36"/><rect x="131" y="2" width="5" height="36"/><rect x="139" y="2" width="1.5" height="36"/><rect x="144" y="2" width="4" height="36"/><rect x="151" y="2" width="2" height="36"/><rect x="156" y="2" width="5" height="36"/><rect x="164" y="2" width="3" height="36"/><rect x="170" y="2" width="1.5" height="36"/><rect x="175" y="2" width="4" height="36"/><rect x="182" y="2" width="2" height="36"/><rect x="188" y="2" width="6" height="36"/>
                                     </svg>
                                 </div>
-                                <p class="text-[10px] sm:text-[11px] text-mutedLavender">
+                                <p id="receipt-footer-text" class="text-[10px] sm:text-[11px] text-mutedLavender">
                                     TERIMA KASIH SUDAH JADI PARTNER MAIN TERBAIK!
                                 </p>
 
@@ -834,8 +804,8 @@
                                         <circle cx="42" cy="40" r="6" stroke="#FF2A85" stroke-width="2.5"/>
                                         <path d="M32 10L34 15L39 16L35 19L36 24L32 21L28 24L29 19L25 16L30 15L32 10Z" fill="#8B5CF6"/>
                                     </svg>
-                                    <span class="font-mono text-[10px] sm:text-[11px] text-electricCyan">Misi Keliling &amp; Cari Angin</span>
-                                    <span class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">"Tujuan awal ke A, nyampenya ke B"</span>
+                                    <span id="pol-title-1" class="font-mono text-[10px] sm:text-[11px] text-electricCyan">Misi Keliling &amp; Cari Angin</span>
+                                    <span id="pol-sub-1" class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">"Tujuan awal ke A, nyampenya ke B"</span>
                                 </div>
                                 <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
                                     + Foto
@@ -844,9 +814,9 @@
                             </div>
                             <div class="flex items-center justify-between text-[10px] font-mono text-mutedLavender mb-1">
                                 <span>MEM_01.RAW</span>
-                                <span class="text-cyberRose">♥ FAV</span>
+                                <span id="pol-badge-1" class="text-cyberRose">♥ FAV</span>
                             </div>
-                            <p class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
+                            <p id="pol-quote-1" class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
                                 "Pas bingung mau ke mana tapi yang penting jalan berdua dulu!"
                             </p>
                         </div>
@@ -862,8 +832,8 @@
                                         <path d="M38 24H44C47.3137 24 50 26.6863 50 30C50 33.3137 47.3137 36 44 36H38" stroke="#00E5FF" stroke-width="2.5"/>
                                         <path d="M22 12C22 12 24 8 26 12C28 16 30 12 30 12" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round"/>
                                     </svg>
-                                    <span class="font-mono text-[10px] sm:text-[11px] text-cyberRose">Kuliner &amp; Jajan Berdua</span>
-                                    <span class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Obat paling ampuh habis pusing kuliah</span>
+                                    <span id="pol-title-2" class="font-mono text-[10px] sm:text-[11px] text-cyberRose">Kuliner &amp; Jajan Berdua</span>
+                                    <span id="pol-sub-2" class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Obat paling ampuh habis pusing kuliah</span>
                                 </div>
                                 <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
                                     + Foto
@@ -872,9 +842,9 @@
                             </div>
                             <div class="flex items-center justify-between text-[10px] font-mono text-mutedLavender mb-1">
                                 <span>MEM_02.RAW</span>
-                                <span class="text-electricCyan">10/10 SERU</span>
+                                <span id="pol-badge-2" class="text-electricCyan">10/10 SERU</span>
                             </div>
-                            <p class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
+                            <p id="pol-quote-2" class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
                                 "Bilangnya 'terserah', tapi pas nyampe tempat makan langsung senyum."
                             </p>
                         </div>
@@ -892,8 +862,8 @@
                                         <path d="M40 25L45 29L40 33" stroke="#FF2A85" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M34 23L30 35" stroke="#F4F4F6" stroke-width="2" stroke-linecap="round"/>
                                     </svg>
-                                    <span class="font-mono text-[10px] sm:text-[11px] text-nebulaViolet">Pejuang S1 Informatika '26</span>
-                                    <span class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Semester 1 Core Memory</span>
+                                    <span id="pol-title-3" class="font-mono text-[10px] sm:text-[11px] text-nebulaViolet">Pejuang S1 Informatika '26</span>
+                                    <span id="pol-sub-3" class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Semester 1 Core Memory</span>
                                 </div>
                                 <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
                                     + Foto
@@ -902,9 +872,9 @@
                             </div>
                             <div class="flex items-center justify-between text-[10px] font-mono text-mutedLavender mb-1">
                                 <span>MEM_03.RAW</span>
-                                <span class="text-cyberRose">LEVEL 19 ♥</span>
+                                <span id="pol-badge-3" class="text-cyberRose">LEVEL 19 ♥</span>
                             </div>
-                            <p class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
+                            <p id="pol-quote-3" class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
                                 "Partner cerita, partner main, &amp; alasan kenapa Semester 1 nggak ngebosenin."
                             </p>
                         </div>
@@ -991,9 +961,9 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 pb-5 sm:pb-6 mb-6 sm:mb-8 border-b border-white/10">
                         <div class="font-mono text-[11px] sm:text-xs text-cyberRose flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
-                            <span>FILE: uncompiled_letter_for_zizuy.md</span>
+                            <span id="letter-file-label">FILE: uncompiled_letter_for_zizuy.md</span>
                         </div>
-                        <span class="font-mono text-[10px] sm:text-xs text-mutedLavender">
+                        <span id="letter-date-label" class="font-mono text-[10px] sm:text-xs text-mutedLavender">
                             23 November 2026 • 19th Birthday Edition
                         </span>
                     </div>
@@ -1003,27 +973,9 @@
                         Hai, Azizah Nazwa Novita <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
                     </h2>
 
-                    <!-- Progressive Reveal Letter Content -->
+                    <!-- Progressive Reveal Letter Content (Populated dynamically by setAppMode) -->
                     <div id="letter-paragraphs" class="space-y-4 sm:space-y-5 text-sm sm:text-base md:text-lg text-starlight/90 leading-relaxed">
-                        <p class="letter-paragraph revealed">
-                            Selamat ulang tahun yang ke-19 ya, Zuy! Rasanya baru kemarin kita sama-sama masuk Semester 1 di S1 Informatika, adaptasi sama lingkungan baru, tugas koding, dan segala kerandomannya—tau-tau sekarang kamu udah resmi naik ke <strong class="text-electricCyan font-mono">Level 19</strong>.
-                        </p>
-
-                        <p class="letter-paragraph">
-                            Jujur, salah satu hal paling seru di semester ini itu ya waktu-waktu pas kita lagi main atau jalan berdua. Entah itu cuma muter-muter cari makan, ngobrolin hal penting sampai hal paling receh, atau sekadar ketawa bareng pas lagi capek kuliah. Bareng kamu itu rasanya selalu ringan, nyaman, dan nggak pernah kehabisan cerita.
-                        </p>
-
-                        <p class="letter-paragraph">
-                            Kalau pakai bahasa anak Informatika, hubungan kita sekarang mungkin mirip variabel yang belum dideklarasikan tipe datanya secara resmi—masih mengalir gitu aja. Dan tenang aja, web ini bukan buat buru-buru nuntut status kok. Aku cuma pengen kamu tau kalau di memori aku, kamu itu selalu jadi <strong class="text-cyberRose font-mono">proses prioritas utama</strong> yang paling seru buat ditemenin ke mana aja.
-                        </p>
-
-                        <p class="letter-paragraph">
-                            Di umur 19 tahun ini, semoga semua hal baik yang lagi kamu usahain dimudahkan jalannya. Semoga kuliah Informatikanya lancar terus, kodingannya jarang kena <em class="text-electricCyan">error</em>, makin bahagia, sehat selalu, dan jangan pernah kehilangan sisi ceria kamu yang selalu bikin orang di dekatmu ikut senyum (dan kadang salah tingkah sendiri).
-                        </p>
-
-                        <p class="letter-paragraph font-hand text-xl sm:text-3xl text-cyberRose pt-2 sm:pt-3">
-                            Happy 19th Birthday, Zizuy! Habis ini, ayo kita agendakan jalan berdua lagi ya. ✨
-                        </p>
+                        <!-- Populated by setAppMode -->
                     </div>
 
                     <!-- Reveal Next Button / Complete Footer -->
@@ -1035,8 +987,8 @@
 
                         <div class="flex items-center gap-2">
                             <button id="heart-burst-btn" class="spring-btn w-full sm:w-auto px-4 py-3 rounded-xl sm:rounded-2xl bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/40 font-mono text-xs text-starlight flex items-center justify-center gap-2">
-                                <span class="text-cyberRose text-base">♥</span>
-                                <span>Kirim Efek Salting (<span id="salting-counter">19</span>)</span>
+                                <span id="salting-counter-icon" class="text-cyberRose text-base">♥</span>
+                                <span><span id="salting-counter-label">Kirim Efek Salting</span> (<span id="salting-counter">19</span>)</span>
                             </button>
                         </div>
                     </div>
@@ -1711,41 +1663,483 @@
             updateChronoTimer();
         });
 
+        /* -----------------------------------------------------------------
+           DUAL MODE SYSTEM: ROMANCE (DEFAULT) VS BESTIE/FRIEND SANTAI
+           Supports zero-cringe friend mode & aesthetic cyber-romance mode
+           ----------------------------------------------------------------- */
+        const CONTENT_MODES = {
+            romance: {
+                id: 'romance',
+                name: 'Mode Romance',
+                statusPill: 'SYSTEM_STATE: RUNNING // AZIZAH NAZWA NOVITA (ZIZUY) V19.0 ONLINE',
+                heroDesc: 'A digital celebration crafted for someone truly special. Happy 19th Birthday, Azizah Nazwa Novita (Zizuy). Wishing your journey through Chapter 19 is filled with pure joy, bright laughter, and unforgettable moments.',
+                codeTitle: '// romance_status.cpp',
+                codeSnippet: `// Chapter 19: Infinite Joy & Happiness
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string heart = "Azizah Nazwa Novita";
+    int age = 19;
+    bool isSpecial = true;
+    
+    while (isSpecial) {
+        std::cout &lt;&lt; "Happy 19th Birthday to the most wonderful person! ✨" &lt;&lt; std::endl;
+        std::cout &lt;&lt; "May your days shine brighter than the stars." &lt;&lt; std::endl;
+        break;
+    }
+    return 0;
+}`,
+                jokes: [
+                    'Compilation successful: You brighten up every room you enter! ✨',
+                    'Warning: Too much sweetness detected in Chapter 19! 💖',
+                    'Notice: May every single dream you chase turn into reality.',
+                    'Process Priority: Wishing you the absolute happiest 19th year!'
+                ],
+                receiptBranch: 'TERMINAL 19 // CELEBRATION DISPATCH',
+                receiptCustomer: 'Azizah Nazwa Novita (Zizuy)',
+                receiptCashier: 'Penoyy (penoyy.sys)',
+                receiptItems: [
+                    { name: '19th Birthday Milestones', qty: '1 x', price: 'PRICELESS' },
+                    { name: 'Uncountable Smiles & Joy', qty: '365 x', price: 'FREE' },
+                    { name: 'Endless Support & Good Vibes', qty: '999 x', price: 'UNCONDITIONAL' },
+                    { name: 'Special Coffee & Sweet Treats', qty: '1 x', price: 'COMPLIMENTARY' }
+                ],
+                receiptTotals: [
+                    { label: 'Subtotal (Memories Created)', val: '19 Chapters Completed' },
+                    { label: 'Happiness Tax', val: '0% (Always Free)' },
+                    { label: 'Total Value', val: 'INFINITY SMILES & WISHES', highlight: true }
+                ],
+                stamps: [
+                    '★ CHAPTER 19 OFFICIALLY UNLOCKED ★',
+                    '♥ SPECIAL PERSON VERIFIED ♥',
+                    '★ BRIGHTEST SMILE IN THE ROOM ★',
+                    '♥ WISHING YOU THE BEST YEAR AHEAD ♥'
+                ],
+                receiptFooter: '* Thank you for being such a wonderful presence in life *',
+                polaroids: [
+                    {
+                        badge: 'PHASE: FRESHMAN VIBES',
+                        title: 'Campus Moments',
+                        sub: 'Gedung F // Kuliah Pagi',
+                        quote: '"Every mundane lecture turns lively with your bright energy and laughs."'
+                    },
+                    {
+                        badge: 'STATUS: SWEET MEMORIES',
+                        title: 'Random Wanderings',
+                        sub: 'Afternoon Breeze // Good Food',
+                        quote: '"Finding comfort in the simplest chats, scenic walks, and favorite desserts."'
+                    },
+                    {
+                        badge: 'LEVEL: 19 UNLOCKED',
+                        title: 'Golden Chapter 19',
+                        sub: 'November 16 // Bright Horizons',
+                        quote: '"May your nineteenth year bring warmth, confidence, and endless wonder."'
+                    }
+                ],
+                quest: {
+                    stage1: {
+                        tag: 'STAGE 1 // CHAPTER 19 MORNING ROUTINE',
+                        narrative: 'Alarm morning class rings at 06:00 AM on your birthday week. How does Zizuy conquer the day?',
+                        options: [
+                            {
+                                id: 'A',
+                                text: 'Dress up nicely, grab a matcha latte, and start fresh.',
+                                reaction: 'Classy and energized! A wonderful start to celebrate Chapter 19 with style. (+50 Radiance)'
+                            },
+                            {
+                                id: 'B',
+                                text: 'Snooze for 10 more minutes, then sprint with full focus.',
+                                reaction: 'Maximum efficiency! Running slightly late yet still looking effortlessly cool. (+50 Agility)'
+                            },
+                            {
+                                id: 'C',
+                                text: 'Text the squad asking if attendance has already started.',
+                                reaction: 'Pure tactical communication! Always staying updated with good friends. (+50 Teamwork)'
+                            }
+                        ]
+                    },
+                    stage2: {
+                        tag: 'STAGE 2 // SPECIAL CELEBRATION AGENDA',
+                        narrative: 'Time to unwind after a busy week! What’s your ideal celebratory hangout for the afternoon?',
+                        options: [
+                            {
+                                id: 'A',
+                                text: 'Cozy aesthetic cafe with great dessert and deep chats.',
+                                reaction: 'Perfect atmosphere! Relaxing ambience, sweet treats, and meaningful conversations.'
+                            },
+                            {
+                                id: 'B',
+                                text: 'Hunting delicious street food and breezy road trips.',
+                                reaction: 'Adventurous! Street food hits differently when shared with great company and scenic views.'
+                            },
+                            {
+                                id: 'C',
+                                text: 'Relaxing chill night, listening to favorite playlists.',
+                                reaction: 'Peak comfort! The best way to recharge your energy in peace and tranquility.'
+                            }
+                        ]
+                    },
+                    rewards: [
+                        {
+                            id: 'R1',
+                            title: 'Celebration Sweet Treat Voucher',
+                            badge: 'BUFF +100% MOOD',
+                            desc: 'Complimentary sweet dessert, iced coffee, or favorite meals whenever we hang out! Valid anytime.',
+                            code: 'ZUY19-SWEET-TREAT'
+                        },
+                        {
+                            id: 'R2',
+                            title: 'Weekend Roadtrip VIP Pass',
+                            badge: 'UNLIMITED VIP',
+                            desc: 'You pick the destination, Penoyy drives! Zero hassle, full fun and good vibes guaranteed.',
+                            code: 'ZUY19-WEEKEND-PASS'
+                        },
+                        {
+                            id: 'R3',
+                            title: 'Priority Tech & Study Lifeline',
+                            badge: '24/7 SUPPORT',
+                            desc: 'Debugging assistance, study companion, or assignment brainstorming anytime you need!',
+                            code: 'ZUY19-TECH-LIFELINE'
+                        }
+                    ]
+                },
+                letter: {
+                    fileLabel: 'LETTER_FOR_ZIZUY_SPECIAL_V19.TXT',
+                    dateLabel: '16 November 2026 // Special Edition',
+                    paragraphs: [
+                        'Dear Zizuy, Happy 19th Birthday! Entering 19 is a special milestone. It\'s the final stretch of your teenage years before stepping into your twenties, and I hope you celebrate every single second of it with pride and joy.',
+                        'Looking back at our first semester in Informatics, college life can be quite hectic with algorithms, practical tasks, and endless assignments. Having someone as bright, cheerful, and supportive as you makes the journey much more fun and memorable.',
+                        'Thank you for the spontaneous conversations, the shared laughs between classes, and for just being yourself. You bring an easygoing warmth and positive energy that everyone around you truly appreciates.',
+                        'May Chapter 19 grant you all the happiness you deserve, good health, smooth sailing in your studies, and endless success in everything you pursue. Cheers to another year of growing, learning, and making great memories! ✨'
+                    ],
+                    saltingIcon: '♥',
+                    saltingLabel: 'Send Birthday Wishes',
+                    toastMsg: 'Warm birthday wishes sent for Zizuy\'s 19th! ✨'
+                }
+            },
+            friend: {
+                id: 'friend',
+                name: 'Mode Bestie Santai',
+                statusPill: 'SYSTEM_STATE: BESTIE_MODE_ACTIVE // AZIZAH NAZWA NOVITA (ZIZUY) V19.0',
+                heroDesc: 'Selamat ulang tahun ke-19, Zizuy! Mode santai sesama pejuang S1 Informatika. Nggak ada drama, no alay-alay, cuma doa tulus biar laprak lancar, kodingan nggak error, dan makin sukses di umur 19!',
+                codeTitle: '// bestie_logic.cpp',
+                codeSnippet: `// Mode Bestie Seperjuangan S1 Informatika
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string nama = "Zizuy (Azizah Nazwa Novita)";
+    int umur = 19;
+    bool statusTemenDekat = true;
+    
+    if (statusTemenDekat) {
+        std::cout &lt;&lt; "HBD Zizuy ke-19! Sehat selalu &amp; sukses terus bro!" &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Semoga semester ini IPK aman &amp; laprak kelar tepat waktu!" &lt;&lt; std::endl;
+    }
+    return 0;
+}`,
+                jokes: [
+                    'Status: Temen deket seperjuangan kuliah. No drama, no baper, solid terus! 👊',
+                    'Warning: Deadline laprak mendekat, tapi hari ini Zizuy wajib santai & happy dulu!',
+                    'Build Success: Tingkat kekompakan nugas & jajan = 100%!',
+                    'Process Priority: Doa terbaik buat Zizuy di umur 19 tahun!'
+                ],
+                receiptBranch: 'WARUNG BESTIE // CABANG TEKNIK INFORMATIKA',
+                receiptCustomer: 'Zizuy (Temen Deket Seperjuangan)',
+                receiptCashier: 'Penoyy (Temen Nugas)',
+                receiptItems: [
+                    { name: 'Curhat Laprak & Tugas Coding', qty: '1 x', price: 'GRATIS' },
+                    { name: 'Muter-Muter Nyari Makan Pas Jam Kosong', qty: '48 x', price: 'PUAS' },
+                    { name: 'Anti Drama & Zero Cringe Policy', qty: '1 x', price: 'PERMANEN' },
+                    { name: 'Doa Sukses & IPK Tinggi Semester 1', qty: '999 x', price: 'LUNAS' }
+                ],
+                receiptTotals: [
+                    { label: 'Subtotal (Umur Zizuy)', val: '19 Tahun Resmi' },
+                    { label: 'Biaya Temenan', val: 'Rp 0 (Solid Selamanya)' },
+                    { label: 'Total Status', val: 'TEMENAN SANTAI NO ALAY', highlight: true }
+                ],
+                stamps: [
+                    '✓ TEMEN DEKET VERIFIED NO DRAMA ✓',
+                    '★ PARTNER NUGAS & JAJAN FAVORIT ★',
+                    '✓ BEBAS WACANA 100% ✓',
+                    '★ SOLID SEPERJUANGAN INFORMATIKA ★'
+                ],
+                receiptFooter: '* Makasih udah jadi temen deket yang asik diajak nugas & ngobrol *',
+                polaroids: [
+                    {
+                        badge: 'STATUS: MAHASISWA TEKNIK',
+                        title: 'Korban Laprak Informatika',
+                        sub: 'Gedung Kuliah // Jam Kosong',
+                        quote: '"Muka ngantuk nahan dosen nerangin algoritma, tapi pas jam kosong langsung semangat cari jajan."'
+                    },
+                    {
+                        badge: 'STATUS: PARTNER KULINER',
+                        title: 'Misi Nyari Makanan',
+                        sub: 'Keliling Kota // Random Abis',
+                        quote: '"Nanya mau makan apa jawabnya \'terserah\', ujung-ujungnya muter 1 jam baru nemu tempat."'
+                    },
+                    {
+                        badge: 'LEVEL: 19 RESMI',
+                        title: 'Zizuy Naik Level 19',
+                        sub: '16 November // Makin Dewasa',
+                        quote: '"Udah 19 tahun nih Zuy, semoga makin pintar, makin santai, dan tugas-tugas kuliah lancar jaya!"'
+                    }
+                ],
+                quest: {
+                    stage1: {
+                        tag: 'STAGE 1 // DRAMA S1 INFORMATIKA SEMESTER 1',
+                        narrative: 'Senin pagi, jadwal kuliah pemrograman dasar, tapi semalam habis begadang. Apa langkah penyelamatan Zizuy?',
+                        options: [
+                            {
+                                id: 'A',
+                                text: 'Tetap duduk paling depan biar kelihatan rajin.',
+                                reaction: 'Wah, mental baja! Walaupun mata tinggal 5 watt, yang penting dosen lihat Zizuy paling depan. (+50 Respect)'
+                            },
+                            {
+                                id: 'B',
+                                text: 'Cari kursi aman sambil nahan ngantuk.',
+                                reaction: 'Strategi paling realistis anak Informatika! Posisi menentukan ketenangan selama 2 SKS. (+50 Stealth)'
+                            },
+                            {
+                                id: 'C',
+                                text: 'Nunggu jam kosong buat langsung cabut main/jajan.',
+                                reaction: 'Nah ini yang paling ditunggu-tunggu! Begitu dosen bilang kelas selesai cepat, langsung gas cari jajan! (+100 Mood)'
+                            }
+                        ]
+                    },
+                    stage2: {
+                        tag: 'STAGE 2 // MISTERI MAIN BERDUA',
+                        narrative: 'Kita lagi ada waktu luang pas kelar kuliah nih. Pertanyaan paling sulit sedunia pun muncul: "Mau makan/jajan apa Zuy?"',
+                        options: [
+                            {
+                                id: 'A',
+                                text: '"Terserah" (tapi kalau dikasih saran nolak semua).',
+                                reaction: 'Klasik banget! Algoritma "Terserah" ini kompleksitasnya O(∞), tapi seru karena ujungnya ketawa bareng.'
+                            },
+                            {
+                                id: 'B',
+                                text: 'Muter-muter dulu sampai tiba-tiba nemu tempat makan enak.',
+                                reaction: 'Jujur ini bagian paling asik! Nggak jelas tujuannya ke mana, yang penting ngobrol sepanjang jalan.'
+                            },
+                            {
+                                id: 'C',
+                                text: 'Ke tempat langganan yang udah pasti enak dan murah.',
+                                reaction: 'Pilihan aman anak kos/kuliah! Yang penting perut kenyang dan bisa santai ngobrol.'
+                            }
+                        ]
+                    },
+                    rewards: [
+                        {
+                            id: 'R1',
+                            title: 'Voucher Traktir Jajan & Es Kopi',
+                            badge: 'BUFF MOOD +100%',
+                            desc: 'Bebas pilih jajan, es kopi, atau makanan pas kita lagi keluar bareng. Tinggal tunjukin kartu ini ke Penoyy!',
+                            code: 'ZUY19-JAJAN-FREE'
+                        },
+                        {
+                            id: 'R2',
+                            title: 'Tiket Jalan Santai Bebas Pilih Tujuan',
+                            badge: 'UNLIMITED PASS',
+                            desc: 'Zizuy yang nentuin rute! Mau kulineran, cari angin, atau muter kota, langsung gas.',
+                            code: 'ZUY19-ROADTRIP-VIP'
+                        },
+                        {
+                            id: 'R3',
+                            title: 'Kartu Bantuan Tugas Ngoding 24 Jam',
+                            badge: 'IT SUPPORT BESTIE',
+                            desc: 'Ada tugas C++, error kodingan, atau laprak yang bikin pusing? Klaim kartu ini buat dibantuin sampai kelar!',
+                            code: 'ZUY19-CODING-SOS'
+                        }
+                    ]
+                },
+                letter: {
+                    fileLabel: 'SURAT_UNTUK_ZIZUY_FRIEND_V19.TXT',
+                    dateLabel: '16 November 2026 // Edisi Temen Deket',
+                    paragraphs: [
+                        'Yo Zizuy! Selamat ulang tahun yang ke-19 ya! Akhirnya nyentuh angka 19 juga. Nggak kerasa ya dari awal masuk kuliah sampai sekarang udah semester 1 hampir lewat bareng-bareng.',
+                        'Jujur seru banget punya temen deket kayak lu di kampus. Kuliah Informatika yang isinya kodingan sama tugas laprak jadi jauh lebih santai dan nggak bikin stres karena ada temen ngobrol dan ketawa bareng.',
+                        'Makasih ya udah jadi temen yang asik, nggak ribet, dan selalu seru diajak ngobrol atau muter-muter nyari makan pas jam kosong. Temenan sama lu tuh bener-bener santai tanpa ada drama.',
+                        'Di umur 19 ini, doa gua simpel tapi penting: semoga lu sehat selalu, makin jago kuliahnya, tugas-tugas lancar, dijauhin dari error kodingan di malam hari, dan semua yang lu cita-citakan bisa tercapai. Pokoknya sukses terus buat lu, Zuy! Happy 19th Birthday! 👊✨'
+                    ],
+                    saltingIcon: '👥',
+                    saltingLabel: 'Mood Bestie Solid',
+                    toastMsg: 'Semangat bestie terkirim buat Zizuy! 👊'
+                }
+            }
+        };
+
+        let currentAppMode = 'romance';
+
+        function setAppMode(mode, showNotification = true) {
+            if (!CONTENT_MODES[mode]) return;
+            currentAppMode = mode;
+            try {
+                localStorage.setItem('zizuy_theme_mode', mode);
+            } catch (e) {}
+
+            const data = CONTENT_MODES[mode];
+
+            // 1. Update Navbar Button
+            const navBtn = document.getElementById('toggle-mode-btn');
+            if (navBtn) {
+                if (mode === 'romance') {
+                    navBtn.innerHTML = '<span>💕</span><span class="hidden sm:inline">Mode:</span> Romance';
+                    navBtn.className = 'spring-btn px-2.5 sm:px-3 py-1.5 rounded-full bg-cyberRose/20 text-cyberRose border border-cyberRose/40 font-mono text-[11px] sm:text-xs flex items-center gap-1.5 hover:bg-cyberRose/30 transition-all shadow-[0_0_12px_rgba(255,42,133,0.3)]';
+                } else {
+                    navBtn.innerHTML = '<span>👥</span><span class="hidden sm:inline">Mode:</span> Bestie';
+                    navBtn.className = 'spring-btn px-2.5 sm:px-3 py-1.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40 font-mono text-[11px] sm:text-xs flex items-center gap-1.5 hover:bg-electricCyan/30 transition-all shadow-[0_0_12px_rgba(0,229,255,0.3)]';
+                }
+            }
+
+            // 2. Update Hero Mode Switcher Buttons
+            const btnFriend = document.getElementById('mode-btn-friend');
+            const btnRomance = document.getElementById('mode-btn-romance');
+            if (btnFriend && btnRomance) {
+                if (mode === 'friend') {
+                    btnFriend.className = 'flex-1 py-1.5 sm:py-2 px-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-mono font-bold transition-all bg-electricCyan/20 text-electricCyan border border-electricCyan/50 shadow-[0_0_15px_rgba(0,229,255,0.25)]';
+                    btnRomance.className = 'flex-1 py-1.5 sm:py-2 px-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-mono font-medium text-mutedLavender hover:text-starlight hover:bg-white/5 transition-all';
+                } else {
+                    btnRomance.className = 'flex-1 py-1.5 sm:py-2 px-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-mono font-bold transition-all bg-cyberRose/20 text-cyberRose border border-cyberRose/50 shadow-[0_0_15px_rgba(255,42,133,0.25)]';
+                    btnFriend.className = 'flex-1 py-1.5 sm:py-2 px-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-mono font-medium text-mutedLavender hover:text-starlight hover:bg-white/5 transition-all';
+                }
+            }
+
+            // 3. Update Hero Section Text & Code
+            const pill = document.getElementById('hero-status-pill-text');
+            if (pill) pill.textContent = data.statusPill;
+
+            const desc = document.getElementById('hero-description');
+            if (desc) desc.textContent = data.heroDesc;
+
+            const codeTitle = document.getElementById('code-card-title');
+            if (codeTitle) codeTitle.textContent = data.codeTitle;
+
+            const codeBox = document.getElementById('code-snippet-box');
+            if (codeBox) codeBox.innerHTML = `<code>${data.codeSnippet}</code>`;
+
+            const outTxt = document.getElementById('compile-output-text');
+            if (outTxt) outTxt.textContent = data.jokes[0];
+
+            // 4. Update Receipt Section
+            const rBranch = document.getElementById('receipt-branch');
+            if (rBranch) rBranch.textContent = data.receiptBranch;
+
+            const rCust = document.getElementById('receipt-customer');
+            if (rCust) rCust.textContent = data.receiptCustomer;
+
+            const rCash = document.getElementById('receipt-cashier');
+            if (rCash) rCash.textContent = data.receiptCashier;
+
+            const itemsContainer = document.getElementById('receipt-items-container');
+            if (itemsContainer) {
+                itemsContainer.innerHTML = data.receiptItems.map(item => `
+                    <div class="flex items-start justify-between text-xs sm:text-sm gap-2">
+                        <span class="text-starlight/90">${item.name}</span>
+                        <span class="font-mono ${item.price === 'PRICELESS' || item.price === 'PERMANEN' ? 'text-cyberRose font-bold' : (item.price === 'COMPLIMENTARY' || item.price === 'LUNAS' ? 'text-electricCyan font-bold' : 'text-starlight')} shrink-0">${item.price}</span>
+                    </div>
+                    <div class="text-[10px] sm:text-xs text-mutedLavender font-mono -mt-1 sm:-mt-1.5">${item.qty}</div>
+                `).join('');
+            }
+
+            const totalsContainer = document.getElementById('receipt-totals-container');
+            if (totalsContainer) {
+                totalsContainer.innerHTML = data.receiptTotals.map(t => `
+                    <div class="flex justify-between ${t.highlight ? 'text-sm sm:text-base font-bold text-starlight pt-2 border-t border-dashed border-white/20' : 'text-mutedLavender'}">
+                        <span>${t.label}</span>
+                        <span class="font-mono ${t.highlight ? (mode === 'friend' ? 'text-electricCyan' : 'text-cyberRose') : 'text-starlight'}">${t.val}</span>
+                    </div>
+                `).join('');
+            }
+
+            const stampEl = document.getElementById('receipt-stamp');
+            if (stampEl) stampEl.textContent = data.stamps[0];
+
+            const rFoot = document.getElementById('receipt-footer-text');
+            if (rFoot) rFoot.textContent = data.receiptFooter;
+
+            // 5. Update Polaroids
+            data.polaroids.forEach((p, idx) => {
+                const num = idx + 1;
+                const b = document.getElementById(`pol-badge-${num}`);
+                const t = document.getElementById(`pol-title-${num}`);
+                const s = document.getElementById(`pol-sub-${num}`);
+                const q = document.getElementById(`pol-quote-${num}`);
+                if (b) b.textContent = p.badge;
+                if (t) t.textContent = p.title;
+                if (s) s.textContent = p.sub;
+                if (q) q.textContent = p.quote;
+            });
+
+            // 6. Update Quest
+            questData = data.quest;
+            questState = { stage: 1, ans1: null, ans2: null, selectedReward: null };
+            renderQuestStage();
+
+            // 7. Update Letter Section
+            const fileLabel = document.getElementById('letter-file-label');
+            if (fileLabel) fileLabel.textContent = data.letter.fileLabel;
+
+            const dateLabel = document.getElementById('letter-date-label');
+            if (dateLabel) dateLabel.textContent = data.letter.dateLabel;
+
+            const letterCont = document.getElementById('letter-paragraphs');
+            if (letterCont) {
+                letterCont.innerHTML = data.letter.paragraphs.map((para, idx) => `
+                    <p class="letter-paragraph ${idx === 0 ? 'revealed' : ''} leading-relaxed text-sm sm:text-base md:text-lg">
+                        ${para}
+                    </p>
+                `).join('');
+            }
+            revealedCount = 1;
+            const revealBtnText = document.getElementById('reveal-btn-text');
+            if (revealBtnText) {
+                revealBtnText.textContent = `Buka Paragraf Selanjutnya (1/${data.letter.paragraphs.length - 1})`;
+            }
+
+            const saltIcon = document.getElementById('salting-counter-icon');
+            if (saltIcon) saltIcon.textContent = data.letter.saltingIcon;
+
+            const saltLabel = document.getElementById('salting-counter-label');
+            if (saltLabel) saltLabel.textContent = data.letter.saltingLabel;
+
+            // 8. Notifications
+            if (showNotification) {
+                playCyberTone(mode === 'friend' ? 523.25 : 659.25, 'sine', 0.15);
+                showToast(mode === 'friend' ? 'Beralih ke Mode Bestie Santai (No Alay/No Drama) 👥' : 'Beralih ke Mode Romance Aesthetic 💕');
+            }
+        }
+
+        window.setAppMode = setAppMode;
+        window.toggleAppMode = function() {
+            setAppMode(currentAppMode === 'romance' ? 'friend' : 'romance');
+        };
+
         // Hero Code Test Joke Button
-        const jokeMessages = [
-            'Status memang belum dideklarasikan, tapi Zizuy udah ngabisin 99.9% RAM pikiran!',
-            'Warning: Senyum Zizuy menyebabkan infinite loop di kepala!',
-            'Build Success: Kenyamanan jalan berdua = 100% Tanpa Bug.',
-            ' Process Priority: Zizuy selalu di urutan paling atas!'
-        ];
         let jokeIdx = 0;
         document.getElementById('compile-joke-btn').addEventListener('click', () => {
             playCyberTone(783.99, 'triangle', 0.14);
             const outBox = document.getElementById('compile-output');
             const outTxt = document.getElementById('compile-output-text');
             showElement(outBox);
-            outTxt.textContent = jokeMessages[jokeIdx % jokeMessages.length];
+            const jokes = CONTENT_MODES[currentAppMode].jokes;
+            outTxt.textContent = jokes[jokeIdx % jokes.length];
             jokeIdx++;
         });
 
         /* -----------------------------------------------------------------
            F-03: MEMORY RECEIPT INTERACTION
            ----------------------------------------------------------------- */
-        const stamps = [
-            '★ VERIFIED LEVEL 19 ★',
-            '♥ PARTNER MAIN FAVORIT ♥',
-            '✓ BEBAS WACANA 100% ✓',
-            '★ ZIZUY HIGH PRIORITY ★'
-        ];
         let stampIdx = 0;
         document.getElementById('stamp-receipt-btn').addEventListener('click', () => {
             playCyberTone(523.25, 'triangle', 0.12);
+            const stamps = CONTENT_MODES[currentAppMode].stamps;
             stampIdx = (stampIdx + 1) % stamps.length;
             const stampEl = document.getElementById('receipt-stamp');
             stampEl.textContent = stamps[stampIdx];
             stampEl.classList.add('scale-110');
             setTimeout(() => stampEl.classList.remove('scale-110'), 220);
-            showToast('Stempel struk diperbarui: ' + stamps[stampIdx]);
+            showToast('Stempel struk: ' + stamps[stampIdx]);
         });
 
         /* -----------------------------------------------------------------
@@ -1858,75 +2252,8 @@
 
         /* -----------------------------------------------------------------
            F-05: ZIZUY'S QUEST CHOICE (3-STAGE INTERACTIVE RPG DIALOG)
-           Exact scenarios & rewards from PRD Section 2.3
            ----------------------------------------------------------------- */
-        const questData = {
-            stage1: {
-                tag: 'STAGE 1 // DRAMA S1 INFORMATIKA SEMESTER 1',
-                narrative: 'Senin pagi, jadwal kuliah pemrograman dasar, tapi semalam habis begadang. Apa langkah penyelamatan Zizuy?',
-                options: [
-                    {
-                        id: 'A',
-                        text: 'Tetap duduk paling depan biar kelihatan rajin.',
-                        reaction: 'Wah, mental baja! Walaupun mata tinggal 5 watt, yang penting dosen lihat Zizuy paling depan. (+50 Respect)'
-                    },
-                    {
-                        id: 'B',
-                        text: 'Cari kursi aman sambil nahan ngantuk.',
-                        reaction: 'Strategi paling realistis anak Informatika! Posisi menentukan ketenangan selama 2 SKS. (+50 Stealth)'
-                    },
-                    {
-                        id: 'C',
-                        text: 'Nunggu jam kosong buat langsung cabut main/jajan.',
-                        reaction: 'Nah ini yang paling ditunggu-tunggu! Begitu dosen bilang kelas selesai cepat, langsung gas cari jajan! (+100 Mood)'
-                    }
-                ]
-            },
-            stage2: {
-                tag: 'STAGE 2 // MISTERI MAIN BERDUA',
-                narrative: 'Kita udah siap jalan berdua nih. Pertanyaan paling sulit sedunia pun muncul: "Hari ini kita mau ke mana / makan apa?"',
-                options: [
-                    {
-                        id: 'A',
-                        text: '"Terserah" (tapi kalau dikasih saran nolak semua).',
-                        reaction: 'Klasik banget! Algoritma "Terserah" ini kompleksitasnya O(∞), tapi justru seru karena ujung-ujungnya ketawa bareng.'
-                    },
-                    {
-                        id: 'B',
-                        text: 'Mutar-mutar kota dulu sampai tiba-tiba dapat pencerahan.',
-                        reaction: 'Jujur ini bagian paling asik! Nggak jelas tujuannya ke mana, yang penting ngobrol sepanjang jalan.'
-                    },
-                    {
-                        id: 'C',
-                        text: 'Ke tempat langganan yang udah pasti seru.',
-                        reaction: 'Pilihan aman dan anti gagal! Yang penting tempatnya nyaman buat cerita lama-lama berdua.'
-                    }
-                ]
-            },
-            rewards: [
-                {
-                    id: 'R1',
-                    title: 'Voucher Traktir Jajan & Kopi',
-                    badge: 'BUFF MOOD +100%',
-                    desc: 'Bebas pilih jajan, es kopi, atau makanan favorit Zizuy pas kita lagi keluar bareng. Tinggal tunjukin kartu ini!',
-                    code: 'ZUY19-JAJAN-FREE'
-                },
-                {
-                    id: 'R2',
-                    title: 'Tiket Jalan Berdua Bebas Pilih Tujuan',
-                    badge: 'UNLIMITED PASS',
-                    desc: 'Hari itu Zizuy yang pegang kendali penuh! Mau muter-muter, kulineran, atau ke tempat baru, langsung berangkat.',
-                    code: 'ZUY19-ROADTRIP-VIP'
-                },
-                {
-                    id: 'R3',
-                    title: 'Kartu Bantuan Tugas Ngoding 24 Jam',
-                    badge: 'IT SUPPORT PRIORITAS',
-                    desc: 'Ada tugas algoritma, error kodingan, atau laprak Semester 1 yang bikin pusing? Klaim kartu ini buat bantuan kapan aja!',
-                    code: 'ZUY19-CODING-SOS'
-                }
-            ]
-        };
+        let questData = CONTENT_MODES[currentAppMode].quest;
 
         let questState = {
             stage: 1,
@@ -2107,7 +2434,9 @@
         window.copyVoucherClaim = function() {
             const rw = questState.selectedReward;
             if (!rw) return;
-            const textToCopy = `Hai! Aku udah selesain Quest v19.0 dan mau klaim hadiah ulang tahun ke-19: [${rw.title}] (Kode: ${rw.code}) ✨`;
+            const textToCopy = currentAppMode === 'friend'
+                ? `Yo Penoyy! Gua udah selesain Quest v19.0 dan mau klaim hadiah ulang tahun ke-19: [${rw.title}] (Kode: ${rw.code}) 👊✨`
+                : `Hai Penoyy! Aku udah selesain Quest v19.0 dan mau klaim hadiah Chapter 19: [${rw.title}] (Kode: ${rw.code}) ✨`;
             const tempInput = document.createElement('textarea');
             tempInput.value = textToCopy;
             document.body.appendChild(tempInput);
@@ -2122,11 +2451,11 @@
            F-06: THE UNCOMPILED LETTER & BINARY FIREFLIES
            ----------------------------------------------------------------- */
         let revealedCount = 1;
-        const letterParas = document.querySelectorAll('.letter-paragraph');
         const revealBtn = document.getElementById('reveal-letter-btn');
         const revealBtnText = document.getElementById('reveal-btn-text');
 
         revealBtn.addEventListener('click', () => {
+            const letterParas = document.querySelectorAll('#letter-paragraphs .letter-paragraph');
             playCyberTone(587.33 + revealedCount * 60, 'sine', 0.16);
             if (revealedCount < letterParas.length) {
                 letterParas[revealedCount].classList.add('revealed');
@@ -2134,20 +2463,23 @@
                 if (revealedCount < letterParas.length) {
                     revealBtnText.textContent = `Buka Paragraf Selanjutnya (${revealedCount}/${letterParas.length - 1})`;
                 } else {
-                    revealBtnText.textContent = 'Semua Pesan Terbuka ♥ Happy 19th Zizuy!';
+                    revealBtnText.textContent = currentAppMode === 'friend' 
+                        ? 'Semua Pesan Terbuka 👊 Happy 19th Zizuy!' 
+                        : 'Semua Pesan Terbuka ♥ Happy 19th Zizuy!';
                 }
             } else {
                 showToast('Selamat ulang tahun ke-19, Azizah Nazwa Novita (Zizuy)! ✨');
             }
         });
 
-        // Salting Counter Button
+        // Salting / Bestie Counter Button
         let saltingVal = 19;
         document.getElementById('heart-burst-btn').addEventListener('click', () => {
             playCyberTone(987.77, 'sine', 0.14);
             saltingVal++;
             document.getElementById('salting-counter').textContent = saltingVal;
-            showToast(`Efek salting bertambah jadi +${saltingVal}%!`);
+            const data = CONTENT_MODES[currentAppMode];
+            showToast(data.letter.toastMsg || `Efek bertambah jadi +${saltingVal}!`);
         });
 
         // Binary Firefly Canvas in Letter Section
@@ -2284,7 +2616,13 @@
             updateChronoTimer();
             setInterval(updateChronoTimer, 1000);
 
-            renderQuestStage();
+            // Initialize Dual Mode (Default Romance, with instant toggle to Friend Bestie Mode)
+            let savedMode = 'romance';
+            try {
+                savedMode = localStorage.getItem('zizuy_theme_mode') || 'romance';
+            } catch (e) {}
+            setAppMode(savedMode, false);
+
             setupScrollReveal();
 
             initBgGalaxy();
