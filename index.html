@@ -416,9 +416,23 @@
             </div>
         </div>
 
-        <!-- Center Floating Prompt (Pointer-events-none so canvas stays interactive) -->
-        <div class="relative z-10 pointer-events-none text-center mt-2 px-3 max-w-lg">
-            <div class="inline-block px-3 py-1 rounded-full bg-velvet/70 border border-white/15 backdrop-blur-md font-mono text-[10px] sm:text-[11px] tracking-wider uppercase text-electricCyan">
+        <!-- Floating Center-Top Happy Birthday Title (Placed smoothly above the 3D binary heart) -->
+        <div id="intro-hbd-banner" class="relative z-10 pointer-events-none text-center px-4 mt-2 sm:mt-3 transition-all duration-1000 ease-out opacity-0 translate-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyberRose/15 border border-cyberRose/35 font-mono text-[10px] sm:text-xs text-cyberRose tracking-widest uppercase mb-1 sm:mb-1.5 shadow-[0_0_20px_rgba(255,42,133,0.35)] backdrop-blur-md">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyberRose animate-ping"></span>
+                <span>LEVEL 19 COMPILATION // SPECIAL BUILD</span>
+            </div>
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-cyberRose via-[#FF73B3] to-electricCyan tracking-tight drop-shadow-[0_0_35px_rgba(255,42,133,0.6)]">
+                Happy Birthday!
+            </h1>
+            <p class="font-hand text-xl sm:text-3xl text-starlight mt-0.5 sm:mt-1 drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]">
+                Azizah Nazwa Novita (Zizuy) ✨
+            </p>
+        </div>
+
+        <!-- Floating Interaction Hint (Auto-fades out on interaction or after 10s) -->
+        <div id="intro-hint-pill" class="relative z-10 pointer-events-none text-center px-3 mt-1 sm:mt-2 transition-all duration-700 ease-out opacity-0 translate-y-2">
+            <div class="inline-block px-3.5 py-1 rounded-full bg-velvet/80 border border-white/15 backdrop-blur-md font-mono text-[10px] sm:text-[11px] tracking-wider uppercase text-electricCyan shadow-lg">
                 Sentuh / gerakkan kursor untuk memutar galaksi &amp; hati 3D
             </div>
         </div>
@@ -1195,11 +1209,63 @@
                         showElement(introGate);
                         requestAnimationFrame(renderVortex);
                         hideElement(preloader);
+                        // Trigger smooth fade-in of Happy Birthday title & auto-dismiss hint
+                        triggerIntroAppear();
                     }, 260);
                 }
             }
 
             requestAnimationFrame(step);
+        }
+
+        /* -----------------------------------------------------------------
+           INTRO APPEAR & AUTO-DISMISS HINT CONTROLLER
+           ----------------------------------------------------------------- */
+        let hintDismissed = false;
+        let hintTimeout = null;
+
+        function triggerIntroAppear() {
+            hintDismissed = false;
+            const banner = document.getElementById('intro-hbd-banner');
+            const hint = document.getElementById('intro-hint-pill');
+
+            if (banner) {
+                banner.classList.remove('opacity-100', 'translate-y-0');
+                banner.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => {
+                    banner.classList.remove('opacity-0', 'translate-y-4');
+                    banner.classList.add('opacity-100', 'translate-y-0');
+                }, 160);
+            }
+
+            if (hint) {
+                hint.classList.remove('opacity-100', 'translate-y-0', '-translate-y-2');
+                hint.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => {
+                    hint.classList.remove('opacity-0', 'translate-y-2');
+                    hint.classList.add('opacity-100', 'translate-y-0');
+                }, 420);
+            }
+
+            // Auto-dismiss hint after 10 seconds if user hasn't interacted
+            if (hintTimeout) clearTimeout(hintTimeout);
+            hintTimeout = setTimeout(() => {
+                dismissIntroHint();
+            }, 10000);
+        }
+
+        function dismissIntroHint() {
+            if (hintDismissed) return;
+            hintDismissed = true;
+            if (hintTimeout) {
+                clearTimeout(hintTimeout);
+                hintTimeout = null;
+            }
+            const hint = document.getElementById('intro-hint-pill');
+            if (hint) {
+                hint.classList.remove('opacity-100', 'translate-y-0');
+                hint.classList.add('opacity-0', '-translate-y-2');
+            }
         }
 
         /* -----------------------------------------------------------------
@@ -1341,7 +1407,7 @@
 
             const elapsed = (now - startTime) * 0.001;
             const centerX = vWidth / 2;
-            const centerY = vHeight / 2 - (vWidth < 640 ? 12 : 8);
+            const centerY = vHeight / 2 + (vWidth < 640 ? 18 : 24);
 
             // Deep galaxy base coat with smooth motion trail
             vCtx.fillStyle = 'rgba(5, 4, 12, 0.30)';
@@ -1486,13 +1552,21 @@
             requestAnimationFrame(renderVortex);
         }
 
-        // Pointer listeners for 3D tilt & ripple
+        // Pointer listeners for 3D tilt & ripple + auto-dismiss hint on interaction
+        function handleUserGalaxyInteraction() {
+            if (!introActive) return;
+            if (!hintDismissed) {
+                dismissIntroHint();
+            }
+        }
+
         window.addEventListener('mousemove', (e) => {
             pointer.normX = (e.clientX / window.innerWidth - 0.5) * 2;
             pointer.normY = (e.clientY / window.innerHeight - 0.5) * 2;
             if (!introActive) return;
             pointer.x = e.clientX;
             pointer.y = e.clientY;
+            handleUserGalaxyInteraction();
         });
         window.addEventListener('touchmove', (e) => {
             if (!e.touches[0]) return;
@@ -1501,6 +1575,10 @@
             if (!introActive) return;
             pointer.x = e.touches[0].clientX;
             pointer.y = e.touches[0].clientY;
+            handleUserGalaxyInteraction();
+        }, { passive: true });
+        window.addEventListener('touchstart', () => {
+            handleUserGalaxyInteraction();
         }, { passive: true });
         window.addEventListener('touchend', () => {
             pointer.x = -9999;
@@ -1544,6 +1622,7 @@
             const gate = document.getElementById('intro-gate');
             showElement(gate);
             requestAnimationFrame(renderVortex);
+            triggerIntroAppear();
         });
 
         /* -----------------------------------------------------------------
