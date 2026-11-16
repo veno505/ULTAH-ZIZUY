@@ -69,6 +69,15 @@
             color: #ffffff;
         }
 
+        /* Custom Scrollbar Utility */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         /* 3.4 Pedoman Desain Humanized: Film Noise Grain Overlay (3% Opacity) */
         .noise-overlay {
             position: fixed;
@@ -392,42 +401,43 @@
         <canvas id="vortex-canvas" class="absolute inset-0 w-full h-full block cursor-crosshair"></canvas>
 
         <!-- Top Terminal Status Bar -->
-        <div class="relative z-10 w-full max-w-5xl flex flex-wrap items-center justify-between gap-2 pt-1 font-mono text-xs text-mutedLavender">
-            <div class="flex items-center gap-2 bg-velvet/80 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-md">
+        <div class="relative z-10 w-full max-w-5xl flex items-center justify-between gap-2 pt-1 font-mono text-xs text-mutedLavender">
+            <div class="flex items-center gap-2 bg-velvet/85 border border-white/10 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full backdrop-blur-md text-[11px] sm:text-xs">
                 <span class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
                 <span class="text-starlight font-medium">zizuy_v19.exe</span>
                 <span class="text-white/30">|</span>
-                <span class="text-electricCyan">3D_GALAXY_CORE</span>
+                <span class="text-electricCyan">3D_GALAXY</span>
             </div>
-            <div class="hidden sm:flex items-center gap-3 bg-velvet/80 border border-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-md">
-                <span>TARGET: <strong class="text-starlight">AZIZAH NAZWA NOVITA</strong></span>
+            <div class="flex items-center gap-2 bg-velvet/85 border border-white/10 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full backdrop-blur-md text-[11px] sm:text-xs">
+                <span class="hidden sm:inline">TARGET:</span>
+                <strong class="text-starlight">ZIZUY</strong>
                 <span class="text-white/30">•</span>
-                <span>STATUS: <strong class="text-cyberRose">HIGH_PRIORITY_VAR</strong></span>
+                <strong class="text-cyberRose">Lv.19</strong>
             </div>
         </div>
 
         <!-- Center Floating Prompt (Pointer-events-none so canvas stays interactive) -->
-        <div class="relative z-10 pointer-events-none text-center mt-2 px-4 max-w-lg">
-            <div class="inline-block px-3.5 py-1 rounded-full bg-velvet/60 border border-white/15 backdrop-blur-md font-mono text-[11px] tracking-widest uppercase text-electricCyan">
+        <div class="relative z-10 pointer-events-none text-center mt-2 px-3 max-w-lg">
+            <div class="inline-block px-3 py-1 rounded-full bg-velvet/70 border border-white/15 backdrop-blur-md font-mono text-[10px] sm:text-[11px] tracking-wider uppercase text-electricCyan">
                 Sentuh / gerakkan kursor untuk memutar galaksi &amp; hati 3D
             </div>
         </div>
 
         <!-- Bottom Action Gate -->
-        <div class="relative z-10 w-full max-w-md flex flex-col items-center text-center pb-4 sm:pb-6">
-            <p class="font-mono text-xs text-starlight/80 mb-3 tracking-wide">
+        <div class="relative z-10 w-full max-w-sm flex flex-col items-center text-center pb-4 sm:pb-6 px-3">
+            <p class="font-mono text-[11px] sm:text-xs text-starlight/80 mb-2.5 tracking-wide">
                 [01011010] Galaksi Memori Semester 1 siap dibuka...
             </p>
-            <button id="run-exe-btn" class="spring-btn group relative w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan p-[1.5px] shadow-[0_0_35px_rgba(255,42,133,0.45)] hover:shadow-[0_0_55px_rgba(0,229,255,0.65)]">
-                <div class="bg-obsidian/90 group-hover:bg-obsidian/70 transition-colors rounded-[15px] px-7 py-3.5 flex items-center justify-center gap-3">
+            <button id="run-exe-btn" class="spring-btn group relative w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan p-[1.5px] shadow-[0_0_35px_rgba(255,42,133,0.45)] hover:shadow-[0_0_55px_rgba(0,229,255,0.65)]">
+                <div class="bg-obsidian/90 group-hover:bg-obsidian/70 transition-colors rounded-[15px] px-5 sm:px-7 py-3 sm:py-3.5 flex items-center justify-center gap-2.5 sm:gap-3">
                     <span class="w-2.5 h-2.5 rounded-full bg-cyberRose group-hover:bg-electricCyan transition-colors"></span>
-                    <span class="font-mono font-bold text-sm sm:text-base text-starlight tracking-wide">
+                    <span class="font-mono font-bold text-xs sm:text-base text-starlight tracking-wide">
                         Run zizuy_v19.exe
                     </span>
                     <span class="font-mono text-electricCyan group-hover:translate-x-1 transition-transform">-&gt;</span>
                 </div>
             </button>
-            <span class="font-hand text-lg text-starlight/85 mt-2">
+            <span class="font-hand text-base sm:text-lg text-starlight/85 mt-2">
                 Dibuat khusus buat ulang tahun ke-19 Zizuy ✨
             </span>
         </div>
@@ -436,7 +446,7 @@
     <!-- ===================================================================
          MAIN EXPERIENCE WRAPPER
          =================================================================== -->
-    <div id="main-app" hidden class="stage-layer relative min-h-screen flex-col">
+    <div id="main-app" hidden class="stage-layer relative min-h-screen flex-col w-full max-w-full overflow-x-hidden">
         <!-- Fixed Lightweight 3D Galaxy Starfield Background for Main Content -->
         <canvas id="bg-galaxy-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-75"></canvas>
         
@@ -445,11 +455,11 @@
         <div class="ambient-orb w-96 h-96 bg-nebulaViolet top-[32%] right-0"></div>
         <div class="ambient-orb w-80 h-80 bg-electricCyan bottom-40 -left-20"></div>
 
-        <!-- Sticky Top Navigation Bar -->
-        <header class="sticky top-0 z-40 backdrop-blur-xl bg-obsidian/75 border-b border-white/10">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-3 h-3 rounded-full bg-cyberRose shadow-[0_0_12px_#FF2A85]"></div>
+        <!-- Sticky Top Navigation Bar (Mobile-first responsive) -->
+        <header class="sticky top-0 z-40 backdrop-blur-xl bg-obsidian/80 border-b border-white/10">
+            <div class="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-2">
+                <div class="flex items-center gap-2 shrink-0">
+                    <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-cyberRose shadow-[0_0_12px_#FF2A85]"></div>
                     <span class="font-mono font-bold text-xs sm:text-sm tracking-tight text-starlight">
                         ZIZUY<span class="text-cyberRose">//</span>v19.0
                     </span>
@@ -458,15 +468,27 @@
                     </span>
                 </div>
 
-                <nav class="flex items-center gap-1 sm:gap-2 font-mono text-xs">
-                    <a href="#hero-timer" class="px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors">01.Timer</a>
-                    <a href="#scrapbook" class="px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors">02.Struk&Foto</a>
-                    <a href="#quest-section" class="px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors">03.Quest</a>
-                    <a href="#letter-section" class="px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors">04.Surat</a>
-                    <button id="toggle-motion-btn" type="button" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-mutedLavender hover:text-starlight transition-colors flex items-center gap-1">
-                        <span id="toggle-motion-label">Pause Motion</span>
+                <nav class="flex items-center gap-1 sm:gap-2 font-mono text-[11px] sm:text-xs overflow-x-auto no-scrollbar py-1">
+                    <a href="#hero-timer" class="px-2 sm:px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors whitespace-nowrap">
+                        <span class="sm:hidden">Timer</span>
+                        <span class="hidden sm:inline">01.Timer</span>
+                    </a>
+                    <a href="#scrapbook" class="px-2 sm:px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors whitespace-nowrap">
+                        <span class="sm:hidden">Struk</span>
+                        <span class="hidden sm:inline">02.Struk&Foto</span>
+                    </a>
+                    <a href="#quest-section" class="px-2 sm:px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors whitespace-nowrap">
+                        <span class="sm:hidden">Quest</span>
+                        <span class="hidden sm:inline">03.Quest</span>
+                    </a>
+                    <a href="#letter-section" class="px-2 sm:px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/5 transition-colors whitespace-nowrap">
+                        <span class="sm:hidden">Surat</span>
+                        <span class="hidden sm:inline">04.Surat</span>
+                    </a>
+                    <button id="toggle-motion-btn" type="button" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-mutedLavender hover:text-starlight transition-colors flex items-center gap-1 shrink-0 whitespace-nowrap">
+                        <span id="toggle-motion-label">Motion</span>
                     </button>
-                    <button id="replay-intro-btn" type="button" title="Putar Ulang Hati Biner" class="ml-1 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/50 text-cyberRose transition-all flex items-center gap-1">
+                    <button id="replay-intro-btn" type="button" title="Putar Ulang Hati Biner" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/50 text-cyberRose transition-all flex items-center gap-1 shrink-0 whitespace-nowrap">
                         <span>♥</span>
                         <span class="hidden sm:inline">Intro</span>
                     </button>
@@ -477,59 +499,59 @@
         <!-- ===============================================================
              SECTION 1: HERO & DUAL-STATE CHRONO-SHIFT TIMER (F-02)
              =============================================================== -->
-        <section id="hero-timer" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-20 md:pt-16 md:pb-28">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <section id="hero-timer" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-12 sm:pb-20 md:pt-16 md:pb-28">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
                 
                 <!-- Left Column: Artistic Title & "Undefined Status, High-Priority Variable" -->
-                <div class="lg:col-span-7 space-y-6">
+                <div class="lg:col-span-7 space-y-4 sm:space-y-6">
                     <!-- Dynamic Status Pill -->
-                    <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-velvet border border-white/10">
-                        <span class="w-2 h-2 rounded-full bg-electricCyan animate-pulse"></span>
-                        <span class="font-mono text-xs text-electricCyan tracking-wide">
+                    <div class="inline-flex max-w-full items-center gap-2 px-3 py-1.5 rounded-full bg-velvet border border-white/10 text-[11px] sm:text-xs">
+                        <span class="w-2 h-2 rounded-full bg-electricCyan animate-pulse shrink-0"></span>
+                        <span class="font-mono text-electricCyan tracking-wide truncate">
                             let statusKita = undefined; // tapi prioritas utama
                         </span>
                     </div>
 
-                    <div class="space-y-2">
-                        <p class="font-mono text-xs sm:text-sm uppercase tracking-widest text-mutedLavender">
+                    <div class="space-y-1.5 sm:space-y-2">
+                        <p class="font-mono text-[11px] sm:text-sm uppercase tracking-widest text-mutedLavender">
                             SPECIAL BUILD FOR 23 NOVEMBER 2026 • LEVEL 19
                         </p>
-                        <h1 class="font-display font-extrabold text-4xl sm:text-6xl xl:text-7xl leading-[1.05] tracking-tight text-starlight">
+                        <h1 class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl xl:text-7xl leading-[1.1] sm:leading-[1.05] tracking-tight text-starlight">
                             Happy 19th,<br>
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan">
                                 Azizah Nazwa
                             </span>
-                            <span class="inline-block font-hand text-3xl sm:text-5xl text-cyberRose -rotate-6 ml-1">
+                            <span class="inline-block font-hand text-2xl sm:text-4xl md:text-5xl text-cyberRose -rotate-6 ml-1">
                                 (Zizuy!)
                             </span>
                         </h1>
                     </div>
 
-                    <p class="text-base sm:text-lg text-mutedLavender leading-relaxed max-w-2xl">
+                    <p class="text-sm sm:text-base md:text-lg text-mutedLavender leading-relaxed max-w-2xl">
                         Di antara tumpukan tugas koding Semester 1, algoritma yang kadang bikin pusing, dan jutaan kali pertanyaan <span class="text-starlight font-medium italic">"hari ini mau makan di mana?"</span>—web kecil ini sengaja dikompilasi khusus buat merayakan seseorang yang selalu bikin hari-hari belakangan ini jauh lebih seru.
                     </p>
 
                     <!-- Interactive Mini Terminal Card: High-Priority Variable -->
-                    <div class="velvet-card rounded-2xl p-4 sm:p-5 border border-white/10 max-w-xl">
-                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+                    <div class="velvet-card rounded-2xl p-3.5 sm:p-5 border border-white/10 max-w-xl">
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10 gap-2">
                             <div class="flex items-center gap-1.5">
                                 <span class="w-2.5 h-2.5 rounded-full bg-cyberRose/80"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-nebulaViolet/80"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-electricCyan/80"></span>
                                 <span class="font-mono text-xs text-mutedLavender ml-2">priority_check.js</span>
                             </div>
-                            <button id="compile-joke-btn" class="font-mono text-[11px] px-2.5 py-1 rounded bg-cyberRose/15 text-cyberRose border border-cyberRose/30 hover:bg-cyberRose hover:text-white transition-colors">
+                            <button id="compile-joke-btn" class="font-mono text-[10px] sm:text-[11px] px-2.5 py-1 rounded bg-cyberRose/15 text-cyberRose border border-cyberRose/30 hover:bg-cyberRose hover:text-white transition-colors shrink-0">
                                 Jalankan Test -&gt;
                             </button>
                         </div>
-                        <pre class="font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto text-starlight/90"><code><span class="text-nebulaViolet">const</span> target = <span class="text-electricCyan">"Azizah Nazwa Novita (Zizuy)"</span>;
+                        <pre class="font-mono text-[11px] sm:text-xs md:text-sm leading-relaxed overflow-x-auto text-starlight/90 no-scrollbar"><code><span class="text-nebulaViolet">const</span> target = <span class="text-electricCyan">"Azizah Nazwa Novita (Zizuy)"</span>;
 <span class="text-nebulaViolet">let</span> status = <span class="text-cyberRose">undefined</span>; <span class="text-mutedLavender">// ngalir aja dulu</span>
 <span class="text-nebulaViolet">const</span> kenyamananMainBerdua = <span class="text-electricCyan">Infinity</span>;
 
 <span class="text-nebulaViolet">if</span> (target === <span class="text-electricCyan">"Zizuy"</span>) {
   memory.setPriority(<span class="text-cyberRose">"ALWAYS_NUMBER_ONE"</span>);
 }</code></pre>
-                        <div id="compile-output" hidden class="discrete-fade mt-3 pt-2.5 border-t border-white/10 font-mono text-xs text-electricCyan items-center gap-2">
+                        <div id="compile-output" hidden class="discrete-fade mt-3 pt-2.5 border-t border-white/10 font-mono text-[11px] sm:text-xs text-electricCyan items-center gap-2">
                             <span>✓ Output:</span>
                             <span id="compile-output-text">Status memang belum dideklarasikan, tapi Zizuy udah ngabisin 99.9% RAM pikiran!</span>
                         </div>
@@ -538,72 +560,72 @@
 
                 <!-- Right Column: F-02 Dual-State Chrono-Shift Timer Module -->
                 <div class="lg:col-span-5">
-                    <div id="timer-card" class="velvet-card-rose rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-500">
+                    <div id="timer-card" class="velvet-card-rose rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:p-8 relative overflow-hidden transition-all duration-500">
                         <!-- Subtle Top Right Corner Tag -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
-                            <span id="timer-badge" class="inline-flex items-center gap-2 font-mono text-xs font-bold px-3 py-1.5 rounded-full bg-cyberRose/20 text-cyberRose border border-cyberRose/40">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 sm:mb-5">
+                            <span id="timer-badge" class="inline-flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-cyberRose/20 text-cyberRose border border-cyberRose/40">
                                 <span id="timer-dot" class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
                                 <span id="timer-badge-text">COMPILING ZIZUY LEVEL 19...</span>
                             </span>
-                            <span class="font-mono text-[11px] text-mutedLavender">
+                            <span class="font-mono text-[10px] sm:text-[11px] text-mutedLavender">
                                 23.11.2026 // 00:00 WIB
                             </span>
                         </div>
 
                         <!-- Title inside timer -->
-                        <div class="mb-4">
-                            <h2 id="timer-heading" class="font-display font-bold text-xl sm:text-2xl text-starlight">
+                        <div class="mb-3 sm:mb-4">
+                            <h2 id="timer-heading" class="font-display font-bold text-lg sm:text-2xl text-starlight">
                                 Hitung Mundur Menuju 19 Tahun
                             </h2>
-                            <p id="timer-subtext" class="text-xs sm:text-sm text-mutedLavender mt-1">
+                            <p id="timer-subtext" class="text-xs sm:text-sm text-mutedLavender mt-0.5 sm:mt-1">
                                 Waktu berjalan real-time menuju hari spesial Zizuy.
                             </p>
                         </div>
 
-                        <!-- Main Chrono Display -->
-                        <div class="bg-obsidian/80 border border-white/10 rounded-2xl p-4 sm:p-5 my-4">
-                            <div class="flex items-center justify-center gap-1.5 sm:gap-3 font-mono">
+                        <!-- Main Chrono Display (Responsive width on 320px-1440px) -->
+                        <div class="bg-obsidian/85 border border-white/10 rounded-2xl p-2.5 sm:p-4 md:p-5 my-3 sm:my-4">
+                            <div class="flex items-center justify-center gap-1 sm:gap-2.5 md:gap-3 font-mono">
                                 <!-- Sign Symbol (- or +) -->
-                                <div id="timer-sign" class="text-3xl sm:text-5xl font-bold text-cyberRose glow-rose select-none pr-1">
+                                <div id="timer-sign" class="text-2xl sm:text-4xl md:text-5xl font-bold text-cyberRose glow-rose select-none pr-0.5 sm:pr-1">
                                     -
                                 </div>
 
                                 <!-- Days -->
-                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-2.5 py-2 sm:px-3.5 sm:py-3 min-w-[58px] sm:min-w-[68px]">
-                                    <span id="t-days" class="font-display font-extrabold text-2xl sm:text-4xl text-starlight">00</span>
-                                    <span class="text-[10px] uppercase tracking-wider text-mutedLavender mt-1">Hari</span>
+                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3 min-w-[48px] sm:min-w-[62px] md:min-w-[68px]">
+                                    <span id="t-days" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight">00</span>
+                                    <span class="text-[9px] sm:text-[10px] uppercase tracking-wider text-mutedLavender mt-0.5 sm:mt-1">Hari</span>
                                 </div>
 
-                                <span class="text-xl sm:text-2xl font-bold text-white/30">:</span>
+                                <span class="text-base sm:text-2xl font-bold text-white/30">:</span>
 
                                 <!-- Hours -->
-                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-2.5 py-2 sm:px-3.5 sm:py-3 min-w-[58px] sm:min-w-[68px]">
-                                    <span id="t-hours" class="font-display font-extrabold text-2xl sm:text-4xl text-starlight">00</span>
-                                    <span class="text-[10px] uppercase tracking-wider text-mutedLavender mt-1">Jam</span>
+                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3 min-w-[48px] sm:min-w-[62px] md:min-w-[68px]">
+                                    <span id="t-hours" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight">00</span>
+                                    <span class="text-[9px] sm:text-[10px] uppercase tracking-wider text-mutedLavender mt-0.5 sm:mt-1">Jam</span>
                                 </div>
 
-                                <span class="text-xl sm:text-2xl font-bold text-white/30">:</span>
+                                <span class="text-base sm:text-2xl font-bold text-white/30">:</span>
 
                                 <!-- Minutes -->
-                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-2.5 py-2 sm:px-3.5 sm:py-3 min-w-[58px] sm:min-w-[68px]">
-                                    <span id="t-mins" class="font-display font-extrabold text-2xl sm:text-4xl text-starlight">00</span>
-                                    <span class="text-[10px] uppercase tracking-wider text-mutedLavender mt-1">Menit</span>
+                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3 min-w-[48px] sm:min-w-[62px] md:min-w-[68px]">
+                                    <span id="t-mins" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight">00</span>
+                                    <span class="text-[9px] sm:text-[10px] uppercase tracking-wider text-mutedLavender mt-0.5 sm:mt-1">Menit</span>
                                 </div>
 
-                                <span class="text-xl sm:text-2xl font-bold text-white/30">:</span>
+                                <span class="text-base sm:text-2xl font-bold text-white/30">:</span>
 
                                 <!-- Seconds -->
-                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-2.5 py-2 sm:px-3.5 sm:py-3 min-w-[58px] sm:min-w-[68px]">
-                                    <span id="t-secs" class="font-display font-extrabold text-2xl sm:text-4xl text-electricCyan">00</span>
-                                    <span class="text-[10px] uppercase tracking-wider text-mutedLavender mt-1">Detik</span>
+                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3 min-w-[48px] sm:min-w-[62px] md:min-w-[68px]">
+                                    <span id="t-secs" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-electricCyan">00</span>
+                                    <span class="text-[9px] sm:text-[10px] uppercase tracking-wider text-mutedLavender mt-0.5 sm:mt-1">Detik</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Conditional Late-Open Banner (Shown automatically when T_now >= 23 Nov 2026 OR in preview mode) -->
-                        <div id="late-banner" hidden class="discrete-fade rounded-2xl bg-electricCyan/10 border border-electricCyan/30 p-4 mb-4">
-                            <div class="flex items-start gap-3">
-                                <span class="text-xl">🎉</span>
+                        <div id="late-banner" hidden class="discrete-fade rounded-2xl bg-electricCyan/10 border border-electricCyan/30 p-3 sm:p-4 mb-3 sm:mb-4">
+                            <div class="flex items-start gap-2.5 sm:gap-3">
+                                <span class="text-lg sm:text-xl shrink-0">🎉</span>
                                 <p class="text-xs sm:text-sm text-starlight leading-relaxed">
                                     <strong class="text-electricCyan font-mono">MODE PLUS (+) AKTIF:</strong> Telat buka webnya ya Zizuy? Tenang, waktunya nggak berhenti di nol kok, malah otomatis berubah jadi <strong>PLUS (+)</strong> buat ngitung sudah berapa detik dunia makin seru sejak kamu resmi 19 tahun!
                                 </p>
@@ -612,8 +634,8 @@
 
                         <!-- Time Mode Switcher (So Zizuy or Sender can test both states anytime) -->
                         <div class="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
-                            <span>Chrono-Engine v19.0</span>
-                            <button id="toggle-time-sim" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-starlight border border-white/10 transition-colors flex items-center gap-1.5">
+                            <span class="text-[11px] sm:text-xs">Chrono-Engine v19.0</span>
+                            <button id="toggle-time-sim" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-starlight border border-white/10 transition-colors flex items-center gap-1.5 text-[11px] sm:text-xs">
                                 <span class="w-1.5 h-1.5 rounded-full bg-electricCyan"></span>
                                 <span id="toggle-time-label">Coba Simulasi Telat Buka (+)</span>
                             </button>
@@ -627,100 +649,100 @@
         <!-- ===============================================================
              SECTION 2: DIGITAL SCRAPBOOK — MEMORY RECEIPT (F-03) & POLAROID DECK (F-04)
              =============================================================== -->
-        <section id="scrapbook" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 border-t border-white/5">
+        <section id="scrapbook" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-24 border-t border-white/5">
             <!-- Section Header -->
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3 sm:gap-4">
                 <div>
-                    <div class="inline-flex items-center gap-2 font-mono text-xs text-cyberRose uppercase tracking-widest mb-2">
+                    <div class="inline-flex items-center gap-2 font-mono text-[11px] sm:text-xs text-cyberRose uppercase tracking-widest mb-1.5 sm:mb-2">
                         <span>// 02. UNCOMPILED ARCHIVES</span>
                     </div>
-                    <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-starlight">
+                    <h2 class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight">
                         Struk Main &amp; Scrapbook Kita
                     </h2>
                 </div>
-                <p class="text-sm sm:text-base text-mutedLavender max-w-md">
+                <p class="text-xs sm:text-base text-mutedLavender max-w-md leading-relaxed">
                     Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.
                 </p>
             </div>
 
             <!-- Asymmetric Bento Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                 
                 <!-- LEFT: F-03 Semester 1 Memory Receipt -->
                 <div class="lg:col-span-5 flex justify-center">
-                    <div id="receipt-container" class="w-full max-w-md transform -rotate-1 hover:rotate-0 transition-transform duration-500">
+                    <div id="receipt-container" class="w-full max-w-sm sm:max-w-md transform -rotate-1 hover:rotate-0 transition-transform duration-500">
                         <!-- Top Sawtooth Edge -->
                         <div class="receipt-edge-top"></div>
 
-                        <!-- Receipt Body -->
-                        <div class="receipt-paper px-6 py-6 sm:px-8 sm:py-7 text-starlight font-mono text-xs shadow-2xl relative">
+                        <!-- Receipt Body with Mobile-first padding -->
+                        <div class="receipt-paper px-4 py-5 sm:px-8 sm:py-7 text-starlight font-mono text-xs shadow-2xl relative">
                             <!-- Washi tape on top -->
-                            <div class="washi-tape w-28 h-6 absolute -top-4 left-1/2 -translate-x-1/2 rotate-2 rounded-sm"></div>
+                            <div class="washi-tape w-24 sm:w-28 h-5 sm:h-6 absolute -top-3.5 sm:-top-4 left-1/2 -translate-x-1/2 rotate-2 rounded-sm"></div>
 
                             <!-- Receipt Header -->
-                            <div class="text-center border-b border-dashed border-white/20 pb-4 mb-4">
-                                <div class="text-base sm:text-lg font-bold tracking-wider text-starlight">
+                            <div class="text-center border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4">
+                                <div class="text-sm sm:text-lg font-bold tracking-wider text-starlight">
                                     INFORMATIKA MART // SEM-01
                                 </div>
-                                <div class="text-[11px] text-mutedLavender mt-0.5">
+                                <div class="text-[10px] sm:text-[11px] text-mutedLavender mt-0.5">
                                     CABANG JALAN BERDUA • SHIFT MALAM &amp; SIANG
                                 </div>
-                                <div class="text-[11px] text-electricCyan mt-1">
+                                <div class="text-[10px] sm:text-[11px] text-electricCyan mt-1">
                                     CUSTOMER: AZIZAH NAZWA NOVITA (ZIZUY)
                                 </div>
                             </div>
 
                             <!-- Receipt Metadata -->
-                            <div class="flex justify-between text-[11px] text-mutedLavender mb-4">
+                            <div class="flex justify-between text-[10px] sm:text-[11px] text-mutedLavender mb-3 sm:mb-4">
                                 <span>NO: #ZUY-19-2026</span>
                                 <span>KASIR: ANAK_IT_01</span>
                             </div>
 
                             <!-- Line Items -->
-                            <div class="space-y-3 border-b border-dashed border-white/20 pb-4 mb-4">
+                            <div class="space-y-2.5 sm:space-y-3 border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4">
                                 <div class="flex justify-between items-start gap-2">
-                                    <div>
-                                        <div class="text-starlight font-medium">1. Wacana Doang</div>
-                                        <div class="text-[11px] text-mutedLavender">Langsung gas berangkat terus</div>
+                                    <div class="pr-2">
+                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">1. Wacana Doang</div>
+                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">Langsung gas berangkat terus</div>
                                     </div>
-                                    <span class="text-electricCyan font-bold shrink-0">0 KALI</span>
+                                    <span class="text-electricCyan font-bold shrink-0 text-[11px] sm:text-xs">0 KALI</span>
                                 </div>
 
                                 <div class="flex justify-between items-start gap-2">
-                                    <div>
-                                        <div class="text-starlight font-medium">2. Debat "Makan Apa Kita?"</div>
-                                        <div class="text-[11px] text-mutedLavender">Ujung-ujungnya muter jalan dulu</div>
+                                    <div class="pr-2">
+                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">2. Debat "Makan Apa Kita?"</div>
+                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">Ujung-ujungnya muter jalan dulu</div>
                                     </div>
-                                    <span class="text-cyberRose font-bold shrink-0">99+ KALI</span>
+                                    <span class="text-cyberRose font-bold shrink-0 text-[11px] sm:text-xs">99+ KALI</span>
                                 </div>
 
                                 <div class="flex justify-between items-start gap-2">
-                                    <div>
-                                        <div class="text-starlight font-medium">3. Survival Kuliah &amp; Laprak</div>
-                                        <div class="text-[11px] text-mutedLavender">S1 Informatika Semester 1</div>
+                                    <div class="pr-2">
+                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">3. Survival Kuliah &amp; Laprak</div>
+                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">S1 Informatika Semester 1</div>
                                     </div>
-                                    <span class="text-starlight font-bold shrink-0">100% AMAN</span>
+                                    <span class="text-starlight font-bold shrink-0 text-[11px] sm:text-xs">100% AMAN</span>
                                 </div>
 
                                 <div class="flex justify-between items-start gap-2">
-                                    <div>
-                                        <div class="text-starlight font-medium">4. Efek Bikin Salah Tingkah</div>
-                                        <div class="text-[11px] text-mutedLavender">Tiap lagi ngobrol &amp; ketawa bareng</div>
+                                    <div class="pr-2">
+                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">4. Efek Bikin Salah Tingkah</div>
+                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">Tiap lagi ngobrol &amp; ketawa bareng</div>
                                     </div>
-                                    <span class="text-cyberRose font-bold shrink-0">CRITICAL</span>
+                                    <span class="text-cyberRose font-bold shrink-0 text-[11px] sm:text-xs">CRITICAL</span>
                                 </div>
 
                                 <div class="flex justify-between items-start gap-2">
-                                    <div>
-                                        <div class="text-starlight font-medium">5. Status Hubungan</div>
-                                        <div class="text-[11px] text-mutedLavender">Tipe data belum dideklarasikan</div>
+                                    <div class="pr-2">
+                                        <div class="text-starlight font-medium text-[11px] sm:text-xs">5. Status Hubungan</div>
+                                        <div class="text-[10px] sm:text-[11px] text-mutedLavender">Tipe data belum dideklarasikan</div>
                                     </div>
-                                    <span class="text-nebulaViolet font-bold shrink-0">NYAMAN_AJA</span>
+                                    <span class="text-nebulaViolet font-bold shrink-0 text-[11px] sm:text-xs">NYAMAN_AJA</span>
                                 </div>
                             </div>
 
                             <!-- Totals -->
-                            <div class="space-y-1.5 border-b border-dashed border-white/20 pb-4 mb-4 text-xs">
+                            <div class="space-y-1.5 border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4 text-[11px] sm:text-xs">
                                 <div class="flex justify-between">
                                     <span class="text-mutedLavender">SUBTOTAL KESERUAN</span>
                                     <span class="font-bold text-starlight">∞ (TAK TERHINGGA)</span>
@@ -729,25 +751,25 @@
                                     <span class="text-mutedLavender">DISKON CANGGUNG</span>
                                     <span class="text-electricCyan">- 100%</span>
                                 </div>
-                                <div class="flex justify-between text-sm font-bold pt-1 text-cyberRose">
+                                <div class="flex justify-between text-xs sm:text-sm font-bold pt-1 text-cyberRose">
                                     <span>TOTAL PRIORITAS</span>
                                     <span>HIGH_PRIORITY ♥</span>
                                 </div>
                             </div>
 
                             <!-- Interactive Stamp Area -->
-                            <div class="text-center space-y-3">
-                                <div id="receipt-stamp" class="inline-block border-2 border-cyberRose text-cyberRose font-mono font-bold text-xs px-3 py-1 rounded -rotate-6 tracking-widest opacity-90">
+                            <div class="text-center space-y-2.5 sm:space-y-3">
+                                <div id="receipt-stamp" class="inline-block border-2 border-cyberRose text-cyberRose font-mono font-bold text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded -rotate-6 tracking-widest opacity-90">
                                     ★ VERIFIED LEVEL 19 ★
                                 </div>
 
                                 <!-- Fake Barcode SVG -->
-                                <div class="pt-2 flex justify-center opacity-75">
-                                    <svg class="h-10 w-48 fill-current text-starlight" viewBox="0 0 200 40">
+                                <div class="pt-1.5 flex justify-center opacity-75">
+                                    <svg class="h-8 sm:h-10 w-40 sm:w-48 fill-current text-starlight" viewBox="0 0 200 40">
                                         <rect x="4" y="2" width="3" height="36"/><rect x="10" y="2" width="1.5" height="36"/><rect x="15" y="2" width="4" height="36"/><rect x="22" y="2" width="2" height="36"/><rect x="28" y="2" width="5" height="36"/><rect x="36" y="2" width="1.5" height="36"/><rect x="40" y="2" width="3" height="36"/><rect x="47" y="2" width="2" height="36"/><rect x="52" y="2" width="6" height="36"/><rect x="61" y="2" width="1.5" height="36"/><rect x="66" y="2" width="3" height="36"/><rect x="72" y="2" width="4" height="36"/><rect x="80" y="2" width="2" height="36"/><rect x="85" y="2" width="5" height="36"/><rect x="93" y="2" width="1.5" height="36"/><rect x="98" y="2" width="4" height="36"/><rect x="105" y="2" width="2" height="36"/><rect x="110" y="2" width="6" height="36"/><rect x="119" y="2" width="2" height="36"/><rect x="124" y="2" width="3" height="36"/><rect x="131" y="2" width="5" height="36"/><rect x="139" y="2" width="1.5" height="36"/><rect x="144" y="2" width="4" height="36"/><rect x="151" y="2" width="2" height="36"/><rect x="156" y="2" width="5" height="36"/><rect x="164" y="2" width="3" height="36"/><rect x="170" y="2" width="1.5" height="36"/><rect x="175" y="2" width="4" height="36"/><rect x="182" y="2" width="2" height="36"/><rect x="188" y="2" width="6" height="36"/>
                                     </svg>
                                 </div>
-                                <p class="text-[11px] text-mutedLavender">
+                                <p class="text-[10px] sm:text-[11px] text-mutedLavender">
                                     TERIMA KASIH SUDAH JADI PARTNER MAIN TERBAIK!
                                 </p>
 
@@ -765,14 +787,14 @@
                 <!-- RIGHT: F-04 Interactive Polaroid Deck (Draggable & Swipeable) -->
                 <div class="lg:col-span-7 flex flex-col">
                     <!-- Controls Bar -->
-                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4 bg-velvet/70 border border-white/10 rounded-2xl px-4 py-3">
-                        <div class="flex items-center gap-2 font-mono text-xs text-mutedLavender">
-                            <span class="w-2 h-2 rounded-full bg-nebulaViolet"></span>
-                            <span>Geser kartu pakai jari / mouse, atau ganti foto asli!</span>
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 mb-3 sm:mb-4 bg-velvet/70 border border-white/10 rounded-2xl p-3 sm:px-4 sm:py-3">
+                        <div class="flex items-center gap-2 font-mono text-[11px] sm:text-xs text-mutedLavender">
+                            <span class="w-2 h-2 rounded-full bg-nebulaViolet shrink-0"></span>
+                            <span>Geser kartu atau ganti foto asli:</span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button id="shuffle-polaroids-btn" class="spring-btn px-3 py-1.5 rounded-lg bg-cyberRose/15 hover:bg-cyberRose/30 text-cyberRose border border-cyberRose/30 font-mono text-xs">
-                                Ganti Kartu Depan -&gt;
+                        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                            <button id="shuffle-polaroids-btn" class="spring-btn flex-1 sm:flex-initial px-3 py-1.5 rounded-lg bg-cyberRose/15 hover:bg-cyberRose/30 text-cyberRose border border-cyberRose/30 font-mono text-xs text-center">
+                                Ganti Kartu -&gt;
                             </button>
                             <button id="reset-polaroids-btn" class="spring-btn px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-mutedLavender border border-white/10 font-mono text-xs">
                                 Rapikan
@@ -781,25 +803,25 @@
                     </div>
 
                     <!-- Polaroid Interactive Stage -->
-                    <div id="polaroid-stage" class="relative w-full min-h-[450px] sm:min-h-[500px] rounded-3xl bg-velvet/40 border border-white/10 p-4 sm:p-8 flex items-center justify-center overflow-hidden">
+                    <div id="polaroid-stage" class="relative w-full min-h-[420px] sm:min-h-[500px] rounded-3xl bg-velvet/40 border border-white/10 p-3 sm:p-8 flex items-center justify-center overflow-hidden">
                         <!-- Subtle Grid Background Inside Stage -->
                         <div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(#8B5CF6 1px, transparent 1px); background-size: 24px 24px;"></div>
 
                         <!-- Polaroid 1 -->
-                        <div class="polaroid-card absolute w-64 sm:w-72 p-3.5 pb-5 rounded-2xl" data-rot="-3.5" data-x="-28" data-y="-14" style="transform: translate3d(-28px, -14px, 0) rotate(-3.5deg); z-index: 10;">
-                            <div class="washi-tape-cyan w-20 h-5 absolute -top-2.5 left-1/2 -translate-x-1/2 -rotate-2 rounded-sm pointer-events-none"></div>
-                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-3 group">
+                        <div class="polaroid-card absolute w-[230px] sm:w-72 p-3 sm:p-3.5 pb-4 sm:pb-5 rounded-2xl" data-rot="-3" data-x="-12" data-y="-8" style="transform: translate3d(-12px, -8px, 0) rotate(-3deg); z-index: 10;">
+                            <div class="washi-tape-cyan w-16 sm:w-20 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 -rotate-2 rounded-sm pointer-events-none"></div>
+                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-2.5 sm:mb-3 group">
                                 <img id="pol-img-1" src="" alt="Memori 1" class="hidden w-full h-full object-cover pointer-events-none">
                                 <!-- Custom Cyber-Romantic Illustration SVG -->
-                                <div id="pol-svg-1" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#1A102B] via-[#0F172A] to-[#2A0E24] p-4 text-center">
-                                    <svg class="w-16 h-16 mb-2 text-cyberRose" viewBox="0 0 64 64" fill="none">
+                                <div id="pol-svg-1" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#1A102B] via-[#0F172A] to-[#2A0E24] p-3 sm:p-4 text-center">
+                                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-1.5 sm:mb-2 text-cyberRose" viewBox="0 0 64 64" fill="none">
                                         <path d="M16 36C16 26 24 20 32 20C40 20 48 26 48 36" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"/>
                                         <circle cx="22" cy="40" r="6" stroke="#FF2A85" stroke-width="2.5"/>
                                         <circle cx="42" cy="40" r="6" stroke="#FF2A85" stroke-width="2.5"/>
                                         <path d="M32 10L34 15L39 16L35 19L36 24L32 21L28 24L29 19L25 16L30 15L32 10Z" fill="#8B5CF6"/>
                                     </svg>
-                                    <span class="font-mono text-[11px] text-electricCyan">Misi Keliling &amp; Cari Angin</span>
-                                    <span class="text-[10px] text-mutedLavender mt-0.5">"Tujuan awal ke A, nyampenya ke B"</span>
+                                    <span class="font-mono text-[10px] sm:text-[11px] text-electricCyan">Misi Keliling &amp; Cari Angin</span>
+                                    <span class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">"Tujuan awal ke A, nyampenya ke B"</span>
                                 </div>
                                 <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
                                     + Foto
@@ -810,24 +832,24 @@
                                 <span>MEM_01.RAW</span>
                                 <span class="text-cyberRose">♥ FAV</span>
                             </div>
-                            <p class="font-hand text-xl sm:text-2xl text-starlight leading-snug">
+                            <p class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
                                 "Pas bingung mau ke mana tapi yang penting jalan berdua dulu!"
                             </p>
                         </div>
 
                         <!-- Polaroid 2 -->
-                        <div class="polaroid-card absolute w-64 sm:w-72 p-3.5 pb-5 rounded-2xl" data-rot="2.8" data-x="26" data-y="16" style="transform: translate3d(26px, 16px, 0) rotate(2.8deg); z-index: 20;">
-                            <div class="washi-tape w-20 h-5 absolute -top-2.5 left-1/2 -translate-x-1/2 rotate-3 rounded-sm pointer-events-none"></div>
-                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-3">
+                        <div class="polaroid-card absolute w-[230px] sm:w-72 p-3 sm:p-3.5 pb-4 sm:pb-5 rounded-2xl" data-rot="2.5" data-x="12" data-y="10" style="transform: translate3d(12px, 10px, 0) rotate(2.5deg); z-index: 20;">
+                            <div class="washi-tape w-16 sm:w-20 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 rotate-3 rounded-sm pointer-events-none"></div>
+                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-2.5 sm:mb-3">
                                 <img id="pol-img-2" src="" alt="Memori 2" class="hidden w-full h-full object-cover pointer-events-none">
-                                <div id="pol-svg-2" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#121E31] via-[#1B112C] to-[#2D0F28] p-4 text-center">
-                                    <svg class="w-16 h-16 mb-2" viewBox="0 0 64 64" fill="none">
+                                <div id="pol-svg-2" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#121E31] via-[#1B112C] to-[#2D0F28] p-3 sm:p-4 text-center">
+                                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-1.5 sm:mb-2" viewBox="0 0 64 64" fill="none">
                                         <rect x="14" y="18" width="24" height="30" rx="4" stroke="#FF2A85" stroke-width="2.5"/>
                                         <path d="M38 24H44C47.3137 24 50 26.6863 50 30C50 33.3137 47.3137 36 44 36H38" stroke="#00E5FF" stroke-width="2.5"/>
                                         <path d="M22 12C22 12 24 8 26 12C28 16 30 12 30 12" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round"/>
                                     </svg>
-                                    <span class="font-mono text-[11px] text-cyberRose">Kuliner &amp; Jajan Berdua</span>
-                                    <span class="text-[10px] text-mutedLavender mt-0.5">Obat paling ampuh habis pusing kuliah</span>
+                                    <span class="font-mono text-[10px] sm:text-[11px] text-cyberRose">Kuliner &amp; Jajan Berdua</span>
+                                    <span class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Obat paling ampuh habis pusing kuliah</span>
                                 </div>
                                 <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
                                     + Foto
@@ -838,26 +860,26 @@
                                 <span>MEM_02.RAW</span>
                                 <span class="text-electricCyan">10/10 SERU</span>
                             </div>
-                            <p class="font-hand text-xl sm:text-2xl text-starlight leading-snug">
+                            <p class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
                                 "Bilangnya 'terserah', tapi pas nyampe tempat makan langsung senyum."
                             </p>
                         </div>
 
                         <!-- Polaroid 3 (Top of Stack) -->
-                        <div class="polaroid-card absolute w-64 sm:w-72 p-3.5 pb-5 rounded-2xl" data-rot="-1.5" data-x="0" data-y="-4" style="transform: translate3d(0px, -4px, 0) rotate(-1.5deg); z-index: 30;">
-                            <div class="washi-tape w-24 h-5 absolute -top-2.5 left-1/2 -translate-x-1/2 -rotate-1 rounded-sm pointer-events-none"></div>
-                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-3">
+                        <div class="polaroid-card absolute w-[230px] sm:w-72 p-3 sm:p-3.5 pb-4 sm:pb-5 rounded-2xl" data-rot="-1" data-x="0" data-y="-4" style="transform: translate3d(0px, -4px, 0) rotate(-1deg); z-index: 30;">
+                            <div class="washi-tape w-20 sm:w-24 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 -rotate-1 rounded-sm pointer-events-none"></div>
+                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-2.5 sm:mb-3">
                                 <img id="pol-img-3" src="" alt="Memori 3" class="hidden w-full h-full object-cover pointer-events-none">
-                                <div id="pol-svg-3" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#230E2B] via-[#131129] to-[#0B232E] p-4 text-center">
-                                    <svg class="w-16 h-16 mb-2" viewBox="0 0 64 64" fill="none">
+                                <div id="pol-svg-3" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#230E2B] via-[#131129] to-[#0B232E] p-3 sm:p-4 text-center">
+                                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-1.5 sm:mb-2" viewBox="0 0 64 64" fill="none">
                                         <rect x="10" y="14" width="44" height="30" rx="3" stroke="#00E5FF" stroke-width="2.5"/>
                                         <path d="M6 48H58" stroke="#8B5CF6" stroke-width="3" stroke-linecap="round"/>
                                         <path d="M24 25L19 29L24 33" stroke="#FF2A85" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M40 25L45 29L40 33" stroke="#FF2A85" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M34 23L30 35" stroke="#F4F4F6" stroke-width="2" stroke-linecap="round"/>
                                     </svg>
-                                    <span class="font-mono text-[11px] text-nebulaViolet">Pejuang S1 Informatika '26</span>
-                                    <span class="text-[10px] text-mutedLavender mt-0.5">Semester 1 Core Memory</span>
+                                    <span class="font-mono text-[10px] sm:text-[11px] text-nebulaViolet">Pejuang S1 Informatika '26</span>
+                                    <span class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Semester 1 Core Memory</span>
                                 </div>
                                 <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
                                     + Foto
@@ -868,15 +890,15 @@
                                 <span>MEM_03.RAW</span>
                                 <span class="text-cyberRose">LEVEL 19 ♥</span>
                             </div>
-                            <p class="font-hand text-xl sm:text-2xl text-starlight leading-snug">
+                            <p class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
                                 "Partner cerita, partner main, &amp; alasan kenapa Semester 1 nggak ngebosenin."
                             </p>
                         </div>
 
                         <!-- Bottom Helper Caption -->
-                        <div class="absolute bottom-3 inset-x-0 text-center pointer-events-none">
-                            <span class="font-mono text-[11px] text-mutedLavender/70 bg-obsidian/70 px-3 py-1 rounded-full border border-white/5">
-                                Tip: Tarik kartu polaroid ke mana aja atau klik "+ Foto" untuk pasang foto Zizuy
+                        <div class="absolute bottom-2 sm:bottom-3 inset-x-0 text-center pointer-events-none px-2">
+                            <span class="font-mono text-[10px] sm:text-[11px] text-mutedLavender/80 bg-obsidian/80 px-2.5 py-1 rounded-full border border-white/10">
+                                Tip: Tarik kartu polaroid ke mana aja atau klik "+ Foto"
                             </span>
                         </div>
                     </div>
@@ -888,54 +910,54 @@
         <!-- ===============================================================
              SECTION 3: ZIZUY'S QUEST CHOICE — MINI RPG VISUAL NOVEL (F-05)
              =============================================================== -->
-        <section id="quest-section" class="reveal-on-scroll relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-24 border-t border-white/5">
+        <section id="quest-section" class="reveal-on-scroll relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-24 border-t border-white/5">
             <!-- Section Header -->
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <div class="inline-flex items-center gap-2 font-mono text-xs text-electricCyan uppercase tracking-widest mb-2">
+            <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+                <div class="inline-flex items-center gap-2 font-mono text-[11px] sm:text-xs text-electricCyan uppercase tracking-widest mb-1.5 sm:mb-2">
                     <span>// 03. MINI RPG INTERACTIVE QUEST</span>
                 </div>
-                <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-starlight">
+                <h2 class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight">
                     Zizuy's Quest: Road to Lv.19
                 </h2>
-                <p class="text-sm sm:text-base text-mutedLavender mt-2">
+                <p class="text-xs sm:text-base text-mutedLavender mt-2 leading-relaxed">
                     Selesaikan 3 babak singkat seputar keseharian kita buat membuka <strong class="text-starlight">Reward Voucher Asli</strong> yang bisa kamu klaim kapan aja!
                 </p>
             </div>
 
             <!-- RPG Game Console Container -->
-            <div class="velvet-card rounded-3xl p-5 sm:p-8 md:p-10 border border-white/15 relative overflow-hidden">
+            <div class="velvet-card rounded-2xl sm:rounded-3xl p-4 sm:p-8 md:p-10 border border-white/15 relative overflow-hidden">
                 
                 <!-- Top Player HUD -->
-                <div class="flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-white/10">
-                    <div class="flex items-center gap-3.5">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyberRose via-nebulaViolet to-electricCyan p-[1.5px]">
-                            <div class="w-full h-full bg-obsidian rounded-[14px] flex items-center justify-center font-display font-extrabold text-lg text-starlight">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 sm:pb-5 mb-5 sm:mb-6 border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-cyberRose via-nebulaViolet to-electricCyan p-[1.5px] shrink-0">
+                            <div class="w-full h-full bg-obsidian rounded-[14px] flex items-center justify-center font-display font-extrabold text-base sm:text-lg text-starlight">
                                 Z19
                             </div>
                         </div>
                         <div>
                             <div class="flex items-center gap-2">
-                                <span class="font-display font-bold text-base sm:text-lg text-starlight">Azizah Nazwa (Zizuy)</span>
-                                <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-cyberRose/20 text-cyberRose border border-cyberRose/30">Lv. 19</span>
+                                <span class="font-display font-bold text-sm sm:text-lg text-starlight">Azizah Nazwa (Zizuy)</span>
+                                <span class="font-mono text-[10px] sm:text-[11px] px-2 py-0.5 rounded bg-cyberRose/20 text-cyberRose border border-cyberRose/30">Lv. 19</span>
                             </div>
-                            <p class="font-mono text-xs text-mutedLavender">
+                            <p class="font-mono text-[11px] sm:text-xs text-mutedLavender mt-0.5">
                                 Class: <span class="text-electricCyan">S1 Informatika '26</span> • Buff: <span class="text-starlight">Bikin Nyaman +100</span>
                             </p>
                         </div>
                     </div>
 
                     <!-- Stage Progress Indicator -->
-                    <div class="flex items-center gap-2 font-mono text-xs">
-                        <span id="step-dot-1" class="px-3 py-1 rounded-full bg-cyberRose text-white font-bold">Stage 1</span>
+                    <div class="flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-xs self-start sm:self-auto">
+                        <span id="step-dot-1" class="px-2.5 sm:px-3 py-1 rounded-full bg-cyberRose text-white font-bold">Stage 1</span>
                         <span class="text-white/20">-&gt;</span>
-                        <span id="step-dot-2" class="px-3 py-1 rounded-full bg-white/5 text-mutedLavender border border-white/10">Stage 2</span>
+                        <span id="step-dot-2" class="px-2.5 sm:px-3 py-1 rounded-full bg-white/5 text-mutedLavender border border-white/10">Stage 2</span>
                         <span class="text-white/20">-&gt;</span>
-                        <span id="step-dot-3" class="px-3 py-1 rounded-full bg-white/5 text-mutedLavender border border-white/10">Reward</span>
+                        <span id="step-dot-3" class="px-2.5 sm:px-3 py-1 rounded-full bg-white/5 text-mutedLavender border border-white/10">Reward</span>
                     </div>
                 </div>
 
                 <!-- Dynamic Quest Stage Body -->
-                <div id="quest-body" class="min-h-[260px] flex flex-col justify-between">
+                <div id="quest-body" class="min-h-[240px] sm:min-h-[260px] flex flex-col justify-between">
                     <!-- Populated dynamically by JS -->
                 </div>
 
@@ -945,30 +967,30 @@
         <!-- ===============================================================
              SECTION 4: THE UNCOMPILED LETTER & BINARY FIREFLIES (F-06)
              =============================================================== -->
-        <section id="letter-section" class="reveal-on-scroll relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-28 border-t border-white/5">
+        <section id="letter-section" class="reveal-on-scroll relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-28 border-t border-white/5">
             <!-- Binary Firefly Background Canvas -->
-            <div class="relative rounded-3xl velvet-card-rose p-6 sm:p-10 md:p-14 overflow-hidden">
+            <div class="relative rounded-2xl sm:rounded-3xl velvet-card-rose p-5 sm:p-10 md:p-14 overflow-hidden">
                 <canvas id="firefly-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-65"></canvas>
 
                 <div class="relative z-10">
                     <!-- Letter Header -->
-                    <div class="flex flex-wrap items-center justify-between gap-2 pb-6 mb-8 border-b border-white/10">
-                        <div class="font-mono text-xs text-cyberRose flex items-center gap-2">
+                    <div class="flex flex-wrap items-center justify-between gap-2 pb-5 sm:pb-6 mb-6 sm:mb-8 border-b border-white/10">
+                        <div class="font-mono text-[11px] sm:text-xs text-cyberRose flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
                             <span>FILE: uncompiled_letter_for_zizuy.md</span>
                         </div>
-                        <span class="font-mono text-xs text-mutedLavender">
+                        <span class="font-mono text-[10px] sm:text-xs text-mutedLavender">
                             23 November 2026 • 19th Birthday Edition
                         </span>
                     </div>
 
                     <!-- Greeting -->
-                    <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-starlight mb-6">
-                        Hai, Azizah Nazwa Novita <span class="font-hand text-cyberRose text-3xl sm:text-5xl ml-1">Zizuy!</span>
+                    <h2 class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-5 sm:mb-6">
+                        Hai, Azizah Nazwa Novita <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
                     </h2>
 
                     <!-- Progressive Reveal Letter Content -->
-                    <div id="letter-paragraphs" class="space-y-5 text-base sm:text-lg text-starlight/90 leading-relaxed">
+                    <div id="letter-paragraphs" class="space-y-4 sm:space-y-5 text-sm sm:text-base md:text-lg text-starlight/90 leading-relaxed">
                         <p class="letter-paragraph revealed">
                             Selamat ulang tahun yang ke-19 ya, Zuy! Rasanya baru kemarin kita sama-sama masuk Semester 1 di S1 Informatika, adaptasi sama lingkungan baru, tugas koding, dan segala kerandomannya—tau-tau sekarang kamu udah resmi naik ke <strong class="text-electricCyan font-mono">Level 19</strong>.
                         </p>
@@ -985,20 +1007,20 @@
                             Di umur 19 tahun ini, semoga semua hal baik yang lagi kamu usahain dimudahkan jalannya. Semoga kuliah Informatikanya lancar terus, kodingannya jarang kena <em class="text-electricCyan">error</em>, makin bahagia, sehat selalu, dan jangan pernah kehilangan sisi ceria kamu yang selalu bikin orang di dekatmu ikut senyum (dan kadang salah tingkah sendiri).
                         </p>
 
-                        <p class="letter-paragraph font-hand text-2xl sm:text-3xl text-cyberRose pt-3">
+                        <p class="letter-paragraph font-hand text-xl sm:text-3xl text-cyberRose pt-2 sm:pt-3">
                             Happy 19th Birthday, Zizuy! Habis ini, ayo kita agendakan jalan berdua lagi ya. ✨
                         </p>
                     </div>
 
                     <!-- Reveal Next Button / Complete Footer -->
-                    <div class="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-                        <button id="reveal-letter-btn" class="spring-btn px-6 py-3.5 rounded-2xl bg-gradient-to-r from-cyberRose to-nebulaViolet text-white font-mono text-xs sm:text-sm font-bold shadow-[0_0_25px_rgba(255,42,133,0.4)] flex items-center gap-2">
+                    <div class="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                        <button id="reveal-letter-btn" class="spring-btn w-full sm:w-auto px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyberRose to-nebulaViolet text-white font-mono text-xs sm:text-sm font-bold shadow-[0_0_25px_rgba(255,42,133,0.4)] flex items-center justify-center gap-2">
                             <span id="reveal-btn-text">Buka Paragraf Selanjutnya (1/4)</span>
                             <span>-&gt;</span>
                         </button>
 
                         <div class="flex items-center gap-2">
-                            <button id="heart-burst-btn" class="spring-btn px-4 py-3 rounded-2xl bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/40 font-mono text-xs text-starlight flex items-center gap-2">
+                            <button id="heart-burst-btn" class="spring-btn w-full sm:w-auto px-4 py-3 rounded-xl sm:rounded-2xl bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/40 font-mono text-xs text-starlight flex items-center justify-center gap-2">
                                 <span class="text-cyberRose text-base">♥</span>
                                 <span>Kirim Efek Salting (<span id="salting-counter">19</span>)</span>
                             </button>
@@ -1009,7 +1031,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="relative z-10 border-t border-white/10 py-10 text-center font-mono text-xs text-mutedLavender px-4">
+        <footer class="relative z-10 border-t border-white/10 py-8 sm:py-10 text-center font-mono text-[11px] sm:text-xs text-mutedLavender px-4">
             <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                     PROJECT ZIZUY // v19.0 — <span class="text-starlight">"Uncompiled Memories"</span>
@@ -1855,35 +1877,35 @@
             if (questState.stage === 1 || questState.stage === 2) {
                 const data = questState.stage === 1 ? questData.stage1 : questData.stage2;
                 container.innerHTML = `
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <span class="font-mono text-xs text-electricCyan tracking-wider uppercase">${data.tag}</span>
-                            <h3 class="font-display font-bold text-xl sm:text-2xl text-starlight leading-snug">
+                    <div class="space-y-4 sm:space-y-6">
+                        <div class="space-y-1.5 sm:space-y-2">
+                            <span class="font-mono text-[11px] sm:text-xs text-electricCyan tracking-wider uppercase">${data.tag}</span>
+                            <h3 class="font-display font-bold text-lg sm:text-2xl text-starlight leading-snug">
                                 "${data.narrative}"
                             </h3>
                         </div>
 
-                        <div class="grid grid-cols-1 gap-3.5">
+                        <div class="grid grid-cols-1 gap-2.5 sm:gap-3.5">
                             ${data.options.map((opt, idx) => `
-                                <button onclick="selectQuestOption(${questState.stage}, ${idx})" class="spring-btn text-left w-full p-4 sm:p-5 rounded-2xl bg-obsidian/70 hover:bg-cyberRose/15 border border-white/10 hover:border-cyberRose/50 flex items-center justify-between gap-4 group">
-                                    <div class="flex items-center gap-3.5">
-                                        <span class="w-8 h-8 rounded-xl bg-white/5 group-hover:bg-cyberRose group-hover:text-white font-mono font-bold text-xs flex items-center justify-center text-electricCyan border border-white/10 transition-colors shrink-0">
+                                <button onclick="selectQuestOption(${questState.stage}, ${idx})" class="spring-btn text-left w-full p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-obsidian/70 hover:bg-cyberRose/15 border border-white/10 hover:border-cyberRose/50 flex items-center justify-between gap-3 sm:gap-4 group">
+                                    <div class="flex items-center gap-2.5 sm:gap-3.5">
+                                        <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-white/5 group-hover:bg-cyberRose group-hover:text-white font-mono font-bold text-xs flex items-center justify-center text-electricCyan border border-white/10 transition-colors shrink-0">
                                             ${opt.id}
                                         </span>
-                                        <span class="text-sm sm:text-base text-starlight font-medium">
+                                        <span class="text-xs sm:text-base text-starlight font-medium leading-snug">
                                             ${opt.text}
                                         </span>
                                     </div>
-                                    <span class="font-mono text-xs text-mutedLavender group-hover:text-cyberRose shrink-0">
+                                    <span class="font-mono text-[11px] sm:text-xs text-mutedLavender group-hover:text-cyberRose shrink-0 hidden xs:inline">
                                         Pilih -&gt;
                                     </span>
                                 </button>
                             `).join('')}
                         </div>
 
-                        <div id="quest-reaction-box" class="hidden rounded-2xl bg-nebulaViolet/15 border border-nebulaViolet/40 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div id="quest-reaction-box" class="hidden rounded-xl sm:rounded-2xl bg-nebulaViolet/15 border border-nebulaViolet/40 p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                             <p id="quest-reaction-text" class="text-xs sm:text-sm text-starlight leading-relaxed"></p>
-                            <button onclick="nextQuestStage()" class="spring-btn shrink-0 px-5 py-2.5 rounded-xl bg-cyberRose text-white font-mono text-xs font-bold">
+                            <button onclick="nextQuestStage()" class="spring-btn shrink-0 w-full sm:w-auto px-5 py-2.5 rounded-xl bg-cyberRose text-white font-mono text-xs font-bold text-center">
                                 Lanjut, Zuy -&gt;
                             </button>
                         </div>
@@ -1891,10 +1913,10 @@
                 `;
             } else if (questState.stage === 3) {
                 container.innerHTML = `
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <span class="font-mono text-xs text-cyberRose tracking-wider uppercase">STAGE 3 // KLAIM HADIAH LEVEL 19 (REWARD BUFF)</span>
-                            <h3 class="font-display font-bold text-xl sm:text-2xl text-starlight leading-snug">
+                    <div class="space-y-4 sm:space-y-6">
+                        <div class="space-y-1.5 sm:space-y-2">
+                            <span class="font-mono text-[11px] sm:text-xs text-cyberRose tracking-wider uppercase">STAGE 3 // KLAIM HADIAH LEVEL 19 (REWARD BUFF)</span>
+                            <h3 class="font-display font-bold text-lg sm:text-2xl text-starlight leading-snug">
                                 Selamat! Zizuy berhasil menyelesaikan Quest Semester 1 &amp; naik ke Level 19. Pilih 1 kartu hadiah di bawah ini:
                             </h3>
                             <p class="text-xs sm:text-sm text-mutedLavender">
@@ -1902,21 +1924,21 @@
                             </p>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                             ${questData.rewards.map((rw, idx) => `
-                                <div onclick="claimRewardCard(${idx})" class="spring-btn cursor-pointer rounded-2xl p-5 bg-obsidian/80 hover:bg-velvet border border-white/15 hover:border-electricCyan flex flex-col justify-between gap-4 relative overflow-hidden group">
+                                <div onclick="claimRewardCard(${idx})" class="spring-btn cursor-pointer rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-obsidian/80 hover:bg-velvet border border-white/15 hover:border-electricCyan flex flex-col justify-between gap-3 sm:gap-4 relative overflow-hidden group">
                                     <div>
-                                        <span class="inline-block font-mono text-[10px] px-2.5 py-1 rounded-full bg-electricCyan/15 text-electricCyan border border-electricCyan/30 mb-3">
+                                        <span class="inline-block font-mono text-[10px] px-2.5 py-1 rounded-full bg-electricCyan/15 text-electricCyan border border-electricCyan/30 mb-2 sm:mb-3">
                                             ${rw.badge}
                                         </span>
-                                        <h4 class="font-display font-bold text-lg text-starlight group-hover:text-electricCyan transition-colors">
+                                        <h4 class="font-display font-bold text-base sm:text-lg text-starlight group-hover:text-electricCyan transition-colors">
                                             [${rw.title}]
                                         </h4>
-                                        <p class="text-xs text-mutedLavender mt-2 leading-relaxed">
+                                        <p class="text-xs text-mutedLavender mt-1.5 sm:mt-2 leading-relaxed">
                                             ${rw.desc}
                                         </p>
                                     </div>
-                                    <div class="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-xs text-cyberRose">
+                                    <div class="pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between font-mono text-xs text-cyberRose">
                                         <span>Klaim Hadiah Ini</span>
                                         <span>-&gt;</span>
                                     </div>
@@ -1928,36 +1950,36 @@
             } else if (questState.stage === 4 && questState.selectedReward) {
                 const rw = questState.selectedReward;
                 container.innerHTML = `
-                    <div class="space-y-6">
-                        <div class="rounded-2xl bg-gradient-to-r from-cyberRose/20 via-nebulaViolet/20 to-electricCyan/20 border border-electricCyan/50 p-6 sm:p-8 relative overflow-hidden">
-                            <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-white/15">
-                                <span class="font-mono text-xs font-bold text-electricCyan">
+                    <div class="space-y-4 sm:space-y-6">
+                        <div class="rounded-2xl bg-gradient-to-r from-cyberRose/20 via-nebulaViolet/20 to-electricCyan/20 border border-electricCyan/50 p-4 sm:p-8 relative overflow-hidden">
+                            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 sm:pb-4 mb-3 sm:mb-4 border-b border-white/15">
+                                <span class="font-mono text-[11px] sm:text-xs font-bold text-electricCyan">
                                     ★ OFFICIAL LEVEL 19 REWARD VOUCHER ★
                                 </span>
-                                <span class="font-mono text-xs text-starlight bg-obsidian/70 px-3 py-1 rounded-full border border-white/10">
+                                <span class="font-mono text-[10px] sm:text-xs text-starlight bg-obsidian/70 px-2.5 sm:px-3 py-1 rounded-full border border-white/10">
                                     KODE: ${rw.code}
                                 </span>
                             </div>
 
-                            <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-starlight mb-2">
+                            <h3 class="font-display font-extrabold text-xl sm:text-3xl text-starlight mb-1.5 sm:mb-2">
                                 ${rw.title}
                             </h3>
-                            <p class="text-sm text-starlight/85 mb-5 max-w-xl">
+                            <p class="text-xs sm:text-sm text-starlight/85 mb-4 sm:mb-5 max-w-xl">
                                 ${rw.desc}
                             </p>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-obsidian/65 rounded-xl p-4 font-mono text-xs text-mutedLavender mb-6 border border-white/10">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 bg-obsidian/65 rounded-xl p-3 sm:p-4 font-mono text-[11px] sm:text-xs text-mutedLavender mb-4 sm:mb-6 border border-white/10">
                                 <div>PEMILIK: <strong class="text-starlight">Azizah Nazwa Novita (Zizuy)</strong></div>
                                 <div>MASA BERLAKU: <strong class="text-electricCyan">Kapan Aja Tanpa Kadaluarsa</strong></div>
                                 <div>GAYA KULIAH: <strong class="text-starlight">Opsi ${questState.ans1.id}</strong></div>
                                 <div>GAYA MAIN BERDUA: <strong class="text-starlight">Opsi ${questState.ans2.id}</strong></div>
                             </div>
 
-                            <div class="flex flex-wrap items-center gap-3">
-                                <button onclick="copyVoucherClaim()" class="spring-btn px-6 py-3 rounded-xl bg-electricCyan text-obsidian font-mono font-bold text-xs sm:text-sm">
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
+                                <button onclick="copyVoucherClaim()" class="spring-btn w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-electricCyan text-obsidian font-mono font-bold text-xs sm:text-sm text-center">
                                     Salin Pesan Klaim Hadiah
                                 </button>
-                                <button onclick="resetQuest()" class="spring-btn px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-mutedLavender font-mono text-xs border border-white/10">
+                                <button onclick="resetQuest()" class="spring-btn w-full sm:w-auto px-4 py-2.5 sm:py-3 rounded-xl bg-white/5 hover:bg-white/10 text-mutedLavender font-mono text-xs border border-white/10 text-center">
                                     Lihat Pilihan Hadiah Lain
                                 </button>
                             </div>
