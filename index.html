@@ -93,6 +93,19 @@
             font-display: swap;
         }
 
+        /* All Buttons / Action CTA Buttons Use News701 BT (Microsoft Word Bold Serif) */
+        button:not([onclick*="selectQuestOption"]),
+        .spring-btn:not([onclick*="selectQuestOption"]),
+        #gate-late-enter-btn,
+        #gate-late-enter-btn span,
+        #run-exe-btn,
+        #run-exe-btn span,
+        #reveal-letter-btn,
+        #heart-burst-btn,
+        .font-btn-news {
+            font-family: 'News701 BT', 'Georgia', serif !important;
+        }
+
         /* Quest Trivia Soal (News701 BT) */
         .font-quest-question,
         #quest-body h3,
@@ -732,7 +745,7 @@
 
             <!-- BUTTON KHUSUS: MUNCUL KETIKA WAKTU SUDAH LEWAT DARI 23 NOVEMBER 00:00 WIB -->
             <div id="gate-late-container" class="hidden flex-col items-center text-center mt-1 sm:mt-2">
-                <button id="gate-late-enter-btn" type="button" onclick="openLoveIntroGate()" class="spring-btn group relative px-6 sm:px-9 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan text-white font-sans font-bold text-xs sm:text-sm md:text-base shadow-[0_10px_30px_rgba(255,42,133,0.4)] hover:scale-105 transition-all flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer">
+                <button id="gate-late-enter-btn" type="button" onclick="openLoveIntroGate()" class="spring-btn font-quest-question group relative px-6 sm:px-9 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan text-white font-bold text-xs sm:text-sm md:text-base shadow-[0_10px_30px_rgba(255,42,133,0.4)] hover:scale-105 transition-all flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer">
                     <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f496/512.webp" alt="💖" class="noto-3d w-6 h-6" onerror="this.outerHTML='<span class=\'text-xl\'>💖</span>'">
                     <span class="tracking-wide">yahh sayangg udah lewat jam nya klik disini yachh</span>
                     <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp" alt="✨" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span class=\'text-xl\'>✨</span>'">
@@ -1426,7 +1439,7 @@
 
                         <!-- Reveal Next Button / Complete Footer -->
                         <div class="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-dashed border-white/20 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                            <button id="reveal-letter-btn" class="spring-btn w-full sm:w-auto px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyberRose to-nebulaViolet text-white font-sans text-xs sm:text-sm font-bold shadow-[0_8px_24px_rgba(255,42,133,0.35)] flex items-center justify-center gap-2">
+                            <button id="reveal-letter-btn" class="spring-btn font-quest-question w-full sm:w-auto px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyberRose to-nebulaViolet text-white text-xs sm:text-sm font-bold shadow-[0_8px_24px_rgba(255,42,133,0.35)] flex items-center justify-center gap-2">
                                 <span id="reveal-btn-text">Buka Paragraf Selanjutnya (1/4)</span>
                                 <span>-&gt;</span>
                             </button>
