@@ -143,6 +143,20 @@
         .font-hand {
             font-family: 'Caveat', cursive !important;
         }
+        /* Progressive Reveal for Romance Letter */
+        .romance-para {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transform: translate3d(0, 14px, 0);
+            transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), max-height 0.65s ease;
+        }
+        .romance-para.revealed {
+            opacity: 1;
+            max-height: 1200px;
+            transform: translate3d(0, 0, 0);
+        }
+
 
         /* Sticky Floating Note Card for Section 1 Desktop Layout */
         @media (min-width: 1024px) {
@@ -1564,14 +1578,14 @@
                         <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-dashed border-white/20">
                             <div class="font-mono text-[11px] sm:text-xs text-cyberRose flex items-center gap-2">
                                 <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f48c/512.webp" alt="💌" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>💌</span>'">
-                                <span>SURAT_UNTUK_ZIZUY_ROMANCE_V19.TXT</span>
+                                <span id="romance-letter-file-label">SURAT_UNTUK_ZIZUY_ROMANCE_V19.TXT</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="font-mono text-[10px] text-cyberRose bg-cyberRose/15 px-2.5 py-0.5 rounded-full border border-cyberRose/30 flex items-center gap-1">
                                     <span>♥</span>
                                     <span>Edisi Spesial Dari Hati</span>
                                 </span>
-                                <span class="font-mono text-[10px] sm:text-xs text-mutedLavender">
+                                <span id="romance-letter-date-label" class="font-mono text-[10px] sm:text-xs text-mutedLavender">
                                     23 November 2026 • Level 19
                                 </span>
                             </div>
@@ -1587,24 +1601,24 @@
                             </p>
                         </div>
 
-                        <!-- Romantic Letter Content (Font MV Boli preserved, lined paper) -->
-                        <div id="romance-letter-content" class="font-notes space-y-4 sm:space-y-5 text-sm sm:text-base md:text-lg text-starlight/95 leading-[32px] sm:leading-[36px]">
-                            <p>
-                                Selamat ulang tahun yang ke-19 ya, Azizah Nazwa Novita. Rasanya baru kemarin kita mulai kenal dan adaptasi di kampus, tapi sekarang kamu udah resmi menginjak usia 19 tahun. Waktu emang jalan cepet, tapi setiap detik yang dilewatin bareng kamu selalu ninggalin kesan yang nggak gampang dilupain.
-                            </p>
-                            <p>
-                                Di antara tumpukan tugas koding, laprak yang padat, dan pusingnya materi kuliah, punya kamu di hari-hari belakangan ini tuh bener-bener kayak oasis. Makasih ya udah selalu hadir dengan senyum manismu yang nular, tawa kamu yang renyah, dan caramu yang selalu bikin aku ngerasa nyaman dan dihargai.
-                            </p>
-                            <p>
-                                Mungkin aku nggak selalu jago merangkai kata-kata puitis, tapi web kecil ini adalah caraku buat nunjukin kalau keberadaanmu di hidupku itu beneran spesial dan berarti banget. Kamu itu orang yang luar biasa, baik hatinya, dan pantas dapetin semua kebahagiaan terbaik di dunia ini.
-                            </p>
-                            <p>
-                                Di umur 19 ini, doaku buat kamu nggak akan pernah putus: semoga kamu selalu sehat, selalu bahagia, dimudahkan setiap urusannya, dijauhin dari hal-hal yang bikin sedih, dan semoga aku selalu dikasih kesempatan buat nemenin langkahmu ke depan. Happy 19th Birthday, my favorite person! 💕✨
-                            </p>
+                        <!-- Romantic Letter Progressive Paragraphs (Font MV Boli) -->
+                        <div id="romance-letter-paragraphs" class="font-notes space-y-4 sm:space-y-5 text-sm sm:text-base md:text-lg text-starlight/95 leading-[32px] sm:leading-[36px]">
+                            <!-- Populated dynamically by initRomanceLetter() -->
                         </div>
 
-                        <!-- Handwritten Closing Footer (Font Caveat) -->
-                        <div class="mt-8 pt-5 border-t border-dashed border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <!-- Reveal Next Paragraph Button -->
+                        <div id="romance-reveal-container" class="mt-6 sm:mt-8 pt-5 border-t border-dashed border-white/20 flex flex-col sm:flex-row items-center justify-between gap-3">
+                            <button id="romance-reveal-btn" type="button" onclick="revealNextRomanceParagraph()" class="spring-btn w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan text-white font-bold text-xs sm:text-sm shadow-[0_8px_24px_rgba(255,42,133,0.35)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                                <span id="romance-reveal-btn-text">Buka Paragraf Selanjutnya (1/4)</span>
+                                <span>→</span>
+                            </button>
+                            <span id="romance-reveal-hint" class="font-mono text-[11px] text-mutedLavender">
+                                Klik tombol untuk membuka lembar paragraf berikutnya ✨
+                            </span>
+                        </div>
+
+                        <!-- Handwritten Closing Footer (Revealed alongside final paragraph) -->
+                        <div id="romance-closing-footer" class="hidden mt-8 pt-5 border-t border-dashed border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div>
                                 <p class="font-hand text-xl sm:text-2xl text-cyberRose leading-tight -rotate-1">
                                     "Selalu ada buat kamu, kemarin, hari ini, dan besok~"
@@ -3408,25 +3422,33 @@ int main() {
         window.CONTENT_MODES = CONTENT_MODES;
         window.DEFAULT_CONTENT_MODES = DEFAULT_CONTENT_MODES;
 
-        // Custom Polaroid Photos (cross-device syncable)
+        // Custom Polaroid Photos (Separated per mode: Romance vs Bestie)
         let customPhotos = {
-            photo1: '',
-            photo2: '',
-            photo3: ''
+            romance: { photo1: '', photo2: '', photo3: '' },
+            friend: { photo1: '', photo2: '', photo3: '' }
         };
         try {
             const savedPhotos = localStorage.getItem('zizuy_custom_photos');
             if (savedPhotos) {
-                customPhotos = Object.assign({}, customPhotos, JSON.parse(savedPhotos));
+                const parsed = JSON.parse(savedPhotos);
+                if (parsed.romance || parsed.friend) {
+                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed.romance || {});
+                    customPhotos.friend = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed.friend || {});
+                } else if (parsed.photo1 !== undefined) {
+                    // Migrate legacy flat structure into romance mode
+                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed);
+                }
             }
         } catch (e) {}
         window.customPhotos = customPhotos;
 
         function applyPolaroidPhotos() {
+            const activeMode = currentAppMode || 'romance';
+            const modePhotos = (customPhotos && customPhotos[activeMode]) || { photo1: '', photo2: '', photo3: '' };
             [1, 2, 3].forEach(idx => {
                 const imgEl = document.getElementById(`pol-img-${idx}`);
                 const svgEl = document.getElementById(`pol-svg-${idx}`);
-                const photo = customPhotos[`photo${idx}`];
+                const photo = modePhotos[`photo${idx}`];
                 if (imgEl && svgEl) {
                     if (photo) {
                         imgEl.src = photo;
@@ -3505,7 +3527,12 @@ int main() {
                 } catch (e) {}
             }
             if (cloudData.photos) {
-                customPhotos = Object.assign({}, customPhotos, cloudData.photos);
+                if (cloudData.photos.romance || cloudData.photos.friend) {
+                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos.romance, cloudData.photos.romance || {});
+                    customPhotos.friend = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos.friend, cloudData.photos.friend || {});
+                } else if (cloudData.photos.photo1 !== undefined) {
+                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos.romance, cloudData.photos);
+                }
                 window.customPhotos = customPhotos;
                 try {
                     localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
@@ -3647,7 +3674,9 @@ int main() {
             } else {
                 if (friendView) friendView.classList.add('hidden');
                 if (romanceView) romanceView.classList.remove('hidden');
+                initRomanceLetter();
             }
+            applyPolaroidPhotos();
 
             // 8. Notifications
             if (showNotification) {
@@ -3734,17 +3763,29 @@ int main() {
             const container = document.getElementById('editor-form-container');
             if (!container || !data) return;
 
+            const isRomance = editorTargetMode === 'romance';
             const cleanCode = (data.codeSnippet || '')
                 .replace(/&lt;/g, '<')
                 .replace(/&gt;/g, '>')
                 .replace(/&amp;/g, '&');
 
+            const targetPhotos = (customPhotos && customPhotos[editorTargetMode]) || { photo1: '', photo2: '', photo3: '' };
+
             container.innerHTML = `
-                <!-- 1. Hero & Header Words -->
+                <!-- Mode Badge Notification in Editor -->
+                <div class="flex items-center justify-between p-3 rounded-xl ${isRomance ? 'bg-cyberRose/15 border border-cyberRose/40 text-cyberRose' : 'bg-electricCyan/15 border border-electricCyan/40 text-electricCyan'} font-mono text-xs">
+                    <span class="flex items-center gap-2">
+                        <span>${isRomance ? '💕' : '👥'}</span>
+                        <span>Kamu sedang mengedit: <strong class="uppercase">${isRomance ? 'Mode Romance' : 'Mode Bestie'}</strong></span>
+                    </span>
+                    <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded">Perubahan tersimpan khusus untuk mode ini</span>
+                </div>
+
+                <!-- 1. Hero & Header Words + Output Kata Kompilasi -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                        <span class="font-mono text-xs font-bold text-electricCyan uppercase">★ 1. Hero &amp; Status Header</span>
-                        <span class="font-mono text-[10px] text-mutedLavender">Teks pembuka halaman</span>
+                        <span class="font-mono text-xs font-bold text-electricCyan uppercase">★ 1. Hero, Status &amp; Output Kata Kompilasi</span>
+                        <span class="font-mono text-[10px] text-mutedLavender">Teks pembuka &amp; respon kode</span>
                     </div>
                     <div class="space-y-3">
                         <div>
@@ -3757,18 +3798,39 @@ int main() {
                             <textarea id="edit-heroDesc" rows="3" 
                                 class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs sm:text-sm text-starlight leading-relaxed focus:outline-none transition-colors">${escapeEditorHtml(data.heroDesc)}</textarea>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <div class="sm:col-span-1">
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Judul File Kode</label>
-                                <input id="edit-codeTitle" type="text" value="${escapeEditorHtml(data.codeTitle)}" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs font-mono text-starlight focus:outline-none transition-colors">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Pesan Test Compile #1</label>
-                                <input id="edit-joke0" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[0]) || '')}" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none transition-colors">
+                        <div>
+                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Judul File Kode</label>
+                            <input id="edit-codeTitle" type="text" value="${escapeEditorHtml(data.codeTitle)}" 
+                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs font-mono text-starlight focus:outline-none transition-colors">
+                        </div>
+
+                        <!-- Output Kata Kompilasi saat klik tombol 'Jalankan Test ->' -->
+                        <div class="space-y-2 p-3 bg-black/40 border border-white/10 rounded-xl">
+                            <label class="block font-mono text-[11px] text-electricCyan font-bold">Output Kata Kompilasi (Muncul saat tombol "Jalankan Test -&gt;" diklik):</label>
+                            <div class="space-y-1.5">
+                                <div>
+                                    <span class="font-mono text-[10px] text-mutedLavender">Output Kata #1 (Pesan Default Awal):</span>
+                                    <input id="edit-joke-0" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[0]) || '')}" 
+                                        class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
+                                </div>
+                                <div>
+                                    <span class="font-mono text-[10px] text-mutedLavender">Output Kata #2:</span>
+                                    <input id="edit-joke-1" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[1]) || '')}" 
+                                        class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
+                                </div>
+                                <div>
+                                    <span class="font-mono text-[10px] text-mutedLavender">Output Kata #3:</span>
+                                    <input id="edit-joke-2" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[2]) || '')}" 
+                                        class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
+                                </div>
+                                <div>
+                                    <span class="font-mono text-[10px] text-mutedLavender">Output Kata #4:</span>
+                                    <input id="edit-joke-3" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[3]) || '')}" 
+                                        class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
+                                </div>
                             </div>
                         </div>
+
                         <div>
                             <label class="block font-mono text-[11px] text-mutedLavender mb-1">Kode C++ (Kotak Editor Kodingan)</label>
                             <textarea id="edit-codeSnippet" rows="6" 
@@ -3818,26 +3880,26 @@ int main() {
                     </div>
                 </div>
 
-                <!-- 3. Polaroid Deck & Foto -->
+                <!-- 3. Polaroid Deck & Foto (KHUSUS MODE INI!) -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-white/10">
                         <div>
-                            <span class="font-mono text-xs font-bold text-starlight uppercase">★ 3. Polaroid Deck &amp; Foto Kenangan</span>
-                            <span class="font-mono text-[10px] text-mutedLavender block sm:inline sm:ml-2">Upload foto asli atau ganti quote</span>
+                            <span class="font-mono text-xs font-bold text-starlight uppercase">★ 3. Polaroid Deck &amp; Foto (${isRomance ? 'Mode Romance' : 'Mode Bestie'})</span>
+                            <span class="font-mono text-[10px] text-mutedLavender block sm:inline sm:ml-2">Tersimpan khusus untuk mode ini</span>
                         </div>
                         <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40">
-                            ☁️ Auto-Sync Semua Perangkat
+                            Foto Beda Tiap Mode
                         </span>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
                         ${(data.polaroids || []).map((p, idx) => {
                             const photoNum = idx + 1;
-                            const curPhoto = customPhotos[`photo${photoNum}`] || '';
+                            const curPhoto = targetPhotos[`photo${photoNum}`] || '';
                             const isDataUrl = curPhoto.startsWith('data:');
                             return `
                                 <div class="p-3.5 bg-black/50 border border-white/10 rounded-xl space-y-2.5">
                                     <div class="flex items-center justify-between">
-                                        <span class="font-mono text-xs text-electricCyan font-bold">Foto #${photoNum}</span>
+                                        <span class="font-mono text-xs text-electricCyan font-bold">Foto #${photoNum} (${isRomance ? 'Romance' : 'Bestie'})</span>
                                         ${curPhoto ? `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40">✓ Foto Aktif</span>` : `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-mutedLavender">SVG Bawaan</span>`}
                                     </div>
 
@@ -3853,13 +3915,13 @@ int main() {
 
                                     <!-- Upload & Photo Input Controls -->
                                     <div class="space-y-1.5">
-                                        <label class="block font-mono text-[10px] text-starlight font-bold">Pilih / Ganti Foto:</label>
+                                        <label class="block font-mono text-[10px] text-starlight font-bold">Pilih / Ganti Foto Mode Ini:</label>
                                         <label class="flex items-center justify-center gap-1.5 w-full py-1.5 px-3 rounded-lg bg-electricCyan/15 hover:bg-electricCyan/25 text-electricCyan border border-electricCyan/30 font-mono text-[11px] cursor-pointer transition-colors">
-                                            <span>📁 Upload Foto (HP / Laptop)</span>
+                                            <span>📁 Upload Foto (${isRomance ? 'Romance' : 'Bestie'})</span>
                                             <input type="file" accept="image/*" class="hidden" onchange="handleEditorPhotoUpload(event, ${photoNum})">
                                         </label>
-                                        <input type="text" value="${escapeEditorHtml(!isDataUrl ? curPhoto : '')}" placeholder="Atau paste link URL gambar web" onchange="handleEditorPhotoUrl(${photoNum}, this.value)" class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-lg px-2 py-1.5 text-[11px] text-starlight focus:outline-none transition-colors">
-                                        ${curPhoto ? `<button type="button" onclick="handleRemovePhoto(${photoNum})" class="w-full py-1 text-[10px] font-mono text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 transition-colors">🗑 Hapus Foto (Gunakan SVG Bawaan)</button>` : ''}
+                                        <input type="text" value="${escapeEditorHtml(!isDataUrl ? curPhoto : '')}" placeholder="Atau paste link URL gambar" onchange="handleEditorPhotoUrl(${photoNum}, this.value)" class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-lg px-2 py-1.5 text-[11px] text-starlight focus:outline-none transition-colors">
+                                        ${curPhoto ? `<button type="button" onclick="handleRemovePhoto(${photoNum})" class="w-full py-1 text-[10px] font-mono text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 transition-colors">🗑 Hapus Foto Mode Ini</button>` : ''}
                                     </div>
 
                                     <!-- Text Caption & Quote -->
@@ -3891,58 +3953,120 @@ int main() {
                     </div>
                 </div>
 
-                <!-- 4. The Uncompiled Letter (Surat) -->
+                <!-- 4. Mini Quest Trivia & Output Kata Respon (KHUSUS MODE INI!) -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                        <span class="font-mono text-xs font-bold text-electricCyan uppercase">★ 4. The Uncompiled Letter (Surat)</span>
-                        <span class="font-mono text-[10px] text-mutedLavender">Isi paragraf demi paragraf</span>
+                        <span class="font-mono text-xs font-bold text-electricCyan uppercase">★ 4. Mini Quest Trivia &amp; Output Kata Respon</span>
+                        <span class="font-mono text-[10px] text-mutedLavender">Soal &amp; kata respon saat opsi dipilih</span>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Nama File Surat</label>
-                            <input id="edit-letterFile" type="text" value="${escapeEditorHtml(data.letter && data.letter.fileLabel)}" 
-                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs font-mono text-starlight focus:outline-none">
+
+                    <!-- Stage 1 -->
+                    <div class="p-3.5 bg-black/40 border border-white/10 rounded-xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-cyberRose font-bold">Stage 1: Pertanyaan &amp; Pilihan Opsi</span>
+                            <span class="font-mono text-[10px] text-mutedLavender">Tag: <input id="edit-q-s1-tag" type="text" value="${escapeEditorHtml((data.quest && data.quest.stage1 && data.quest.stage1.tag) || '')}" class="bg-black/50 border border-white/15 rounded px-2 py-0.5 text-[10px] text-starlight"></span>
                         </div>
                         <div>
-                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Label Tanggal</label>
-                            <input id="edit-letterDate" type="text" value="${escapeEditorHtml(data.letter && data.letter.dateLabel)}" 
-                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
+                            <label class="block font-mono text-[10px] text-mutedLavender mb-1">Pertanyaan / Narasi Stage 1</label>
+                            <textarea id="edit-q-s1-narrative" rows="2" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">${escapeEditorHtml((data.quest && data.quest.stage1 && data.quest.stage1.narrative) || '')}</textarea>
+                        </div>
+                        <div class="space-y-2">
+                            ${((data.quest && data.quest.stage1 && data.quest.stage1.options) || []).map((opt, oIdx) => `
+                                <div class="p-2.5 bg-black/60 border border-white/10 rounded-lg space-y-1.5">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded bg-cyberRose/20 text-cyberRose font-mono font-bold text-[10px] flex items-center justify-center shrink-0">${opt.id}</span>
+                                        <input id="edit-q-s1-opt-${oIdx}-text" type="text" value="${escapeEditorHtml(opt.text)}" placeholder="Teks Pilihan ${opt.id}" class="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                                    </div>
+                                    <div class="pl-7">
+                                        <span class="font-mono text-[9px] text-electricCyan block mb-0.5">↳ Output Kata Respon (Kata yang muncul saat opsi ini diklik):</span>
+                                        <input id="edit-q-s1-opt-${oIdx}-react" type="text" value="${escapeEditorHtml(opt.reaction)}" placeholder="Respon kalimat saat Zizuy memilih opsi ${opt.id}" class="w-full bg-black/50 border border-electricCyan/30 rounded-lg px-2.5 py-1 text-[11px] text-electricCyan focus:outline-none">
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
-                    <div class="space-y-2.5 pt-1">
-                        ${(data.letter && data.letter.paragraphs ? data.letter.paragraphs : []).map((para, idx) => `
-                            <div>
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Paragraf #${idx + 1}</label>
-                                <textarea id="edit-letter-para-${idx}" rows="3" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs sm:text-sm text-starlight leading-relaxed focus:outline-none transition-colors">${escapeEditorHtml(para)}</textarea>
-                            </div>
-                        `).join('')}
+
+                    <!-- Stage 2 -->
+                    <div class="p-3.5 bg-black/40 border border-white/10 rounded-xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-electricCyan font-bold">Stage 2: Pertanyaan &amp; Pilihan Opsi</span>
+                            <span class="font-mono text-[10px] text-mutedLavender">Tag: <input id="edit-q-s2-tag" type="text" value="${escapeEditorHtml((data.quest && data.quest.stage2 && data.quest.stage2.tag) || '')}" class="bg-black/50 border border-white/15 rounded px-2 py-0.5 text-[10px] text-starlight"></span>
+                        </div>
+                        <div>
+                            <label class="block font-mono text-[10px] text-mutedLavender mb-1">Pertanyaan / Narasi Stage 2</label>
+                            <textarea id="edit-q-s2-narrative" rows="2" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">${escapeEditorHtml((data.quest && data.quest.stage2 && data.quest.stage2.narrative) || '')}</textarea>
+                        </div>
+                        <div class="space-y-2">
+                            ${((data.quest && data.quest.stage2 && data.quest.stage2.options) || []).map((opt, oIdx) => `
+                                <div class="p-2.5 bg-black/60 border border-white/10 rounded-lg space-y-1.5">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded bg-electricCyan/20 text-electricCyan font-mono font-bold text-[10px] flex items-center justify-center shrink-0">${opt.id}</span>
+                                        <input id="edit-q-s2-opt-${oIdx}-text" type="text" value="${escapeEditorHtml(opt.text)}" placeholder="Teks Pilihan ${opt.id}" class="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                                    </div>
+                                    <div class="pl-7">
+                                        <span class="font-mono text-[9px] text-electricCyan block mb-0.5">↳ Output Kata Respon (Kata yang muncul saat opsi ini diklik):</span>
+                                        <input id="edit-q-s2-opt-${oIdx}-react" type="text" value="${escapeEditorHtml(opt.reaction)}" placeholder="Respon kalimat saat Zizuy memilih opsi ${opt.id}" class="w-full bg-black/50 border border-electricCyan/30 rounded-lg px-2.5 py-1 text-[11px] text-electricCyan focus:outline-none">
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- 3 Reward Cards -->
+                    <div class="space-y-2 pt-2 border-t border-white/10">
+                        <label class="block font-mono text-[11px] text-mutedLavender font-bold">Reward Vouchers (3 Kartu Hadiah Quest):</label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            ${((data.quest && data.quest.rewards) || []).map((rw, idx) => `
+                                <div class="p-3 bg-black/40 border border-white/10 rounded-xl space-y-2">
+                                    <span class="font-mono text-[10px] text-cyberRose font-bold">Voucher #${idx + 1}</span>
+                                    <input id="edit-reward-title-${idx}" type="text" value="${escapeEditorHtml(rw.title)}" placeholder="Nama Voucher"
+                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                                    <textarea id="edit-reward-desc-${idx}" rows="2" placeholder="Deskripsi Klaim Hadiah"
+                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-[11px] text-starlight focus:outline-none leading-snug">${escapeEditorHtml(rw.desc)}</textarea>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
                 </div>
 
-                <!-- 5. Reward Vouchers -->
+                <!-- 5. Surat / Catatan Bawah -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                        <span class="font-mono text-xs font-bold text-cyberRose uppercase">★ 5. Reward Vouchers (3 Kartu Hadiah Quest)</span>
-                        <span class="font-mono text-[10px] text-mutedLavender">Hadiah yang bisa diklaim Zizuy</span>
+                        <span class="font-mono text-xs font-bold text-cyberRose uppercase">★ 5. ${isRomance ? 'Surat Cinta Spesial dari Penoyy (Mode Romance)' : 'Catatan Harapan & Evaluasi Zizuy (Mode Bestie)'}</span>
+                        <span class="font-mono text-[10px] text-mutedLavender">${isRomance ? 'Muncul bertahap per paragraf' : 'Diisi sendiri oleh Zizuy'}</span>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        ${(data.quest && data.quest.rewards ? data.quest.rewards : []).map((rw, idx) => `
-                            <div class="p-3 bg-black/50 border border-white/10 rounded-xl space-y-2">
-                                <span class="font-mono text-[10px] text-cyberRose font-bold">Voucher #${idx + 1} (${escapeEditorHtml(rw.code)})</span>
-                                <div>
-                                    <label class="block font-mono text-[10px] text-mutedLavender">Judul Voucher</label>
-                                    <input id="edit-reward-title-${idx}" type="text" value="${escapeEditorHtml(rw.title)}" 
-                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
-                                </div>
-                                <div>
-                                    <label class="block font-mono text-[10px] text-mutedLavender">Deskripsi Hadiah</label>
-                                    <textarea id="edit-reward-desc-${idx}" rows="3" 
-                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none leading-snug">${escapeEditorHtml(rw.desc)}</textarea>
-                                </div>
+
+                    ${isRomance ? `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Nama File Surat</label>
+                                <input id="edit-letterFile" type="text" value="${escapeEditorHtml(data.letter && data.letter.fileLabel)}" 
+                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs font-mono text-starlight focus:outline-none">
                             </div>
-                        `).join('')}
-                    </div>
+                            <div>
+                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Label Tanggal</label>
+                                <input id="edit-letterDate" type="text" value="${escapeEditorHtml(data.letter && data.letter.dateLabel)}" 
+                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 pt-1">
+                            <span class="font-mono text-[11px] text-mutedLavender block">Paragraf Surat (Akan dibuka satu per satu oleh Zizuy saat menekan tombol "Buka Paragraf Selanjutnya"):</span>
+                            ${(data.letter && data.letter.paragraphs ? data.letter.paragraphs : []).map((para, idx) => `
+                                <div>
+                                    <label class="block font-mono text-[10px] text-cyberRose mb-0.5">Paragraf #${idx + 1}</label>
+                                    <textarea id="edit-letter-para-${idx}" rows="3" 
+                                        class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs sm:text-sm text-starlight leading-relaxed focus:outline-none transition-colors">${escapeEditorHtml(para)}</textarea>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : `
+                        <div class="p-3.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono space-y-1.5 text-starlight/90">
+                            <p class="text-electricCyan font-bold">📝 Mode Bestie Aktif:</p>
+                            <p class="text-mutedLavender leading-relaxed">
+                                Pada Mode Bestie, bagian ini khusus dirancang sebagai <strong>Lembar Catatan Harapan &amp; Evaluasi Diri Zizuy</strong> yang dilengkapi toolbar Mini Word (Bold, Italic, List, Highlighter, dsb). Zizuy dapat langsung mengetik sendiri harapan dan apa yang ingin direvisinya langsung di halaman utama.
+                            </p>
+                        </div>
+                    `}
                 </div>
             `;
         }
@@ -3951,7 +4075,7 @@ int main() {
             const data = CONTENT_MODES[editorTargetMode];
             if (!data) return;
 
-            // 1. Hero & Status
+            // 1. Hero & Header & Jokes
             const elStatus = document.getElementById('edit-statusPill');
             if (elStatus) data.statusPill = elStatus.value;
 
@@ -3961,10 +4085,13 @@ int main() {
             const elCodeTitle = document.getElementById('edit-codeTitle');
             if (elCodeTitle) data.codeTitle = elCodeTitle.value;
 
-            const elJoke0 = document.getElementById('edit-joke0');
-            if (elJoke0) {
-                if (!data.jokes) data.jokes = [];
-                data.jokes[0] = elJoke0.value;
+            // Save jokes (output kata kompilasi)
+            if (!data.jokes) data.jokes = [];
+            for (let j = 0; j < 4; j++) {
+                const elJoke = document.getElementById(`edit-joke-${j}`);
+                if (elJoke && elJoke.value.trim()) {
+                    data.jokes[j] = elJoke.value.trim();
+                }
             }
 
             const elCodeSnippet = document.getElementById('edit-codeSnippet');
@@ -3997,7 +4124,7 @@ int main() {
             const elFoot = document.getElementById('edit-receiptFooter');
             if (elFoot) data.receiptFooter = elFoot.value;
 
-            // 3. Polaroids
+            // 3. Polaroids text
             if (data.polaroids) {
                 data.polaroids.forEach((p, idx) => {
                     const b = document.getElementById(`edit-pol-badge-${idx}`);
@@ -4011,8 +4138,53 @@ int main() {
                 });
             }
 
-            // 4. Letter
-            if (data.letter) {
+            // 4. Quest Data (Stage 1 & Stage 2 narrative, options & reactions)
+            if (data.quest) {
+                // Stage 1
+                const s1Tag = document.getElementById('edit-q-s1-tag');
+                if (s1Tag && data.quest.stage1) data.quest.stage1.tag = s1Tag.value;
+
+                const s1Nar = document.getElementById('edit-q-s1-narrative');
+                if (s1Nar && data.quest.stage1) data.quest.stage1.narrative = s1Nar.value;
+
+                if (data.quest.stage1 && data.quest.stage1.options) {
+                    data.quest.stage1.options.forEach((opt, oIdx) => {
+                        const oText = document.getElementById(`edit-q-s1-opt-${oIdx}-text`);
+                        const oReact = document.getElementById(`edit-q-s1-opt-${oIdx}-react`);
+                        if (oText) opt.text = oText.value;
+                        if (oReact) opt.reaction = oReact.value;
+                    });
+                }
+
+                // Stage 2
+                const s2Tag = document.getElementById('edit-q-s2-tag');
+                if (s2Tag && data.quest.stage2) data.quest.stage2.tag = s2Tag.value;
+
+                const s2Nar = document.getElementById('edit-q-s2-narrative');
+                if (s2Nar && data.quest.stage2) data.quest.stage2.narrative = s2Nar.value;
+
+                if (data.quest.stage2 && data.quest.stage2.options) {
+                    data.quest.stage2.options.forEach((opt, oIdx) => {
+                        const oText = document.getElementById(`edit-q-s2-opt-${oIdx}-text`);
+                        const oReact = document.getElementById(`edit-q-s2-opt-${oIdx}-react`);
+                        if (oText) opt.text = oText.value;
+                        if (oReact) opt.reaction = oReact.value;
+                    });
+                }
+
+                // Rewards
+                if (data.quest.rewards) {
+                    data.quest.rewards.forEach((rw, idx) => {
+                        const t = document.getElementById(`edit-reward-title-${idx}`);
+                        const d = document.getElementById(`edit-reward-desc-${idx}`);
+                        if (t) rw.title = t.value;
+                        if (d) rw.desc = d.value;
+                    });
+                }
+            }
+
+            // 5. Letter (Romance Mode)
+            if (editorTargetMode === 'romance' && data.letter) {
                 const elLetterFile = document.getElementById('edit-letterFile');
                 if (elLetterFile) data.letter.fileLabel = elLetterFile.value;
 
@@ -4027,17 +4199,7 @@ int main() {
                 }
             }
 
-            // 5. Rewards
-            if (data.quest && data.quest.rewards) {
-                data.quest.rewards.forEach((rw, idx) => {
-                    const t = document.getElementById(`edit-reward-title-${idx}`);
-                    const d = document.getElementById(`edit-reward-desc-${idx}`);
-                    if (t) rw.title = t.value;
-                    if (d) rw.desc = d.value;
-                });
-            }
-
-            // Save to localStorage
+            // Save custom content to localStorage
             try {
                 localStorage.setItem('zizuy_custom_content', JSON.stringify(CONTENT_MODES));
             } catch (e) {
@@ -4047,12 +4209,15 @@ int main() {
             // Immediately apply to live page
             setAppMode(currentAppMode, false);
             applyPolaroidPhotos();
+            if (currentAppMode === 'romance') {
+                initRomanceLetter();
+            }
 
             // Broadcast & save to Cloud Firestore across all devices
             saveToCloudFirestore({ content: CONTENT_MODES, photos: customPhotos });
 
             playCyberTone(880, 'triangle', 0.2);
-            showToast('Teks & foto berhasil disimpan dan otomatis tersinkron ke semua perangkat! ☁️✨');
+            showToast('Teks, quest, foto, & output kata berhasil disimpan untuk mode ini! ☁️✨');
             closeEditorPanel();
         };
 
@@ -4075,14 +4240,16 @@ int main() {
             }
         };
 
-        // Photo handlers for Editor Panel
+        // Photo handlers for Editor Panel (Strictly scoped to editorTargetMode: Romance vs Bestie)
         window.handleEditorPhotoUpload = async function(event, photoNum) {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
             try {
-                showToast(`Memproses & mengompres Foto #${photoNum}...`);
+                const targetMode = editorTargetMode || 'romance';
+                showToast(`Memproses & mengompres Foto #${photoNum} (${targetMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'})...`);
                 const compressedBase64 = await compressImageFile(file, 800, 800, 0.8);
-                customPhotos[`photo${photoNum}`] = compressedBase64;
+                if (!customPhotos[targetMode]) customPhotos[targetMode] = { photo1: '', photo2: '', photo3: '' };
+                customPhotos[targetMode][`photo${photoNum}`] = compressedBase64;
                 window.customPhotos = customPhotos;
                 try {
                     localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
@@ -4090,7 +4257,7 @@ int main() {
                 applyPolaroidPhotos();
                 renderEditorForm();
                 saveToCloudFirestore({ photos: customPhotos });
-                showToast(`Foto #${photoNum} berhasil dipasang & tersinkron ke cloud! ☁️`);
+                showToast(`Foto #${photoNum} berhasil dipasang untuk ${targetMode === 'romance' ? 'Mode Romance 💕' : 'Mode Bestie 👥'}!`);
                 playCyberTone(880, 'triangle', 0.18);
             } catch (err) {
                 console.error('Error uploading photo:', err);
@@ -4099,9 +4266,11 @@ int main() {
         };
 
         window.handleEditorPhotoUrl = function(photoNum, url) {
+            const targetMode = editorTargetMode || 'romance';
             const trimmed = (url || '').trim();
             if (!trimmed) return;
-            customPhotos[`photo${photoNum}`] = trimmed;
+            if (!customPhotos[targetMode]) customPhotos[targetMode] = { photo1: '', photo2: '', photo3: '' };
+            customPhotos[targetMode][`photo${photoNum}`] = trimmed;
             window.customPhotos = customPhotos;
             try {
                 localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
@@ -4109,12 +4278,14 @@ int main() {
             applyPolaroidPhotos();
             renderEditorForm();
             saveToCloudFirestore({ photos: customPhotos });
-            showToast(`URL Foto #${photoNum} berhasil disimpan & disinkronkan! ☁️`);
+            showToast(`URL Foto #${photoNum} disimpan untuk ${targetMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'}!`);
             playCyberTone(783.99, 'triangle', 0.14);
         };
 
         window.handleRemovePhoto = function(photoNum) {
-            customPhotos[`photo${photoNum}`] = '';
+            const targetMode = editorTargetMode || 'romance';
+            if (!customPhotos[targetMode]) customPhotos[targetMode] = { photo1: '', photo2: '', photo3: '' };
+            customPhotos[targetMode][`photo${photoNum}`] = '';
             window.customPhotos = customPhotos;
             try {
                 localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
@@ -4122,7 +4293,7 @@ int main() {
             applyPolaroidPhotos();
             renderEditorForm();
             saveToCloudFirestore({ photos: customPhotos });
-            showToast(`Foto #${photoNum} dihapus (kembali ke SVG bawaan).`);
+            showToast(`Foto #${photoNum} dihapus dari ${targetMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'}.`);
             playCyberTone(440, 'sine', 0.12);
         };
 
@@ -4285,16 +4456,18 @@ int main() {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
             try {
-                showToast(`Memproses & mengompres Foto #${index}...`);
+                const activeMode = currentAppMode || 'romance';
+                showToast(`Memproses & mengompres Foto #${index} (${activeMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'})...`);
                 const compressedBase64 = await compressImageFile(file, 800, 800, 0.8);
-                customPhotos[`photo${index}`] = compressedBase64;
+                if (!customPhotos[activeMode]) customPhotos[activeMode] = { photo1: '', photo2: '', photo3: '' };
+                customPhotos[activeMode][`photo${index}`] = compressedBase64;
                 window.customPhotos = customPhotos;
                 try {
                     localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
                 } catch (e) {}
                 applyPolaroidPhotos();
                 saveToCloudFirestore({ photos: customPhotos });
-                showToast(`Foto Polaroid #${index} berhasil dipasang & tersinkron ke semua perangkat! ☁️`);
+                showToast(`Foto Polaroid #${index} berhasil dipasang untuk ${activeMode === 'romance' ? 'Mode Romance 💕' : 'Mode Bestie 👥'}!`);
                 playCyberTone(880, 'triangle', 0.18);
             } catch (err) {
                 console.error('Error replacing polaroid photo:', err);
@@ -4516,6 +4689,70 @@ int main() {
 <p style="margin-bottom: 12px;"><strong style="color: #F4F4F6;">💌 3. Pesan Khusus Buat Diri Sendiri di Masa Depan:</strong></p>
 <p style="margin-bottom: 8px;"><em>"Hai Zizuy di masa depan! Ingat ya, kamu sudah berjuang hebat sampai ke titik ini. Jangan pernah ragu sama kemampuan diri sendiri. Tetaplah jadi pribadi yang ceria, tulus, dan selalu tersenyum!"</em></p>
 `.trim();
+
+        
+        /* -----------------------------------------------------------------
+           ROMANTIC LETTER: STEP-BY-STEP PARAGRAPH REVEAL
+           ----------------------------------------------------------------- */
+        let romanceRevealedCount = 1;
+
+        function initRomanceLetter() {
+            const data = (CONTENT_MODES.romance && CONTENT_MODES.romance.letter) || {};
+            const container = document.getElementById('romance-letter-paragraphs');
+            if (!container) return;
+
+            const fileLabel = document.getElementById('romance-letter-file-label');
+            if (fileLabel && data.fileLabel) fileLabel.textContent = data.fileLabel;
+
+            const dateLabel = document.getElementById('romance-letter-date-label');
+            if (dateLabel && data.dateLabel) dateLabel.textContent = data.dateLabel;
+
+            const paragraphs = data.paragraphs || [];
+            romanceRevealedCount = 1;
+
+            container.innerHTML = paragraphs.map((p, idx) => `
+                <p class="romance-para font-notes leading-[32px] sm:leading-[36px] ${idx === 0 ? 'revealed' : ''}">
+                    ${p}
+                </p>
+            `).join('');
+
+            const btnText = document.getElementById('romance-reveal-btn-text');
+            const footer = document.getElementById('romance-closing-footer');
+            if (footer) footer.classList.add('hidden');
+            if (btnText) {
+                btnText.textContent = `Buka Paragraf Selanjutnya (1/${paragraphs.length})`;
+            }
+        }
+
+        window.revealNextRomanceParagraph = function() {
+            const data = (CONTENT_MODES.romance && CONTENT_MODES.romance.letter) || {};
+            const paragraphs = data.paragraphs || [];
+            const paras = document.querySelectorAll('#romance-letter-paragraphs .romance-para');
+            if (!paras || paras.length === 0) return;
+
+            if (romanceRevealedCount < paras.length) {
+                paras[romanceRevealedCount].classList.add('revealed');
+                romanceRevealedCount++;
+                playCyberTone(587.33 + romanceRevealedCount * 65, 'sine', 0.16);
+
+                const btnText = document.getElementById('romance-reveal-btn-text');
+                if (romanceRevealedCount < paras.length) {
+                    if (btnText) btnText.textContent = `Buka Paragraf Selanjutnya (${romanceRevealedCount}/${paragraphs.length})`;
+                } else {
+                    if (btnText) btnText.textContent = 'Semua Pesan Terbuka ♥ Happy 19th Zizuy!';
+                    const footer = document.getElementById('romance-closing-footer');
+                    if (footer) {
+                        footer.classList.remove('hidden');
+                        footer.classList.add('animate-fadeIn');
+                    }
+                    showToast('Semua isi surat cinta untuk Zizuy telah terbuka lengkap! 💕✨');
+                    playCyberTone(880, 'sine', 0.22);
+                }
+            } else {
+                showToast('Selamat ulang tahun ke-19, manusia favoritku! ✨💕');
+                playCyberTone(880, 'sine', 0.2);
+            }
+        };
 
         function initWishlistEditor() {
             const editor = document.getElementById('zizuy-wishlist-editor');
