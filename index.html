@@ -94,12 +94,14 @@
         }
 
         /* Action Buttons: Default to News701 BT (Word Serif) except Hero CTA Buttons */
-        button:not([onclick*="selectQuestOption"]):not(#run-exe-btn):not(#gate-late-enter-btn),
-        .spring-btn:not([onclick*="selectQuestOption"]):not(#run-exe-btn):not(#gate-late-enter-btn),
-        #reveal-letter-btn,
-        #heart-burst-btn,
+        button:not([onclick*="selectQuestOption"]):not(#run-exe-btn):not(#gate-late-enter-btn):not(.mini-word-toolbar button),
+        .spring-btn:not([onclick*="selectQuestOption"]):not(#run-exe-btn):not(#gate-late-enter-btn):not(.mini-word-toolbar button),
         .font-btn-news {
             font-family: 'News701 BT', 'Georgia', serif !important;
+        }
+
+        .mini-word-toolbar button {
+            font-family: system-ui, -apple-system, sans-serif !important;
         }
 
         /* Hero / Gate CTA Buttons: Vanilla Cream Font with Clean Solid White Text (No Blue Glow) */
@@ -1442,39 +1444,110 @@
 
                     <div class="relative z-10">
                         <!-- Letter Header -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 pb-5 sm:pb-6 mb-6 sm:mb-8 border-b border-dashed border-white/20">
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-dashed border-white/20">
                             <div class="font-mono text-[11px] sm:text-xs text-cyberRose flex items-center gap-2">
-                                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f498/512.webp" alt="💘" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>💘</span>'">
-                                <span id="letter-file-label">SURAT CATATAN // UNTUK ZIZUY</span>
+                                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f4dd/512.webp" alt="📝" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>📝</span>'">
+                                <span id="letter-file-label">LEMBAR_REFLEKSI_HARAPAN_ZIZUY_19.DOCX</span>
                             </div>
-                            <span id="letter-date-label" class="font-mono text-[10px] sm:text-xs text-mutedLavender">
-                                23 November 2026 • 19th Birthday Edition
-                            </span>
+                            <div class="flex items-center gap-2">
+                                <span id="editor-save-badge" class="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/25 flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                    <span>Tersimpan Otomatis</span>
+                                </span>
+                                <span id="letter-date-label" class="font-mono text-[10px] sm:text-xs text-mutedLavender">
+                                    23 November 2026 • Level 19
+                                </span>
+                            </div>
                         </div>
 
-                        <!-- Greeting -->
-                        <h2 class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-5 sm:mb-6">
-                            Hai, Azizah Nazwa Novita <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
-                        </h2>
-
-                        <!-- Progressive Reveal Letter Content -->
-                        <div id="letter-paragraphs" class="font-notes space-y-4 sm:space-y-5 text-sm sm:text-base md:text-lg text-starlight/95 leading-[30px] sm:leading-[32px]">
-                            <!-- Populated by setAppMode -->
+                        <!-- Greeting / Title -->
+                        <div class="mb-4">
+                            <h2 class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-1.5">
+                                Catatan Harapan &amp; Evaluasi Diri <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
+                            </h2>
+                            <p class="font-mono text-[11px] sm:text-xs text-mutedLavender">
+                                Lembar catatan bebas untuk kamu tulis sendiri: harapan masa depan, target umur 19, dan apa aja yang ingin kamu revisi dari sebelumnya ✨
+                            </p>
                         </div>
 
-                        <!-- Reveal Next Button / Complete Footer -->
-                        <div class="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-dashed border-white/20 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                            <button id="reveal-letter-btn" class="spring-btn font-quest-question w-full sm:w-auto px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyberRose to-nebulaViolet text-white text-xs sm:text-sm font-bold shadow-[0_8px_24px_rgba(255,42,133,0.35)] flex items-center justify-center gap-2">
-                                <span id="reveal-btn-text">Buka Paragraf Selanjutnya (1/4)</span>
-                                <span>-&gt;</span>
+                        <!-- Mini MS Word Toolbar -->
+                        <div class="mini-word-toolbar bg-[#120A1E]/90 border border-white/15 rounded-xl p-1.5 sm:p-2 mb-4 flex flex-wrap items-center gap-1 sm:gap-1.5 shadow-md text-xs font-mono select-none">
+                            <span class="text-[10px] text-mutedLavender uppercase font-bold px-1.5 hidden md:inline">Word Mini:</span>
+                            
+                            <!-- Bold -->
+                            <button type="button" onclick="formatWishlistDoc('bold')" title="Tebal (Bold)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight font-bold flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+                                <strong>B</strong>
+                            </button>
+                            <!-- Italic -->
+                            <button type="button" onclick="formatWishlistDoc('italic')" title="Miring (Italic)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight italic flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+                                <em>I</em>
+                            </button>
+                            <!-- Underline -->
+                            <button type="button" onclick="formatWishlistDoc('underline')" title="Garis Bawah (Underline)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight underline flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+                                <u>U</u>
+                            </button>
+                            <!-- StrikeThrough -->
+                            <button type="button" onclick="formatWishlistDoc('strikeThrough')" title="Coret (Strikethrough)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight line-through flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+                                <s>S</s>
                             </button>
 
-                            <div class="flex items-center gap-2">
-                                <button id="heart-burst-btn" class="spring-btn w-full sm:w-auto px-4 py-3 rounded-xl sm:rounded-2xl bg-white/5 hover:bg-cyberRose/20 border border-white/15 hover:border-cyberRose/40 font-mono text-xs text-starlight flex items-center justify-center gap-2">
-                                    <span id="salting-counter-icon" class="text-cyberRose text-base">♥</span>
-                                    <span><span id="salting-counter-label">Kirim Efek Salting</span> (<span id="salting-counter">19</span>)</span>
-                                </button>
-                            </div>
+                            <div class="w-px h-5 bg-white/15 mx-0.5"></div>
+
+                            <!-- Bullet List -->
+                            <button type="button" onclick="formatWishlistDoc('insertUnorderedList')" title="Daftar Poin (•)" class="px-2 h-7 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight flex items-center gap-1 transition-all hover:scale-105 active:scale-95">
+                                <span>•≡</span>
+                            </button>
+                            <!-- Numbered List -->
+                            <button type="button" onclick="formatWishlistDoc('insertOrderedList')" title="Daftar Angka (1. 2.)" class="px-2 h-7 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight flex items-center gap-1 transition-all hover:scale-105 active:scale-95">
+                                <span>1≡</span>
+                            </button>
+
+                            <div class="w-px h-5 bg-white/15 mx-0.5"></div>
+
+                            <!-- Color Highlights -->
+                            <button type="button" onclick="formatWishlistColor('#FF2A85')" title="Warna Pink Cinta" class="px-2 h-7 sm:h-8 rounded-lg bg-cyberRose/15 hover:bg-cyberRose/30 border border-cyberRose/40 text-cyberRose font-bold flex items-center gap-1 transition-all">
+                                <span class="w-2.5 h-2.5 rounded-full bg-cyberRose"></span>
+                                <span class="hidden sm:inline text-[10px]">Pink</span>
+                            </button>
+                            <button type="button" onclick="formatWishlistColor('#00E5FF')" title="Warna Cyan Neon" class="px-2 h-7 sm:h-8 rounded-lg bg-electricCyan/15 hover:bg-electricCyan/30 border border-electricCyan/40 text-electricCyan font-bold flex items-center gap-1 transition-all">
+                                <span class="w-2.5 h-2.5 rounded-full bg-electricCyan"></span>
+                                <span class="hidden sm:inline text-[10px]">Cyan</span>
+                            </button>
+                            <button type="button" onclick="formatWishlistColor('#F4F4F6')" title="Warna Putih Standar" class="px-2 h-7 sm:h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-starlight flex items-center gap-1 transition-all">
+                                <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
+                                <span class="hidden sm:inline text-[10px]">Normal</span>
+                            </button>
+
+                            <div class="w-px h-5 bg-white/15 mx-0.5"></div>
+
+                            <!-- Action buttons -->
+                            <button type="button" onclick="resetWishlistTemplate()" title="Reset ke Template Awal" class="px-2.5 h-7 sm:h-8 rounded-lg bg-white/5 hover:bg-rose-500/20 hover:border-rose-500/40 border border-white/10 text-mutedLavender hover:text-rose-300 text-[10px] sm:text-xs flex items-center gap-1 transition-all ml-auto">
+                                <span>↺</span>
+                                <span class="hidden sm:inline">Reset</span>
+                            </button>
+                            <button type="button" onclick="manualSaveWishlist()" title="Simpan Catatan ke Browser" class="px-3 h-7 sm:h-8 rounded-lg bg-gradient-to-r from-cyberRose to-nebulaViolet hover:brightness-110 text-white font-bold text-[10px] sm:text-xs flex items-center gap-1.5 shadow-sm transition-all hover:scale-105 active:scale-95">
+                                <span>💾</span>
+                                <span>Simpan</span>
+                            </button>
+                        </div>
+
+                        <!-- Editable Ruled Note Area (Font MV Boli preserved, lined paper) -->
+                        <div id="zizuy-wishlist-editor"
+                             contenteditable="true"
+                             spellcheck="false"
+                             class="font-notes outline-none min-h-[380px] sm:min-h-[440px] text-sm sm:text-base md:text-lg text-starlight/95 leading-[32px] sm:leading-[36px] transition-colors focus:ring-1 focus:ring-cyberRose/30 rounded-xl p-3 sm:p-5 bg-transparent cursor-text select-text">
+                            <!-- Populated dynamically by JS with default template or user's saved writing -->
+                        </div>
+
+                        <!-- Footer Info -->
+                        <div class="mt-4 pt-3 border-t border-dashed border-white/20 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
+                            <span class="flex items-center gap-1.5">
+                                <span>💡</span>
+                                <span>Klik langsung di atas tulisan untuk mulai mengetik atau mengedit sesuka hatimu.</span>
+                            </span>
+                            <span id="wishlist-word-count" class="text-electricCyan font-bold">
+                                0 kata
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -3491,32 +3564,8 @@ int main() {
             questState = { stage: 1, ans1: null, ans2: null, selectedReward: null };
             renderQuestStage();
 
-            // 7. Update Letter Section
-            const fileLabel = document.getElementById('letter-file-label');
-            if (fileLabel) fileLabel.textContent = data.letter.fileLabel;
-
-            const dateLabel = document.getElementById('letter-date-label');
-            if (dateLabel) dateLabel.textContent = data.letter.dateLabel;
-
-            const letterCont = document.getElementById('letter-paragraphs');
-            if (letterCont) {
-                letterCont.innerHTML = data.letter.paragraphs.map((para, idx) => `
-                    <p class="letter-paragraph font-notes ${idx === 0 ? 'revealed' : ''} leading-relaxed text-sm sm:text-base md:text-lg">
-                        ${para}
-                    </p>
-                `).join('');
-            }
-            revealedCount = 1;
-            const revealBtnText = document.getElementById('reveal-btn-text');
-            if (revealBtnText) {
-                revealBtnText.textContent = `Buka Paragraf Selanjutnya (1/${data.letter.paragraphs.length - 1})`;
-            }
-
-            const saltIcon = document.getElementById('salting-counter-icon');
-            if (saltIcon) saltIcon.textContent = data.letter.saltingIcon;
-
-            const saltLabel = document.getElementById('salting-counter-label');
-            if (saltLabel) saltLabel.textContent = data.letter.saltingLabel;
+            // 7. Wishlist Section: Lembar Refleksi Harapan & Evaluasi Diri Zizuy (Personal Editable Sheet)
+            // Tetap terjaga dan tidak tertimpa saat ganti mode
 
             // 8. Notifications
             if (showNotification) {
@@ -4369,39 +4418,125 @@ int main() {
         };
 
         /* -----------------------------------------------------------------
-           F-06: THE UNCOMPILED LETTER & BINARY FIREFLIES
+           F-06: ZIZUY FUTURE WISHLIST & SELF-EVALUATION NOTEBOOK (MINI WORD)
            ----------------------------------------------------------------- */
-        let revealedCount = 1;
-        const revealBtn = document.getElementById('reveal-letter-btn');
-        const revealBtnText = document.getElementById('reveal-btn-text');
+        const DEFAULT_WISHLIST_TEMPLATE = `
+<p style="margin-bottom: 12px;"><strong style="color: #FF2A85;">🎯 1. Harapan &amp; Impianku di Usia 19:</strong></p>
+<p style="margin-bottom: 8px;">• Kuliah S1 Informatika lancar, IPK aman di atas target, paham logika koding, dan semua tugas laprak kelar tepat waktu tanpa stres begadang.</p>
+<p style="margin-bottom: 8px;">• Diberikan kesehatan lahir batin, rezeki lancar, selalu dikelilingi orang-orang baik, dan makin disayang keluarga &amp; sahabat.</p>
+<p style="margin-bottom: 16px;">• Makin percaya diri, mandiri, bisa mengembangkan skill baru, dan selalu bahagia menikmati setiap proses hidup.</p>
 
-        revealBtn.addEventListener('click', () => {
-            const letterParas = document.querySelectorAll('#letter-paragraphs .letter-paragraph');
-            playCyberTone(587.33 + revealedCount * 60, 'sine', 0.16);
-            if (revealedCount < letterParas.length) {
-                letterParas[revealedCount].classList.add('revealed');
-                revealedCount++;
-                if (revealedCount < letterParas.length) {
-                    revealBtnText.textContent = `Buka Paragraf Selanjutnya (${revealedCount}/${letterParas.length - 1})`;
-                } else {
-                    revealBtnText.textContent = currentAppMode === 'friend' 
-                        ? 'Semua Pesan Terbuka 👊 Happy 19th Zizuy!' 
-                        : 'Semua Pesan Terbuka ♥ Happy 19th Zizuy!';
+<p style="margin-bottom: 12px;"><strong style="color: #00E5FF;">🔄 2. Hal yang Harus Direvisi &amp; Ditingkatkan dari Tahun Sebelumnya:</strong></p>
+<p style="margin-bottom: 8px;">• Kurangi overthinking dan jangan suka menunda pekerjaan atau tugas kuliah sampai deadline mepet.</p>
+<p style="margin-bottom: 8px;">• Perbaiki pola tidur dan jam makan, jangan sering skip sarapan atau begadang yang nggak penting.</p>
+<p style="margin-bottom: 16px;">• Lebih sabar, lebih mencintai diri sendiri, dan nggak gampang insecure sama pencapaian orang lain.</p>
+
+<p style="margin-bottom: 12px;"><strong style="color: #F4F4F6;">💌 3. Pesan Khusus Buat Diri Sendiri di Masa Depan:</strong></p>
+<p style="margin-bottom: 8px;"><em>"Hai Zizuy di masa depan! Ingat ya, kamu sudah berjuang hebat sampai ke titik ini. Jangan pernah ragu sama kemampuan diri sendiri. Tetaplah jadi pribadi yang ceria, tulus, dan selalu tersenyum!"</em></p>
+`.trim();
+
+        function initWishlistEditor() {
+            const editor = document.getElementById('zizuy-wishlist-editor');
+            if (!editor) return;
+
+            let saved = null;
+            try {
+                saved = localStorage.getItem('zizuy_wishlist_reflection_19');
+            } catch (e) {}
+
+            editor.innerHTML = (saved && saved.trim()) ? saved : DEFAULT_WISHLIST_TEMPLATE;
+            updateWishlistWordCount();
+
+            // Auto-save on every input
+            let saveTimeout = null;
+            editor.addEventListener('input', () => {
+                updateWishlistWordCount();
+                const badge = document.getElementById('editor-save-badge');
+                if (badge) {
+                    badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span><span class="text-amber-400">Menyimpan...</span>';
                 }
-            } else {
-                showToast('Selamat ulang tahun ke-19, Azizah Nazwa Novita (Zizuy)! ✨');
-            }
-        });
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => {
+                    try {
+                        localStorage.setItem('zizuy_wishlist_reflection_19', editor.innerHTML);
+                    } catch (e) {}
+                    if (badge) {
+                        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span class="text-emerald-400">Tersimpan Otomatis</span>';
+                    }
+                }, 400);
+            });
+        }
 
-        // Salting / Bestie Counter Button
-        let saltingVal = 19;
-        document.getElementById('heart-burst-btn').addEventListener('click', () => {
-            playCyberTone(987.77, 'sine', 0.14);
-            saltingVal++;
-            document.getElementById('salting-counter').textContent = saltingVal;
-            const data = CONTENT_MODES[currentAppMode];
-            showToast(data.letter.toastMsg || `Efek bertambah jadi +${saltingVal}!`);
-        });
+        window.formatWishlistDoc = function(cmd, val = null) {
+            const editor = document.getElementById('zizuy-wishlist-editor');
+            if (editor) editor.focus();
+            document.execCommand(cmd, false, val);
+            try {
+                if (editor) {
+                    localStorage.setItem('zizuy_wishlist_reflection_19', editor.innerHTML);
+                    updateWishlistWordCount();
+                }
+            } catch (e) {}
+        };
+
+        window.formatWishlistColor = function(color) {
+            const editor = document.getElementById('zizuy-wishlist-editor');
+            if (editor) editor.focus();
+            document.execCommand('foreColor', false, color);
+            try {
+                if (editor) {
+                    localStorage.setItem('zizuy_wishlist_reflection_19', editor.innerHTML);
+                }
+            } catch (e) {}
+        };
+
+        window.resetWishlistTemplate = function() {
+            if (confirm('Yakin ingin mereset catatan ke template awal? Tulisan buatanmu saat ini akan diganti ke format awal.')) {
+                const editor = document.getElementById('zizuy-wishlist-editor');
+                if (editor) {
+                    editor.innerHTML = DEFAULT_WISHLIST_TEMPLATE;
+                    try {
+                        localStorage.setItem('zizuy_wishlist_reflection_19', DEFAULT_WISHLIST_TEMPLATE);
+                    } catch (e) {}
+                    updateWishlistWordCount();
+                    showToast('Template catatan berhasil direset! 📝');
+                    playCyberTone(523.25, 'sine', 0.15);
+                }
+            }
+        };
+
+        window.manualSaveWishlist = function() {
+            const editor = document.getElementById('zizuy-wishlist-editor');
+            if (!editor) return;
+            try {
+                localStorage.setItem('zizuy_wishlist_reflection_19', editor.innerHTML);
+            } catch (e) {}
+            playCyberTone(783.99, 'sine', 0.15);
+            showToast('Catatan harapan & evaluasi Zizuy berhasil disimpan! 💾✨');
+            const badge = document.getElementById('editor-save-badge');
+            if (badge) {
+                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span class="text-emerald-400">Tersimpan!</span>';
+                setTimeout(() => {
+                    badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span class="text-emerald-400">Tersimpan Otomatis</span>';
+                }, 1500);
+            }
+        };
+
+        function updateWishlistWordCount() {
+            const editor = document.getElementById('zizuy-wishlist-editor');
+            const counter = document.getElementById('wishlist-word-count');
+            if (!editor || !counter) return;
+            const text = editor.innerText || editor.textContent || '';
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            counter.textContent = `${words} kata`;
+        }
+
+        // Initialize editor when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initWishlistEditor);
+        } else {
+            initWishlistEditor();
+        }
 
         // Binary Firefly Canvas in Letter Section (Throttled 30fps Lazy Canvas)
         const ffCanvas = document.getElementById('firefly-canvas');
@@ -4514,6 +4649,7 @@ int main() {
         function startMainAppCanvases() {
             if (mainAppCanvasesActive) return;
             mainAppCanvasesActive = true;
+            initWishlistEditor();
             initBgGalaxy();
             initFireflies();
             requestAnimationFrame(animateBgGalaxy);
