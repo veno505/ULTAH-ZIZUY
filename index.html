@@ -2572,10 +2572,10 @@
                 const textAlpha = Math.min(0.92, (elapsed - 1.0) * 0.6);
                 vCtx.save();
                 vCtx.globalAlpha = textAlpha;
-                vCtx.font = `800 ${vWidth < 640 ? 22 : 28}px "Syne", sans-serif`;
+                vCtx.font = `700 ${vWidth < 640 ? 24 : 32}px "Calistoga", "Young Serif", "Fraunces", serif`;
                 vCtx.fillStyle = '#F4F4F6';
                 vCtx.fillText('ZIZUY // 19', centerX + pointer.normX * 10, centerY - 6 + pointer.normY * 8);
-                vCtx.font = `500 ${vWidth < 640 ? 11 : 13}px "JetBrains Mono", monospace`;
+                vCtx.font = `700 ${vWidth < 640 ? 12 : 15}px "Calistoga", "Young Serif", "Fraunces", serif`;
                 vCtx.fillStyle = '#00E5FF';
                 vCtx.fillText('23.11.2026 ✨', centerX + pointer.normX * 10, centerY + 19 + pointer.normY * 8);
                 vCtx.restore();
