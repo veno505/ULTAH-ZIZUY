@@ -78,7 +78,7 @@
             scrollbar-width: none;
         }
 
-        /* 3.4 Pedoman Desain Humanized: Film Noise Grain Overlay (3% Opacity, GPU Accelerated) */
+        /* 3.4 Pedoman Desain Humanized: Film Noise Grain Overlay (3% Opacity) */
         .noise-overlay {
             position: fixed;
             inset: 0;
@@ -87,36 +87,32 @@
             pointer-events: none;
             z-index: 9999;
             opacity: 0.035;
-            transform: translateZ(0);
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Velvet Glass Card Surface (Optimized 60fps Blur) */
+        /* Velvet Glass Card Surface */
         .velvet-card {
-            background: rgba(16, 14, 25, 0.88);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(19, 17, 28, 0.72);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
-            transform: translateZ(0);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
         .velvet-card-rose {
-            background: rgba(19, 14, 25, 0.90);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(19, 17, 28, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 42, 133, 0.28);
-            box-shadow: 0 15px 35px rgba(255, 42, 133, 0.08);
-            transform: translateZ(0);
+            box-shadow: 0 20px 50px rgba(255, 42, 133, 0.08);
         }
 
         .velvet-card-cyan {
-            background: rgba(14, 18, 28, 0.90);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(19, 17, 28, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(0, 229, 255, 0.28);
-            box-shadow: 0 15px 35px rgba(0, 229, 255, 0.08);
-            transform: translateZ(0);
+            box-shadow: 0 20px 50px rgba(0, 229, 255, 0.08);
         }
 
         /* Spring Physics Transitions */
@@ -186,22 +182,14 @@
             text-shadow: 0 0 24px rgba(139, 92, 246, 0.65);
         }
 
-        /* Ambient Background Blobs (GPU-friendly Radial Gradients, Zero Blur Cost) */
+        /* Ambient Background Blobs */
         .ambient-orb {
             position: absolute;
             border-radius: 9999px;
+            filter: blur(110px);
             pointer-events: none;
             z-index: 0;
-            transform: translateZ(0);
-        }
-        .ambient-orb-rose {
-            background: radial-gradient(circle, rgba(255, 42, 133, 0.28) 0%, rgba(255, 42, 133, 0.08) 42%, transparent 70%);
-        }
-        .ambient-orb-violet {
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.28) 0%, rgba(139, 92, 246, 0.08) 42%, transparent 70%);
-        }
-        .ambient-orb-cyan {
-            background: radial-gradient(circle, rgba(0, 229, 255, 0.28) 0%, rgba(0, 229, 255, 0.08) 42%, transparent 70%);
+            opacity: 0.35;
         }
 
         /* Custom Scrollbar */
@@ -300,6 +288,45 @@
         }
         .discrete-fade[hidden] {
             display: none;
+        }
+
+        /* Smooth Hyperspace Warp Zoom-Out and Zoom-In */
+        .warp-zoom-out {
+            animation: warpZoomOut 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            pointer-events: none !important;
+        }
+        @keyframes warpZoomOut {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+                filter: blur(0px);
+            }
+            45% {
+                transform: scale(0.92);
+                opacity: 0.75;
+                filter: blur(4px);
+            }
+            100% {
+                transform: scale(0.6);
+                opacity: 0;
+                filter: blur(18px);
+                visibility: hidden;
+            }
+        }
+        .warp-zoom-in {
+            animation: warpZoomIn 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+        }
+        @keyframes warpZoomIn {
+            0% {
+                transform: scale(1.35);
+                opacity: 0;
+                filter: blur(20px);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+                filter: blur(0px);
+            }
         }
 
         /* Smooth Scroll Fade-In & Fade-Out Reveal */
@@ -406,6 +433,137 @@
     </section>
 
     <!-- ===================================================================
+         F-00-B: AESTHETIC BIG COUNTDOWN GATE (BEFORE LOVE INTRO)
+         Shows aesthetic big countdown to 23 November 2026 00:00 WIB
+         Auto-unlocks at 00:00:00 with smooth warp zoom, or shows count-up plus
+         button "yahh sayangg udah lewat jam nya klik disini yachh"
+         =================================================================== -->
+    <section id="countdown-gate" hidden class="stage-layer fixed inset-0 z-50 bg-[#05040A] flex-col justify-between items-center p-4 sm:p-7 md:p-8 overflow-hidden select-none">
+        <!-- Interactive Cosmic Galaxy Canvas for touching and playing -->
+        <canvas id="gate-stars-canvas" class="absolute inset-0 w-full h-full block cursor-pointer"></canvas>
+
+        <!-- Ambient Nebula Glow Blobs -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[600px] h-[340px] sm:h-[600px] rounded-full bg-gradient-to-tr from-cyberRose/25 via-nebulaViolet/25 to-electricCyan/25 blur-[105px]"></div>
+        </div>
+
+        <!-- Top Status Bar -->
+        <div class="relative z-10 w-full max-w-5xl flex items-center justify-between gap-2 pt-1 font-mono text-xs text-mutedLavender">
+            <div class="flex items-center gap-2 bg-velvet/85 border border-white/10 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full backdrop-blur-md text-[11px] sm:text-xs">
+                <span id="gate-status-dot" class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
+                <span id="gate-status-text" class="text-starlight font-semibold">CHRONO GATE // COUNTDOWN v19.0</span>
+            </div>
+            <div class="flex items-center gap-2 bg-velvet/85 border border-white/10 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full backdrop-blur-md text-[11px] sm:text-xs">
+                <span class="text-electricCyan font-bold">23.11.2026</span>
+                <span class="text-white/30">•</span>
+                <span class="text-starlight">00:00 WIB</span>
+            </div>
+        </div>
+
+        <!-- Center Main Timer Section -->
+        <div class="relative z-10 w-full max-w-4xl flex flex-col items-center text-center my-auto px-2 py-3 sm:py-4">
+            
+            <!-- Dynamic Mode Pill Badge -->
+            <div id="gate-mode-badge" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-cyberRose/15 border border-cyberRose/40 font-mono text-xs sm:text-sm text-cyberRose tracking-wider uppercase mb-2.5 sm:mb-4 shadow-[0_0_25px_rgba(255,42,133,0.35)] backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-cyberRose animate-pulse"></span>
+                <span id="gate-mode-badge-text">MENUNGGU DETIK-DETIK RESMI 19 TAHUN</span>
+            </div>
+
+            <!-- Big Main Heading -->
+            <h1 id="gate-main-heading" class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-starlight tracking-tight leading-tight">
+                Menuju Ulang Tahun Ke-19<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan">
+                    Azizah Nazwa Novita (Zizuy)
+                </span>
+            </h1>
+
+            <p id="gate-sub-heading" class="text-xs sm:text-sm md:text-base text-mutedLavender mt-1.5 sm:mt-2 max-w-xl leading-relaxed">
+                Pintu cinta akan terbuka otomatis tepat saat jarum jam menyentuh 23 November 2026 pukul 00:00:00 WIB.
+            </p>
+
+            <!-- AESTHETIC GIANT CHRONO DISPLAY -->
+            <div class="w-full max-w-3xl my-4 sm:my-7 p-3 sm:p-6 md:p-8 rounded-3xl bg-velvet/75 border border-white/15 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.8)] relative overflow-hidden">
+                <div class="flex items-center justify-center gap-1 sm:gap-3 md:gap-4 font-mono">
+                    <!-- Sign Symbol (- or +) -->
+                    <div id="gate-timer-sign" class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-cyberRose glow-rose select-none pr-0.5 sm:pr-1">
+                        -
+                    </div>
+
+                    <!-- Days Box -->
+                    <div class="flex-1 max-w-[65px] sm:max-w-[110px] md:max-w-[130px] flex flex-col items-center bg-obsidian/90 border border-white/15 rounded-2xl p-2 sm:p-4 shadow-inner">
+                        <span id="gate-t-days" class="font-display font-black text-2xl sm:text-5xl md:text-6xl text-starlight tracking-tight">00</span>
+                        <span class="text-[9px] sm:text-xs uppercase font-mono tracking-widest text-mutedLavender mt-0.5 sm:mt-1">Hari</span>
+                    </div>
+
+                    <span class="text-lg sm:text-4xl font-bold text-white/30">:</span>
+
+                    <!-- Hours Box -->
+                    <div class="flex-1 max-w-[65px] sm:max-w-[110px] md:max-w-[130px] flex flex-col items-center bg-obsidian/90 border border-white/15 rounded-2xl p-2 sm:p-4 shadow-inner">
+                        <span id="gate-t-hours" class="font-display font-black text-2xl sm:text-5xl md:text-6xl text-starlight tracking-tight">00</span>
+                        <span class="text-[9px] sm:text-xs uppercase font-mono tracking-widest text-mutedLavender mt-0.5 sm:mt-1">Jam</span>
+                    </div>
+
+                    <span class="text-lg sm:text-4xl font-bold text-white/30">:</span>
+
+                    <!-- Minutes Box -->
+                    <div class="flex-1 max-w-[65px] sm:max-w-[110px] md:max-w-[130px] flex flex-col items-center bg-obsidian/90 border border-white/15 rounded-2xl p-2 sm:p-4 shadow-inner">
+                        <span id="gate-t-mins" class="font-display font-black text-2xl sm:text-5xl md:text-6xl text-starlight tracking-tight">00</span>
+                        <span class="text-[9px] sm:text-xs uppercase font-mono tracking-widest text-mutedLavender mt-0.5 sm:mt-1">Menit</span>
+                    </div>
+
+                    <span class="text-lg sm:text-4xl font-bold text-white/30">:</span>
+
+                    <!-- Seconds Box -->
+                    <div class="flex-1 max-w-[65px] sm:max-w-[110px] md:max-w-[130px] flex flex-col items-center bg-obsidian/90 border border-white/15 rounded-2xl p-2 sm:p-4 shadow-inner">
+                        <span id="gate-t-secs" class="font-display font-black text-2xl sm:text-5xl md:text-6xl text-starlight tracking-tight">00</span>
+                        <span class="text-[9px] sm:text-xs uppercase font-mono tracking-widest text-mutedLavender mt-0.5 sm:mt-1">Detik</span>
+                    </div>
+
+                    <!-- Milliseconds ticker (compact cyber element) -->
+                    <div class="hidden sm:flex flex-col items-center bg-obsidian/60 border border-white/10 rounded-xl px-2 py-3 min-w-[42px]">
+                        <span id="gate-t-ms" class="font-mono text-sm md:text-base text-electricCyan font-bold">00</span>
+                        <span class="text-[8px] uppercase tracking-wider text-mutedLavender">MS</span>
+                    </div>
+                </div>
+
+                <!-- Live Auto-Unlock Notification Bar (when countdown active) -->
+                <div id="gate-countdown-notice" class="mt-3.5 sm:mt-4 pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-2 font-mono text-[11px] sm:text-xs text-mutedLavender">
+                    <span class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
+                    <span>Terkunci otomatis • Tepat jam 00:00:00 WIB, pintu cinta langsung terbuka sendiri ✨</span>
+                </div>
+            </div>
+
+            <!-- BUTTON KHUSUS: MUNCUL KETIKA WAKTU SUDAH LEWAT DARI 23 NOVEMBER 00:00 WIB -->
+            <div id="gate-late-container" class="hidden flex-col items-center text-center mt-1 sm:mt-2">
+                <button id="gate-late-enter-btn" type="button" onclick="openLoveIntroGate()" class="spring-btn group relative px-6 sm:px-9 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan text-white font-mono font-bold text-xs sm:text-sm md:text-base shadow-[0_0_40px_rgba(255,42,133,0.55)] hover:shadow-[0_0_65px_rgba(0,229,255,0.75)] hover:scale-105 transition-all flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer">
+                    <span class="text-xl sm:text-2xl animate-bounce">💖</span>
+                    <span class="tracking-wide">yahh sayangg udah lewat jam nya klik disini yachh</span>
+                    <span class="text-xl sm:text-2xl animate-pulse">✨</span>
+                </button>
+                <p class="font-hand text-base sm:text-xl text-starlight/90 mt-2">
+                    Klik tombol di atas untuk membuka galaksi cinta &amp; ucapan spesialmu!
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Bottom Interactive Area (Mini-game touch to play + Simulation Toggle) -->
+        <div class="relative z-10 w-full max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left font-mono text-[11px] sm:text-xs text-mutedLavender pb-1">
+            <!-- Interactive Touch Hint & Star Prayer Counter -->
+            <div class="flex items-center gap-2 bg-velvet/80 border border-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                <span class="text-cyberRose animate-pulse text-sm">✨</span>
+                <span>Sentuh layar untuk kirim bintang: <strong id="gate-star-prayers-count" class="text-electricCyan font-bold">19</strong> Doa Terkirim</span>
+            </div>
+
+            <!-- Discreet Simulator Toggle Button -->
+            <button id="gate-toggle-sim-btn" type="button" onclick="toggleGateSimulation()" class="spring-btn px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-mutedLavender hover:text-starlight text-[10px] sm:text-[11px] transition-colors flex items-center gap-1.5 cursor-pointer">
+                <span>⏱️</span>
+                <span id="gate-sim-label">Simulasi: Sudah Lewat 23 Nov (+)</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- ===================================================================
          F-01: 3D GALAXY & WIDE BINARY HEART INTRO GATE (zizuy_v19.exe)
          =================================================================== -->
     <section id="intro-gate" hidden class="stage-layer fixed inset-0 z-50 bg-[#05040A] flex-col justify-between items-center p-5 sm:p-8 overflow-hidden">
@@ -476,10 +634,10 @@
         <!-- Fixed Lightweight 3D Galaxy Starfield Background for Main Content -->
         <canvas id="bg-galaxy-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-75"></canvas>
         
-        <!-- Ambient Glowing Background Orbs (GPU-accelerated Gradients) -->
-        <div class="ambient-orb ambient-orb-rose w-72 sm:w-96 h-72 sm:h-96 top-16 -left-24"></div>
-        <div class="ambient-orb ambient-orb-violet w-80 sm:w-[28rem] h-80 sm:h-[28rem] top-[32%] right-0"></div>
-        <div class="ambient-orb ambient-orb-cyan w-72 sm:w-96 h-72 sm:h-96 bottom-40 -left-20"></div>
+        <!-- Ambient Glowing Background Orbs -->
+        <div class="ambient-orb w-80 h-80 bg-cyberRose top-16 -left-24"></div>
+        <div class="ambient-orb w-96 h-96 bg-nebulaViolet top-[32%] right-0"></div>
+        <div class="ambient-orb w-80 h-80 bg-electricCyan bottom-40 -left-20"></div>
 
         <!-- Sticky Top Navigation Bar (Mobile-first responsive) -->
         <header class="sticky top-0 z-40 backdrop-blur-xl bg-obsidian/80 border-b border-white/10">
@@ -1241,20 +1399,274 @@
                     requestAnimationFrame(step);
                 } else {
                     setTimeout(() => {
-                        // Fade-in Intro Gate & Fade-out Preloader
-                        introActive = true;
-                        startTime = performance.now();
-                        initVortexParticles();
-                        showElement(introGate);
-                        requestAnimationFrame(renderVortex);
                         hideElement(preloader);
-                        // Trigger smooth fade-in of Happy Birthday title & auto-dismiss hint
-                        triggerIntroAppear();
+                        initCountdownGate();
                     }, 200);
                 }
             }
 
             requestAnimationFrame(step);
+        }
+
+        /* -----------------------------------------------------------------
+           F-00-B: AESTHETIC BIG COUNTDOWN GATE & INTERACTIVE STARDUST
+           Runs after 100% preloader. Counts down to 2026-11-23T00:00:00+07:00.
+           Auto-unlocks at 00:00:00 WIB with smooth warp zoom into 3D Love intro,
+           or shows count-up plus button "yahh sayangg udah lewat jam nya klik disini yachh".
+           ----------------------------------------------------------------- */
+        const TARGET_BIRTHDAY_MS = new Date('2026-11-23T00:00:00+07:00').getTime();
+        let gateSimulationLate = false;
+        let hasAutoUnlocked = false;
+        let countdownTickerInterval = null;
+        let starPrayersCount = 19;
+        let gateCanvasInitialized = false;
+
+        function pad2(n) {
+            return String(Math.floor(Math.abs(n))).padStart(2, '0');
+        }
+
+        function initCountdownGate() {
+            const countdownGate = document.getElementById('countdown-gate');
+            if (!countdownGate) return;
+            showElement(countdownGate);
+            initGateStarsInteractive();
+            updateCountdownGateTicker();
+            if (countdownTickerInterval) clearInterval(countdownTickerInterval);
+            countdownTickerInterval = setInterval(updateCountdownGateTicker, 40);
+        }
+
+        function updateCountdownGateTicker() {
+            const nowMs = Date.now();
+            let deltaMs = TARGET_BIRTHDAY_MS - nowMs;
+
+            if (gateSimulationLate || simulateLateMode) {
+                // Simulation: already passed 23 Nov by 4h 12m + elapsed
+                deltaMs = fakeLateStartMs - nowMs;
+            }
+
+            const isCountdown = deltaMs > 0;
+            const absMs = Math.abs(deltaMs);
+            const absSeconds = Math.floor(absMs / 1000);
+
+            const days = Math.floor(absSeconds / 86400);
+            const hours = Math.floor((absSeconds % 86400) / 3600);
+            const mins = Math.floor((absSeconds % 3600) / 60);
+            const secs = absSeconds % 60;
+            const millis = Math.floor((absMs % 1000) / 10); // 00-99
+
+            const dDays = document.getElementById('gate-t-days');
+            const dHours = document.getElementById('gate-t-hours');
+            const dMins = document.getElementById('gate-t-mins');
+            const dSecs = document.getElementById('gate-t-secs');
+            const dMs = document.getElementById('gate-t-ms');
+            const signEl = document.getElementById('gate-timer-sign');
+            const noticeEl = document.getElementById('gate-countdown-notice');
+            const lateContainer = document.getElementById('gate-late-container');
+            const badgeEl = document.getElementById('gate-mode-badge');
+            const badgeText = document.getElementById('gate-mode-badge-text');
+            const subHeading = document.getElementById('gate-sub-heading');
+
+            if (dDays) dDays.textContent = pad2(days);
+            if (dHours) dHours.textContent = pad2(hours);
+            if (dMins) dMins.textContent = pad2(mins);
+            if (dSecs) dSecs.textContent = pad2(secs);
+            if (dMs) dMs.textContent = pad2(millis);
+
+            if (isCountdown) {
+                // Countdown Mode: Before 23 Nov 2026 00:00:00 WIB
+                if (signEl) {
+                    signEl.textContent = '-';
+                    signEl.className = 'font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-cyberRose glow-rose select-none pr-0.5 sm:pr-1';
+                }
+                if (noticeEl) noticeEl.classList.remove('hidden');
+                if (lateContainer) lateContainer.classList.add('hidden');
+                if (badgeEl) {
+                    badgeEl.className = 'inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-cyberRose/15 border border-cyberRose/40 font-mono text-xs sm:text-sm text-cyberRose tracking-wider uppercase mb-2.5 sm:mb-4 shadow-[0_0_25px_rgba(255,42,133,0.35)] backdrop-blur-md';
+                }
+                if (badgeText) badgeText.textContent = 'MENUNGGU DETIK-DETIK RESMI 19 TAHUN';
+                if (subHeading) {
+                    subHeading.textContent = 'Pintu cinta akan terbuka otomatis tepat saat jarum jam menyentuh 23 November 2026 pukul 00:00:00 WIB.';
+                }
+            } else {
+                // Elapsed Mode: Already 23 Nov 2026 00:00:00 WIB or passed
+                if (signEl) {
+                    signEl.textContent = '+';
+                    signEl.className = 'font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-electricCyan glow-cyan select-none pr-0.5 sm:pr-1';
+                }
+                if (noticeEl) noticeEl.classList.add('hidden');
+                if (lateContainer) lateContainer.classList.remove('hidden');
+                if (badgeEl) {
+                    badgeEl.className = 'inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/50 font-mono text-xs sm:text-sm tracking-wider uppercase mb-2.5 sm:mb-4 shadow-[0_0_25px_rgba(0,229,255,0.35)] backdrop-blur-md';
+                }
+                if (badgeText) badgeText.textContent = '✨ LEVEL 19 SUDAH RESMI DIBUKA! ✨';
+                if (subHeading) {
+                    subHeading.textContent = 'Hari ulang tahun ke-19 kamu sudah tiba! Ini waktu yang sudah berjalan sejak kamu resmi 19 tahun:';
+                }
+
+                // Automatic unlock condition if user is watching the countdown exactly when it hits 0!
+                if (!hasAutoUnlocked && !gateSimulationLate && deltaMs <= 0 && deltaMs > -3000) {
+                    hasAutoUnlocked = true;
+                    openLoveIntroGate();
+                }
+            }
+        }
+
+        window.openLoveIntroGate = function() {
+            playCyberTone(523.25, 'triangle', 0.2);
+            setTimeout(() => playCyberTone(659.25, 'triangle', 0.25), 130);
+            setTimeout(() => playCyberTone(1046.5, 'triangle', 0.45), 260);
+
+            const countdownGate = document.getElementById('countdown-gate');
+            const introGate = document.getElementById('intro-gate');
+
+            if (countdownGate) {
+                countdownGate.classList.add('warp-zoom-out');
+            }
+
+            setTimeout(() => {
+                if (countdownTickerInterval) {
+                    clearInterval(countdownTickerInterval);
+                    countdownTickerInterval = null;
+                }
+                showElement(introGate);
+                if (introGate) {
+                    introGate.classList.add('warp-zoom-in');
+                }
+                introActive = true;
+                startTime = performance.now();
+                initVortexParticles();
+                requestAnimationFrame(renderVortex);
+                triggerIntroAppear();
+
+                setTimeout(() => {
+                    if (countdownGate) {
+                        hideElement(countdownGate);
+                        countdownGate.classList.remove('warp-zoom-out');
+                    }
+                    if (introGate) {
+                        introGate.classList.remove('warp-zoom-in');
+                    }
+                }, 900);
+            }, 380);
+        };
+
+        window.toggleGateSimulation = function() {
+            gateSimulationLate = !gateSimulationLate;
+            simulateLateMode = gateSimulationLate;
+            playCyberTone(659.25, 'triangle', 0.14);
+            const label = document.getElementById('gate-sim-label');
+            if (label) {
+                label.textContent = gateSimulationLate ? 'Kembali ke Waktu Asli (-)' : 'Simulasi: Sudah Lewat 23 Nov (+)';
+            }
+            showToast(gateSimulationLate ? 'Simulasi Sudah Lewat 23 Nov (+) aktif!' : 'Kembali ke waktu countdown asli.');
+            updateCountdownGateTicker();
+            if (typeof updateChronoTimer === 'function') updateChronoTimer();
+        };
+
+        // Interactive Stardust & Floating Love Particles on Countdown Gate Canvas
+        let gateStars = [];
+        let gateChimeIdx = 0;
+        const gatePentatonic = [523.25, 587.33, 659.25, 783.99, 880, 1046.5];
+
+        function initGateStarsInteractive() {
+            const canvas = document.getElementById('gate-stars-canvas');
+            if (!canvas || gateCanvasInitialized) return;
+            gateCanvasInitialized = true;
+            const ctx = canvas.getContext('2d');
+
+            function resizeGateCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeGateCanvas();
+            window.addEventListener('resize', resizeGateCanvas);
+
+            // Ambient background stars
+            const ambientCount = window.innerWidth < 640 ? 45 : 75;
+            for (let i = 0; i < ambientCount; i++) {
+                gateStars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: -(0.2 + Math.random() * 0.6),
+                    size: 1 + Math.random() * 2,
+                    color: i % 3 === 0 ? '#FF2A85' : (i % 3 === 1 ? '#00E5FF' : '#8B5CF6'),
+                    alpha: 0.2 + Math.random() * 0.6,
+                    isInteractive: false
+                });
+            }
+
+            function triggerStarBurst(x, y) {
+                starPrayersCount++;
+                const countEl = document.getElementById('gate-star-prayers-count');
+                if (countEl) countEl.textContent = starPrayersCount;
+
+                playCyberTone(gatePentatonic[gateChimeIdx % gatePentatonic.length], 'sine', 0.16);
+                gateChimeIdx++;
+
+                const colors = ['#FF2A85', '#00E5FF', '#8B5CF6', '#FFFFFF', '#FFD166'];
+                for (let i = 0; i < 16; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 1.2 + Math.random() * 4.2;
+                    gateStars.push({
+                        x: x,
+                        y: y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed - 0.5,
+                        size: 2 + Math.random() * 3,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        alpha: 1,
+                        decay: 0.016 + Math.random() * 0.02,
+                        isHeart: i % 4 === 0,
+                        isInteractive: true
+                    });
+                }
+            }
+
+            canvas.addEventListener('pointerdown', (e) => {
+                triggerStarBurst(e.clientX, e.clientY);
+            });
+
+            function renderGateStars() {
+                const countdownGate = document.getElementById('countdown-gate');
+                if (countdownGate && !countdownGate.hidden && !motionPaused) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    for (let i = gateStars.length - 1; i >= 0; i--) {
+                        const s = gateStars[i];
+                        s.x += s.vx;
+                        s.y += s.vy;
+
+                        if (s.isInteractive) {
+                            s.alpha -= s.decay;
+                            if (s.alpha <= 0) {
+                                gateStars.splice(i, 1);
+                                continue;
+                            }
+                        } else {
+                            if (s.y < -10) s.y = canvas.height + 10;
+                            if (s.x < -10) s.x = canvas.width + 10;
+                            if (s.x > canvas.width + 10) s.x = -10;
+                        }
+
+                        ctx.save();
+                        ctx.globalAlpha = Math.max(0, s.alpha);
+                        ctx.fillStyle = s.color;
+
+                        if (s.isHeart) {
+                            ctx.font = '12px sans-serif';
+                            ctx.fillText('♥', s.x, s.y);
+                        } else {
+                            ctx.beginPath();
+                            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                        ctx.restore();
+                    }
+                }
+                requestAnimationFrame(renderGateStars);
+            }
+            requestAnimationFrame(renderGateStars);
         }
 
         /* -----------------------------------------------------------------
@@ -1385,14 +1797,14 @@
         function initVortexParticles() {
             vWidth = window.innerWidth;
             vHeight = window.innerHeight;
-            const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
             vortexCanvas.width = vWidth * dpr;
             vortexCanvas.height = vHeight * dpr;
             vCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
             if (nebulaSprites.length === 0) initNebulaSprites();
 
-            const count = vWidth < 640 ? 150 : 250;
+            const count = vWidth < 640 ? 250 : 420;
             particles = [];
 
             for (let i = 0; i < count; i++) {
@@ -1415,14 +1827,14 @@
                     vy: 0,
                     radialOffset: (Math.random() - 0.5) * 18,
                     color: PARTICLE_Colors[i % PARTICLE_Colors.length],
-                    size: vWidth < 640 ? 11 : 12,
-                    alpha: 0.45 + Math.random() * 0.55,
+                    size: vWidth < 640 ? (10 + Math.floor(Math.random() * 5)) : (11 + Math.floor(Math.random() * 6)),
+                    alpha: 0.4 + Math.random() * 0.6,
                     lerpFactor: 0
                 });
             }
 
             // Initialize 3D Galaxy spiral & depth starfield
-            const starCount = vWidth < 640 ? 60 : 95;
+            const starCount = vWidth < 640 ? 110 : 180;
             galaxyStars = [];
             for (let i = 0; i < starCount; i++) {
                 const armAngle = (i / starCount) * Math.PI * 6 + (Math.random() - 0.5) * 0.8;
@@ -1506,7 +1918,6 @@
 
             vCtx.textAlign = 'center';
             vCtx.textBaseline = 'middle';
-            vCtx.font = vWidth < 640 ? '700 11px "JetBrains Mono", monospace' : '700 12px "JetBrains Mono", monospace';
 
             for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
@@ -1567,6 +1978,7 @@
                     p.y += p.vy;
                 }
 
+                vCtx.font = `700 ${p.size}px "JetBrains Mono", monospace`;
                 vCtx.fillStyle = p.color;
                 vCtx.globalAlpha = Math.max(0, p.alpha);
                 vCtx.fillText(p.char, p.x, p.y);
@@ -1642,13 +2054,13 @@
             const gate = document.getElementById('intro-gate');
             const mainApp = document.getElementById('main-app');
             setTimeout(() => {
-                introActive = false;
                 showElement(mainApp);
                 initBgGalaxy();
                 initFireflies();
-                setupFirefliesObserver();
-                hideElement(gate);
-            }, 280);
+                hideElement(gate).then(() => {
+                    introActive = false;
+                });
+            }, 320);
         });
 
         // Replay Intro Button from Navbar
@@ -1665,26 +2077,22 @@
         });
 
         /* -----------------------------------------------------------------
-           F-02: DUAL-STATE CHRONO-SHIFT TIMER
-           Target: 2026-11-23T00:00:00+07:00
-           Supports automatic switch from Countdown (-) to Plus (+) if opened late,
-           plus interactive simulation toggle!
+           F-02: ELAPSED CHRONO-TIMER (HALAMAN UTAMA)
+           Khusus menampilkan waktu plus (+) yang sudah berjalan sejak resmi 19 tahun!
            ----------------------------------------------------------------- */
-        const TARGET_BIRTHDAY_MS = new Date('2026-11-23T00:00:00+07:00').getTime();
-        let simulateLateMode = false;
-        let fakeLateStartMs = Date.now() - (4 * 3600 * 1000 + 12 * 60 * 1000 + 9 * 1000); // + 00d : 04h : 12m : 09s example from PRD!
-
-        function pad2(n) {
-            return String(Math.floor(Math.abs(n))).padStart(2, '0');
-        }
+        var simulateLateMode = false;
+        var fakeLateStartMs = Date.now() - (4 * 3600 * 1000 + 12 * 60 * 1000 + 9 * 1000); // contoh +00d:04h:12m:09s
 
         function updateChronoTimer() {
             const nowMs = Date.now();
-            let deltaMs = TARGET_BIRTHDAY_MS - nowMs;
+            let elapsedMs = 0;
 
-            if (simulateLateMode) {
-                // Simulate that birthday has already passed by 4 hours 12 mins + live elapsed seconds
-                deltaMs = fakeLateStartMs - nowMs;
+            if (nowMs >= TARGET_BIRTHDAY_MS) {
+                // Waktu resmi sudah tiba/lewat
+                elapsedMs = nowMs - TARGET_BIRTHDAY_MS;
+            } else {
+                // Di halaman hero utama, selalu tampilkan waktu plus berjalan sejak resmi 19 tahun
+                elapsedMs = Math.max(0, nowMs - fakeLateStartMs);
             }
 
             const timerCard = document.getElementById('timer-card');
@@ -1696,40 +2104,46 @@
             const timerSubtext = document.getElementById('timer-subtext');
             const lateBanner = document.getElementById('late-banner');
 
-            const isCountdown = deltaMs > 0;
-            const absSeconds = Math.floor(Math.abs(deltaMs) / 1000);
-
+            const absSeconds = Math.floor(elapsedMs / 1000);
             const days = Math.floor(absSeconds / 86400);
             const hours = Math.floor((absSeconds % 86400) / 3600);
             const mins = Math.floor((absSeconds % 3600) / 60);
             const secs = absSeconds % 60;
 
-            document.getElementById('t-days').textContent = pad2(days);
-            document.getElementById('t-hours').textContent = pad2(hours);
-            document.getElementById('t-mins').textContent = pad2(mins);
-            document.getElementById('t-secs').textContent = pad2(secs);
+            const tDays = document.getElementById('t-days');
+            const tHours = document.getElementById('t-hours');
+            const tMins = document.getElementById('t-mins');
+            const tSecs = document.getElementById('t-secs');
 
-            if (isCountdown) {
-                // CONDITION 1: Before 23 Nov 2026 00:00 WIB (Countdown Mode '-')
-                timerSign.textContent = '-';
-                timerSign.className = 'text-3xl sm:text-5xl font-bold text-cyberRose glow-rose select-none pr-1';
-                timerCard.className = 'velvet-card-rose rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-500';
-                timerBadge.className = 'inline-flex items-center gap-2 font-mono text-xs font-bold px-3 py-1.5 rounded-full bg-cyberRose/20 text-cyberRose border border-cyberRose/40';
-                timerDot.className = 'w-2 h-2 rounded-full bg-cyberRose animate-ping';
-                timerBadgeText.textContent = 'COMPILING ZIZUY LEVEL 19...';
-                timerHeading.textContent = 'Hitung Mundur Menuju 19 Tahun';
-                timerSubtext.textContent = 'Menuju 23 November 2026 (00:00 WIB). Begitu lewat, otomatis berubah jadi PLUS (+)!';
-                hideElement(lateBanner);
-            } else {
-                // CONDITION 2: After 23 Nov 2026 00:00 WIB / Telat Buka (Elapsed Plus Mode '+')
+            if (tDays) tDays.textContent = pad2(days);
+            if (tHours) tHours.textContent = pad2(hours);
+            if (tMins) tMins.textContent = pad2(mins);
+            if (tSecs) tSecs.textContent = pad2(secs);
+
+            // TAMPILAN SELALU PLUS (+) DI HALAMAN SETELAH KLIK TOMBOL
+            if (timerSign) {
                 timerSign.textContent = '+';
                 timerSign.className = 'text-3xl sm:text-5xl font-bold text-electricCyan glow-cyan select-none pr-1';
+            }
+            if (timerCard) {
                 timerCard.className = 'velvet-card-cyan rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-500';
+            }
+            if (timerBadge) {
                 timerBadge.className = 'inline-flex items-center gap-2 font-mono text-xs font-bold px-3 py-1.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40';
+            }
+            if (timerDot) {
                 timerDot.className = 'w-2 h-2 rounded-full bg-electricCyan animate-ping';
+            }
+            if (timerBadgeText) {
                 timerBadgeText.textContent = 'LEVEL 19 UNLOCKED & RUNNING (+)';
+            }
+            if (timerHeading) {
                 timerHeading.textContent = 'Waktu Berjalan Sejak Resmi 19 Tahun';
+            }
+            if (timerSubtext) {
                 timerSubtext.textContent = 'Count-up real-time sejak 23 November 2026 pukul 00:00 WIB.';
+            }
+            if (lateBanner) {
                 showElement(lateBanner);
             }
         }
@@ -3239,44 +3653,25 @@ int main() {
             }
         }
 
-        let firefliesInView = false;
-        let firefliesRafId = null;
-
         function animateFireflies() {
-            if (!firefliesInView || motionPaused) {
-                firefliesRafId = null;
-                return;
-            }
-            ffCtx.clearRect(0, 0, ffCanvas.width, ffCanvas.height);
-            ffCtx.font = '600 11px "JetBrains Mono", monospace';
-            for (let i = 0; i < fireflies.length; i++) {
-                const f = fireflies[i];
-                f.x += f.vx;
-                f.y += f.vy;
-                if (f.y < -10) {
-                    f.y = ffCanvas.height + 10;
-                    f.x = Math.random() * ffCanvas.width;
-                }
-                ffCtx.fillStyle = f.color;
-                ffCtx.globalAlpha = f.alpha;
-                ffCtx.fillText(f.char, f.x, f.y);
-            }
-            ffCtx.globalAlpha = 1;
-            firefliesRafId = requestAnimationFrame(animateFireflies);
-        }
-
-        function setupFirefliesObserver() {
-            const letterSec = document.getElementById('uncompiled-letter');
-            if (!letterSec) return;
-            const obs = new IntersectionObserver((entries) => {
-                entries.forEach((e) => {
-                    firefliesInView = e.isIntersecting;
-                    if (firefliesInView && !firefliesRafId && !motionPaused) {
-                        firefliesRafId = requestAnimationFrame(animateFireflies);
+            if (!motionPaused) {
+                ffCtx.clearRect(0, 0, ffCanvas.width, ffCanvas.height);
+                ffCtx.font = '600 11px "JetBrains Mono", monospace';
+                for (let i = 0; i < fireflies.length; i++) {
+                    const f = fireflies[i];
+                    f.x += f.vx;
+                    f.y += f.vy;
+                    if (f.y < -10) {
+                        f.y = ffCanvas.height + 10;
+                        f.x = Math.random() * ffCanvas.width;
                     }
-                });
-            }, { threshold: 0.05 });
-            obs.observe(letterSec);
+                    ffCtx.fillStyle = f.color;
+                    ffCtx.globalAlpha = f.alpha;
+                    ffCtx.fillText(f.char, f.x, f.y);
+                }
+                ffCtx.globalAlpha = 1;
+            }
+            requestAnimationFrame(animateFireflies);
         }
 
         /* -----------------------------------------------------------------
@@ -3289,22 +3684,22 @@ int main() {
         function initBgGalaxy() {
             bgCanvas.width = window.innerWidth;
             bgCanvas.height = window.innerHeight;
-            const count = window.innerWidth < 640 ? 28 : 45;
+            const count = window.innerWidth < 640 ? 55 : 95;
             bgStars = [];
             for (let i = 0; i < count; i++) {
                 bgStars.push({
-                    x: (Math.random() - 0.5) * bgCanvas.width * 1.4,
-                    y: (Math.random() - 0.5) * bgCanvas.height * 1.4,
+                    x: (Math.random() - 0.5) * bgCanvas.width * 1.5,
+                    y: (Math.random() - 0.5) * bgCanvas.height * 1.5,
                     z: Math.random() * 600 + 80,
-                    speedZ: 0.35 + Math.random() * 0.65,
+                    speedZ: 0.45 + Math.random() * 0.85,
                     color: PARTICLE_Colors[i % PARTICLE_Colors.length],
-                    size: 1 + Math.random() * 1.5
+                    size: 1 + Math.random() * 1.8
                 });
             }
         }
 
         function animateBgGalaxy() {
-            if (!introActive && !motionPaused && !document.hidden) {
+            if (!introActive && !motionPaused) {
                 bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
                 const cx = bgCanvas.width / 2;
                 const cy = bgCanvas.height / 2;
@@ -3315,13 +3710,14 @@ int main() {
                     s.z -= s.speedZ;
                     if (s.z <= 20) s.z = 680;
                     const scale = fov / (fov + s.z);
-                    const sx = cx + (s.x + pointer.normX * 24) * scale;
-                    const sy = cy + (s.y + pointer.normY * 18) * scale;
+                    const sx = cx + (s.x + pointer.normX * 35) * scale;
+                    const sy = cy + (s.y + pointer.normY * 25) * scale;
                     if (sx >= 0 && sx <= bgCanvas.width && sy >= 0 && sy <= bgCanvas.height) {
-                        const sz = Math.max(1, s.size * scale);
+                        bgCtx.beginPath();
                         bgCtx.fillStyle = s.color;
                         bgCtx.globalAlpha = Math.min(0.65, scale * 0.85);
-                        bgCtx.fillRect(sx - sz / 2, sy - sz / 2, sz, sz);
+                        bgCtx.arc(sx, sy, Math.max(0.6, s.size * scale), 0, Math.PI * 2);
+                        bgCtx.fill();
                     }
                 }
                 bgCtx.globalAlpha = 1;
@@ -3336,16 +3732,18 @@ int main() {
             showToast(motionPaused ? 'Animasi latar dijeda.' : 'Animasi latar dilanjutkan.');
         });
 
-        // Smooth Fade-In on Scroll (Zero Jank IntersectionObserver)
+        // Smooth Fade-In & Fade-Out on Scroll (IntersectionObserver)
         function setupScrollReveal() {
             const revealItems = document.querySelectorAll('.reveal-on-scroll');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
+                    } else {
+                        entry.target.classList.remove('in-view');
                     }
                 });
-            }, { threshold: 0.08 });
+            }, { threshold: 0.12 });
 
             revealItems.forEach((el) => observer.observe(el));
         }
@@ -3384,7 +3782,7 @@ int main() {
             requestAnimationFrame(animateBgGalaxy);
 
             initFireflies();
-            setupFirefliesObserver();
+            requestAnimationFrame(animateFireflies);
         }
 
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
