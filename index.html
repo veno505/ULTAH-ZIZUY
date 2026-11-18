@@ -141,6 +141,24 @@
         .font-hand {
             font-family: 'Caveat', cursive !important;
         }
+
+        /* Sticky Floating Note Card for Section 1 Desktop Layout */
+        @media (min-width: 1024px) {
+            #hero-timer .hero-grid-container {
+                align-items: stretch !important;
+            }
+            #hero-timer-right-col {
+                height: 100% !important;
+                min-height: 100% !important;
+            }
+            #hero-note-sticky-wrapper {
+                position: -webkit-sticky !important;
+                position: sticky !important;
+                top: 5.5rem !important; /* ~88px: right below sticky navbar */
+                z-index: 25;
+            }
+        }
+
         :root {
             --obsidian: #120A1E;
             --velvet: #1B1429;
@@ -162,7 +180,7 @@
             background-color: #12091E;
             color: var(--starlight);
             font-family: 'Nunito', sans-serif;
-            overflow-x: hidden;
+            overflow-x: clip; /* clip preserves sticky scroll context */
             selection-background-color: #FF2A85;
             selection-color: #ffffff;
         }
@@ -548,7 +566,8 @@
         }
         .reveal-on-scroll.in-view {
             opacity: 1;
-            transform: translate3d(0, 0, 0);
+            transform: none !important;
+            will-change: auto !important;
         }
 
         /* Preloader Orbit Ring */
@@ -842,7 +861,7 @@
     <!-- ===================================================================
          MAIN EXPERIENCE WRAPPER (Rich Gradient Backdrop + Zero Blur Lag)
          =================================================================== -->
-    <div id="main-app" hidden class="stage-layer relative min-h-screen flex-col w-full max-w-full overflow-x-hidden">
+    <div id="main-app" hidden class="stage-layer relative min-h-screen flex-col w-full max-w-full overflow-x-clip">
         <!-- Fixed Lightweight 3D Starfield Background -->
         <canvas id="bg-galaxy-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-60"></canvas>
         
@@ -900,10 +919,10 @@
              SECTION 1: HERO, TORN-PAPER TIMER & WRITING-PAPER NOTE CARD
              =============================================================== -->
         <section id="hero-timer" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-12 sm:pb-20 md:pt-16 md:pb-24">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-8 lg:gap-10 items-start">
+            <div class="hero-grid-container grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-8 lg:gap-10">
                 
                 <!-- Left Column: Title, Torn-Paper Timer, & Torn-Paper Note Snippet -->
-                <div class="lg:col-span-7 space-y-5 sm:space-y-6">
+                <div class="lg:col-span-7 space-y-5 sm:space-y-6 self-start">
                     
                     <!-- Quick Mode Switcher Selector -->
                     <div class="inline-flex max-w-full items-center gap-1.5 p-1 rounded-2xl bg-velvet/95 border border-white/15 text-[11px] sm:text-xs font-mono">
@@ -1059,9 +1078,9 @@
                     </div>
                 </div>
 
-                <!-- Right Column: TORN WRITING PAPER NOTE CARD (Kertas Tulis Bergaris Khusus Ucapan) -->
-                <div class="lg:col-span-5 pt-3 sm:pt-4">
-                    <div class="torn-paper-shell">
+                <!-- Right Column: TORN WRITING PAPER NOTE CARD (Kertas Tulis Bergaris Khusus Ucapan - Sticky Ikut Turun Menyesuaikan Scroll) -->
+                <div id="hero-timer-right-col" class="lg:col-span-5 pt-3 sm:pt-4 h-full relative">
+                    <div id="hero-note-sticky-wrapper" class="torn-paper-shell lg:sticky lg:top-24 transition-all duration-300">
                         <div class="torn-edge-top"></div>
                         <div class="aesthetic-paper-card p-5 sm:p-7 md:p-8 pt-6 sm:pt-7 pl-11 sm:pl-16 relative">
                             <!-- Notebook Binder Punch Holes on Left Margin -->
