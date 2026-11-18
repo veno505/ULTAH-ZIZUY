@@ -87,32 +87,41 @@
             pointer-events: none;
             z-index: 9999;
             opacity: 0.035;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            will-change: transform;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Velvet Glass Card Surface */
+        /* Velvet Glass Card Surface (GPU Accelerated) */
         .velvet-card {
             background: rgba(19, 17, 28, 0.72);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
         }
 
         .velvet-card-rose {
             background: rgba(19, 17, 28, 0.78);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 42, 133, 0.28);
             box-shadow: 0 20px 50px rgba(255, 42, 133, 0.08);
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
         }
 
         .velvet-card-cyan {
             background: rgba(19, 17, 28, 0.78);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(0, 229, 255, 0.28);
             box-shadow: 0 20px 50px rgba(0, 229, 255, 0.08);
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
         }
 
         /* Spring Physics Transitions */
@@ -182,14 +191,17 @@
             text-shadow: 0 0 24px rgba(139, 92, 246, 0.65);
         }
 
-        /* Ambient Background Blobs */
+        /* Ambient Background Blobs (GPU Accelerated Blur) */
         .ambient-orb {
             position: absolute;
             border-radius: 9999px;
-            filter: blur(110px);
+            filter: blur(55px);
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            will-change: transform;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.35;
+            opacity: 0.32;
         }
 
         /* Custom Scrollbar */
@@ -1413,6 +1425,7 @@
            Runs after 100% preloader. Counts down to 2026-11-23T00:00:00+07:00.
            Auto-unlocks at 00:00:00 WIB with smooth warp zoom into 3D Love intro,
            or shows count-up plus button "yahh sayangg udah lewat jam nya klik disini yachh".
+           HIGH PERFORMANCE OPTIMIZED: RAF Culling, 65ms Batched Ticker, Zero Save/Restore.
            ----------------------------------------------------------------- */
         const TARGET_BIRTHDAY_MS = new Date('2026-11-23T00:00:00+07:00').getTime();
         let gateSimulationLate = false;
@@ -1420,6 +1433,7 @@
         let countdownTickerInterval = null;
         let starPrayersCount = 19;
         let gateCanvasInitialized = false;
+        let gateStarsActive = false;
 
         function pad2(n) {
             return String(Math.floor(Math.abs(n))).padStart(2, '0');
@@ -1429,10 +1443,12 @@
             const countdownGate = document.getElementById('countdown-gate');
             if (!countdownGate) return;
             showElement(countdownGate);
+            gateStarsActive = true;
             initGateStarsInteractive();
             updateCountdownGateTicker();
             if (countdownTickerInterval) clearInterval(countdownTickerInterval);
-            countdownTickerInterval = setInterval(updateCountdownGateTicker, 40);
+            // 65ms (~15 FPS ticker) is imperceptibly smooth for 2-digit ms, saving ~40% CPU cycles!
+            countdownTickerInterval = setInterval(updateCountdownGateTicker, 65);
         }
 
         function updateCountdownGateTicker() {
@@ -1454,6 +1470,12 @@
             const secs = absSeconds % 60;
             const millis = Math.floor((absMs % 1000) / 10); // 00-99
 
+            const strD = pad2(days);
+            const strH = pad2(hours);
+            const strM = pad2(mins);
+            const strS = pad2(secs);
+            const strMs = pad2(millis);
+
             const dDays = document.getElementById('gate-t-days');
             const dHours = document.getElementById('gate-t-hours');
             const dMins = document.getElementById('gate-t-mins');
@@ -1466,40 +1488,45 @@
             const badgeText = document.getElementById('gate-mode-badge-text');
             const subHeading = document.getElementById('gate-sub-heading');
 
-            if (dDays) dDays.textContent = pad2(days);
-            if (dHours) dHours.textContent = pad2(hours);
-            if (dMins) dMins.textContent = pad2(mins);
-            if (dSecs) dSecs.textContent = pad2(secs);
-            if (dMs) dMs.textContent = pad2(millis);
+            // Micro-optimization: Only touch DOM when string actually changes
+            if (dDays && dDays.textContent !== strD) dDays.textContent = strD;
+            if (dHours && dHours.textContent !== strH) dHours.textContent = strH;
+            if (dMins && dMins.textContent !== strM) dMins.textContent = strM;
+            if (dSecs && dSecs.textContent !== strS) dSecs.textContent = strS;
+            if (dMs && dMs.textContent !== strMs) dMs.textContent = strMs;
 
             if (isCountdown) {
                 // Countdown Mode: Before 23 Nov 2026 00:00:00 WIB
-                if (signEl) {
+                if (signEl && signEl.textContent !== '-') {
                     signEl.textContent = '-';
                     signEl.className = 'font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-cyberRose glow-rose select-none pr-0.5 sm:pr-1';
                 }
-                if (noticeEl) noticeEl.classList.remove('hidden');
-                if (lateContainer) lateContainer.classList.add('hidden');
-                if (badgeEl) {
+                if (noticeEl && noticeEl.classList.contains('hidden')) noticeEl.classList.remove('hidden');
+                if (lateContainer && !lateContainer.classList.contains('hidden')) lateContainer.classList.add('hidden');
+                if (badgeEl && !badgeEl.classList.contains('bg-cyberRose/15')) {
                     badgeEl.className = 'inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-cyberRose/15 border border-cyberRose/40 font-mono text-xs sm:text-sm text-cyberRose tracking-wider uppercase mb-2.5 sm:mb-4 shadow-[0_0_25px_rgba(255,42,133,0.35)] backdrop-blur-md';
                 }
-                if (badgeText) badgeText.textContent = 'MENUNGGU DETIK-DETIK RESMI 19 TAHUN';
-                if (subHeading) {
+                if (badgeText && badgeText.textContent !== 'MENUNGGU DETIK-DETIK RESMI 19 TAHUN') {
+                    badgeText.textContent = 'MENUNGGU DETIK-DETIK RESMI 19 TAHUN';
+                }
+                if (subHeading && subHeading.textContent !== 'Pintu cinta akan terbuka otomatis tepat saat jarum jam menyentuh 23 November 2026 pukul 00:00:00 WIB.') {
                     subHeading.textContent = 'Pintu cinta akan terbuka otomatis tepat saat jarum jam menyentuh 23 November 2026 pukul 00:00:00 WIB.';
                 }
             } else {
                 // Elapsed Mode: Already 23 Nov 2026 00:00:00 WIB or passed
-                if (signEl) {
+                if (signEl && signEl.textContent !== '+') {
                     signEl.textContent = '+';
                     signEl.className = 'font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-electricCyan glow-cyan select-none pr-0.5 sm:pr-1';
                 }
-                if (noticeEl) noticeEl.classList.add('hidden');
-                if (lateContainer) lateContainer.classList.remove('hidden');
-                if (badgeEl) {
+                if (noticeEl && !noticeEl.classList.contains('hidden')) noticeEl.classList.add('hidden');
+                if (lateContainer && lateContainer.classList.contains('hidden')) lateContainer.classList.remove('hidden');
+                if (badgeEl && !badgeEl.classList.contains('bg-electricCyan/20')) {
                     badgeEl.className = 'inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/50 font-mono text-xs sm:text-sm tracking-wider uppercase mb-2.5 sm:mb-4 shadow-[0_0_25px_rgba(0,229,255,0.35)] backdrop-blur-md';
                 }
-                if (badgeText) badgeText.textContent = '✨ LEVEL 19 SUDAH RESMI DIBUKA! ✨';
-                if (subHeading) {
+                if (badgeText && badgeText.textContent !== '✨ LEVEL 19 SUDAH RESMI DIBUKA! ✨') {
+                    badgeText.textContent = '✨ LEVEL 19 SUDAH RESMI DIBUKA! ✨';
+                }
+                if (subHeading && subHeading.textContent !== 'Hari ulang tahun ke-19 kamu sudah tiba! Ini waktu yang sudah berjalan sejak kamu resmi 19 tahun:') {
                     subHeading.textContent = 'Hari ulang tahun ke-19 kamu sudah tiba! Ini waktu yang sudah berjalan sejak kamu resmi 19 tahun:';
                 }
 
@@ -1516,6 +1543,13 @@
             setTimeout(() => playCyberTone(659.25, 'triangle', 0.25), 130);
             setTimeout(() => playCyberTone(1046.5, 'triangle', 0.45), 260);
 
+            // STOP countdown gate ticker & canvas loop immediately to free up 100% GPU for Love Intro
+            gateStarsActive = false;
+            if (countdownTickerInterval) {
+                clearInterval(countdownTickerInterval);
+                countdownTickerInterval = null;
+            }
+
             const countdownGate = document.getElementById('countdown-gate');
             const introGate = document.getElementById('intro-gate');
 
@@ -1524,10 +1558,6 @@
             }
 
             setTimeout(() => {
-                if (countdownTickerInterval) {
-                    clearInterval(countdownTickerInterval);
-                    countdownTickerInterval = null;
-                }
                 showElement(introGate);
                 if (introGate) {
                     introGate.classList.add('warp-zoom-in');
@@ -1581,8 +1611,8 @@
             resizeGateCanvas();
             window.addEventListener('resize', resizeGateCanvas);
 
-            // Ambient background stars
-            const ambientCount = window.innerWidth < 640 ? 45 : 75;
+            // Ambient background stars (Balanced for smooth 60fps on mobile)
+            const ambientCount = window.innerWidth < 640 ? 25 : 45;
             for (let i = 0; i < ambientCount; i++) {
                 gateStars.push({
                     x: Math.random() * canvas.width,
@@ -1604,8 +1634,9 @@
                 playCyberTone(gatePentatonic[gateChimeIdx % gatePentatonic.length], 'sine', 0.16);
                 gateChimeIdx++;
 
+                const burstCount = window.innerWidth < 640 ? 12 : 16;
                 const colors = ['#FF2A85', '#00E5FF', '#8B5CF6', '#FFFFFF', '#FFD166'];
-                for (let i = 0; i < 16; i++) {
+                for (let i = 0; i < burstCount; i++) {
                     const angle = Math.random() * Math.PI * 2;
                     const speed = 1.2 + Math.random() * 4.2;
                     gateStars.push({
@@ -1628,9 +1659,15 @@
             });
 
             function renderGateStars() {
+                if (!gateStarsActive || document.hidden) {
+                    if (gateStarsActive) requestAnimationFrame(renderGateStars);
+                    return;
+                }
+
                 const countdownGate = document.getElementById('countdown-gate');
                 if (countdownGate && !countdownGate.hidden && !motionPaused) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.font = '12px sans-serif';
 
                     for (let i = gateStars.length - 1; i >= 0; i--) {
                         const s = gateStars[i];
@@ -1649,22 +1686,23 @@
                             if (s.x > canvas.width + 10) s.x = -10;
                         }
 
-                        ctx.save();
+                        // HIGH PERFORMANCE: Direct alpha and fillStyle mutation, avoiding push/pop state overhead
                         ctx.globalAlpha = Math.max(0, s.alpha);
                         ctx.fillStyle = s.color;
 
                         if (s.isHeart) {
-                            ctx.font = '12px sans-serif';
                             ctx.fillText('♥', s.x, s.y);
                         } else {
                             ctx.beginPath();
                             ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
                             ctx.fill();
                         }
-                        ctx.restore();
                     }
+                    ctx.globalAlpha = 1;
                 }
-                requestAnimationFrame(renderGateStars);
+                if (gateStarsActive) {
+                    requestAnimationFrame(renderGateStars);
+                }
             }
             requestAnimationFrame(renderGateStars);
         }
@@ -1797,14 +1835,16 @@
         function initVortexParticles() {
             vWidth = window.innerWidth;
             vHeight = window.innerHeight;
-            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            // Cap DPR at 1.5 to provide razor-sharp visuals while cutting GPU pixel rasterization by 50%
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
             vortexCanvas.width = vWidth * dpr;
             vortexCanvas.height = vHeight * dpr;
             vCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
             if (nebulaSprites.length === 0) initNebulaSprites();
 
-            const count = vWidth < 640 ? 250 : 420;
+            // Balanced particle density for velvety-smooth 60fps on both phones and laptops
+            const count = vWidth < 640 ? 180 : 300;
             particles = [];
 
             for (let i = 0; i < count; i++) {
@@ -1827,14 +1867,14 @@
                     vy: 0,
                     radialOffset: (Math.random() - 0.5) * 18,
                     color: PARTICLE_Colors[i % PARTICLE_Colors.length],
-                    size: vWidth < 640 ? (10 + Math.floor(Math.random() * 5)) : (11 + Math.floor(Math.random() * 6)),
+                    size: vWidth < 640 ? (10 + Math.floor(Math.random() * 4)) : (11 + Math.floor(Math.random() * 5)),
                     alpha: 0.4 + Math.random() * 0.6,
                     lerpFactor: 0
                 });
             }
 
             // Initialize 3D Galaxy spiral & depth starfield
-            const starCount = vWidth < 640 ? 110 : 180;
+            const starCount = vWidth < 640 ? 65 : 110;
             galaxyStars = [];
             for (let i = 0; i < starCount; i++) {
                 const armAngle = (i / starCount) * Math.PI * 6 + (Math.random() - 0.5) * 0.8;
@@ -1855,6 +1895,10 @@
         let startTime = performance.now();
         function renderVortex(now) {
             if (!introActive) return;
+            if (document.hidden) {
+                requestAnimationFrame(renderVortex);
+                return;
+            }
 
             const elapsed = (now - startTime) * 0.001;
             const centerX = vWidth / 2;
@@ -1919,6 +1963,9 @@
             vCtx.textAlign = 'center';
             vCtx.textBaseline = 'middle';
 
+            // High Performance Font Caching: drastically reduces font parser churn
+            let lastParticleFont = '';
+
             for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
 
@@ -1978,7 +2025,11 @@
                     p.y += p.vy;
                 }
 
-                vCtx.font = `700 ${p.size}px "JetBrains Mono", monospace`;
+                const curFont = `700 ${p.size}px "JetBrains Mono", monospace`;
+                if (lastParticleFont !== curFont) {
+                    vCtx.font = curFont;
+                    lastParticleFont = curFont;
+                }
                 vCtx.fillStyle = p.color;
                 vCtx.globalAlpha = Math.max(0, p.alpha);
                 vCtx.fillText(p.char, p.x, p.y);
@@ -2055,10 +2106,10 @@
             const mainApp = document.getElementById('main-app');
             setTimeout(() => {
                 showElement(mainApp);
-                initBgGalaxy();
-                initFireflies();
+                // Start background ambient canvases only when Main App is actually entered!
+                startMainAppCanvases();
                 hideElement(gate).then(() => {
-                    introActive = false;
+                    introActive = false; // Stop Love Vortex loop to free up 100% GPU!
                 });
             }, 320);
         });
@@ -2066,6 +2117,7 @@
         // Replay Intro Button from Navbar
         document.getElementById('replay-intro-btn').addEventListener('click', () => {
             playCyberTone(659.25, 'sine', 0.15);
+            mainAppCanvasesActive = false; // Pause main app canvases for pure 60fps intro experience
             introExploding = false;
             introActive = true;
             startTime = performance.now();
@@ -3629,17 +3681,20 @@ int main() {
             showToast(data.letter.toastMsg || `Efek bertambah jadi +${saltingVal}!`);
         });
 
-        // Binary Firefly Canvas in Letter Section
+        // Binary Firefly Canvas in Letter Section (High Performance Lazy Canvas)
         const ffCanvas = document.getElementById('firefly-canvas');
         const ffCtx = ffCanvas.getContext('2d');
         let fireflies = [];
+        let mainAppCanvasesActive = false;
 
         function initFireflies() {
             const rect = ffCanvas.parentElement.getBoundingClientRect();
             ffCanvas.width = rect.width || 800;
             ffCanvas.height = rect.height || 500;
+            ffCtx.font = '600 11px "JetBrains Mono", monospace';
+            const count = window.innerWidth < 640 ? 20 : 32;
             fireflies = [];
-            for (let i = 0; i < 36; i++) {
+            for (let i = 0; i < count; i++) {
                 fireflies.push({
                     x: Math.random() * ffCanvas.width,
                     y: Math.random() * ffCanvas.height,
@@ -3654,9 +3709,9 @@ int main() {
         }
 
         function animateFireflies() {
-            if (!motionPaused) {
+            if (!mainAppCanvasesActive) return;
+            if (!motionPaused && !document.hidden) {
                 ffCtx.clearRect(0, 0, ffCanvas.width, ffCanvas.height);
-                ffCtx.font = '600 11px "JetBrains Mono", monospace';
                 for (let i = 0; i < fireflies.length; i++) {
                     const f = fireflies[i];
                     f.x += f.vx;
@@ -3671,7 +3726,9 @@ int main() {
                 }
                 ffCtx.globalAlpha = 1;
             }
-            requestAnimationFrame(animateFireflies);
+            if (mainAppCanvasesActive) {
+                requestAnimationFrame(animateFireflies);
+            }
         }
 
         /* -----------------------------------------------------------------
@@ -3684,7 +3741,7 @@ int main() {
         function initBgGalaxy() {
             bgCanvas.width = window.innerWidth;
             bgCanvas.height = window.innerHeight;
-            const count = window.innerWidth < 640 ? 55 : 95;
+            const count = window.innerWidth < 640 ? 45 : 75;
             bgStars = [];
             for (let i = 0; i < count; i++) {
                 bgStars.push({
@@ -3699,7 +3756,8 @@ int main() {
         }
 
         function animateBgGalaxy() {
-            if (!introActive && !motionPaused) {
+            if (!mainAppCanvasesActive) return;
+            if (!motionPaused && !document.hidden) {
                 bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
                 const cx = bgCanvas.width / 2;
                 const cy = bgCanvas.height / 2;
@@ -3722,8 +3780,33 @@ int main() {
                 }
                 bgCtx.globalAlpha = 1;
             }
-            requestAnimationFrame(animateBgGalaxy);
+            if (mainAppCanvasesActive) {
+                requestAnimationFrame(animateBgGalaxy);
+            }
         }
+
+        // Lazy Start: Canvases in Main App only start when user actually enters main app!
+        function startMainAppCanvases() {
+            if (mainAppCanvasesActive) return;
+            mainAppCanvasesActive = true;
+            initBgGalaxy();
+            initFireflies();
+            requestAnimationFrame(animateBgGalaxy);
+            requestAnimationFrame(animateFireflies);
+        }
+
+        // Page Visibility API: Saves battery and prevents thermal throttling
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                if (mainAppCanvasesActive) {
+                    requestAnimationFrame(animateBgGalaxy);
+                    requestAnimationFrame(animateFireflies);
+                }
+                if (introActive) {
+                    requestAnimationFrame(renderVortex);
+                }
+            }
+        });
 
         // Pause / Play Ambient Motion Control (WCAG 2.2.2 Compliance)
         document.getElementById('toggle-motion-btn').addEventListener('click', () => {
@@ -3753,8 +3836,10 @@ int main() {
            ----------------------------------------------------------------- */
         window.addEventListener('resize', () => {
             if (introActive) initVortexParticles();
-            initBgGalaxy();
-            initFireflies();
+            if (mainAppCanvasesActive) {
+                initBgGalaxy();
+                initFireflies();
+            }
         });
 
         function startApp() {
@@ -3777,12 +3862,6 @@ int main() {
             applyPolaroidPhotos();
 
             setupScrollReveal();
-
-            initBgGalaxy();
-            requestAnimationFrame(animateBgGalaxy);
-
-            initFireflies();
-            requestAnimationFrame(animateFireflies);
         }
 
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
