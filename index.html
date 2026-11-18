@@ -302,43 +302,55 @@
             display: none;
         }
 
-        /* Smooth Hyperspace Warp Zoom-Out and Zoom-In */
+        /* Smooth GPU-Accelerated Hyperspace Warp Zoom-Out and Zoom-In (Zero Blur Lag) */
         .warp-zoom-out {
-            animation: warpZoomOut 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            animation: warpZoomOut 0.78s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
             pointer-events: none !important;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
         }
         @keyframes warpZoomOut {
             0% {
-                transform: scale(1);
+                transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
                 opacity: 1;
-                filter: blur(0px);
-            }
-            45% {
-                transform: scale(0.92);
-                opacity: 0.75;
-                filter: blur(4px);
             }
             100% {
-                transform: scale(0.6);
+                transform: translate3d(0, 0, 0) scale3d(0.72, 0.72, 1);
                 opacity: 0;
-                filter: blur(18px);
                 visibility: hidden;
             }
         }
         .warp-zoom-in {
-            animation: warpZoomIn 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            animation: warpZoomIn 0.88s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
         }
         @keyframes warpZoomIn {
             0% {
-                transform: scale(1.35);
+                transform: translate3d(0, 0, 0) scale3d(1.22, 1.22, 1);
                 opacity: 0;
-                filter: blur(20px);
             }
             100% {
-                transform: scale(1);
+                transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
                 opacity: 1;
-                filter: blur(0px);
             }
+        }
+
+        /* Global Custom Love Heart Cursor & Animated Follower */
+        *, body, a, button, input, textarea, select, canvas {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M14 24.5C14 24.5 3.5 17.2 3.5 9.8C3.5 6.4 6.2 3.8 9.5 3.8C11.5 3.8 13.2 4.8 14 6.3C14.8 4.8 16.5 3.8 18.5 3.8C21.8 3.8 24.5 6.4 24.5 9.8C24.5 17.2 14 24.5 14 24.5Z' fill='%23FF2A85' stroke='%23FFFFFF' stroke-width='1.5'/%3E%3C/svg%3E") 14 14, auto !important;
+        }
+        @keyframes cursorHeartPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale3d(1, 1, 1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale3d(1.24, 1.24, 1);
+            }
+        }
+        .love-cursor-heart-inner {
+            animation: cursorHeartPulse 1.3s ease-in-out infinite;
+            will-change: transform;
         }
 
         /* Smooth Scroll Fade-In & Fade-Out Reveal */
@@ -406,6 +418,22 @@
     <!-- Film Grain Noise Overlay -->
     <div class="noise-overlay"></div>
 
+    <!-- Global Animated Love Cursor & Trailing Shadow Aura (Active on ALL pages) -->
+    <div id="love-cursor-layer" class="fixed inset-0 pointer-events-none z-[10000] overflow-hidden select-none">
+        <!-- Trailing Soft Shadow Love Ring -->
+        <div id="love-cursor-trail" class="fixed top-0 left-0 pointer-events-none opacity-0 transition-opacity duration-300 will-change-transform" style="transform: translate3d(-100px, -100px, 0);">
+            <div class=" -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full border border-cyberRose/45 bg-cyberRose/10 shadow-[0_0_20px_rgba(255,42,133,0.45)] flex items-center justify-center">
+                <span class="text-cyberRose/50 text-xs">♥</span>
+            </div>
+        </div>
+        <!-- Primary Pulsing Love Heart Cursor -->
+        <div id="love-cursor-main" class="fixed top-0 left-0 pointer-events-none opacity-0 transition-opacity duration-200 will-change-transform" style="transform: translate3d(-100px, -100px, 0);">
+            <div class="love-cursor-heart-inner text-cyberRose text-xl drop-shadow-[0_0_12px_rgba(255,42,133,0.95)] select-none">
+                💖
+            </div>
+        </div>
+    </div>
+
     <!-- ===================================================================
          F-00: PRE-INTRO GALAXY BOOT LOADER (0% -> 100% WITH FADE IN/OUT)
          =================================================================== -->
@@ -451,8 +479,8 @@
          button "yahh sayangg udah lewat jam nya klik disini yachh"
          =================================================================== -->
     <section id="countdown-gate" hidden class="stage-layer fixed inset-0 z-50 bg-[#05040A] flex-col justify-between items-center p-4 sm:p-7 md:p-8 overflow-hidden select-none">
-        <!-- Interactive Cosmic Galaxy Canvas for touching and playing -->
-        <canvas id="gate-stars-canvas" class="absolute inset-0 w-full h-full block cursor-pointer"></canvas>
+        <!-- Falling Shadow Love Rain Canvas (Turun dari atas seperti hujan bayang love) -->
+        <canvas id="gate-stars-canvas" class="absolute inset-0 w-full h-full block pointer-events-none"></canvas>
 
         <!-- Ambient Nebula Glow Blobs -->
         <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -559,12 +587,12 @@
 
         </div>
 
-        <!-- Bottom Interactive Area (Mini-game touch to play + Simulation Toggle) -->
+        <!-- Bottom Status Area (Shadow Love Rain + Discreet Simulation Toggle) -->
         <div class="relative z-10 w-full max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left font-mono text-[11px] sm:text-xs text-mutedLavender pb-1">
-            <!-- Interactive Touch Hint & Star Prayer Counter -->
+            <!-- Ambient Falling Shadow Love Indicator -->
             <div class="flex items-center gap-2 bg-velvet/80 border border-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-md">
-                <span class="text-cyberRose animate-pulse text-sm">✨</span>
-                <span>Sentuh layar untuk kirim bintang: <strong id="gate-star-prayers-count" class="text-electricCyan font-bold">19</strong> Doa Terkirim</span>
+                <span class="text-cyberRose animate-pulse text-sm">💖</span>
+                <span>Hujan Bayang Love // Menemani Detik Menuju <strong class="text-electricCyan font-bold">19 Tahun</strong></span>
             </div>
 
             <!-- Discreet Simulator Toggle Button -->
@@ -580,7 +608,7 @@
          =================================================================== -->
     <section id="intro-gate" hidden class="stage-layer fixed inset-0 z-50 bg-[#05040A] flex-col justify-between items-center p-5 sm:p-8 overflow-hidden">
         <!-- Interactive HTML5 Canvas for 60fps 3D Galaxy & Wide Binary Heart -->
-        <canvas id="vortex-canvas" class="absolute inset-0 w-full h-full block cursor-crosshair"></canvas>
+        <canvas id="vortex-canvas" class="absolute inset-0 w-full h-full block"></canvas>
 
         <!-- Top Terminal Status Bar -->
         <div class="relative z-10 w-full max-w-5xl flex items-center justify-between gap-2 pt-1 font-mono text-xs text-mutedLavender">
@@ -847,13 +875,13 @@
                             </div>
                         </div>
 
-                        <!-- Time Mode Switcher (So Zizuy or Sender can test both states anytime) -->
+                        <!-- Chrono-Engine Live Status Footer -->
                         <div class="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
                             <span class="text-[11px] sm:text-xs">Chrono-Engine v19.0</span>
-                            <button id="toggle-time-sim" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-starlight border border-white/10 transition-colors flex items-center gap-1.5 text-[11px] sm:text-xs">
-                                <span class="w-1.5 h-1.5 rounded-full bg-electricCyan"></span>
-                                <span id="toggle-time-label">Coba Simulasi Telat Buka (+)</span>
-                            </button>
+                            <span class="inline-flex items-center gap-1.5 text-electricCyan text-[11px] sm:text-xs font-semibold">
+                                <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-pulse"></span>
+                                <span>REAL-TIME ELAPSED (+)</span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -1593,10 +1621,58 @@
             if (typeof updateChronoTimer === 'function') updateChronoTimer();
         };
 
-        // Interactive Stardust & Floating Love Particles on Countdown Gate Canvas
-        let gateStars = [];
-        let gateChimeIdx = 0;
-        const gatePentatonic = [523.25, 587.33, 659.25, 783.99, 880, 1046.5];
+        // Falling Shadow Love Rain (Animasi Love Gerakan Bayang Turun Seperti Hujan)
+        // Pre-rendered offscreen sprites with built-in ghostly shadow trails for locked 60fps performance
+        let gateLoveDrops = [];
+        let heartRainSprites = [];
+
+        function createShadowHeartSprite(hexColor, rgbaGlow) {
+            const off = document.createElement('canvas');
+            off.width = 64;
+            off.height = 120;
+            const oCtx = off.getContext('2d');
+
+            function drawHeartPath(cx, cy, size) {
+                oCtx.save();
+                oCtx.translate(cx, cy);
+                oCtx.scale(size, size);
+                oCtx.beginPath();
+                oCtx.moveTo(0, 6);
+                oCtx.bezierCurveTo(-12, -4, -15, -14, -7, -14);
+                oCtx.bezierCurveTo(-2, -14, 0, -9, 0, -9);
+                oCtx.bezierCurveTo(0, -9, 2, -14, 7, -14);
+                oCtx.bezierCurveTo(15, -14, 12, -4, 0, 6);
+                oCtx.closePath();
+                oCtx.fill();
+                oCtx.restore();
+            }
+
+            // Soft ambient glow halo around main heart
+            const grad = oCtx.createRadialGradient(32, 90, 2, 32, 90, 26);
+            grad.addColorStop(0, rgbaGlow);
+            grad.addColorStop(1, 'rgba(0,0,0,0)');
+            oCtx.fillStyle = grad;
+            oCtx.fillRect(4, 62, 56, 56);
+
+            // Ghostly Shadow Trail 3 (Topmost faint afterimage)
+            oCtx.fillStyle = hexColor;
+            oCtx.globalAlpha = 0.11;
+            drawHeartPath(32, 24, 0.58);
+
+            // Ghostly Shadow Trail 2 (Middle shadow echo)
+            oCtx.globalAlpha = 0.24;
+            drawHeartPath(32, 45, 0.72);
+
+            // Ghostly Shadow Trail 1 (Near shadow echo)
+            oCtx.globalAlpha = 0.45;
+            drawHeartPath(32, 68, 0.86);
+
+            // Main Falling Love Heart
+            oCtx.globalAlpha = 0.95;
+            drawHeartPath(32, 94, 1.05);
+
+            return off;
+        }
 
         function initGateStarsInteractive() {
             const canvas = document.getElementById('gate-stars-canvas');
@@ -1611,54 +1687,34 @@
             resizeGateCanvas();
             window.addEventListener('resize', resizeGateCanvas);
 
-            // Ambient background stars (Balanced for smooth 60fps on mobile)
-            const ambientCount = window.innerWidth < 640 ? 25 : 45;
-            for (let i = 0; i < ambientCount; i++) {
-                gateStars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: -(0.2 + Math.random() * 0.6),
-                    size: 1 + Math.random() * 2,
-                    color: i % 3 === 0 ? '#FF2A85' : (i % 3 === 1 ? '#00E5FF' : '#8B5CF6'),
-                    alpha: 0.2 + Math.random() * 0.6,
-                    isInteractive: false
+            if (heartRainSprites.length === 0) {
+                heartRainSprites = [
+                    createShadowHeartSprite('#FF2A85', 'rgba(255, 42, 133, 0.45)'),
+                    createShadowHeartSprite('#A855F7', 'rgba(168, 85, 247, 0.40)'),
+                    createShadowHeartSprite('#00E5FF', 'rgba(0, 229, 255, 0.38)'),
+                    createShadowHeartSprite('#FF73B3', 'rgba(255, 115, 179, 0.42)')
+                ];
+            }
+
+            // Multi-depth falling shadow love drops (background shadow layer + foreground rain layer)
+            const dropCount = window.innerWidth < 640 ? 28 : 46;
+            gateLoveDrops = [];
+            for (let i = 0; i < dropCount; i++) {
+                const depthScale = 0.42 + Math.random() * 0.75; // 0.42 (distant shadow) to 1.17 (foreground)
+                gateLoveDrops.push({
+                    xBase: Math.random() * canvas.width,
+                    y: Math.random() * (canvas.height + 160) - 120,
+                    vy: (1.1 + Math.random() * 2.1) * (0.65 + depthScale * 0.55),
+                    swayAmp: 8 + Math.random() * 18,
+                    swaySpeed: 0.0012 + Math.random() * 0.0018,
+                    phase: Math.random() * Math.PI * 2,
+                    scale: depthScale,
+                    alpha: 0.22 + (depthScale * 0.52),
+                    sprite: heartRainSprites[i % heartRainSprites.length]
                 });
             }
 
-            function triggerStarBurst(x, y) {
-                starPrayersCount++;
-                const countEl = document.getElementById('gate-star-prayers-count');
-                if (countEl) countEl.textContent = starPrayersCount;
-
-                playCyberTone(gatePentatonic[gateChimeIdx % gatePentatonic.length], 'sine', 0.16);
-                gateChimeIdx++;
-
-                const burstCount = window.innerWidth < 640 ? 12 : 16;
-                const colors = ['#FF2A85', '#00E5FF', '#8B5CF6', '#FFFFFF', '#FFD166'];
-                for (let i = 0; i < burstCount; i++) {
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = 1.2 + Math.random() * 4.2;
-                    gateStars.push({
-                        x: x,
-                        y: y,
-                        vx: Math.cos(angle) * speed,
-                        vy: Math.sin(angle) * speed - 0.5,
-                        size: 2 + Math.random() * 3,
-                        color: colors[Math.floor(Math.random() * colors.length)],
-                        alpha: 1,
-                        decay: 0.016 + Math.random() * 0.02,
-                        isHeart: i % 4 === 0,
-                        isInteractive: true
-                    });
-                }
-            }
-
-            canvas.addEventListener('pointerdown', (e) => {
-                triggerStarBurst(e.clientX, e.clientY);
-            });
-
-            function renderGateStars() {
+            function renderGateStars(now) {
                 if (!gateStarsActive || document.hidden) {
                     if (gateStarsActive) requestAnimationFrame(renderGateStars);
                     return;
@@ -1667,36 +1723,22 @@
                 const countdownGate = document.getElementById('countdown-gate');
                 if (countdownGate && !countdownGate.hidden && !motionPaused) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.font = '12px sans-serif';
 
-                    for (let i = gateStars.length - 1; i >= 0; i--) {
-                        const s = gateStars[i];
-                        s.x += s.vx;
-                        s.y += s.vy;
+                    for (let i = 0; i < gateLoveDrops.length; i++) {
+                        const d = gateLoveDrops[i];
+                        d.y += d.vy;
 
-                        if (s.isInteractive) {
-                            s.alpha -= s.decay;
-                            if (s.alpha <= 0) {
-                                gateStars.splice(i, 1);
-                                continue;
-                            }
-                        } else {
-                            if (s.y < -10) s.y = canvas.height + 10;
-                            if (s.x < -10) s.x = canvas.width + 10;
-                            if (s.x > canvas.width + 10) s.x = -10;
+                        if (d.y > canvas.height + 40) {
+                            d.y = -110 - Math.random() * 60;
+                            d.xBase = Math.random() * canvas.width;
                         }
 
-                        // HIGH PERFORMANCE: Direct alpha and fillStyle mutation, avoiding push/pop state overhead
-                        ctx.globalAlpha = Math.max(0, s.alpha);
-                        ctx.fillStyle = s.color;
+                        const swayX = d.xBase + Math.sin(now * d.swaySpeed + d.phase) * d.swayAmp;
+                        const w = 44 * d.scale;
+                        const h = 82 * d.scale;
 
-                        if (s.isHeart) {
-                            ctx.fillText('♥', s.x, s.y);
-                        } else {
-                            ctx.beginPath();
-                            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-                            ctx.fill();
-                        }
+                        ctx.globalAlpha = d.alpha;
+                        ctx.drawImage(d.sprite, swayX - w * 0.5, d.y - h * 0.5, w, h);
                     }
                     ctx.globalAlpha = 1;
                 }
@@ -2200,21 +2242,139 @@
             }
         }
 
-        // Toggle Simulation Button for Timer
-        document.getElementById('toggle-time-sim').addEventListener('click', () => {
-            playCyberTone(698.46, 'sine', 0.12);
-            simulateLateMode = !simulateLateMode;
-            fakeLateStartMs = Date.now() - (4 * 3600 * 1000 + 12 * 60 * 1000 + 9 * 1000);
-            const label = document.getElementById('toggle-time-label');
-            if (simulateLateMode) {
-                label.textContent = 'Kembali ke Waktu Asli (-)';
-                showToast('Simulasi Telat Buka (+) diaktifkan!');
-            } else {
-                label.textContent = 'Coba Simulasi Telat Buka (+)';
-                showToast('Kembali ke waktu real-time sekarang.');
+        // Optional Toggle Simulation Button (Safely guarded since removed from Chrono-Engine v19.0)
+        const toggleTimeSimEl = document.getElementById('toggle-time-sim');
+        if (toggleTimeSimEl) {
+            toggleTimeSimEl.addEventListener('click', () => {
+                playCyberTone(698.46, 'sine', 0.12);
+                simulateLateMode = !simulateLateMode;
+                fakeLateStartMs = Date.now() - (4 * 3600 * 1000 + 12 * 60 * 1000 + 9 * 1000);
+                updateChronoTimer();
+            });
+        }
+
+        /* -----------------------------------------------------------------
+           GLOBAL ANIMATED LOVE CURSOR & SHADOW TRAIL ENGINE (ALL PAGES)
+           Zero-Allocation Object Pool + Auto-Sleeping Lerp Loop for 0% Idle Load
+           ----------------------------------------------------------------- */
+        function initLoveCursorEngine() {
+            const layer = document.getElementById('love-cursor-layer');
+            const mainEl = document.getElementById('love-cursor-main');
+            const trailEl = document.getElementById('love-cursor-trail');
+            if (!layer || !mainEl || !trailEl) return;
+
+            let targetX = -100, targetY = -100;
+            let trailX = -100, trailY = -100;
+            let cursorVisible = false;
+            let lerpRunning = false;
+
+            // Pre-allocate 8 reusable floating mini shadow-heart nodes (zero GC churn)
+            const echoPool = [];
+            const echoColors = ['#FF2A85', '#00E5FF', '#A855F7', '#FF73B3'];
+            for (let i = 0; i < 8; i++) {
+                const el = document.createElement('span');
+                el.textContent = '♥';
+                el.className = 'fixed top-0 left-0 pointer-events-none select-none font-sans text-xs transition-none will-change-transform';
+                el.style.opacity = '0';
+                el.style.color = echoColors[i % echoColors.length];
+                el.style.textShadow = `0 0 10px ${echoColors[i % echoColors.length]}`;
+                layer.appendChild(el);
+                echoPool.push({ el, active: false, x: 0, y: 0, vx: 0, vy: 0, alpha: 0, scale: 1 });
             }
-            updateChronoTimer();
-        });
+
+            let poolIdx = 0;
+            let lastSpawnTime = 0;
+
+            function spawnLoveEcho(x, y, burst = false) {
+                const count = burst ? 3 : 1;
+                for (let c = 0; c < count; c++) {
+                    const item = echoPool[poolIdx];
+                    poolIdx = (poolIdx + 1) % echoPool.length;
+                    item.active = true;
+                    item.x = x + (Math.random() - 0.5) * (burst ? 18 : 8);
+                    item.y = y + (Math.random() - 0.5) * (burst ? 18 : 8);
+                    item.vx = (Math.random() - 0.5) * (burst ? 2.2 : 0.8);
+                    item.vy = -(0.8 + Math.random() * (burst ? 1.8 : 1.1));
+                    item.alpha = burst ? 0.95 : 0.72;
+                    item.scale = burst ? (0.85 + Math.random() * 0.5) : (0.65 + Math.random() * 0.35);
+                }
+                startCursorLoop();
+            }
+
+            function updateCursorLoop() {
+                if (document.hidden) {
+                    lerpRunning = false;
+                    return;
+                }
+
+                const dx = targetX - trailX;
+                const dy = targetY - trailY;
+                trailX += dx * 0.22;
+                trailY += dy * 0.22;
+                trailEl.style.transform = `translate3d(${trailX.toFixed(1)}px, ${trailY.toFixed(1)}px, 0)`;
+
+                let anyEchoActive = false;
+                for (let i = 0; i < echoPool.length; i++) {
+                    const p = echoPool[i];
+                    if (!p.active) continue;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.alpha -= 0.028;
+                    if (p.alpha <= 0) {
+                        p.active = false;
+                        p.el.style.opacity = '0';
+                    } else {
+                        anyEchoActive = true;
+                        p.el.style.opacity = p.alpha.toFixed(2);
+                        p.el.style.transform = `translate3d(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px, 0) translate(-50%, -50%) scale(${p.scale.toFixed(2)})`;
+                    }
+                }
+
+                if (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3 || anyEchoActive) {
+                    requestAnimationFrame(updateCursorLoop);
+                } else {
+                    lerpRunning = false;
+                }
+            }
+
+            function startCursorLoop() {
+                if (!lerpRunning) {
+                    lerpRunning = true;
+                    requestAnimationFrame(updateCursorLoop);
+                }
+            }
+
+            window.addEventListener('pointermove', (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+                if (!cursorVisible) {
+                    cursorVisible = true;
+                    trailX = targetX;
+                    trailY = targetY;
+                    mainEl.classList.remove('opacity-0');
+                    trailEl.classList.remove('opacity-0');
+                }
+                mainEl.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+
+                const now = performance.now();
+                if (now - lastSpawnTime > 75) {
+                    lastSpawnTime = now;
+                    spawnLoveEcho(targetX, targetY, false);
+                } else {
+                    startCursorLoop();
+                }
+            }, { passive: true });
+
+            window.addEventListener('pointerdown', (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+                mainEl.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) scale(1.28)`;
+                setTimeout(() => {
+                    mainEl.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) scale(1)`;
+                }, 150);
+                spawnLoveEcho(targetX, targetY, true);
+            }, { passive: true });
+        }
 
         /* -----------------------------------------------------------------
            DUAL MODE SYSTEM: ROMANCE (DEFAULT) VS BESTIE/FRIEND SANTAI
@@ -3846,6 +4006,7 @@ int main() {
             if (window._appInitialized) return;
             window._appInitialized = true;
 
+            initLoveCursorEngine();
             runPreloaderSequence();
 
             updateChronoTimer();
