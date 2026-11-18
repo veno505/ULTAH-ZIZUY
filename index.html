@@ -1442,25 +1442,29 @@
 
                     <canvas id="firefly-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-45"></canvas>
 
-                    <div class="relative z-10">
-                        <!-- Letter Header -->
+                    <!-- ==============================================================
+                         VIEW 1: MODE BESTIE -> LEMBAR HARAPAN & EVALUASI DIRI (MINI WORD)
+                         Zizuy yang mengisi sendiri harapan ke depan & evaluasi dirinya!
+                         ============================================================== -->
+                    <div id="section4-friend-view" class="relative z-10">
+                        <!-- Header -->
                         <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-dashed border-white/20">
                             <div class="font-mono text-[11px] sm:text-xs text-cyberRose flex items-center gap-2">
                                 <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f4dd/512.webp" alt="📝" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>📝</span>'">
-                                <span id="letter-file-label">LEMBAR_REFLEKSI_HARAPAN_ZIZUY_19.DOCX</span>
+                                <span>LEMBAR_REFLEKSI_HARAPAN_ZIZUY_19.DOCX</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span id="editor-save-badge" class="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/25 flex items-center gap-1.5">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                                     <span>Tersimpan Otomatis</span>
                                 </span>
-                                <span id="letter-date-label" class="font-mono text-[10px] sm:text-xs text-mutedLavender">
-                                    23 November 2026 • Level 19
+                                <span class="font-mono text-[10px] sm:text-xs text-mutedLavender">
+                                    23 November 2026 • Edisi Mandiri
                                 </span>
                             </div>
                         </div>
 
-                        <!-- Greeting / Title -->
+                        <!-- Title -->
                         <div class="mb-4">
                             <h2 class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-1.5">
                                 Catatan Harapan &amp; Evaluasi Diri <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
@@ -1550,6 +1554,73 @@
                             </span>
                         </div>
                     </div>
+
+                    <!-- ==============================================================
+                         VIEW 2: MODE ROMANCE -> SURAT SPESIAL PENUH PERASAAN DARI PENOYY
+                         Kembali ke surat romantis yang diisi oleh kamu untuk dibaca Zizuy!
+                         ============================================================== -->
+                    <div id="section4-romance-view" class="relative z-10 hidden">
+                        <!-- Header -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-dashed border-white/20">
+                            <div class="font-mono text-[11px] sm:text-xs text-cyberRose flex items-center gap-2">
+                                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f48c/512.webp" alt="💌" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>💌</span>'">
+                                <span>SURAT_UNTUK_ZIZUY_ROMANCE_V19.TXT</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[10px] text-cyberRose bg-cyberRose/15 px-2.5 py-0.5 rounded-full border border-cyberRose/30 flex items-center gap-1">
+                                    <span>♥</span>
+                                    <span>Edisi Spesial Dari Hati</span>
+                                </span>
+                                <span class="font-mono text-[10px] sm:text-xs text-mutedLavender">
+                                    23 November 2026 • Level 19
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Greeting -->
+                        <div class="mb-5 sm:mb-6">
+                            <h2 class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-2">
+                                Hai, Azizah Nazwa Novita <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
+                            </h2>
+                            <p class="font-mono text-[11px] sm:text-xs text-mutedLavender">
+                                Ditulis khusus dan tulus dari hati untuk merayakan awal usia 19 tahunmu ✨
+                            </p>
+                        </div>
+
+                        <!-- Romantic Letter Content (Font MV Boli preserved, lined paper) -->
+                        <div id="romance-letter-content" class="font-notes space-y-4 sm:space-y-5 text-sm sm:text-base md:text-lg text-starlight/95 leading-[32px] sm:leading-[36px]">
+                            <p>
+                                Selamat ulang tahun yang ke-19 ya, Azizah Nazwa Novita. Rasanya baru kemarin kita mulai kenal dan adaptasi di kampus, tapi sekarang kamu udah resmi menginjak usia 19 tahun. Waktu emang jalan cepet, tapi setiap detik yang dilewatin bareng kamu selalu ninggalin kesan yang nggak gampang dilupain.
+                            </p>
+                            <p>
+                                Di antara tumpukan tugas koding, laprak yang padat, dan pusingnya materi kuliah, punya kamu di hari-hari belakangan ini tuh bener-bener kayak oasis. Makasih ya udah selalu hadir dengan senyum manismu yang nular, tawa kamu yang renyah, dan caramu yang selalu bikin aku ngerasa nyaman dan dihargai.
+                            </p>
+                            <p>
+                                Mungkin aku nggak selalu jago merangkai kata-kata puitis, tapi web kecil ini adalah caraku buat nunjukin kalau keberadaanmu di hidupku itu beneran spesial dan berarti banget. Kamu itu orang yang luar biasa, baik hatinya, dan pantas dapetin semua kebahagiaan terbaik di dunia ini.
+                            </p>
+                            <p>
+                                Di umur 19 ini, doaku buat kamu nggak akan pernah putus: semoga kamu selalu sehat, selalu bahagia, dimudahkan setiap urusannya, dijauhin dari hal-hal yang bikin sedih, dan semoga aku selalu dikasih kesempatan buat nemenin langkahmu ke depan. Happy 19th Birthday, my favorite person! 💕✨
+                            </p>
+                        </div>
+
+                        <!-- Handwritten Closing Footer (Font Caveat) -->
+                        <div class="mt-8 pt-5 border-t border-dashed border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div>
+                                <p class="font-hand text-xl sm:text-2xl text-cyberRose leading-tight -rotate-1">
+                                    "Selalu ada buat kamu, kemarin, hari ini, dan besok~"
+                                </p>
+                                <p class="font-mono text-[11px] sm:text-xs text-mutedLavender mt-1">
+                                    — Dari Penoyy yang selalu sayang Zizuy (23 November 2026)
+                                </p>
+                            </div>
+                            <div class="shrink-0 self-end sm:self-center">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyberRose/15 border border-cyberRose/40 font-mono text-xs text-cyberRose font-bold">
+                                    ♥ CHAPTER 19 WITH LOVE
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="torn-edge-bottom"></div>
             </div>
@@ -3019,151 +3090,151 @@
             romance: {
                 id: 'romance',
                 name: 'Mode Romance',
-                statusPill: 'SYSTEM_STATE: RUNNING // AZIZAH NAZWA NOVITA (ZIZUY) V19.0 ONLINE',
-                heroDesc: 'A digital celebration crafted for someone truly special. Happy 19th Birthday, Azizah Nazwa Novita (Zizuy). Wishing your journey through Chapter 19 is filled with pure joy, bright laughter, and unforgettable moments.',
+                statusPill: 'STATUS_HATI: PRIORITAS_UTAMA // AZIZAH NAZWA NOVITA (ZIZUY) V19.0 💕',
+                heroDesc: 'Sebuah persembahan kecil yang sengaja dirancang khusus untuk merayakan seseorang yang bener-bener spesial. Selamat ulang tahun ke-19, Azizah Nazwa Novita (Zizuy). Semoga perjalanan babak ke-19 kamu dipenuhi kebahagiaan manis, tawa yang lepas, dan sejuta momen indah.',
                 codeTitle: '// romance_status.cpp',
-                codeSnippet: `// Chapter 19: Infinite Joy & Happiness
+                codeSnippet: `// Babak 19: Kebahagiaan & Rasa Sayang Tanpa Batas
 #include &lt;iostream&gt;
 #include &lt;string&gt;
 
 int main() {
-    std::string heart = "Azizah Nazwa Novita";
-    int age = 19;
-    bool isSpecial = true;
+    std::string manusiaFavorit = "Azizah Nazwa Novita (Zizuy)";
+    int umur = 19;
+    bool selaluSpesial = true;
     
-    while (isSpecial) {
-        std::cout &lt;&lt; "Happy 19th Birthday to the most wonderful person! ✨" &lt;&lt; std::endl;
-        std::cout &lt;&lt; "May your days shine brighter than the stars." &lt;&lt; std::endl;
+    while (selaluSpesial) {
+        std::cout &lt;&lt; "Happy 19th Birthday buat orang yang selalu bikin hari-hariku jauh lebih bermakna! 💕" &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Semoga senyum manismu selalu bersinar lebih terang dari bintang apapun." &lt;&lt; std::endl;
         break;
     }
     return 0;
 }`,
                 jokes: [
-                    'Compilation successful: You brighten up every room you enter! ✨',
-                    'Warning: Too much sweetness detected in Chapter 19! 💖',
-                    'Notice: May every single dream you chase turn into reality.',
-                    'Process Priority: Wishing you the absolute happiest 19th year!'
+                    'Kompilasi Sukses: Kehadiranmu selalu bikin duniaku terasa jauh lebih manis! ✨',
+                    'Warning: Terlalu banyak rasa sayang dan kenyamanan terdeteksi di umur 19! 💖',
+                    'Notice: Semoga setiap impian dan doa baikmu dikabulkan Tuhan satu per satu.',
+                    'Prioritas Utama: Semoga Zizuy jadi orang paling bahagia di dunia!'
                 ],
-                receiptBranch: 'TERMINAL 19 // CELEBRATION DISPATCH',
-                receiptCustomer: 'Azizah Nazwa Novita (Zizuy)',
-                receiptCashier: 'Penoyy (penoyy.sys)',
+                receiptBranch: 'INFORMATIKA MART // CABANG HATI SPESIAL',
+                receiptCustomer: 'Azizah Nazwa Novita (Zizuy Tersayang)',
+                receiptCashier: 'Penoyy (Yang Selalu Ada Buat Kamu)',
                 receiptItems: [
-                    { name: '19th Birthday Milestones', qty: '1 x', price: 'PRICELESS' },
-                    { name: 'Uncountable Smiles & Joy', qty: '365 x', price: 'FREE' },
-                    { name: 'Endless Support & Good Vibes', qty: '999 x', price: 'UNCONDITIONAL' },
-                    { name: 'Special Coffee & Sweet Treats', qty: '1 x', price: 'COMPLIMENTARY' }
+                    { name: 'Kenyamanan & Perhatian Tanpa Batas', qty: '1 x', price: 'TAK TERNILAI' },
+                    { name: 'Senyuman Manis Zizuy Bikin Salting', qty: '365 x', price: 'GRATIS' },
+                    { name: 'Selalu Nemenin & Jadi Tempat Cerita', qty: '999 x', price: 'SELAMANYA' },
+                    { name: 'Traktir Kencan Rayain Umur 19 Tahun', qty: '1 x', price: 'LUNAS DI AWAL' }
                 ],
                 receiptTotals: [
-                    { label: 'Subtotal (Memories Created)', val: '19 Chapters Completed' },
-                    { label: 'Happiness Tax', val: '0% (Always Free)' },
-                    { label: 'Total Value', val: 'INFINITY SMILES & WISHES', highlight: true }
+                    { label: 'Subtotal (Momen Berharga)', val: '19 Babak Penuh Cerita' },
+                    { label: 'Pajak Kebahagiaan', val: '0% (Selalu Gratis & Tulus)' },
+                    { label: 'Total Nilai Rasa', val: 'INFINITY LOVE & WISHES', highlight: true }
                 ],
                 stamps: [
-                    '★ CHAPTER 19 OFFICIALLY UNLOCKED ★',
-                    '♥ SPECIAL PERSON VERIFIED ♥',
-                    '★ BRIGHTEST SMILE IN THE ROOM ★',
-                    '♥ WISHING YOU THE BEST YEAR AHEAD ♥'
+                    '♥ ORANG PALING SPESIAL VERIFIED ♥',
+                    '★ SENYUMAN PALING MANIS DI DUNIA ★',
+                    '♥ PRIORITAS NOMOR SATU SELALU ♥',
+                    '★ SEMOGA BAHAGIA TERUS BARENG AKU ★'
                 ],
-                receiptFooter: '* Thank you for being such a wonderful presence in life *',
+                receiptFooter: '* Terima kasih udah hadir dan bikin hari-hari belakangan ini jauh lebih indah *',
                 polaroids: [
                     {
-                        badge: 'PHASE: FRESHMAN VIBES',
-                        title: 'Campus Moments',
-                        sub: 'Gedung F // Kuliah Pagi',
-                        quote: '"Every mundane lecture turns lively with your bright energy and laughs."'
+                        badge: 'MOMEN FAVORIT: KULIAH PAGI',
+                        title: 'Senyuman di Kelas',
+                        sub: 'Gedung Kuliah // Jam Pagi',
+                        quote: '"Kuliah yang ngebosenin pun mendadak seru kalau duduknya sebelahan atau bisa ngeliat kamu senyum."'
                     },
                     {
-                        badge: 'STATUS: SWEET MEMORIES',
-                        title: 'Random Wanderings',
-                        sub: 'Afternoon Breeze // Good Food',
-                        quote: '"Finding comfort in the simplest chats, scenic walks, and favorite desserts."'
+                        badge: 'STATUS: KENANGAN MANIS',
+                        title: 'Muter-Muter Berdua',
+                        sub: 'Sore Hari // Jalan Santai',
+                        quote: '"Bukan tentang tujuannya mau ke mana, tapi tentang siapa yang duduk di samping nemenin sepanjang jalan."'
                     },
                     {
-                        badge: 'LEVEL: 19 UNLOCKED',
-                        title: 'Golden Chapter 19',
-                        sub: 'November 16 // Bright Horizons',
-                        quote: '"May your nineteenth year bring warmth, confidence, and endless wonder."'
+                        badge: 'BABAK KE-19 RESMI TERBUKA',
+                        title: 'Happy 19th Zizuy',
+                        sub: '23 November 2026 // Spesial',
+                        quote: '"Selamat bertambah usia, manusia favoritku. Semoga aku selalu punya tempat buat nemenin kamu di babak-babak berikutnya."'
                     }
                 ],
                 quest: {
                     stage1: {
-                        tag: 'STAGE 1 // CHAPTER 19 MORNING ROUTINE',
-                        narrative: 'Alarm morning class rings at 06:00 AM on your birthday week. How does Zizuy conquer the day?',
+                        tag: 'STAGE 1 // PERASAAN DI AWAL UMUR 19',
+                        narrative: 'Tepat jam 00:00 WIB di tanggal 23 November, apa hal pertama yang pengen Zizuy rasain pas buka web kejutan ini?',
                         options: [
                             {
                                 id: 'A',
-                                text: 'Dress up nicely, grab a matcha latte, and start fresh.',
-                                reaction: 'Classy and energized! A wonderful start to celebrate Chapter 19 with style. (+50 Radiance)'
+                                text: 'Senyum-senyum sendiri sambil salting bacanya.',
+                                reaction: 'Hehe misi berhasil kalau Zizuy senyum dan salting! Itu tujuan utama web ini dibuat. (+100 Sweetness)'
                             },
                             {
                                 id: 'B',
-                                text: 'Snooze for 10 more minutes, then sprint with full focus.',
-                                reaction: 'Maximum efficiency! Running slightly late yet still looking effortlessly cool. (+50 Agility)'
+                                text: 'Ngerasa disayang dan jadi orang paling spesial di dunia.',
+                                reaction: 'Karena kamu memang orang paling spesial di mataku, nggak ada duanya! (+100 Happiness)'
                             },
                             {
                                 id: 'C',
-                                text: 'Text the squad asking if attendance has already started.',
-                                reaction: 'Pure tactical communication! Always staying updated with good friends. (+50 Teamwork)'
+                                text: 'Langsung mikir: "Wah niat banget yang bikin, pasti begadang demi aku".',
+                                reaction: 'Bener banget! Begadang pun rela demi liat kamu bahagia di hari ulang tahunmu. (+100 Dedication)'
                             }
                         ]
                     },
                     stage2: {
-                        tag: 'STAGE 2 // SPECIAL CELEBRATION AGENDA',
-                        narrative: 'Time to unwind after a busy week! What’s your ideal celebratory hangout for the afternoon?',
+                        tag: 'STAGE 2 // HAL PALING MEMBEKAS',
+                        narrative: 'Dari semua waktu yang udah kita lewatin bareng, momen mana yang paling bikin Zizuy ngerasa nyaman?',
                         options: [
                             {
                                 id: 'A',
-                                text: 'Cozy aesthetic cafe with great dessert and deep chats.',
-                                reaction: 'Perfect atmosphere! Relaxing ambience, sweet treats, and meaningful conversations.'
+                                text: 'Obrolan santai yang nyambung ke mana-mana sampai lupa waktu.',
+                                reaction: 'Sama! Ngobrol sama kamu tuh selalu bikin lupa waktu karena senyaman itu.'
                             },
                             {
                                 id: 'B',
-                                text: 'Hunting delicious street food and breezy road trips.',
-                                reaction: 'Adventurous! Street food hits differently when shared with great company and scenic views.'
+                                text: 'Waktu jalan berdua nyari makan pas jam kosong kuliah.',
+                                reaction: 'Momen sederhana tapi paling berharga pas bisa duduk bareng nikmatin hari.'
                             },
                             {
                                 id: 'C',
-                                text: 'Relaxing chill night, listening to favorite playlists.',
-                                reaction: 'Peak comfort! The best way to recharge your energy in peace and tranquility.'
+                                text: 'Waktu ngerasa selalu ada orang yang siap nemenin dan peduli.',
+                                reaction: 'Aku akan selalu ada buat nemenin kamu, kapanpun dan dalam situasi apapun.'
                             }
                         ]
                     },
                     rewards: [
                         {
                             id: 'R1',
-                            title: 'Celebration Sweet Treat Voucher',
-                            badge: 'BUFF +100% MOOD',
-                            desc: 'Complimentary sweet dessert, iced coffee, or favorite meals whenever we hang out! Valid anytime.',
-                            code: 'ZUY19-SWEET-TREAT'
+                            title: 'Voucher Kencan Makan Malam & Dessert Manis',
+                            badge: 'DITANGGUNG 100% PENUH',
+                            desc: 'Bebas pilih makanan atau cafe favorit Zizuy, ditemenin jalan dan ditraktir sepuasnya kapanpun kamu mau!',
+                            code: 'ZUY19-ROMANCE-DATE'
                         },
                         {
                             id: 'R2',
-                            title: 'Weekend Roadtrip VIP Pass',
-                            badge: 'UNLIMITED VIP',
-                            desc: 'You pick the destination, Penoyy drives! Zero hassle, full fun and good vibes guaranteed.',
-                            code: 'ZUY19-WEEKEND-PASS'
+                            title: 'Voucher Jalan Berdua Seharian Penuh',
+                            badge: 'VIP COMPANION PASS',
+                            desc: 'Kamu tentukan destinasinya, Penoyy siap nemenin dan antar ke mana aja Zizuy pengen pergi seharian.',
+                            code: 'ZUY19-ROMANCE-TRIP'
                         },
                         {
                             id: 'R3',
-                            title: 'Priority Tech & Study Lifeline',
-                            badge: '24/7 SUPPORT',
-                            desc: 'Debugging assistance, study companion, or assignment brainstorming anytime you need!',
-                            code: 'ZUY19-TECH-LIFELINE'
+                            title: 'Voucher Support System & Pendengar Setia 24/7',
+                            badge: 'SEUMUR HIDUP',
+                            desc: 'Siap dengerin curhat, jadi temen nugas, atau nemenin kapanpun Zizuy butuh temen bicara tanpa syarat.',
+                            code: 'ZUY19-ALWAYS-THERE'
                         }
                     ]
                 },
                 letter: {
-                    fileLabel: 'LETTER_FOR_ZIZUY_SPECIAL_V19.TXT',
-                    dateLabel: '16 November 2026 // Special Edition',
+                    fileLabel: 'SURAT_UNTUK_ZIZUY_ROMANCE_V19.TXT',
+                    dateLabel: '23 November 2026 // Edisi Spesial Cinta',
                     paragraphs: [
-                        'Dear Zizuy, Happy 19th Birthday! Entering 19 is a special milestone. It\'s the final stretch of your teenage years before stepping into your twenties, and I hope you celebrate every single second of it with pride and joy.',
-                        'Looking back at our first semester in Informatics, college life can be quite hectic with algorithms, practical tasks, and endless assignments. Having someone as bright, cheerful, and supportive as you makes the journey much more fun and memorable.',
-                        'Thank you for the spontaneous conversations, the shared laughs between classes, and for just being yourself. You bring an easygoing warmth and positive energy that everyone around you truly appreciates.',
-                        'May Chapter 19 grant you all the happiness you deserve, good health, smooth sailing in your studies, and endless success in everything you pursue. Cheers to another year of growing, learning, and making great memories! ✨'
+                        'Selamat ulang tahun yang ke-19 ya, Azizah Nazwa Novita. Rasanya baru kemarin kita mulai kenal dan adaptasi di kampus, tapi sekarang kamu udah resmi menginjak usia 19 tahun. Waktu emang jalan cepet, tapi setiap detik yang dilewatin bareng kamu selalu ninggalin kesan yang nggak gampang dilupain.',
+                        'Di antara tumpukan tugas koding, laprak yang padat, dan pusingnya materi kuliah, punya kamu di hari-hari belakangan ini tuh bener-bener kayak oasis. Makasih ya udah selalu hadir dengan senyum manismu yang nular, tawa kamu yang renyah, dan caramu yang selalu bikin aku ngerasa nyaman dan dihargai.',
+                        'Mungkin aku nggak selalu jago merangkai kata-kata puitis, tapi web kecil ini adalah caraku buat nunjukin kalau keberadaanmu di hidupku itu beneran spesial dan berarti banget. Kamu itu orang yang luar biasa, baik hatinya, dan pantas dapetin semua kebahagiaan terbaik di dunia ini.',
+                        'Di umur 19 ini, doaku buat kamu nggak akan pernah putus: semoga kamu selalu sehat, selalu bahagia, dimudahkan setiap urusannya, dijauhin dari hal-hal yang bikin sedih, dan semoga aku selalu dikasih kesempatan buat nemenin langkahmu ke depan. Happy 19th Birthday, my favorite person! 💕✨'
                     ],
                     saltingIcon: '♥',
-                    saltingLabel: 'Send Birthday Wishes',
-                    toastMsg: 'Warm birthday wishes sent for Zizuy\'s 19th! ✨'
+                    saltingLabel: 'Kirim Sayang',
+                    toastMsg: 'Rasa sayang tulus terkirim buat Zizuy tersayang! 💕'
                 }
             },
             friend: {
@@ -3564,8 +3635,19 @@ int main() {
             questState = { stage: 1, ans1: null, ans2: null, selectedReward: null };
             renderQuestStage();
 
-            // 7. Wishlist Section: Lembar Refleksi Harapan & Evaluasi Diri Zizuy (Personal Editable Sheet)
-            // Tetap terjaga dan tidak tertimpa saat ganti mode
+            // 7. Section 4 Dual View Toggle:
+            // Mode Bestie: Zizuy mengisi lembar harapan & evaluasi diri sendiri (Mini Word)
+            // Mode Romance: Surat romantis manis yang diisi oleh Penoyy untuk Zizuy
+            const friendView = document.getElementById('section4-friend-view');
+            const romanceView = document.getElementById('section4-romance-view');
+            if (mode === 'friend') {
+                if (friendView) friendView.classList.remove('hidden');
+                if (romanceView) romanceView.classList.add('hidden');
+                initWishlistEditor();
+            } else {
+                if (friendView) friendView.classList.add('hidden');
+                if (romanceView) romanceView.classList.remove('hidden');
+            }
 
             // 8. Notifications
             if (showNotification) {
