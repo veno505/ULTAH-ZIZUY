@@ -1295,7 +1295,22 @@
             </div>
         </div>
     </div>
-    <div id="custom-toast" class="fixed bottom-5 right-5 z-50 max-w-sm velvet-card-cyan rounded-2xl px-4 py-3.5 text-xs sm:text-sm font-mono text-starlight shadow-2xl transform translate-y-24 opacity-0 pointer-events-none transition-all duration-500 flex items-center gap-3">
+    <!-- Floating Warm & Playful Happy Birthday Backsound Toggle Pill -->
+    <button id="bgm-toggle-btn" type="button" onclick="toggleBirthdayBgm()" title="Putar / Jeda Backsound Instrumental Happy Birthday"
+        class="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-[85] spring-btn px-3 sm:px-3.5 py-2 rounded-full bg-velvet/90 hover:bg-velvet border border-cyberRose/40 hover:border-electricCyan/60 text-starlight shadow-[0_0_25px_rgba(255,42,133,0.3)] backdrop-blur-md flex items-center gap-2 font-mono text-[11px] sm:text-xs cursor-pointer">
+        <span id="bgm-icon-wrap" class="relative flex items-center justify-center w-4 h-4 rounded-full bg-cyberRose/20 text-cyberRose text-xs">
+            🎵
+        </span>
+        <span id="bgm-label" class="font-medium tracking-tight">HBD Music</span>
+        <!-- Mini Animated Equalizer Bars -->
+        <span id="bgm-eq" class="flex items-end gap-[2px] h-3 ml-0.5 opacity-90">
+            <span class="w-[2px] h-2 bg-cyberRose rounded-full animate-pulse"></span>
+            <span class="w-[2px] h-3 bg-electricCyan rounded-full animate-bounce"></span>
+            <span class="w-[2px] h-1.5 bg-nebulaViolet rounded-full animate-pulse"></span>
+        </span>
+    </button>
+
+    <div id="custom-toast" class="fixed bottom-16 right-4 sm:right-5 z-[90] max-w-sm velvet-card-cyan rounded-2xl px-4 py-3.5 text-xs sm:text-sm font-mono text-starlight shadow-2xl transform translate-y-24 opacity-0 pointer-events-none transition-all duration-500 flex items-center gap-3">
         <span class="w-2.5 h-2.5 rounded-full bg-electricCyan shrink-0"></span>
         <span id="custom-toast-msg">Notifikasi siap!</span>
     </div>
@@ -1322,30 +1337,316 @@
         }
 
         /* -----------------------------------------------------------------
-           WEB AUDIO SYNTH: Soft Cyber Chimes (Zero external audio bloat)
+           WEB AUDIO SYNTH & WARM ROMANTIC-PLAYFUL "HAPPY BIRTHDAY" BGM
+           Multi-layered Rhodes Electric Piano + Celesta Music Box + Warm Pad
            ----------------------------------------------------------------- */
         let audioCtx = null;
+        let bgmBus = null;
+        let bgmPlaying = false;
+        let bgmUserMuted = false;
+        let bgmSchedulerTimer = null;
+        let bgmStepIdx = 0;
+        let bgmNextStepTime = 0;
+
+        function ensureAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            if (!bgmBus && audioCtx) {
+                // Create Warm Acoustic Room Bus (Low-pass warmth filter + Dreamy Stereo Echo)
+                const masterGain = audioCtx.createGain();
+                masterGain.gain.value = 0.78;
+
+                const warmFilter = audioCtx.createBiquadFilter();
+                warmFilter.type = 'lowpass';
+                warmFilter.frequency.value = 2650;
+                warmFilter.Q.value = 0.7;
+
+                // Soft Romantic Delay Echo (Reverb-like warmth)
+                const delay = audioCtx.createDelay(1.0);
+                delay.delayTime.value = 0.27;
+                const delayFeedback = audioCtx.createGain();
+                delayFeedback.gain.value = 0.24;
+                const delayDamp = audioCtx.createBiquadFilter();
+                delayDamp.type = 'lowpass';
+                delayDamp.frequency.value = 1350;
+                const wetGain = audioCtx.createGain();
+                wetGain.gain.value = 0.28;
+
+                warmFilter.connect(masterGain);
+                warmFilter.connect(delay);
+                delay.connect(delayDamp);
+                delayDamp.connect(delayFeedback);
+                delayFeedback.connect(delay);
+                delayDamp.connect(wetGain);
+                wetGain.connect(masterGain);
+                masterGain.connect(audioCtx.destination);
+
+                bgmBus = { input: warmFilter, masterGain };
+            }
+            return audioCtx;
+        }
+
         function playCyberTone(freq = 523.25, type = 'sine', duration = 0.16) {
             try {
-                if (!audioCtx) {
-                    const AudioContext = window.AudioContext || window.webkitAudioContext;
-                    audioCtx = new AudioContext();
-                }
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
+                const ctx = ensureAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
                 osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                gain.gain.setValueAtTime(0.05, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
                 osc.connect(gain);
-                gain.connect(audioCtx.destination);
+                gain.connect(ctx.destination);
                 osc.start();
-                osc.stop(audioCtx.currentTime + duration);
-            } catch (e) {
-                // Ignore if audio context blocked
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        // Musical Note Frequencies (F Major Warm Romantic Register)
+        const N = {
+            Bb2: 116.54, C3: 130.81, Db3: 138.59, D3: 146.83, E3: 164.81, F3: 174.61, G3: 196.00, Ab3: 207.65, A3: 220.00, Bb3: 233.08,
+            C4: 261.63, Db4: 277.18, D4: 293.66, Eb4: 311.13, E4: 329.63, F4: 349.23, G4: 392.00, Ab4: 415.30, A4: 440.00, Bb4: 466.16,
+            C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99, A5: 880.00, C6: 1046.50
+        };
+
+        // Complete "Happy Birthday to You" Arrangement (Warm Rhodes + Playful Music Box + Lush Jazz-Pop Chords)
+        // Each step: { dur (in beats, 1 beat = 0.52s), mel: freq, chord: [freqs], sparkle: [freqs] }
+        const HBD_SCORE = [
+            // Pickup: "Hap-py"
+            { dur: 0.68, mel: N.C4, sparkle: [N.A4] },
+            { dur: 0.32, mel: N.C4 },
+
+            // Phrase 1: "Birth-day to You~" (Warm Fmaj9 -> C13)
+            { dur: 1.0,  mel: N.D4, chord: [N.F3, N.A3, N.C4, N.E4], sparkle: [N.F5] },
+            { dur: 1.0,  mel: N.C4, sparkle: [N.C5, N.A4] },
+            { dur: 1.0,  mel: N.F4, chord: [N.F3, N.A3, N.D4], sparkle: [N.A4, N.C5] },
+            { dur: 2.0,  mel: N.E4, chord: [N.C3, N.G3, N.Bb3, N.E4], sparkle: [N.G4, N.C5, N.E5, N.G5] },
+
+            // Pickup 2: "Hap-py"
+            { dur: 0.68, mel: N.C4, sparkle: [N.Bb4] },
+            { dur: 0.32, mel: N.C4 },
+
+            // Phrase 2: "Birth-day to You~" (Playful Gm9 -> C9 -> Fmaj7)
+            { dur: 1.0,  mel: N.D4, chord: [N.G3, N.Bb3, N.D4, N.F4], sparkle: [N.D5] },
+            { dur: 1.0,  mel: N.C4, chord: [N.C3, N.G3, N.Bb3, N.E4], sparkle: [N.E5, N.C5] },
+            { dur: 1.0,  mel: N.G4, sparkle: [N.Bb4, N.D5] },
+            { dur: 2.0,  mel: N.F4, chord: [N.F3, N.A3, N.C4, N.E4], sparkle: [N.A4, N.C5, N.E5, N.F5] },
+
+            // Pickup 3: "Hap-py"
+            { dur: 0.68, mel: N.C4, sparkle: [N.C5] },
+            { dur: 0.32, mel: N.C4 },
+
+            // Phrase 3: "Birth-day dear Zi-zuy~" (Romantic F7 -> Lush Bbmaj7 -> Nostalgic Bbm6)
+            { dur: 1.0,  mel: N.C5, chord: [N.F3, N.A3, N.C4, N.Eb4], sparkle: [N.F5, N.A5] },
+            { dur: 1.0,  mel: N.A4, sparkle: [N.C5, N.F5] },
+            { dur: 0.68, mel: N.F4, chord: [N.Bb2, N.F3, N.A3, N.D4], sparkle: [N.D5] },
+            { dur: 0.32, mel: N.F4 },
+            { dur: 1.0,  mel: N.E4, sparkle: [N.A4, N.C5] },
+            { dur: 1.8,  mel: N.D4, chord: [N.Bb2, N.F3, N.Ab3, N.Db4], sparkle: [N.F4, N.Ab4, N.D5, N.F5] },
+
+            // Pickup 4: "Hap-py"
+            { dur: 0.68, mel: N.Bb4, sparkle: [N.D5] },
+            { dur: 0.32, mel: N.Bb4 },
+
+            // Phrase 4: "Birth-day to You~" (Heartwarming Resolution Fmaj7/C -> C9 -> Fmaj9)
+            { dur: 1.0,  mel: N.A4, chord: [N.C3, N.F3, N.A3, N.C4], sparkle: [N.C5, N.F5] },
+            { dur: 1.0,  mel: N.F4, sparkle: [N.A4, N.C5] },
+            { dur: 1.0,  mel: N.G4, chord: [N.C3, N.G3, N.Bb3, N.D4, N.E4], sparkle: [N.Bb4, N.E5] },
+            { dur: 2.2,  mel: N.F4, chord: [N.F3, N.A3, N.C4, N.E4, N.G4], sparkle: [N.A4, N.C5, N.E5, N.G5, N.C6] },
+
+            // Playful Romantic Music-Box Interlude Turnaround (2 bars of cozy twinkle before repeat)
+            { dur: 0.75, mel: N.A4, chord: [N.D3, N.A3, N.C4, N.F4], sparkle: [N.C5, N.F5] },
+            { dur: 0.75, mel: N.C5, sparkle: [N.E5] },
+            { dur: 0.75, mel: N.D5, chord: [N.G3, N.Bb3, N.D4, N.F4], sparkle: [N.G5] },
+            { dur: 0.75, mel: N.C5, sparkle: [N.F5] },
+            { dur: 1.0,  mel: N.A4, chord: [N.C3, N.G3, N.Bb3, N.E4], sparkle: [N.C5, N.E5] },
+            { dur: 1.2,  mel: N.G4, sparkle: [N.Bb4, N.D5, N.E5] }
+        ];
+
+        function scheduleWarmMelodyNote(ctx, freq, startTime, durationSec) {
+            if (!freq || !bgmBus) return;
+            // Layer 1: Warm Rhodes Electric Piano Body (Sine)
+            const osc1 = ctx.createOscillator();
+            const gain1 = ctx.createGain();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(freq, startTime);
+
+            gain1.gain.setValueAtTime(0.0001, startTime);
+            gain1.gain.linearRampToValueAtTime(0.11, startTime + 0.025);
+            gain1.gain.exponentialRampToValueAtTime(0.045, startTime + durationSec * 0.65);
+            gain1.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec + 0.55);
+
+            osc1.connect(gain1);
+            gain1.connect(bgmBus.input);
+            osc1.start(startTime);
+            osc1.stop(startTime + durationSec + 0.6);
+
+            // Layer 2: Playful Celesta / Music-Box Harmonic Bell (Triangle Octave + Detune warmth)
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
+            osc2.type = 'triangle';
+            osc2.frequency.setValueAtTime(freq * 2, startTime);
+            osc2.detune.setValueAtTime(4, startTime);
+
+            gain2.gain.setValueAtTime(0.0001, startTime);
+            gain2.gain.linearRampToValueAtTime(0.024, startTime + 0.015);
+            gain2.gain.exponentialRampToValueAtTime(0.0001, startTime + Math.min(0.65, durationSec * 0.85));
+
+            osc2.connect(gain2);
+            gain2.connect(bgmBus.input);
+            osc2.start(startTime);
+            osc2.stop(startTime + 0.7);
+        }
+
+        function scheduleRomanticStrumChord(ctx, freqs, startTime, durationSec) {
+            if (!freqs || !bgmBus) return;
+            for (let i = 0; i < freqs.length; i++) {
+                const noteStart = startTime + i * 0.032; // Gentle harp/guitar strum roll
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = i === 0 ? 'sine' : 'triangle';
+                osc.frequency.setValueAtTime(freqs[i], noteStart);
+
+                const peak = i === 0 ? 0.048 : 0.024;
+                gain.gain.setValueAtTime(0.0001, noteStart);
+                gain.gain.linearRampToValueAtTime(peak, noteStart + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.0001, noteStart + durationSec + 0.9);
+
+                osc.connect(gain);
+                gain.connect(bgmBus.input);
+                osc.start(noteStart);
+                osc.stop(noteStart + durationSec + 0.95);
             }
         }
+
+        function schedulePlayfulSparkleArp(ctx, freqs, startTime, stepDurSec) {
+            if (!freqs || !bgmBus) return;
+            const spacing = Math.min(0.24, stepDurSec / (freqs.length + 0.5));
+            for (let i = 0; i < freqs.length; i++) {
+                const t = startTime + 0.14 + i * spacing;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freqs[i], t);
+
+                gain.gain.setValueAtTime(0.0001, t);
+                gain.gain.linearRampToValueAtTime(0.026, t + 0.012);
+                gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
+
+                osc.connect(gain);
+                gain.connect(bgmBus.input);
+                osc.start(t);
+                osc.stop(t + 0.6);
+            }
+        }
+
+        function runBgmScheduler() {
+            if (!bgmPlaying || !audioCtx || document.hidden) return;
+            const beatSec = 0.53; // ~113 BPM warm & playful waltz-swing pulse
+            while (bgmNextStepTime < audioCtx.currentTime + 0.65) {
+                const step = HBD_SCORE[bgmStepIdx];
+                const durSec = step.dur * beatSec;
+
+                scheduleWarmMelodyNote(audioCtx, step.mel, bgmNextStepTime, durSec);
+                if (step.chord) {
+                    scheduleRomanticStrumChord(audioCtx, step.chord, bgmNextStepTime, durSec * 1.35);
+                }
+                if (step.sparkle) {
+                    schedulePlayfulSparkleArp(audioCtx, step.sparkle, bgmNextStepTime, durSec);
+                }
+
+                bgmNextStepTime += durSec;
+                bgmStepIdx = (bgmStepIdx + 1) % HBD_SCORE.length;
+            }
+        }
+
+        function updateBgmButtonUI() {
+            const btn = document.getElementById('bgm-toggle-btn');
+            const label = document.getElementById('bgm-label');
+            const eq = document.getElementById('bgm-eq');
+            const iconWrap = document.getElementById('bgm-icon-wrap');
+            if (!btn || !label || !eq || !iconWrap) return;
+
+            if (bgmPlaying) {
+                label.textContent = 'HBD Music: ON';
+                eq.classList.remove('hidden');
+                iconWrap.textContent = '🎵';
+                btn.classList.add('border-cyberRose/50');
+                btn.classList.remove('opacity-60');
+            } else {
+                label.textContent = 'HBD Music: OFF';
+                eq.classList.add('hidden');
+                iconWrap.textContent = '🔇';
+                btn.classList.remove('border-cyberRose/50');
+                btn.classList.add('opacity-60');
+            }
+        }
+
+        function startBirthdayBgm() {
+            if (bgmPlaying || bgmUserMuted) return;
+            try {
+                const ctx = ensureAudioContext();
+                if (ctx.state === 'suspended') {
+                    ctx.resume();
+                }
+                bgmPlaying = true;
+                if (bgmBus && bgmBus.masterGain) {
+                    bgmBus.masterGain.gain.cancelScheduledValues(ctx.currentTime);
+                    bgmBus.masterGain.gain.setValueAtTime(0.01, ctx.currentTime);
+                    bgmBus.masterGain.gain.linearRampToValueAtTime(0.78, ctx.currentTime + 0.8);
+                }
+                bgmNextStepTime = ctx.currentTime + 0.08;
+                runBgmScheduler();
+                if (bgmSchedulerTimer) clearInterval(bgmSchedulerTimer);
+                bgmSchedulerTimer = setInterval(runBgmScheduler, 220);
+                updateBgmButtonUI();
+            } catch (e) {}
+        }
+
+        function stopBirthdayBgm() {
+            bgmPlaying = false;
+            if (bgmSchedulerTimer) {
+                clearInterval(bgmSchedulerTimer);
+                bgmSchedulerTimer = null;
+            }
+            if (audioCtx && bgmBus && bgmBus.masterGain) {
+                try {
+                    bgmBus.masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+                    bgmBus.masterGain.gain.setValueAtTime(bgmBus.masterGain.gain.value, audioCtx.currentTime);
+                    bgmBus.masterGain.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.25);
+                } catch (e) {}
+            }
+            updateBgmButtonUI();
+        }
+
+        window.toggleBirthdayBgm = function() {
+            if (bgmPlaying) {
+                bgmUserMuted = true;
+                stopBirthdayBgm();
+                showToast('🔇 Backsound Happy Birthday dijeda.');
+            } else {
+                bgmUserMuted = false;
+                startBirthdayBgm();
+                showToast('🎵 Memutar Backsound Happy Birthday (Warm & Romantic) ✨');
+            }
+        };
+
+        // Auto-unlock & start BGM on first user touch/click/key interaction anywhere
+        function unlockBgmOnInteraction() {
+            if (!bgmUserMuted && !bgmPlaying) {
+                startBirthdayBgm();
+            } else if (audioCtx && audioCtx.state === 'suspended' && !bgmUserMuted) {
+                audioCtx.resume();
+            }
+        }
+        window.addEventListener('pointerdown', unlockBgmOnInteraction, { passive: true });
+        window.addEventListener('keydown', unlockBgmOnInteraction, { passive: true });
+        window.addEventListener('touchstart', unlockBgmOnInteraction, { passive: true });
 
         /* -----------------------------------------------------------------
            DISCRETE ENTRY & EXIT TRANSITION HELPERS (FADE IN / FADE OUT)
@@ -3958,6 +4259,10 @@ int main() {
         // Page Visibility API: Saves battery and prevents thermal throttling
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
+                if (bgmPlaying && audioCtx) {
+                    bgmNextStepTime = Math.max(bgmNextStepTime, audioCtx.currentTime + 0.08);
+                    runBgmScheduler();
+                }
                 if (mainAppCanvasesActive) {
                     requestAnimationFrame(animateBgGalaxy);
                     requestAnimationFrame(animateFireflies);
@@ -4007,6 +4312,7 @@ int main() {
             window._appInitialized = true;
 
             initLoveCursorEngine();
+            startBirthdayBgm();
             runPreloaderSequence();
 
             updateChronoTimer();
