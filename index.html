@@ -246,6 +246,36 @@
             border-right: 1px dashed rgba(255, 255, 255, 0.25);
         }
 
+        /* Aesthetic Paper Sheet Theme for Birthday Message Card */
+        .aesthetic-paper-card {
+            position: relative;
+            background: linear-gradient(180deg, #1A1726 0%, #13111E 100%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 42, 133, 0.14);
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0),
+                linear-gradient(to bottom, transparent 31px, rgba(255, 255, 255, 0.035) 32px);
+            background-size: 20px 20px, 100% 32px;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+        }
+        .aesthetic-paper-card::before {
+            content: '';
+            position: absolute;
+            top: -11px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 24px;
+            background: rgba(255, 42, 133, 0.32);
+            border-left: 2px dashed rgba(255, 255, 255, 0.5);
+            border-right: 2px dashed rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            z-index: 10;
+        }
+
         /* Smooth Discrete Entry & Exit Transitions (Fade-In & Fade-Out) */
         .stage-layer {
             display: flex;
@@ -727,12 +757,13 @@
 
         <!-- ===============================================================
              SECTION 1: HERO & DUAL-STATE CHRONO-SHIFT TIMER (F-02)
+             Layout Swapped: Timer below Happy Birthday, Prominent Paper Sheet Card on Right
              =============================================================== -->
         <section id="hero-timer" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-12 sm:pb-20 md:pt-16 md:pb-28">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-8 lg:gap-10 items-start">
                 
-                <!-- Left Column: Artistic Title & Mode Switcher -->
-                <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+                <!-- Left Column: Artistic Title, Chrono-Timer (Directly Under Title), & Terminal -->
+                <div class="lg:col-span-7 space-y-5 sm:space-y-6">
                     
                     <!-- Quick Mode Switcher Selector -->
                     <div class="inline-flex max-w-full items-center gap-1.5 p-1 rounded-2xl bg-velvet/90 border border-white/15 backdrop-blur-md text-[11px] sm:text-xs font-mono">
@@ -755,6 +786,7 @@
                         </span>
                     </div>
 
+                    <!-- Main Heading -->
                     <div class="space-y-1.5 sm:space-y-2">
                         <p class="font-mono text-[11px] sm:text-sm uppercase tracking-widest text-mutedLavender">
                             SPECIAL BUILD FOR 23 NOVEMBER 2026 • LEVEL 19
@@ -770,9 +802,88 @@
                         </h1>
                     </div>
 
-                    <p id="hero-description" class="text-sm sm:text-base md:text-lg text-mutedLavender leading-relaxed max-w-2xl">
-                        Di antara tumpukan tugas koding Semester 1, algoritma yang kadang bikin pusing, dan jutaan kali pertanyaan <span class="text-starlight font-medium italic">"hari ini mau makan di mana?"</span>—web kecil ini sengaja dikompilasi khusus buat merayakan seseorang yang selalu bikin hari-hari belakangan ini jauh lebih seru.
-                    </p>
+                    <!-- F-02 CHRONO-SHIFT TIMER: MOVED DIRECTLY UNDER HAPPY BIRTHDAY TITLE -->
+                    <div id="timer-card" class="velvet-card-rose rounded-2xl sm:rounded-3xl p-4 sm:p-6 relative overflow-hidden transition-all duration-500 max-w-xl shadow-[0_15px_40px_rgba(0,0,0,0.5)]">
+                        <!-- Top Tag -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <span id="timer-badge" class="inline-flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-cyberRose/20 text-cyberRose border border-cyberRose/40">
+                                <span id="timer-dot" class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
+                                <span id="timer-badge-text">LEVEL 19 UNLOCKED &amp; RUNNING (+)</span>
+                            </span>
+                            <span class="font-mono text-[10px] sm:text-[11px] text-mutedLavender">
+                                23.11.2026 // 00:00 WIB
+                            </span>
+                        </div>
+
+                        <!-- Title inside timer -->
+                        <div class="mb-2.5">
+                            <h2 id="timer-heading" class="font-display font-bold text-base sm:text-xl text-starlight">
+                                Waktu Berjalan Sejak Resmi 19 Tahun
+                            </h2>
+                            <p id="timer-subtext" class="text-xs text-mutedLavender mt-0.5">
+                                Count-up real-time sejak 23 November 2026 pukul 00:00 WIB.
+                            </p>
+                        </div>
+
+                        <!-- Main Chrono Display Boxes -->
+                        <div class="bg-obsidian/85 border border-white/10 rounded-2xl p-2.5 sm:p-3.5 my-2.5">
+                            <div class="flex items-center justify-center gap-1 sm:gap-2 md:gap-2.5 font-mono">
+                                <!-- Sign Symbol (- or +) -->
+                                <div id="timer-sign" class="text-2xl sm:text-4xl font-bold text-electricCyan glow-cyan select-none pr-0.5 sm:pr-1">
+                                    +
+                                </div>
+
+                                <!-- Days -->
+                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2 min-w-[48px] sm:min-w-[58px]">
+                                    <span id="t-days" class="font-display font-extrabold text-lg sm:text-2xl md:text-3xl text-starlight">00</span>
+                                    <span class="text-[8px] sm:text-[9px] uppercase tracking-wider text-mutedLavender mt-0.5">Hari</span>
+                                </div>
+
+                                <span class="text-sm sm:text-xl font-bold text-white/30">:</span>
+
+                                <!-- Hours -->
+                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2 min-w-[48px] sm:min-w-[58px]">
+                                    <span id="t-hours" class="font-display font-extrabold text-lg sm:text-2xl md:text-3xl text-starlight">00</span>
+                                    <span class="text-[8px] sm:text-[9px] uppercase tracking-wider text-mutedLavender mt-0.5">Jam</span>
+                                </div>
+
+                                <span class="text-sm sm:text-xl font-bold text-white/30">:</span>
+
+                                <!-- Minutes -->
+                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2 min-w-[48px] sm:min-w-[58px]">
+                                    <span id="t-mins" class="font-display font-extrabold text-lg sm:text-2xl md:text-3xl text-starlight">00</span>
+                                    <span class="text-[8px] sm:text-[9px] uppercase tracking-wider text-mutedLavender mt-0.5">Menit</span>
+                                </div>
+
+                                <span class="text-sm sm:text-xl font-bold text-white/30">:</span>
+
+                                <!-- Seconds -->
+                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2 min-w-[48px] sm:min-w-[58px]">
+                                    <span id="t-secs" class="font-display font-extrabold text-lg sm:text-2xl md:text-3xl text-electricCyan">00</span>
+                                    <span class="text-[8px] sm:text-[9px] uppercase tracking-wider text-mutedLavender mt-0.5">Detik</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Conditional Late-Open Banner -->
+                        <div id="late-banner" hidden class="discrete-fade rounded-xl bg-electricCyan/10 border border-electricCyan/30 p-2.5 sm:p-3 my-2">
+                            <div class="flex items-start gap-2">
+                                <span class="text-base shrink-0">🎉</span>
+                                <p class="text-[11px] sm:text-xs text-starlight leading-relaxed">
+                                    <strong class="text-electricCyan font-mono">MODE PLUS (+) AKTIF:</strong> Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Chrono-Engine Status Footer -->
+                        <div class="pt-2.5 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
+                            <span class="text-[10px] sm:text-[11px]">Chrono-Engine v19.0</span>
+                            <span class="inline-flex items-center gap-1.5 text-electricCyan text-[10px] sm:text-[11px] font-semibold">
+                                <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-pulse"></span>
+                                <span>REAL-TIME ELAPSED (+)</span>
+                            </span>
+                        </div>
+                    </div>
 
                     <!-- Interactive Mini Terminal Card -->
                     <div class="velvet-card rounded-2xl p-3.5 sm:p-5 border border-white/10 max-w-xl">
@@ -801,87 +912,56 @@
                     </div>
                 </div>
 
-                <!-- Right Column: F-02 Dual-State Chrono-Shift Timer Module -->
-                <div class="lg:col-span-5">
-                    <div id="timer-card" class="velvet-card-rose rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:p-8 relative overflow-hidden transition-all duration-500">
-                        <!-- Subtle Top Right Corner Tag -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 sm:mb-5">
-                            <span id="timer-badge" class="inline-flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-cyberRose/20 text-cyberRose border border-cyberRose/40">
-                                <span id="timer-dot" class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
-                                <span id="timer-badge-text">COMPILING ZIZUY LEVEL 19...</span>
-                            </span>
-                            <span class="font-mono text-[10px] sm:text-[11px] text-mutedLavender">
-                                23.11.2026 // 00:00 WIB
+                <!-- Right Column: AESTHETIC PAPER CARD (SELEMBAR KERTAS UCAPAN ULANG TAHUN MENONJOL) -->
+                <div class="lg:col-span-5 pt-3 sm:pt-4">
+                    <div class="aesthetic-paper-card p-5 sm:p-7 md:p-8 pt-7 sm:pt-9 relative">
+                        <!-- Top Paper Header & Memo Accents -->
+                        <div class="flex items-center justify-between pb-3.5 mb-3.5 border-b border-white/15 gap-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3.5 h-3.5 rounded-full bg-obsidian border border-white/20 shadow-inner shrink-0"></span>
+                                <span class="font-mono text-[10px] sm:text-xs font-bold tracking-wider text-cyberRose uppercase">
+                                    MEMO RESMI // UNTUK ZIZUY 💌
+                                </span>
+                            </div>
+                            <span class="font-mono text-[10px] sm:text-xs text-mutedLavender bg-white/5 px-2 py-0.5 rounded-md border border-white/10">
+                                23.11.2026
                             </span>
                         </div>
 
-                        <!-- Title inside timer -->
-                        <div class="mb-3 sm:mb-4">
-                            <h2 id="timer-heading" class="font-display font-bold text-lg sm:text-2xl text-starlight">
-                                Hitung Mundur Menuju 19 Tahun
-                            </h2>
-                            <p id="timer-subtext" class="text-xs sm:text-sm text-mutedLavender mt-0.5 sm:mt-1">
-                                Waktu berjalan real-time menuju hari spesial Zizuy.
+                        <!-- Paper Memo Title -->
+                        <div class="space-y-1 mb-3.5">
+                            <h3 class="font-display font-extrabold text-xl sm:text-2xl text-starlight tracking-tight flex items-center gap-2">
+                                <span>Pesan Spesial Ulang Tahun</span>
+                                <span class="text-sm">✨</span>
+                            </h3>
+                            <p class="font-mono text-[11px] sm:text-xs text-mutedLavender">
+                                Ditulis langsung dari hati untuk menemani awal babak ke-19 kamu.
                             </p>
                         </div>
 
-                        <!-- Main Chrono Display (Responsive width on 320px-1440px) -->
-                        <div class="bg-obsidian/85 border border-white/10 rounded-2xl p-2.5 sm:p-4 md:p-5 my-3 sm:my-4">
-                            <div class="flex items-center justify-center gap-1 sm:gap-2.5 md:gap-3 font-mono">
-                                <!-- Sign Symbol (- or +) -->
-                                <div id="timer-sign" class="text-2xl sm:text-4xl md:text-5xl font-bold text-cyberRose glow-rose select-none pr-0.5 sm:pr-1">
-                                    -
-                                </div>
-
-                                <!-- Days -->
-                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3 min-w-[48px] sm:min-w-[62px] md:min-w-[68px]">
-                                    <span id="t-days" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight">00</span>
-                                    <span class="text-[9px] sm:text-[10px] uppercase tracking-wider text-mutedLavender mt-0.5 sm:mt-1">Hari</span>
-                                </div>
-
-                                <span class="text-base sm:text-2xl font-bold text-white/30">:</span>
-
-                                <!-- Hours -->
-                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3 min-w-[48px] sm:min-w-[62px] md:min-w-[68px]">
-                                    <span id="t-hours" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight">00</span>
-                                    <span class="text-[9px] sm:text-[10px] uppercase tracking-wider text-mutedLavender mt-0.5 sm:mt-1">Jam</span>
-                                </div>
-
-                                <span class="text-base sm:text-2xl font-bold text-white/30">:</span>
-
-                                <!-- Minutes -->
-                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3 min-w-[48px] sm:min-w-[62px] md:min-w-[68px]">
-                                    <span id="t-mins" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight">00</span>
-                                    <span class="text-[9px] sm:text-[10px] uppercase tracking-wider text-mutedLavender mt-0.5 sm:mt-1">Menit</span>
-                                </div>
-
-                                <span class="text-base sm:text-2xl font-bold text-white/30">:</span>
-
-                                <!-- Seconds -->
-                                <div class="flex flex-col items-center bg-velvet/90 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3 min-w-[48px] sm:min-w-[62px] md:min-w-[68px]">
-                                    <span id="t-secs" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-electricCyan">00</span>
-                                    <span class="text-[9px] sm:text-[10px] uppercase tracking-wider text-mutedLavender mt-0.5 sm:mt-1">Detik</span>
-                                </div>
-                            </div>
+                        <!-- The Prominent Hero Description (Ucapan Panjang Dalam Selembar Kertas) -->
+                        <div class="bg-black/35 rounded-2xl p-4 sm:p-5 border border-white/10 shadow-inner relative overflow-hidden">
+                            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-cyberRose via-nebulaViolet to-electricCyan"></div>
+                            <p id="hero-description" class="text-sm sm:text-base leading-relaxed text-slate-100 font-sans pl-2">
+                                Di antara tumpukan tugas koding Semester 1, algoritma yang kadang bikin pusing, dan jutaan kali pertanyaan "hari ini mau makan di mana?"—web kecil ini sengaja dikompilasi khusus buat merayakan seseorang yang selalu bikin hari-hari belakangan ini jauh lebih seru.
+                            </p>
                         </div>
 
-                        <!-- Conditional Late-Open Banner (Shown automatically when T_now >= 23 Nov 2026 OR in preview mode) -->
-                        <div id="late-banner" hidden class="discrete-fade rounded-2xl bg-electricCyan/10 border border-electricCyan/30 p-3 sm:p-4 mb-3 sm:mb-4">
-                            <div class="flex items-start gap-2.5 sm:gap-3">
-                                <span class="text-lg sm:text-xl shrink-0">🎉</span>
-                                <p class="text-xs sm:text-sm text-starlight leading-relaxed">
-                                    <strong class="text-electricCyan font-mono">MODE PLUS (+) AKTIF:</strong> Telat buka webnya ya Zizuy? Tenang, waktunya nggak berhenti di nol kok, malah otomatis berubah jadi <strong>PLUS (+)</strong> buat ngitung sudah berapa detik dunia makin seru sejak kamu resmi 19 tahun!
+                        <!-- Handwritten Warm Closing Note -->
+                        <div class="mt-5 pt-3.5 border-t border-dashed border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div>
+                                <p class="font-hand text-lg sm:text-2xl text-cyberRose leading-tight -rotate-1">
+                                    "Semoga di umur 19 ini, semua doa baikmu dikabulkan satu per satu~"
+                                </p>
+                                <p class="font-mono text-[10px] sm:text-[11px] text-mutedLavender/80 mt-0.5">
+                                    — Penoyy (23 November 2026)
                                 </p>
                             </div>
-                        </div>
-
-                        <!-- Chrono-Engine Live Status Footer -->
-                        <div class="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
-                            <span class="text-[11px] sm:text-xs">Chrono-Engine v19.0</span>
-                            <span class="inline-flex items-center gap-1.5 text-electricCyan text-[11px] sm:text-xs font-semibold">
-                                <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-pulse"></span>
-                                <span>REAL-TIME ELAPSED (+)</span>
-                            </span>
+                            <div class="shrink-0 self-end sm:self-center">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-cyberRose/15 border border-cyberRose/40 font-mono text-[10px] text-cyberRose font-bold shadow-[0_0_12px_rgba(255,42,133,0.3)]">
+                                    ★ CHAPTER 19
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1353,29 +1433,26 @@
                 const AudioContextClass = window.AudioContext || window.webkitAudioContext;
                 audioCtx = new AudioContextClass();
             }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
             if (!bgmBus && audioCtx) {
-                // Create Warm Acoustic Room Bus (Low-pass warmth filter + Dreamy Stereo Echo)
+                // Warm Acoustic Room Bus (Rich Warmth + Clarity Boost + Lush Stereo Echo)
                 const masterGain = audioCtx.createGain();
-                masterGain.gain.value = 0.78;
+                masterGain.gain.value = 1.45; // Suara jelas, hangat, renyah, dan tidak pelan
 
                 const warmFilter = audioCtx.createBiquadFilter();
                 warmFilter.type = 'lowpass';
-                warmFilter.frequency.value = 2650;
-                warmFilter.Q.value = 0.7;
+                warmFilter.frequency.value = 3800; // Lebih jernih dan manis
+                warmFilter.Q.value = 0.65;
 
                 // Soft Romantic Delay Echo (Reverb-like warmth)
                 const delay = audioCtx.createDelay(1.0);
-                delay.delayTime.value = 0.27;
+                delay.delayTime.value = 0.26;
                 const delayFeedback = audioCtx.createGain();
-                delayFeedback.gain.value = 0.24;
+                delayFeedback.gain.value = 0.22;
                 const delayDamp = audioCtx.createBiquadFilter();
                 delayDamp.type = 'lowpass';
-                delayDamp.frequency.value = 1350;
+                delayDamp.frequency.value = 1800;
                 const wetGain = audioCtx.createGain();
-                wetGain.gain.value = 0.28;
+                wetGain.gain.value = 0.32;
 
                 warmFilter.connect(masterGain);
                 warmFilter.connect(delay);
@@ -1394,11 +1471,12 @@
         function playCyberTone(freq = 523.25, type = 'sine', duration = 0.16) {
             try {
                 const ctx = ensureAudioContext();
+                if (ctx.state === 'suspended') ctx.resume();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = type;
                 osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                gain.gain.setValueAtTime(0.05, ctx.currentTime);
+                gain.gain.setValueAtTime(0.07, ctx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
                 osc.connect(gain);
                 gain.connect(ctx.destination);
@@ -1477,8 +1555,8 @@
             osc1.frequency.setValueAtTime(freq, startTime);
 
             gain1.gain.setValueAtTime(0.0001, startTime);
-            gain1.gain.linearRampToValueAtTime(0.11, startTime + 0.025);
-            gain1.gain.exponentialRampToValueAtTime(0.045, startTime + durationSec * 0.65);
+            gain1.gain.linearRampToValueAtTime(0.25, startTime + 0.02);
+            gain1.gain.exponentialRampToValueAtTime(0.095, startTime + durationSec * 0.65);
             gain1.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec + 0.55);
 
             osc1.connect(gain1);
@@ -1494,7 +1572,7 @@
             osc2.detune.setValueAtTime(4, startTime);
 
             gain2.gain.setValueAtTime(0.0001, startTime);
-            gain2.gain.linearRampToValueAtTime(0.024, startTime + 0.015);
+            gain2.gain.linearRampToValueAtTime(0.075, startTime + 0.015);
             gain2.gain.exponentialRampToValueAtTime(0.0001, startTime + Math.min(0.65, durationSec * 0.85));
 
             osc2.connect(gain2);
@@ -1512,7 +1590,7 @@
                 osc.type = i === 0 ? 'sine' : 'triangle';
                 osc.frequency.setValueAtTime(freqs[i], noteStart);
 
-                const peak = i === 0 ? 0.048 : 0.024;
+                const peak = i === 0 ? 0.14 : 0.075;
                 gain.gain.setValueAtTime(0.0001, noteStart);
                 gain.gain.linearRampToValueAtTime(peak, noteStart + 0.05);
                 gain.gain.exponentialRampToValueAtTime(0.0001, noteStart + durationSec + 0.9);
@@ -1535,7 +1613,7 @@
                 osc.frequency.setValueAtTime(freqs[i], t);
 
                 gain.gain.setValueAtTime(0.0001, t);
-                gain.gain.linearRampToValueAtTime(0.026, t + 0.012);
+                gain.gain.linearRampToValueAtTime(0.065, t + 0.012);
                 gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
 
                 osc.connect(gain);
@@ -1587,24 +1665,34 @@
             }
         }
 
-        function startBirthdayBgm() {
-            if (bgmPlaying || bgmUserMuted) return;
+        function startBirthdayBgm(isInteraction = false) {
+            if (bgmUserMuted) return;
             try {
                 const ctx = ensureAudioContext();
+                const playNow = () => {
+                    bgmPlaying = true;
+                    if (bgmBus && bgmBus.masterGain) {
+                        bgmBus.masterGain.gain.cancelScheduledValues(ctx.currentTime);
+                        bgmBus.masterGain.gain.setValueAtTime(0.01, ctx.currentTime);
+                        bgmBus.masterGain.gain.linearRampToValueAtTime(1.45, ctx.currentTime + 0.4);
+                    }
+                    bgmNextStepTime = ctx.currentTime + 0.05;
+                    runBgmScheduler();
+                    if (bgmSchedulerTimer) clearInterval(bgmSchedulerTimer);
+                    bgmSchedulerTimer = setInterval(runBgmScheduler, 180);
+                    updateBgmButtonUI();
+                };
+
                 if (ctx.state === 'suspended') {
-                    ctx.resume();
+                    ctx.resume().then(() => {
+                        playNow();
+                    }).catch(() => {
+                        bgmPlaying = false;
+                        updateBgmButtonUI();
+                    });
+                } else {
+                    playNow();
                 }
-                bgmPlaying = true;
-                if (bgmBus && bgmBus.masterGain) {
-                    bgmBus.masterGain.gain.cancelScheduledValues(ctx.currentTime);
-                    bgmBus.masterGain.gain.setValueAtTime(0.01, ctx.currentTime);
-                    bgmBus.masterGain.gain.linearRampToValueAtTime(0.78, ctx.currentTime + 0.8);
-                }
-                bgmNextStepTime = ctx.currentTime + 0.08;
-                runBgmScheduler();
-                if (bgmSchedulerTimer) clearInterval(bgmSchedulerTimer);
-                bgmSchedulerTimer = setInterval(runBgmScheduler, 220);
-                updateBgmButtonUI();
             } catch (e) {}
         }
 
@@ -1631,22 +1719,31 @@
                 showToast('🔇 Backsound Happy Birthday dijeda.');
             } else {
                 bgmUserMuted = false;
-                startBirthdayBgm();
-                showToast('🎵 Memutar Backsound Happy Birthday (Warm & Romantic) ✨');
+                startBirthdayBgm(true);
+                showToast('🎵 Memutar Backsound Happy Birthday (Hangat & Playful) ✨');
             }
         };
 
-        // Auto-unlock & start BGM on first user touch/click/key interaction anywhere
+        // Universal Auto-Unlock: starts BGM immediately on first touch/click/keypress anywhere!
         function unlockBgmOnInteraction() {
-            if (!bgmUserMuted && !bgmPlaying) {
-                startBirthdayBgm();
-            } else if (audioCtx && audioCtx.state === 'suspended' && !bgmUserMuted) {
-                audioCtx.resume();
+            if (bgmUserMuted) return;
+            const ctx = ensureAudioContext();
+            if (ctx.state === 'suspended') {
+                ctx.resume().then(() => {
+                    if (!bgmPlaying) {
+                        startBirthdayBgm(true);
+                    } else {
+                        bgmNextStepTime = ctx.currentTime + 0.05;
+                        runBgmScheduler();
+                    }
+                }).catch(() => {});
+            } else if (!bgmPlaying) {
+                startBirthdayBgm(true);
             }
         }
-        window.addEventListener('pointerdown', unlockBgmOnInteraction, { passive: true });
-        window.addEventListener('keydown', unlockBgmOnInteraction, { passive: true });
-        window.addEventListener('touchstart', unlockBgmOnInteraction, { passive: true });
+        ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(evt => {
+            window.addEventListener(evt, unlockBgmOnInteraction, { passive: true });
+        });
 
         /* -----------------------------------------------------------------
            DISCRETE ENTRY & EXIT TRANSITION HELPERS (FADE IN / FADE OUT)
