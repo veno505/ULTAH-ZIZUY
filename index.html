@@ -791,7 +791,7 @@
             <div id="gate-late-container" class="hidden flex-col items-center text-center mt-1 sm:mt-2">
                 <button id="gate-late-enter-btn" type="button" onclick="openLoveIntroGate()" class="spring-btn font-vanilla-btn group relative px-6 sm:px-9 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan font-bold text-xs sm:text-sm md:text-base shadow-[0_10px_30px_rgba(255,42,133,0.4)] hover:scale-105 transition-all flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer">
                     <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f496/512.webp" alt="💖" class="noto-3d w-6 h-6" onerror="this.outerHTML='<span class=\'text-xl\'>💖</span>'">
-                    <span class="tracking-wide text-white">yahh sayangg udah lewat jam nya klik disini yachh</span>
+                    <span id="gate-late-btn-text" class="tracking-wide text-white">yahh sayangg udah lewat jam nya klik disini yachh</span>
                     <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp" alt="✨" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span class=\'text-xl\'>✨</span>'">
                 </button>
                 <p class="font-hand text-lg sm:text-2xl text-starlight/90 mt-2">
@@ -864,7 +864,7 @@
         <div class="relative z-10 w-full max-w-md flex flex-col items-center text-center pb-4 sm:pb-6 px-3">
             <button id="run-exe-btn" type="button" class="spring-btn font-vanilla-btn group relative px-7 sm:px-10 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-[#9333EA] to-electricCyan font-bold text-sm sm:text-base md:text-lg shadow-[0_14px_38px_rgba(255,42,133,0.48),_0_0_24px_rgba(0,229,255,0.28)] border border-white/35 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 cursor-pointer whitespace-nowrap">
                 <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f382/512.webp" alt="🎂" class="noto-3d w-6 h-6 shrink-0" onerror="this.outerHTML='<span class=\'text-xl\'>🎂</span>'">
-                <span class="tracking-wide text-white">Click Here Yaa Cantiik</span>
+                <span id="run-exe-btn-text" class="tracking-wide text-white">Click Here Yaa Cantiik</span>
                 <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp" alt="✨" class="noto-3d w-5 h-5 shrink-0" onerror="this.outerHTML='<span class=\'text-xl\'>✨</span>'">
                 <span class="font-mono text-white text-base group-hover:translate-x-1.5 transition-transform font-bold">→</span>
             </button>
@@ -1046,7 +1046,7 @@
                                 <div class="flex items-start gap-2">
                                     <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f388/512.webp" alt="🎈" class="noto-3d w-5 h-5 shrink-0" onerror="this.outerHTML='<span>🎈</span>'">
                                     <p class="text-[11px] sm:text-xs text-starlight leading-relaxed">
-                                        <strong class="text-electricCyan font-mono">MODE PLUS (+) AKTIF:</strong> Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!
+                                        <strong class="text-electricCyan font-mono">MODE PLUS (+) AKTIF:</strong> <span id="countdown-note-text">Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!</span>
                                     </p>
                                 </div>
                             </div>
@@ -1197,7 +1197,7 @@
 
                             <!-- Receipt Header -->
                             <div class="text-center border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4">
-                                <div class="text-sm sm:text-lg font-bold tracking-wider text-starlight">
+                                <div id="receipt-store-title" class="text-sm sm:text-lg font-bold tracking-wider text-starlight">
                                     INFORMATIKA MART // SEM-01
                                 </div>
                                 <div id="receipt-branch" class="text-[10px] sm:text-[11px] text-mutedLavender mt-0.5">
@@ -1382,12 +1382,12 @@
             <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
                 <div class="inline-flex items-center gap-2 font-mono text-[11px] sm:text-xs text-electricCyan uppercase tracking-widest mb-1.5 sm:mb-2">
                     <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f381/512.webp" alt="🎁" class="noto-3d w-4 h-4" onerror="this.outerHTML='<span>🎁</span>'">
-                    <span>// 03. MINI QUEST BERHADIAH</span>
+                    <span id="quest-tag-text">// 03. MINI QUEST BERHADIAH</span>
                 </div>
-                <h2 class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight">
+                <h2 id="quest-title-text" class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight">
                     Zizuy's Quest: Road to Lv.19
                 </h2>
-                <p class="text-xs sm:text-base text-mutedLavender mt-2 leading-relaxed">
+                <p id="quest-subtitle-text" class="text-xs sm:text-base text-mutedLavender mt-2 leading-relaxed">
                     Selesaikan 3 babak singkat seputar keseharian kita buat membuka <strong class="text-starlight">Reward Voucher Asli</strong> yang bisa kamu klaim kapan aja!
                 </p>
             </div>
@@ -1408,11 +1408,11 @@
                             </div>
                             <div>
                                 <div class="flex items-center gap-2">
-                                    <span class="font-display font-bold text-sm sm:text-lg text-starlight">Azizah Nazwa (Zizuy)</span>
-                                    <span class="font-mono text-[10px] sm:text-[11px] px-2 py-0.5 rounded bg-cyberRose/20 text-cyberRose border border-cyberRose/30">Lv. 19</span>
+                                    <span id="quest-char-name" class="font-display font-bold text-sm sm:text-lg text-starlight">Azizah Nazwa (Zizuy)</span>
+                                    <span id="quest-char-lv" class="font-mono text-[10px] sm:text-[11px] px-2 py-0.5 rounded bg-cyberRose/20 text-cyberRose border border-cyberRose/30">Lv. 19</span>
                                 </div>
                                 <p class="font-mono text-[11px] sm:text-xs text-mutedLavender mt-0.5">
-                                    Class: <span class="text-electricCyan">S1 Informatika '26</span> • Buff: <span class="text-starlight">Bikin Nyaman +100</span>
+                                    <span id="quest-char-class-wrap">Class: <span id="quest-char-class" class="text-electricCyan">S1 Informatika '26</span></span><span id="quest-char-divider"> • </span><span id="quest-char-buff-wrap">Buff: <span id="quest-char-buff" class="text-starlight">Bikin Nyaman +100</span></span>
                                 </p>
                             </div>
                         </div>
@@ -1480,10 +1480,10 @@
 
                         <!-- Title -->
                         <div class="mb-4">
-                            <h2 class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-1.5">
+                            <h2 id="wishlist-heading-title" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-1.5">
                                 Catatan Harapan &amp; Evaluasi Diri <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
                             </h2>
-                            <p class="font-mono text-[11px] sm:text-xs text-mutedLavender">
+                            <p id="wishlist-heading-sub" class="font-mono text-[11px] sm:text-xs text-mutedLavender">
                                 Lembar catatan bebas untuk kamu tulis sendiri: harapan masa depan, target umur 19, dan apa aja yang ingin kamu revisi dari sebelumnya ✨
                             </p>
                         </div>
@@ -1593,10 +1593,10 @@
 
                         <!-- Greeting -->
                         <div class="mb-5 sm:mb-6">
-                            <h2 class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-2">
+                            <h2 id="romance-letter-title" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-2">
                                 Hai, Azizah Nazwa Novita <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
                             </h2>
-                            <p class="font-mono text-[11px] sm:text-xs text-mutedLavender">
+                            <p id="romance-letter-subtitle" class="font-mono text-[11px] sm:text-xs text-mutedLavender">
                                 Ditulis khusus dan tulus dari hati untuk merayakan awal usia 19 tahunmu ✨
                             </p>
                         </div>
@@ -1620,10 +1620,10 @@
                         <!-- Handwritten Closing Footer (Revealed alongside final paragraph) -->
                         <div id="romance-closing-footer" class="hidden mt-8 pt-5 border-t border-dashed border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div>
-                                <p class="font-hand text-xl sm:text-2xl text-cyberRose leading-tight -rotate-1">
+                                <p id="romance-closing-quote" class="font-hand text-xl sm:text-2xl text-cyberRose leading-tight -rotate-1">
                                     "Selalu ada buat kamu, kemarin, hari ini, dan besok~"
                                 </p>
-                                <p class="font-mono text-[11px] sm:text-xs text-mutedLavender mt-1">
+                                <p id="romance-closing-author" class="font-mono text-[11px] sm:text-xs text-mutedLavender mt-1">
                                     — Dari Penoyy yang selalu sayang Zizuy (23 November 2026)
                                 </p>
                             </div>
@@ -3104,12 +3104,15 @@
             romance: {
                 id: 'romance',
                 name: 'Mode Romance',
+                gateLateBtnText: 'yahh sayangg udah lewat jam nya klik disini yachh',
+                gateClickHereBtnText: 'Click Here Yaa Cantiik',
+                countdownNote: 'Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!',
                 statusPill: 'STATUS_HATI: PRIORITAS_UTAMA // AZIZAH NAZWA NOVITA (ZIZUY) V19.0 💕',
                 heroDesc: 'Sebuah persembahan kecil yang sengaja dirancang khusus untuk merayakan seseorang yang bener-bener spesial. Selamat ulang tahun ke-19, Azizah Nazwa Novita (Zizuy). Semoga perjalanan babak ke-19 kamu dipenuhi kebahagiaan manis, tawa yang lepas, dan sejuta momen indah.',
                 codeTitle: '// romance_status.cpp',
                 codeSnippet: `// Babak 19: Kebahagiaan & Rasa Sayang Tanpa Batas
-#include &lt;iostream&gt;
-#include &lt;string&gt;
+#include <iostream>
+#include <string>
 
 int main() {
     std::string manusiaFavorit = "Azizah Nazwa Novita (Zizuy)";
@@ -3117,8 +3120,8 @@ int main() {
     bool selaluSpesial = true;
     
     while (selaluSpesial) {
-        std::cout &lt;&lt; "Happy 19th Birthday buat orang yang selalu bikin hari-hariku jauh lebih bermakna! 💕" &lt;&lt; std::endl;
-        std::cout &lt;&lt; "Semoga senyum manismu selalu bersinar lebih terang dari bintang apapun." &lt;&lt; std::endl;
+        std::cout << "Happy 19th Birthday buat orang yang selalu bikin hari-hariku jauh lebih bermakna! 💕" << std::endl;
+        std::cout << "Semoga senyum manismu selalu bersinar lebih terang dari bintang apapun." << std::endl;
         break;
     }
     return 0;
@@ -3129,6 +3132,10 @@ int main() {
                     'Notice: Semoga setiap impian dan doa baikmu dikabulkan Tuhan satu per satu.',
                     'Prioritas Utama: Semoga Zizuy jadi orang paling bahagia di dunia!'
                 ],
+                scrapbookTag: '// 02. STATISTIK SEMESTER 1 & SCRAPBOOK',
+                scrapbookTitle: 'Struk Main & Scrapbook Kita',
+                scrapbookSubtitle: 'Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.',
+                receiptStoreTitle: 'INFORMATIKA MART // SEM-01',
                 receiptBranch: 'INFORMATIKA MART // CABANG HATI SPESIAL',
                 receiptCustomer: 'Azizah Nazwa Novita (Zizuy Tersayang)',
                 receiptCashier: 'Penoyy (Yang Selalu Ada Buat Kamu)',
@@ -3170,6 +3177,13 @@ int main() {
                         quote: '"Selamat bertambah usia, manusia favoritku. Semoga aku selalu punya tempat buat nemenin kamu di babak-babak berikutnya."'
                     }
                 ],
+                questTag: '// 03. MINI QUEST BERHADIAH',
+                questTitle: "Zizuy's Quest: Road to Lv.19",
+                questSubtitle: 'Selesaikan 3 babak singkat seputar keseharian kita buat membuka Reward Voucher Asli yang bisa kamu klaim kapan aja!',
+                questCharName: 'Azizah Nazwa (Zizuy)',
+                questCharLevel: 'Lv. 19',
+                questCharClass: "S1 Informatika '26",
+                questCharBuff: 'Bikin Nyaman +100',
                 quest: {
                     stage1: {
                         tag: 'STAGE 1 // PERASAAN DI AWAL UMUR 19',
@@ -3240,26 +3254,30 @@ int main() {
                 letter: {
                     fileLabel: 'SURAT_UNTUK_ZIZUY_ROMANCE_V19.TXT',
                     dateLabel: '23 November 2026 // Edisi Spesial Cinta',
+                    title: 'Hai, Azizah Nazwa Novita Zizuy!',
+                    subtitle: 'Ditulis khusus dan tulus dari hati untuk merayakan awal usia 19 tahunmu ✨',
                     paragraphs: [
                         'Selamat ulang tahun yang ke-19 ya, Azizah Nazwa Novita. Rasanya baru kemarin kita mulai kenal dan adaptasi di kampus, tapi sekarang kamu udah resmi menginjak usia 19 tahun. Waktu emang jalan cepet, tapi setiap detik yang dilewatin bareng kamu selalu ninggalin kesan yang nggak gampang dilupain.',
                         'Di antara tumpukan tugas koding, laprak yang padat, dan pusingnya materi kuliah, punya kamu di hari-hari belakangan ini tuh bener-bener kayak oasis. Makasih ya udah selalu hadir dengan senyum manismu yang nular, tawa kamu yang renyah, dan caramu yang selalu bikin aku ngerasa nyaman dan dihargai.',
                         'Mungkin aku nggak selalu jago merangkai kata-kata puitis, tapi web kecil ini adalah caraku buat nunjukin kalau keberadaanmu di hidupku itu beneran spesial dan berarti banget. Kamu itu orang yang luar biasa, baik hatinya, dan pantas dapetin semua kebahagiaan terbaik di dunia ini.',
                         'Di umur 19 ini, doaku buat kamu nggak akan pernah putus: semoga kamu selalu sehat, selalu bahagia, dimudahkan setiap urusannya, dijauhin dari hal-hal yang bikin sedih, dan semoga aku selalu dikasih kesempatan buat nemenin langkahmu ke depan. Happy 19th Birthday, my favorite person! 💕✨'
                     ],
-                    saltingIcon: '♥',
-                    saltingLabel: 'Kirim Sayang',
-                    toastMsg: 'Rasa sayang tulus terkirim buat Zizuy tersayang! 💕'
+                    closingQuote: '"Selalu ada buat kamu, kemarin, hari ini, dan besok~"',
+                    closingSignature: '— Dari Penoyy yang selalu sayang Zizuy (23 November 2026)'
                 }
             },
             friend: {
                 id: 'friend',
                 name: 'Mode Bestie Santai',
+                gateLateBtnText: 'yahh udah lewat jam nya, klik disini yuk!',
+                gateClickHereBtnText: 'Click Here Zuy!',
+                countdownNote: 'Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!',
                 statusPill: 'SYSTEM_STATE: BESTIE_MODE_ACTIVE // AZIZAH NAZWA NOVITA (ZIZUY) V19.0',
                 heroDesc: 'Selamat ulang tahun ke-19, Zizuy! Mode santai sesama pejuang S1 Informatika. Nggak ada drama, no alay-alay, cuma doa tulus biar laprak lancar, kodingan nggak error, dan makin sukses di umur 19!',
                 codeTitle: '// bestie_logic.cpp',
                 codeSnippet: `// Mode Bestie Seperjuangan S1 Informatika
-#include &lt;iostream&gt;
-#include &lt;string&gt;
+#include <iostream>
+#include <string>
 
 int main() {
     std::string nama = "Zizuy (Azizah Nazwa Novita)";
@@ -3267,8 +3285,8 @@ int main() {
     bool statusTemenDekat = true;
     
     if (statusTemenDekat) {
-        std::cout &lt;&lt; "HBD Zizuy ke-19! Sehat selalu &amp; sukses terus bro!" &lt;&lt; std::endl;
-        std::cout &lt;&lt; "Semoga semester ini IPK aman &amp; laprak kelar tepat waktu!" &lt;&lt; std::endl;
+        std::cout << "HBD Zizuy ke-19! Sehat selalu & sukses terus bro!" << std::endl;
+        std::cout << "Semoga semester ini IPK aman & laprak kelar tepat waktu!" << std::endl;
     }
     return 0;
 }`,
@@ -3278,6 +3296,10 @@ int main() {
                     'Build Success: Tingkat kekompakan nugas & jajan = 100%!',
                     'Process Priority: Doa terbaik buat Zizuy di umur 19 tahun!'
                 ],
+                scrapbookTag: '// 02. STATISTIK SEMESTER 1 & SCRAPBOOK',
+                scrapbookTitle: 'Struk Main & Scrapbook Kita',
+                scrapbookSubtitle: 'Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.',
+                receiptStoreTitle: 'INFORMATIKA MART // SEM-01',
                 receiptBranch: 'WARUNG BESTIE // CABANG TEKNIK INFORMATIKA',
                 receiptCustomer: 'Zizuy (Temen Deket Seperjuangan)',
                 receiptCashier: 'Penoyy (Temen Nugas)',
@@ -3319,6 +3341,13 @@ int main() {
                         quote: '"Udah 19 tahun nih Zuy, semoga makin pintar, makin santai, dan tugas-tugas kuliah lancar jaya!"'
                     }
                 ],
+                questTag: '// 03. MINI QUEST BERHADIAH',
+                questTitle: "Zizuy's Quest: Road to Lv.19",
+                questSubtitle: 'Selesaikan 3 babak singkat seputar keseharian kita buat membuka Reward Voucher Asli yang bisa kamu klaim kapan aja!',
+                questCharName: 'Azizah Nazwa (Zizuy)',
+                questCharLevel: 'Lv. 19',
+                questCharClass: "S1 Informatika '26",
+                questCharBuff: 'Solid & Anti Baper +100',
                 quest: {
                     stage1: {
                         tag: 'STAGE 1 // DRAMA S1 INFORMATIKA SEMESTER 1',
@@ -3386,23 +3415,11 @@ int main() {
                         }
                     ]
                 },
-                letter: {
-                    fileLabel: 'SURAT_UNTUK_ZIZUY_FRIEND_V19.TXT',
-                    dateLabel: '16 November 2026 // Edisi Temen Deket',
-                    paragraphs: [
-                        'Yo Zizuy! Selamat ulang tahun yang ke-19 ya! Akhirnya nyentuh angka 19 juga. Nggak kerasa ya dari awal masuk kuliah sampai sekarang udah semester 1 hampir lewat bareng-bareng.',
-                        'Jujur seru banget punya temen deket kayak lu di kampus. Kuliah Informatika yang isinya kodingan sama tugas laprak jadi jauh lebih santai dan nggak bikin stres karena ada temen ngobrol dan ketawa bareng.',
-                        'Makasih ya udah jadi temen yang asik, nggak ribet, dan selalu seru diajak ngobrol atau muter-muter nyari makan pas jam kosong. Temenan sama lu tuh bener-bener santai tanpa ada drama.',
-                        'Di umur 19 ini, doa gua simpel tapi penting: semoga lu sehat selalu, makin jago kuliahnya, tugas-tugas lancar, dijauhin dari error kodingan di malam hari, dan semua yang lu cita-citakan bisa tercapai. Pokoknya sukses terus buat lu, Zuy! Happy 19th Birthday! 👊✨'
-                    ],
-                    saltingIcon: '👥',
-                    saltingLabel: 'Mood Bestie Solid',
-                    toastMsg: 'Semangat bestie terkirim buat Zizuy! 👊'
-                }
+                wishlistTitle: 'Catatan Harapan & Evaluasi Diri Zizuy!',
+                wishlistSubtitle: 'Lembar catatan bebas untuk kamu tulis sendiri: harapan masa depan, target umur 19, dan apa aja yang ingin kamu revisi dari sebelumnya ✨'
             }
         };
 
-        // Clone default into active CONTENT_MODES and restore overrides if present
         let CONTENT_MODES = JSON.parse(JSON.stringify(DEFAULT_CONTENT_MODES));
         try {
             const savedCustom = localStorage.getItem('zizuy_custom_content');
@@ -3566,6 +3583,17 @@ int main() {
 
             const data = CONTENT_MODES[mode];
 
+            function updateTextOrHide(id, text) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (!text || String(text).trim() === '') {
+                    el.classList.add('hidden');
+                } else {
+                    el.classList.remove('hidden');
+                    el.textContent = text;
+                }
+            }
+
             // 1. Update Navbar Button
             const navBtn = document.getElementById('toggle-mode-btn');
             if (navBtn) {
@@ -3591,46 +3619,47 @@ int main() {
                 }
             }
 
-            // 3. Update Hero Section Text & Code
-            const pill = document.getElementById('hero-status-pill-text');
-            if (pill) pill.textContent = data.statusPill;
+            // 3. Countdown & Gate Buttons
+            updateTextOrHide('gate-late-btn-text', data.gateLateBtnText);
+            updateTextOrHide('run-exe-btn-text', data.gateClickHereBtnText);
+            updateTextOrHide('countdown-note-text', data.countdownNote);
 
-            const desc = document.getElementById('hero-description');
-            if (desc) desc.textContent = data.heroDesc;
-
-            const codeTitle = document.getElementById('code-card-title');
-            if (codeTitle) codeTitle.textContent = data.codeTitle;
+            // 4. Update Hero Section Text & Code
+            updateTextOrHide('hero-status-pill-text', data.statusPill);
+            updateTextOrHide('hero-description', data.heroDesc);
+            updateTextOrHide('code-card-title', data.codeTitle);
 
             const codeBox = document.getElementById('code-snippet-box');
             if (codeBox) codeBox.innerHTML = `<code>${data.codeSnippet}</code>`;
 
             const outTxt = document.getElementById('compile-output-text');
-            if (outTxt) outTxt.textContent = data.jokes[0];
+            if (outTxt && data.jokes && data.jokes.length > 0) outTxt.textContent = data.jokes[0];
 
-            // 4. Update Receipt Section
-            const rBranch = document.getElementById('receipt-branch');
-            if (rBranch) rBranch.textContent = data.receiptBranch;
-
-            const rCust = document.getElementById('receipt-customer');
-            if (rCust) rCust.textContent = data.receiptCustomer;
-
-            const rCash = document.getElementById('receipt-cashier');
-            if (rCash) rCash.textContent = data.receiptCashier;
+            // 5. Update Scrapbook & Receipt Section
+            updateTextOrHide('scrapbook-tag', data.scrapbookTag);
+            updateTextOrHide('scrapbook-title', data.scrapbookTitle);
+            updateTextOrHide('scrapbook-subtitle', data.scrapbookSubtitle);
+            updateTextOrHide('receipt-store-title', data.receiptStoreTitle);
+            updateTextOrHide('receipt-branch', data.receiptBranch);
+            updateTextOrHide('receipt-customer', data.receiptCustomer);
+            updateTextOrHide('receipt-cashier', data.receiptCashier);
+            updateTextOrHide('receipt-footer-text', data.receiptFooter);
 
             const itemsContainer = document.getElementById('receipt-items-container');
             if (itemsContainer) {
-                itemsContainer.innerHTML = data.receiptItems.map(item => `
+                const validItems = (data.receiptItems || []).filter(item => item.name && item.name.trim() !== '');
+                itemsContainer.innerHTML = validItems.map(item => `
                     <div class="flex items-start justify-between text-xs sm:text-sm gap-2">
                         <span class="text-starlight/90">${item.name}</span>
-                        <span class="font-mono ${item.price === 'PRICELESS' || item.price === 'PERMANEN' ? 'text-cyberRose font-bold' : (item.price === 'COMPLIMENTARY' || item.price === 'LUNAS' ? 'text-electricCyan font-bold' : 'text-starlight')} shrink-0">${item.price}</span>
+                        <span class="font-mono ${item.price === 'PRICELESS' || item.price === 'PERMANEN' ? 'text-cyberRose font-bold' : (item.price === 'COMPLIMENTARY' || item.price === 'LUNAS' ? 'text-electricCyan font-bold' : 'text-starlight')} shrink-0">${item.price || ''}</span>
                     </div>
-                    <div class="text-[10px] sm:text-xs text-mutedLavender font-mono -mt-1 sm:-mt-1.5">${item.qty}</div>
+                    ${item.qty ? `<div class="text-[10px] sm:text-xs text-mutedLavender font-mono -mt-1 sm:-mt-1.5">${item.qty}</div>` : ''}
                 `).join('');
             }
 
             const totalsContainer = document.getElementById('receipt-totals-container');
             if (totalsContainer) {
-                totalsContainer.innerHTML = data.receiptTotals.map(t => `
+                totalsContainer.innerHTML = (data.receiptTotals || []).map(t => `
                     <div class="flex justify-between ${t.highlight ? 'text-sm sm:text-base font-bold text-starlight pt-2 border-t border-dashed border-white/20' : 'text-mutedLavender'}">
                         <span>${t.label}</span>
                         <span class="font-mono ${t.highlight ? (mode === 'friend' ? 'text-electricCyan' : 'text-cyberRose') : 'text-starlight'}">${t.val}</span>
@@ -3639,49 +3668,69 @@ int main() {
             }
 
             const stampEl = document.getElementById('receipt-stamp');
-            if (stampEl) stampEl.textContent = data.stamps[0];
+            if (stampEl && data.stamps && data.stamps.length > 0) stampEl.textContent = data.stamps[0];
 
-            const rFoot = document.getElementById('receipt-footer-text');
-            if (rFoot) rFoot.textContent = data.receiptFooter;
-
-            // 5. Update Polaroids
-            data.polaroids.forEach((p, idx) => {
+            // 6. Update Polaroids
+            (data.polaroids || []).forEach((p, idx) => {
                 const num = idx + 1;
-                const b = document.getElementById(`pol-badge-${num}`);
-                const t = document.getElementById(`pol-title-${num}`);
-                const s = document.getElementById(`pol-sub-${num}`);
-                const q = document.getElementById(`pol-quote-${num}`);
-                if (b) b.textContent = p.badge;
-                if (t) t.textContent = p.title;
-                if (s) s.textContent = p.sub;
-                if (q) q.textContent = p.quote;
+                updateTextOrHide(`pol-badge-${num}`, p.badge);
+                updateTextOrHide(`pol-title-${num}`, p.title);
+                updateTextOrHide(`pol-sub-${num}`, p.sub);
+                updateTextOrHide(`pol-quote-${num}`, p.quote);
             });
 
-            // 6. Update Quest
+            // 7. Update Quest HUD & Titles
+            updateTextOrHide('quest-tag-text', data.questTag);
+            updateTextOrHide('quest-title-text', data.questTitle);
+            updateTextOrHide('quest-subtitle-text', data.questSubtitle);
+            updateTextOrHide('quest-char-name', data.questCharName);
+            updateTextOrHide('quest-char-lv', data.questCharLevel);
+            updateTextOrHide('quest-char-class', data.questCharClass);
+
+            const buffWrap = document.getElementById('quest-char-buff-wrap');
+            const buffDivider = document.getElementById('quest-char-divider');
+            const buffEl = document.getElementById('quest-char-buff');
+            if (buffWrap && buffEl) {
+                if (!data.questCharBuff || data.questCharBuff.trim() === '') {
+                    buffWrap.classList.add('hidden');
+                    if (buffDivider) buffDivider.classList.add('hidden');
+                } else {
+                    buffWrap.classList.remove('hidden');
+                    if (buffDivider) buffDivider.classList.remove('hidden');
+                    buffEl.textContent = data.questCharBuff;
+                }
+            }
+
             questData = data.quest;
             questState = { stage: 1, ans1: null, ans2: null, selectedReward: null };
             renderQuestStage();
 
-            // 7. Section 4 Dual View Toggle:
-            // Mode Bestie: Zizuy mengisi lembar harapan & evaluasi diri sendiri (Mini Word)
-            // Mode Romance: Surat romantis manis yang diisi oleh Penoyy untuk Zizuy
+            // 8. Section 4 Dual View Toggle
             const friendView = document.getElementById('section4-friend-view');
             const romanceView = document.getElementById('section4-romance-view');
             if (mode === 'friend') {
                 if (friendView) friendView.classList.remove('hidden');
                 if (romanceView) romanceView.classList.add('hidden');
+                updateTextOrHide('wishlist-heading-title', data.wishlistTitle);
+                updateTextOrHide('wishlist-heading-sub', data.wishlistSubtitle);
                 initWishlistEditor();
             } else {
                 if (friendView) friendView.classList.add('hidden');
                 if (romanceView) romanceView.classList.remove('hidden');
+                if (data.letter) {
+                    updateTextOrHide('romance-letter-title', data.letter.title);
+                    updateTextOrHide('romance-letter-subtitle', data.letter.subtitle);
+                    updateTextOrHide('romance-closing-quote', data.letter.closingQuote);
+                    updateTextOrHide('romance-closing-author', data.letter.closingSignature);
+                }
                 initRomanceLetter();
             }
             applyPolaroidPhotos();
 
-            // 8. Notifications
+            // 9. Notifications
             if (showNotification) {
                 playCyberTone(mode === 'friend' ? 523.25 : 659.25, 'sine', 0.15);
-                showToast(mode === 'friend' ? 'Beralih ke Mode Bestie Santai (No Alay/No Drama) 👥' : 'Beralih ke Mode Romance Aesthetic 💕');
+                showToast(mode === 'friend' ? 'Beralih ke Mode Bestie Santai 👥' : 'Beralih ke Mode Romance Aesthetic 💕');
             }
         }
 
@@ -3738,14 +3787,14 @@ int main() {
             }
         };
 
-        window.switchEditorTab = function(targetMode) {
-            editorTargetMode = targetMode;
+        window.switchEditorTab = function(mode) {
+            editorTargetMode = mode;
             const tabRomance = document.getElementById('editor-tab-romance');
             const tabFriend = document.getElementById('editor-tab-friend');
             const badge = document.getElementById('editor-active-target-badge');
 
             if (tabRomance && tabFriend) {
-                if (targetMode === 'romance') {
+                if (mode === 'romance') {
                     tabRomance.className = 'px-2.5 sm:px-3 py-1 rounded-lg font-mono text-xs font-bold transition-all bg-cyberRose/30 text-white border border-cyberRose/50 shadow-[0_0_10px_rgba(255,42,133,0.3)]';
                     tabFriend.className = 'px-2.5 sm:px-3 py-1 rounded-lg font-mono text-xs font-medium text-mutedLavender hover:text-starlight hover:bg-white/5 transition-all';
                     if (badge) badge.textContent = 'Target: Mode Romance Aktif';
@@ -3756,6 +3805,16 @@ int main() {
                 }
             }
             renderEditorForm();
+        };
+
+        // Quick helper to empty an input field in the editor
+        window.clearEditorField = function(elementId) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.value = '';
+                el.focus();
+                showToast('Teks dikosongkan. Klik "Simpan & Terapkan" untuk menghilangkannya dari tampilan! ✨');
+            }
         };
 
         function renderEditorForm() {
@@ -3772,35 +3831,99 @@ int main() {
             const targetPhotos = (customPhotos && customPhotos[editorTargetMode]) || { photo1: '', photo2: '', photo3: '' };
 
             container.innerHTML = `
-                <!-- Mode Badge Notification in Editor -->
-                <div class="flex items-center justify-between p-3 rounded-xl ${isRomance ? 'bg-cyberRose/15 border border-cyberRose/40 text-cyberRose' : 'bg-electricCyan/15 border border-electricCyan/40 text-electricCyan'} font-mono text-xs">
-                    <span class="flex items-center gap-2">
-                        <span>${isRomance ? '💕' : '👥'}</span>
-                        <span>Kamu sedang mengedit: <strong class="uppercase">${isRomance ? 'Mode Romance' : 'Mode Bestie'}</strong></span>
-                    </span>
-                    <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded">Perubahan tersimpan khusus untuk mode ini</span>
+                <!-- Mode Badge Notification & Visual Live Edit Launcher -->
+                <div class="space-y-3">
+                    <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl ${isRomance ? 'bg-cyberRose/15 border border-cyberRose/40 text-cyberRose' : 'bg-electricCyan/15 border border-electricCyan/40 text-electricCyan'} font-mono text-xs">
+                        <span class="flex items-center gap-2">
+                            <span>${isRomance ? '💕' : '👥'}</span>
+                            <span>Target: <strong class="uppercase">${isRomance ? 'Mode Romance' : 'Mode Bestie'}</strong></span>
+                        </span>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded">Tersimpan khusus untuk mode ini</span>
+                    </div>
+
+                    <!-- Direct Visual Live Edit Button -->
+                    <button type="button" onclick="startVisualLiveEdit()" class="w-full py-2.5 px-3 sm:px-4 rounded-xl bg-gradient-to-r from-electricCyan/20 via-nebulaViolet/20 to-cyberRose/20 hover:from-electricCyan/30 hover:to-cyberRose/30 border border-electricCyan/40 text-starlight font-mono text-xs flex items-center justify-between gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer shadow-sm">
+                        <span class="flex items-center gap-2 text-left">
+                            <span class="text-base shrink-0">✏️</span>
+                            <span>
+                                <strong class="text-white block sm:inline">Mode Edit Visual Langsung:</strong>
+                                <span class="text-mutedLavender text-[11px] block sm:inline sm:ml-1">Klik teks mana saja di layar untuk edit/hapus langsung!</span>
+                            </span>
+                        </span>
+                        <span class="px-2.5 py-1 rounded-lg bg-electricCyan/20 text-electricCyan font-bold text-[10px] shrink-0 border border-electricCyan/30">
+                            Aktifkan ↗
+                        </span>
+                    </button>
+
+                    <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 font-mono text-[11px] text-mutedLavender flex items-start gap-2">
+                        <span class="text-amber-400 shrink-0">💡</span>
+                        <span><strong>Tips Hapus Teks Alay/Berlebihan:</strong> Cukup kosongkan kotak teks atau klik tombol <em>[✕ Kosongkan]</em>. Teks tersebut otomatis hilang dan tidak akan muncul lagi di website!</span>
+                    </div>
                 </div>
 
-                <!-- 1. Hero & Header Words + Output Kata Kompilasi -->
+                <!-- 1. Countdown & Gate Buttons -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                        <span class="font-mono text-xs font-bold text-electricCyan uppercase">★ 1. Hero, Status &amp; Output Kata Kompilasi</span>
+                        <span class="font-mono text-xs font-bold text-starlight uppercase">★ 1. Tombol Countdown &amp; Jam Lewat</span>
+                        <span class="font-mono text-[10px] text-mutedLavender">Teks tombol masuk</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Teks Tombol Lewat Jam (Countdown Habis)</label>
+                                <button type="button" onclick="clearEditorField('edit-gateLateBtnText')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
+                            <input id="edit-gateLateBtnText" type="text" value="${escapeEditorHtml(data.gateLateBtnText || '')}" 
+                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Teks Tombol 3D Masuk (Click Here)</label>
+                                <button type="button" onclick="clearEditorField('edit-gateClickHereBtnText')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
+                            <input id="edit-gateClickHereBtnText" type="text" value="${escapeEditorHtml(data.gateClickHereBtnText || '')}" 
+                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Teks Catatan Countdown (Mode Plus)</label>
+                                <button type="button" onclick="clearEditorField('edit-countdownNote')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
+                            <textarea id="edit-countdownNote" rows="2" 
+                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">${escapeEditorHtml(data.countdownNote || '')}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Hero & Output Kata Kompilasi -->
+                <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
+                    <div class="flex items-center justify-between pb-2 border-b border-white/10">
+                        <span class="font-mono text-xs font-bold text-electricCyan uppercase">★ 2. Hero, Status &amp; Output Kata Kompilasi</span>
                         <span class="font-mono text-[10px] text-mutedLavender">Teks pembuka &amp; respon kode</span>
                     </div>
                     <div class="space-y-3">
                         <div>
-                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Status Pill Header</label>
-                            <input id="edit-statusPill" type="text" value="${escapeEditorHtml(data.statusPill)}" 
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Status Pill Header</label>
+                                <button type="button" onclick="clearEditorField('edit-statusPill')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
+                            <input id="edit-statusPill" type="text" value="${escapeEditorHtml(data.statusPill || '')}" 
                                 class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs sm:text-sm font-mono text-starlight focus:outline-none transition-colors">
                         </div>
                         <div>
-                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Deskripsi Hero</label>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Deskripsi Hero</label>
+                                <button type="button" onclick="clearEditorField('edit-heroDesc')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
                             <textarea id="edit-heroDesc" rows="3" 
-                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs sm:text-sm text-starlight leading-relaxed focus:outline-none transition-colors">${escapeEditorHtml(data.heroDesc)}</textarea>
+                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs sm:text-sm text-starlight leading-relaxed focus:outline-none transition-colors">${escapeEditorHtml(data.heroDesc || '')}</textarea>
                         </div>
                         <div>
-                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Judul File Kode</label>
-                            <input id="edit-codeTitle" type="text" value="${escapeEditorHtml(data.codeTitle)}" 
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Judul File Kode</label>
+                                <button type="button" onclick="clearEditorField('edit-codeTitle')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
+                            <input id="edit-codeTitle" type="text" value="${escapeEditorHtml(data.codeTitle || '')}" 
                                 class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs font-mono text-starlight focus:outline-none transition-colors">
                         </div>
 
@@ -3808,89 +3931,123 @@ int main() {
                         <div class="space-y-2 p-3 bg-black/40 border border-white/10 rounded-xl">
                             <label class="block font-mono text-[11px] text-electricCyan font-bold">Output Kata Kompilasi (Muncul saat tombol "Jalankan Test -&gt;" diklik):</label>
                             <div class="space-y-1.5">
-                                <div>
-                                    <span class="font-mono text-[10px] text-mutedLavender">Output Kata #1 (Pesan Default Awal):</span>
-                                    <input id="edit-joke-0" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[0]) || '')}" 
-                                        class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
-                                </div>
-                                <div>
-                                    <span class="font-mono text-[10px] text-mutedLavender">Output Kata #2:</span>
-                                    <input id="edit-joke-1" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[1]) || '')}" 
-                                        class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
-                                </div>
-                                <div>
-                                    <span class="font-mono text-[10px] text-mutedLavender">Output Kata #3:</span>
-                                    <input id="edit-joke-2" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[2]) || '')}" 
-                                        class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
-                                </div>
-                                <div>
-                                    <span class="font-mono text-[10px] text-mutedLavender">Output Kata #4:</span>
-                                    <input id="edit-joke-3" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[3]) || '')}" 
-                                        class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
-                                </div>
+                                ${[0, 1, 2, 3].map(j => `
+                                    <div>
+                                        <div class="flex items-center justify-between mb-0.5">
+                                            <span class="font-mono text-[10px] text-mutedLavender">Output Kata #${j + 1}:</span>
+                                            <button type="button" onclick="clearEditorField('edit-joke-${j}')" class="text-[9px] font-mono text-red-400 hover:text-red-300">[✕ Hapus]</button>
+                                        </div>
+                                        <input id="edit-joke-${j}" type="text" value="${escapeEditorHtml((data.jokes && data.jokes[j]) || '')}" 
+                                            class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
+                                    </div>
+                                `).join('')}
                             </div>
                         </div>
 
                         <div>
                             <label class="block font-mono text-[11px] text-mutedLavender mb-1">Kode C++ (Kotak Editor Kodingan)</label>
-                            <textarea id="edit-codeSnippet" rows="6" 
+                            <textarea id="edit-codeSnippet" rows="5" 
                                 class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs font-mono text-starlight leading-relaxed focus:outline-none transition-colors">${escapeEditorHtml(cleanCode)}</textarea>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2. Struk Kasir (Memory Receipt) -->
+                <!-- 3. Struk Kasir (Memory Receipt) -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                        <span class="font-mono text-xs font-bold text-cyberRose uppercase">★ 2. Memory Receipt (Struk Kasir)</span>
+                        <span class="font-mono text-xs font-bold text-cyberRose uppercase">★ 3. Memory Receipt (Struk Kasir)</span>
                         <span class="font-mono text-[10px] text-mutedLavender">Struk belanja memori</span>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Nama Cabang / Branch</label>
-                            <input id="edit-receiptBranch" type="text" value="${escapeEditorHtml(data.receiptBranch)}" 
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Nama Toko / Judul Struk</label>
+                                <button type="button" onclick="clearEditorField('edit-receiptStoreTitle')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
+                            <input id="edit-receiptStoreTitle" type="text" value="${escapeEditorHtml(data.receiptStoreTitle || '')}" 
                                 class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs font-mono text-starlight focus:outline-none transition-colors">
                         </div>
                         <div>
-                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Nama Customer</label>
-                            <input id="edit-receiptCustomer" type="text" value="${escapeEditorHtml(data.receiptCustomer)}" 
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Nama Cabang / Branch</label>
+                                <button type="button" onclick="clearEditorField('edit-receiptBranch')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
+                            <input id="edit-receiptBranch" type="text" value="${escapeEditorHtml(data.receiptBranch || '')}" 
+                                class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs font-mono text-starlight focus:outline-none transition-colors">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Nama Customer</label>
+                                <button type="button" onclick="clearEditorField('edit-receiptCustomer')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
+                            <input id="edit-receiptCustomer" type="text" value="${escapeEditorHtml(data.receiptCustomer || '')}" 
                                 class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none transition-colors">
                         </div>
                         <div>
-                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Nama Kasir</label>
-                            <input id="edit-receiptCashier" type="text" value="${escapeEditorHtml(data.receiptCashier)}" 
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[11px] text-mutedLavender">Nama Kasir</label>
+                                <button type="button" onclick="clearEditorField('edit-receiptCashier')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                            </div>
+                            <input id="edit-receiptCashier" type="text" value="${escapeEditorHtml(data.receiptCashier || '')}" 
                                 class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none transition-colors">
                         </div>
                     </div>
                     <div class="space-y-2 pt-1">
-                        <label class="block font-mono text-[11px] text-mutedLavender">Item Struk (Nama &amp; Harga/Status)</label>
+                        <label class="block font-mono text-[11px] text-mutedLavender">Item Struk (Kosongkan nama item jika ingin menghapusnya):</label>
                         ${(data.receiptItems || []).map((item, idx) => `
                             <div class="grid grid-cols-12 gap-2 items-center">
-                                <input id="edit-item-name-${idx}" type="text" value="${escapeEditorHtml(item.name)}" placeholder="Nama Item"
-                                    class="col-span-8 bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none transition-colors">
-                                <input id="edit-item-price-${idx}" type="text" value="${escapeEditorHtml(item.price)}" placeholder="Status/Harga"
-                                    class="col-span-4 bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-1.5 text-xs font-mono text-cyberRose focus:outline-none transition-colors">
+                                <input id="edit-item-name-${idx}" type="text" value="${escapeEditorHtml(item.name || '')}" placeholder="Nama Item #${idx + 1} (Kosong = Dihapus)"
+                                    class="col-span-7 bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none transition-colors">
+                                <input id="edit-item-price-${idx}" type="text" value="${escapeEditorHtml(item.price || '')}" placeholder="Harga"
+                                    class="col-span-3 bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-2 py-1.5 text-xs font-mono text-cyberRose focus:outline-none transition-colors">
+                                <button type="button" onclick="clearEditorField('edit-item-name-${idx}'); clearEditorField('edit-item-price-${idx}');" class="col-span-2 text-[10px] font-mono text-red-400 hover:text-red-300 bg-red-500/10 py-1.5 rounded-lg border border-red-500/20">Hapus</button>
                             </div>
                         `).join('')}
                     </div>
                     <div>
-                        <label class="block font-mono text-[11px] text-mutedLavender mb-1">Catatan Kaki Struk (Footer Text)</label>
-                        <input id="edit-receiptFooter" type="text" value="${escapeEditorHtml(data.receiptFooter)}" 
+                        <div class="flex items-center justify-between mb-1">
+                            <label class="font-mono text-[11px] text-mutedLavender">Catatan Kaki Struk (Footer Text)</label>
+                            <button type="button" onclick="clearEditorField('edit-receiptFooter')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                        </div>
+                        <input id="edit-receiptFooter" type="text" value="${escapeEditorHtml(data.receiptFooter || '')}" 
                             class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none transition-colors">
                     </div>
                 </div>
 
-                <!-- 3. Polaroid Deck & Foto (KHUSUS MODE INI!) -->
+                <!-- 4. Scrapbook & Polaroid -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-white/10">
                         <div>
-                            <span class="font-mono text-xs font-bold text-starlight uppercase">★ 3. Polaroid Deck &amp; Foto (${isRomance ? 'Mode Romance' : 'Mode Bestie'})</span>
-                            <span class="font-mono text-[10px] text-mutedLavender block sm:inline sm:ml-2">Tersimpan khusus untuk mode ini</span>
+                            <span class="font-mono text-xs font-bold text-starlight uppercase">★ 4. Scrapbook &amp; Foto Polaroid (${isRomance ? 'Mode Romance' : 'Mode Bestie'})</span>
+                            <span class="font-mono text-[10px] text-mutedLavender block sm:inline sm:ml-2">Foto terpisah tiap mode</span>
                         </div>
-                        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40">
-                            Foto Beda Tiap Mode
-                        </span>
                     </div>
+                    <!-- Scrapbook Header Texts -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2 border-b border-white/10">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[10px] text-mutedLavender">Tag Seksi Scrapbook</label>
+                                <button type="button" onclick="clearEditorField('edit-scrapbookTag')" class="text-[9px] font-mono text-red-400">[✕]</button>
+                            </div>
+                            <input id="edit-scrapbookTag" type="text" value="${escapeEditorHtml(data.scrapbookTag || '')}" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[10px] text-mutedLavender">Judul Seksi Scrapbook</label>
+                                <button type="button" onclick="clearEditorField('edit-scrapbookTitle')" class="text-[9px] font-mono text-red-400">[✕]</button>
+                            </div>
+                            <input id="edit-scrapbookTitle" type="text" value="${escapeEditorHtml(data.scrapbookTitle || '')}" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-mono text-[10px] text-mutedLavender">Subjudul Penjelasan Scrapbook</label>
+                                <button type="button" onclick="clearEditorField('edit-scrapbookSubtitle')" class="text-[9px] font-mono text-red-400">[✕]</button>
+                            </div>
+                            <textarea id="edit-scrapbookSubtitle" rows="2" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">${escapeEditorHtml(data.scrapbookSubtitle || '')}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- 3 Polaroid Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
                         ${(data.polaroids || []).map((p, idx) => {
                             const photoNum = idx + 1;
@@ -3903,48 +4060,55 @@ int main() {
                                         ${curPhoto ? `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40">✓ Foto Aktif</span>` : `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-mutedLavender">SVG Bawaan</span>`}
                                     </div>
 
-                                    <!-- Thumbnail Preview Box -->
                                     <div class="relative aspect-[4/3] w-full rounded-lg overflow-hidden bg-black/60 border border-white/15">
                                         <img id="edit-pol-thumb-${photoNum}" src="${curPhoto}" alt="Preview Foto #${photoNum}" class="${curPhoto ? '' : 'hidden'} w-full h-full object-cover">
                                         <div id="edit-pol-thumb-empty-${photoNum}" class="${curPhoto ? 'hidden' : 'flex'} w-full h-full flex-col items-center justify-center p-2 text-center text-mutedLavender">
                                             <span class="text-2xl mb-1">📷</span>
                                             <span class="text-[10px] font-mono">Belum ada foto</span>
-                                            <span class="text-[9px] text-mutedLavender/70">(Menampilkan ilustrasi SVG)</span>
                                         </div>
                                     </div>
 
-                                    <!-- Upload & Photo Input Controls -->
                                     <div class="space-y-1.5">
-                                        <label class="block font-mono text-[10px] text-starlight font-bold">Pilih / Ganti Foto Mode Ini:</label>
                                         <label class="flex items-center justify-center gap-1.5 w-full py-1.5 px-3 rounded-lg bg-electricCyan/15 hover:bg-electricCyan/25 text-electricCyan border border-electricCyan/30 font-mono text-[11px] cursor-pointer transition-colors">
-                                            <span>📁 Upload Foto (${isRomance ? 'Romance' : 'Bestie'})</span>
+                                            <span>📁 Upload Foto #${photoNum}</span>
                                             <input type="file" accept="image/*" class="hidden" onchange="handleEditorPhotoUpload(event, ${photoNum})">
                                         </label>
                                         <input type="text" value="${escapeEditorHtml(!isDataUrl ? curPhoto : '')}" placeholder="Atau paste link URL gambar" onchange="handleEditorPhotoUrl(${photoNum}, this.value)" class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-lg px-2 py-1.5 text-[11px] text-starlight focus:outline-none transition-colors">
                                         ${curPhoto ? `<button type="button" onclick="handleRemovePhoto(${photoNum})" class="w-full py-1 text-[10px] font-mono text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 transition-colors">🗑 Hapus Foto Mode Ini</button>` : ''}
                                     </div>
 
-                                    <!-- Text Caption & Quote -->
                                     <div class="space-y-1.5 pt-2 border-t border-white/10">
                                         <div>
-                                            <label class="block font-mono text-[10px] text-mutedLavender">Badge</label>
-                                            <input id="edit-pol-badge-${idx}" type="text" value="${escapeEditorHtml(p.badge)}" 
+                                            <div class="flex items-center justify-between mb-0.5">
+                                                <label class="font-mono text-[10px] text-mutedLavender">Badge</label>
+                                                <button type="button" onclick="clearEditorField('edit-pol-badge-${idx}')" class="text-[9px] font-mono text-red-400">[✕]</button>
+                                            </div>
+                                            <input id="edit-pol-badge-${idx}" type="text" value="${escapeEditorHtml(p.badge || '')}" 
                                                 class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
                                         </div>
                                         <div>
-                                            <label class="block font-mono text-[10px] text-mutedLavender">Judul</label>
-                                            <input id="edit-pol-title-${idx}" type="text" value="${escapeEditorHtml(p.title)}" 
+                                            <div class="flex items-center justify-between mb-0.5">
+                                                <label class="font-mono text-[10px] text-mutedLavender">Judul</label>
+                                                <button type="button" onclick="clearEditorField('edit-pol-title-${idx}')" class="text-[9px] font-mono text-red-400">[✕]</button>
+                                            </div>
+                                            <input id="edit-pol-title-${idx}" type="text" value="${escapeEditorHtml(p.title || '')}" 
                                                 class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
                                         </div>
                                         <div>
-                                            <label class="block font-mono text-[10px] text-mutedLavender">Subjudul</label>
-                                            <input id="edit-pol-sub-${idx}" type="text" value="${escapeEditorHtml(p.sub)}" 
+                                            <div class="flex items-center justify-between mb-0.5">
+                                                <label class="font-mono text-[10px] text-mutedLavender">Subjudul</label>
+                                                <button type="button" onclick="clearEditorField('edit-pol-sub-${idx}')" class="text-[9px] font-mono text-red-400">[✕]</button>
+                                            </div>
+                                            <input id="edit-pol-sub-${idx}" type="text" value="${escapeEditorHtml(p.sub || '')}" 
                                                 class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
                                         </div>
                                         <div>
-                                            <label class="block font-mono text-[10px] text-mutedLavender">Quote Teks</label>
+                                            <div class="flex items-center justify-between mb-0.5">
+                                                <label class="font-mono text-[10px] text-mutedLavender">Quote Teks</label>
+                                                <button type="button" onclick="clearEditorField('edit-pol-quote-${idx}')" class="text-[9px] font-mono text-red-400">[✕]</button>
+                                            </div>
                                             <textarea id="edit-pol-quote-${idx}" rows="2" 
-                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none leading-snug">${escapeEditorHtml(p.quote)}</textarea>
+                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none leading-snug">${escapeEditorHtml(p.quote || '')}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -3953,11 +4117,46 @@ int main() {
                     </div>
                 </div>
 
-                <!-- 4. Mini Quest Trivia & Output Kata Respon (KHUSUS MODE INI!) -->
+                <!-- 5. Mini Quest Trivia & Output Respon -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                        <span class="font-mono text-xs font-bold text-electricCyan uppercase">★ 4. Mini Quest Trivia &amp; Output Kata Respon</span>
-                        <span class="font-mono text-[10px] text-mutedLavender">Soal &amp; kata respon saat opsi dipilih</span>
+                        <span class="font-mono text-xs font-bold text-electricCyan uppercase">★ 5. Mini Quest Trivia &amp; Profil Karakter</span>
+                        <span class="font-mono text-[10px] text-mutedLavender">Soal, profil, &amp; respon kata</span>
+                    </div>
+
+                    <!-- Quest Header & Profile Info -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-black/40 rounded-xl border border-white/10">
+                        <div>
+                            <label class="block font-mono text-[10px] text-mutedLavender mb-0.5">Tag Seksi Quest</label>
+                            <input id="edit-questTag" type="text" value="${escapeEditorHtml(data.questTag || '')}" class="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono text-[10px] text-mutedLavender mb-0.5">Judul Utama Quest</label>
+                            <input id="edit-questTitle" type="text" value="${escapeEditorHtml(data.questTitle || '')}" class="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block font-mono text-[10px] text-mutedLavender mb-0.5">Subjudul Quest</label>
+                            <textarea id="edit-questSubtitle" rows="2" class="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">${escapeEditorHtml(data.questSubtitle || '')}</textarea>
+                        </div>
+                        <div>
+                            <label class="block font-mono text-[10px] text-mutedLavender mb-0.5">Nama Karakter</label>
+                            <input id="edit-questCharName" type="text" value="${escapeEditorHtml(data.questCharName || '')}" class="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono text-[10px] text-mutedLavender mb-0.5">Level</label>
+                            <input id="edit-questCharLevel" type="text" value="${escapeEditorHtml(data.questCharLevel || '')}" class="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono text-[10px] text-mutedLavender mb-0.5">Class Karakter</label>
+                            <input id="edit-questCharClass" type="text" value="${escapeEditorHtml(data.questCharClass || '')}" class="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-0.5">
+                                <label class="font-mono text-[10px] text-electricCyan font-bold">Buff Karakter (Kosongkan jika alay)</label>
+                                <button type="button" onclick="clearEditorField('edit-questCharBuff')" class="text-[9px] font-mono text-red-400 hover:text-red-300">[✕ Hapus Buff]</button>
+                            </div>
+                            <input id="edit-questCharBuff" type="text" value="${escapeEditorHtml(data.questCharBuff || '')}" placeholder="Contoh: Bikin Nyaman +100 (atau kosongkan)" class="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                        </div>
                     </div>
 
                     <!-- Stage 1 -->
@@ -3975,11 +4174,11 @@ int main() {
                                 <div class="p-2.5 bg-black/60 border border-white/10 rounded-lg space-y-1.5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-5 h-5 rounded bg-cyberRose/20 text-cyberRose font-mono font-bold text-[10px] flex items-center justify-center shrink-0">${opt.id}</span>
-                                        <input id="edit-q-s1-opt-${oIdx}-text" type="text" value="${escapeEditorHtml(opt.text)}" placeholder="Teks Pilihan ${opt.id}" class="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                                        <input id="edit-q-s1-opt-${oIdx}-text" type="text" value="${escapeEditorHtml(opt.text || '')}" placeholder="Teks Pilihan ${opt.id}" class="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
                                     </div>
                                     <div class="pl-7">
                                         <span class="font-mono text-[9px] text-electricCyan block mb-0.5">↳ Output Kata Respon (Kata yang muncul saat opsi ini diklik):</span>
-                                        <input id="edit-q-s1-opt-${oIdx}-react" type="text" value="${escapeEditorHtml(opt.reaction)}" placeholder="Respon kalimat saat Zizuy memilih opsi ${opt.id}" class="w-full bg-black/50 border border-electricCyan/30 rounded-lg px-2.5 py-1 text-[11px] text-electricCyan focus:outline-none">
+                                        <input id="edit-q-s1-opt-${oIdx}-react" type="text" value="${escapeEditorHtml(opt.reaction || '')}" placeholder="Respon kalimat saat Zizuy memilih opsi ${opt.id}" class="w-full bg-black/50 border border-electricCyan/30 rounded-lg px-2.5 py-1 text-[11px] text-electricCyan focus:outline-none">
                                     </div>
                                 </div>
                             `).join('')}
@@ -4001,11 +4200,11 @@ int main() {
                                 <div class="p-2.5 bg-black/60 border border-white/10 rounded-lg space-y-1.5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-5 h-5 rounded bg-electricCyan/20 text-electricCyan font-mono font-bold text-[10px] flex items-center justify-center shrink-0">${opt.id}</span>
-                                        <input id="edit-q-s2-opt-${oIdx}-text" type="text" value="${escapeEditorHtml(opt.text)}" placeholder="Teks Pilihan ${opt.id}" class="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                                        <input id="edit-q-s2-opt-${oIdx}-text" type="text" value="${escapeEditorHtml(opt.text || '')}" placeholder="Teks Pilihan ${opt.id}" class="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
                                     </div>
                                     <div class="pl-7">
                                         <span class="font-mono text-[9px] text-electricCyan block mb-0.5">↳ Output Kata Respon (Kata yang muncul saat opsi ini diklik):</span>
-                                        <input id="edit-q-s2-opt-${oIdx}-react" type="text" value="${escapeEditorHtml(opt.reaction)}" placeholder="Respon kalimat saat Zizuy memilih opsi ${opt.id}" class="w-full bg-black/50 border border-electricCyan/30 rounded-lg px-2.5 py-1 text-[11px] text-electricCyan focus:outline-none">
+                                        <input id="edit-q-s2-opt-${oIdx}-react" type="text" value="${escapeEditorHtml(opt.reaction || '')}" placeholder="Respon kalimat saat Zizuy memilih opsi ${opt.id}" class="w-full bg-black/50 border border-electricCyan/30 rounded-lg px-2.5 py-1 text-[11px] text-electricCyan focus:outline-none">
                                     </div>
                                 </div>
                             `).join('')}
@@ -4019,52 +4218,88 @@ int main() {
                             ${((data.quest && data.quest.rewards) || []).map((rw, idx) => `
                                 <div class="p-3 bg-black/40 border border-white/10 rounded-xl space-y-2">
                                     <span class="font-mono text-[10px] text-cyberRose font-bold">Voucher #${idx + 1}</span>
-                                    <input id="edit-reward-title-${idx}" type="text" value="${escapeEditorHtml(rw.title)}" placeholder="Nama Voucher"
+                                    <input id="edit-reward-title-${idx}" type="text" value="${escapeEditorHtml(rw.title || '')}" placeholder="Nama Voucher"
                                         class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
                                     <textarea id="edit-reward-desc-${idx}" rows="2" placeholder="Deskripsi Klaim Hadiah"
-                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-[11px] text-starlight focus:outline-none leading-snug">${escapeEditorHtml(rw.desc)}</textarea>
+                                        class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-[11px] text-starlight focus:outline-none leading-snug">${escapeEditorHtml(rw.desc || '')}</textarea>
                                 </div>
                             `).join('')}
                         </div>
                     </div>
                 </div>
 
-                <!-- 5. Surat / Catatan Bawah -->
+                <!-- 6. Surat & Lembar Catatan Paling Bawah (Section 4) -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                        <span class="font-mono text-xs font-bold text-cyberRose uppercase">★ 5. ${isRomance ? 'Surat Cinta Spesial dari Penoyy (Mode Romance)' : 'Catatan Harapan & Evaluasi Zizuy (Mode Bestie)'}</span>
-                        <span class="font-mono text-[10px] text-mutedLavender">${isRomance ? 'Muncul bertahap per paragraf' : 'Diisi sendiri oleh Zizuy'}</span>
+                        <span class="font-mono text-xs font-bold text-cyberRose uppercase">★ 6. ${isRomance ? 'Surat Cinta Spesial dari Penoyy (Mode Romance)' : 'Catatan Harapan & Evaluasi Zizuy (Mode Bestie)'}</span>
+                        <span class="font-mono text-[10px] text-mutedLavender">${isRomance ? 'Buka per paragraf' : 'Lembar mandiri Zizuy'}</span>
                     </div>
 
                     ${isRomance ? `
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-mono text-[11px] text-mutedLavender mb-1">Nama File Surat</label>
-                                <input id="edit-letterFile" type="text" value="${escapeEditorHtml(data.letter && data.letter.fileLabel)}" 
+                                <input id="edit-letterFile" type="text" value="${escapeEditorHtml((data.letter && data.letter.fileLabel) || '')}" 
                                     class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs font-mono text-starlight focus:outline-none">
                             </div>
                             <div>
                                 <label class="block font-mono text-[11px] text-mutedLavender mb-1">Label Tanggal</label>
-                                <input id="edit-letterDate" type="text" value="${escapeEditorHtml(data.letter && data.letter.dateLabel)}" 
+                                <input id="edit-letterDate" type="text" value="${escapeEditorHtml((data.letter && data.letter.dateLabel) || '')}" 
+                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Judul Sapaan Surat</label>
+                                <input id="edit-letterTitle" type="text" value="${escapeEditorHtml((data.letter && data.letter.title) || '')}" 
+                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Subjudul Surat</label>
+                                <input id="edit-letterSubtitle" type="text" value="${escapeEditorHtml((data.letter && data.letter.subtitle) || '')}" 
                                     class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
                             </div>
                         </div>
-                        <div class="space-y-2.5 pt-1">
-                            <span class="font-mono text-[11px] text-mutedLavender block">Paragraf Surat (Akan dibuka satu per satu oleh Zizuy saat menekan tombol "Buka Paragraf Selanjutnya"):</span>
+
+                        <div class="space-y-2.5 pt-2 border-t border-white/10">
+                            <span class="font-mono text-[11px] text-mutedLavender block">Paragraf Surat (Terbuka bertahap oleh Zizuy):</span>
                             ${(data.letter && data.letter.paragraphs ? data.letter.paragraphs : []).map((para, idx) => `
                                 <div>
-                                    <label class="block font-mono text-[10px] text-cyberRose mb-0.5">Paragraf #${idx + 1}</label>
+                                    <div class="flex items-center justify-between mb-0.5">
+                                        <label class="font-mono text-[10px] text-cyberRose">Paragraf #${idx + 1}</label>
+                                        <button type="button" onclick="clearEditorField('edit-letter-para-${idx}')" class="text-[9px] font-mono text-red-400">[✕ Kosongkan]</button>
+                                    </div>
                                     <textarea id="edit-letter-para-${idx}" rows="3" 
                                         class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs sm:text-sm text-starlight leading-relaxed focus:outline-none transition-colors">${escapeEditorHtml(para)}</textarea>
                                 </div>
                             `).join('')}
                         </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-white/10">
+                            <div>
+                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Quote Penutup Tanda Tangan</label>
+                                <input id="edit-closingQuote" type="text" value="${escapeEditorHtml((data.letter && data.letter.closingQuote) || '')}" 
+                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Nama Pembuat / Author</label>
+                                <input id="edit-closingAuthor" type="text" value="${escapeEditorHtml((data.letter && data.letter.closingSignature) || '')}" 
+                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
+                            </div>
+                        </div>
                     ` : `
-                        <div class="p-3.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono space-y-1.5 text-starlight/90">
-                            <p class="text-electricCyan font-bold">📝 Mode Bestie Aktif:</p>
-                            <p class="text-mutedLavender leading-relaxed">
-                                Pada Mode Bestie, bagian ini khusus dirancang sebagai <strong>Lembar Catatan Harapan &amp; Evaluasi Diri Zizuy</strong> yang dilengkapi toolbar Mini Word (Bold, Italic, List, Highlighter, dsb). Zizuy dapat langsung mengetik sendiri harapan dan apa yang ingin direvisinya langsung di halaman utama.
-                            </p>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Judul Lembar Harapan &amp; Evaluasi (Mode Bestie)</label>
+                                <input id="edit-wishlistTitle" type="text" value="${escapeEditorHtml(data.wishlistTitle || '')}" 
+                                    class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Subjudul Lembar Harapan</label>
+                                <textarea id="edit-wishlistSubtitle" rows="2" 
+                                    class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">${escapeEditorHtml(data.wishlistSubtitle || '')}</textarea>
+                            </div>
+                            <div class="p-3 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-mutedLavender leading-relaxed">
+                                📝 Isian lembar harapan diketik dan diformat langsung oleh Zizuy di halaman utama menggunakan Mini Word Toolbar (otomatis tersimpan).
+                            </div>
                         </div>
                     `}
                 </div>
@@ -4075,7 +4310,17 @@ int main() {
             const data = CONTENT_MODES[editorTargetMode];
             if (!data) return;
 
-            // 1. Hero & Header & Jokes
+            // 1. Countdown & Gate
+            const elGateLate = document.getElementById('edit-gateLateBtnText');
+            if (elGateLate) data.gateLateBtnText = elGateLate.value;
+
+            const elGateClick = document.getElementById('edit-gateClickHereBtnText');
+            if (elGateClick) data.gateClickHereBtnText = elGateClick.value;
+
+            const elCountNote = document.getElementById('edit-countdownNote');
+            if (elCountNote) data.countdownNote = elCountNote.value;
+
+            // 2. Hero & Header & Jokes
             const elStatus = document.getElementById('edit-statusPill');
             if (elStatus) data.statusPill = elStatus.value;
 
@@ -4085,12 +4330,12 @@ int main() {
             const elCodeTitle = document.getElementById('edit-codeTitle');
             if (elCodeTitle) data.codeTitle = elCodeTitle.value;
 
-            // Save jokes (output kata kompilasi)
+            // Save jokes
             if (!data.jokes) data.jokes = [];
             for (let j = 0; j < 4; j++) {
                 const elJoke = document.getElementById(`edit-joke-${j}`);
-                if (elJoke && elJoke.value.trim()) {
-                    data.jokes[j] = elJoke.value.trim();
+                if (elJoke) {
+                    data.jokes[j] = elJoke.value;
                 }
             }
 
@@ -4102,7 +4347,10 @@ int main() {
                     .replace(/>/g, '&gt;');
             }
 
-            // 2. Receipt
+            // 3. Receipt
+            const elStore = document.getElementById('edit-receiptStoreTitle');
+            if (elStore) data.receiptStoreTitle = elStore.value;
+
             const elBranch = document.getElementById('edit-receiptBranch');
             if (elBranch) data.receiptBranch = elBranch.value;
 
@@ -4124,7 +4372,16 @@ int main() {
             const elFoot = document.getElementById('edit-receiptFooter');
             if (elFoot) data.receiptFooter = elFoot.value;
 
-            // 3. Polaroids text
+            // 4. Scrapbook & Polaroids
+            const elScrapTag = document.getElementById('edit-scrapbookTag');
+            if (elScrapTag) data.scrapbookTag = elScrapTag.value;
+
+            const elScrapTitle = document.getElementById('edit-scrapbookTitle');
+            if (elScrapTitle) data.scrapbookTitle = elScrapTitle.value;
+
+            const elScrapSub = document.getElementById('edit-scrapbookSubtitle');
+            if (elScrapSub) data.scrapbookSubtitle = elScrapSub.value;
+
             if (data.polaroids) {
                 data.polaroids.forEach((p, idx) => {
                     const b = document.getElementById(`edit-pol-badge-${idx}`);
@@ -4138,7 +4395,28 @@ int main() {
                 });
             }
 
-            // 4. Quest Data (Stage 1 & Stage 2 narrative, options & reactions)
+            // 5. Quest Section
+            const elQTag = document.getElementById('edit-questTag');
+            if (elQTag) data.questTag = elQTag.value;
+
+            const elQTitle = document.getElementById('edit-questTitle');
+            if (elQTitle) data.questTitle = elQTitle.value;
+
+            const elQSub = document.getElementById('edit-questSubtitle');
+            if (elQSub) data.questSubtitle = elQSub.value;
+
+            const elQCharName = document.getElementById('edit-questCharName');
+            if (elQCharName) data.questCharName = elQCharName.value;
+
+            const elQCharLv = document.getElementById('edit-questCharLevel');
+            if (elQCharLv) data.questCharLevel = elQCharLv.value;
+
+            const elQCharClass = document.getElementById('edit-questCharClass');
+            if (elQCharClass) data.questCharClass = elQCharClass.value;
+
+            const elQCharBuff = document.getElementById('edit-questCharBuff');
+            if (elQCharBuff) data.questCharBuff = elQCharBuff.value;
+
             if (data.quest) {
                 // Stage 1
                 const s1Tag = document.getElementById('edit-q-s1-tag');
@@ -4183,7 +4461,7 @@ int main() {
                 }
             }
 
-            // 5. Letter (Romance Mode)
+            // 6. Section 4
             if (editorTargetMode === 'romance' && data.letter) {
                 const elLetterFile = document.getElementById('edit-letterFile');
                 if (elLetterFile) data.letter.fileLabel = elLetterFile.value;
@@ -4191,12 +4469,30 @@ int main() {
                 const elLetterDate = document.getElementById('edit-letterDate');
                 if (elLetterDate) data.letter.dateLabel = elLetterDate.value;
 
+                const elLetterTitle = document.getElementById('edit-letterTitle');
+                if (elLetterTitle) data.letter.title = elLetterTitle.value;
+
+                const elLetterSub = document.getElementById('edit-letterSubtitle');
+                if (elLetterSub) data.letter.subtitle = elLetterSub.value;
+
                 if (data.letter.paragraphs) {
                     data.letter.paragraphs.forEach((_, idx) => {
                         const elPara = document.getElementById(`edit-letter-para-${idx}`);
                         if (elPara) data.letter.paragraphs[idx] = elPara.value;
                     });
                 }
+
+                const elQuote = document.getElementById('edit-closingQuote');
+                if (elQuote) data.letter.closingQuote = elQuote.value;
+
+                const elAuthor = document.getElementById('edit-closingAuthor');
+                if (elAuthor) data.letter.closingSignature = elAuthor.value;
+            } else if (editorTargetMode === 'friend') {
+                const elWTitle = document.getElementById('edit-wishlistTitle');
+                if (elWTitle) data.wishlistTitle = elWTitle.value;
+
+                const elWSub = document.getElementById('edit-wishlistSubtitle');
+                if (elWSub) data.wishlistSubtitle = elWSub.value;
             }
 
             // Save custom content to localStorage
@@ -4217,8 +4513,148 @@ int main() {
             saveToCloudFirestore({ content: CONTENT_MODES, photos: customPhotos });
 
             playCyberTone(880, 'triangle', 0.2);
-            showToast('Teks, quest, foto, & output kata berhasil disimpan untuk mode ini! ☁️✨');
+            showToast('Semua teks & pengaturan berhasil disimpan & diterapkan! ☁️✨');
             closeEditorPanel();
+        };
+
+        /* -----------------------------------------------------------------
+           VISUAL LIVE EDIT MODE: KLIK & HAPUS TEKS LANGSUNG DI LAYAR
+           ----------------------------------------------------------------- */
+        let isVisualLiveEditActive = false;
+
+        window.startVisualLiveEdit = function() {
+            closeEditorPanel();
+            if (isVisualLiveEditActive) return;
+            isVisualLiveEditActive = true;
+
+            // Make body editable
+            document.body.contentEditable = 'true';
+            document.body.classList.add('visual-edit-mode-active');
+
+            // Insert floating action bar if not already present
+            let bar = document.getElementById('visual-live-edit-bar');
+            if (!bar) {
+                bar = document.createElement('div');
+                bar.id = 'visual-live-edit-bar';
+                bar.contentEditable = 'false';
+                bar.className = 'fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-[9999] bg-[#120B20]/95 border border-cyberRose/60 shadow-[0_10px_35px_rgba(255,42,133,0.5)] backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl flex items-center gap-3 font-mono text-xs text-white';
+                bar.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyberRose animate-pulse"></span>
+                        <strong class="text-cyberRose font-bold">MODE EDIT VISUAL AKTIF</strong>
+                    </div>
+                    <span class="text-mutedLavender text-[11px] hidden md:inline">| Klik teks mana saja di layar untuk diedit atau dihapus</span>
+                    <button type="button" onclick="saveVisualLiveEdit()" class="px-3.5 py-1.5 bg-gradient-to-r from-cyberRose to-electricCyan text-white font-bold rounded-xl hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md">
+                        💾 Simpan
+                    </button>
+                    <button type="button" onclick="stopVisualLiveEdit()" class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-mutedLavender hover:text-white rounded-xl transition-all cursor-pointer">
+                        ✕ Selesai
+                    </button>
+                `;
+                document.body.appendChild(bar);
+            } else {
+                bar.classList.remove('hidden');
+            }
+
+            showToast('Mode Edit Visual Aktif! Klik tulisan apa saja di layar untuk mengubah atau menghapusnya. ✨');
+            playCyberTone(783.99, 'sine', 0.15);
+        };
+
+        window.stopVisualLiveEdit = function() {
+            isVisualLiveEditActive = false;
+            document.body.contentEditable = 'false';
+            document.body.classList.remove('visual-edit-mode-active');
+            const bar = document.getElementById('visual-live-edit-bar');
+            if (bar) bar.classList.add('hidden');
+            showToast('Mode Edit Visual dimatikan.');
+        };
+
+        window.saveVisualLiveEdit = function() {
+            const data = CONTENT_MODES[currentAppMode];
+            if (data) {
+                const getTxt = (id) => {
+                    const el = document.getElementById(id);
+                    return el ? el.textContent.trim() : null;
+                };
+
+                const lateTxt = getTxt('gate-late-btn-text');
+                if (lateTxt !== null) data.gateLateBtnText = lateTxt;
+
+                const runTxt = getTxt('run-exe-btn-text');
+                if (runTxt !== null) data.gateClickHereBtnText = runTxt;
+
+                const descTxt = getTxt('hero-description');
+                if (descTxt !== null) data.heroDesc = descTxt;
+
+                const pillTxt = getTxt('hero-status-pill-text');
+                if (pillTxt !== null) data.statusPill = pillTxt;
+
+                const codeTitleTxt = getTxt('code-card-title');
+                if (codeTitleTxt !== null) data.codeTitle = codeTitleTxt;
+
+                const scrapTitle = getTxt('scrapbook-title');
+                if (scrapTitle !== null) data.scrapbookTitle = scrapTitle;
+
+                const scrapSub = getTxt('scrapbook-subtitle');
+                if (scrapSub !== null) data.scrapbookSubtitle = scrapSub;
+
+                const rStore = getTxt('receipt-store-title');
+                if (rStore !== null) data.receiptStoreTitle = rStore;
+
+                const rBranch = getTxt('receipt-branch');
+                if (rBranch !== null) data.receiptBranch = rBranch;
+
+                const rCust = getTxt('receipt-customer');
+                if (rCust !== null) data.receiptCustomer = rCust;
+
+                const rCash = getTxt('receipt-cashier');
+                if (rCash !== null) data.receiptCashier = rCash;
+
+                const rFoot = getTxt('receipt-footer-text');
+                if (rFoot !== null) data.receiptFooter = rFoot;
+
+                const qTitle = getTxt('quest-title-text');
+                if (qTitle !== null) data.questTitle = qTitle;
+
+                const qSub = getTxt('quest-subtitle-text');
+                if (qSub !== null) data.questSubtitle = qSub;
+
+                const qName = getTxt('quest-char-name');
+                if (qName !== null) data.questCharName = qName;
+
+                const qBuff = getTxt('quest-char-buff');
+                if (qBuff !== null) data.questCharBuff = qBuff;
+
+                if (currentAppMode === 'romance' && data.letter) {
+                    const lTitle = getTxt('romance-letter-title');
+                    if (lTitle !== null) data.letter.title = lTitle;
+
+                    const lSub = getTxt('romance-letter-subtitle');
+                    if (lSub !== null) data.letter.subtitle = lSub;
+
+                    const lQuote = getTxt('romance-closing-quote');
+                    if (lQuote !== null) data.letter.closingQuote = lQuote;
+
+                    const lAuthor = getTxt('romance-closing-author');
+                    if (lAuthor !== null) data.letter.closingSignature = lAuthor;
+                } else if (currentAppMode === 'friend') {
+                    const wTitle = getTxt('wishlist-heading-title');
+                    if (wTitle !== null) data.wishlistTitle = wTitle;
+
+                    const wSub = getTxt('wishlist-heading-sub');
+                    if (wSub !== null) data.wishlistSubtitle = wSub;
+                }
+
+                try {
+                    localStorage.setItem('zizuy_custom_content', JSON.stringify(CONTENT_MODES));
+                } catch (e) {}
+
+                saveToCloudFirestore({ content: CONTENT_MODES, photos: customPhotos });
+            }
+
+            playCyberTone(880, 'sine', 0.2);
+            showToast('Perubahan teks visual berhasil disimpan ke perangkat & cloud! 💾✨');
+            stopVisualLiveEdit();
         };
 
         window.resetEditorToDefault = function() {
