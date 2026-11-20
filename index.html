@@ -4518,14 +4518,174 @@ int main() {
         };
 
         /* -----------------------------------------------------------------
-           VISUAL LIVE EDIT MODE: KLIK & HAPUS TEKS LANGSUNG DI LAYAR
+           VISUAL LIVE EDIT MODE: KLIK & HAPUS TEKS LANGSUNG DI LAYAR + UNDO/REDO
            ----------------------------------------------------------------- */
         let isVisualLiveEditActive = false;
+        let visualUndoStack = [];
+        let visualRedoStack = [];
+        let lastEditedElement = null;
+        let lastElementInitialHTML = '';
+        let editDebounceTimer = null;
+
+        function updateUndoButtonState() {
+            const uBtn = document.getElementById('visual-undo-btn');
+            const rBtn = document.getElementById('visual-redo-btn');
+            if (uBtn) {
+                if (visualUndoStack.length > 0) {
+                    uBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+                    uBtn.classList.add('hover:bg-white/20');
+                    uBtn.title = `Undo (${visualUndoStack.length} riwayat) [Ctrl+Z]`;
+                } else {
+                    uBtn.classList.add('opacity-40', 'cursor-not-allowed');
+                    uBtn.classList.remove('hover:bg-white/20');
+                    uBtn.title = 'Tidak ada yang bisa di-undo';
+                }
+            }
+            if (rBtn) {
+                if (visualRedoStack.length > 0) {
+                    rBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+                    rBtn.classList.add('hover:bg-white/20');
+                    rBtn.title = `Redo (${visualRedoStack.length} riwayat) [Ctrl+Y]`;
+                } else {
+                    rBtn.classList.add('opacity-40', 'cursor-not-allowed');
+                    rBtn.classList.remove('hover:bg-white/20');
+                    rBtn.title = 'Tidak ada yang bisa di-redo';
+                }
+            }
+        }
+
+        // Global listeners for live visual edit undo tracking
+        document.addEventListener('focusin', function(e) {
+            if (!isVisualLiveEditActive) return;
+            if (e.target && (e.target.id === 'visual-live-edit-bar' || e.target.closest('#visual-live-edit-bar') || e.target.closest('#editor-panel-modal'))) return;
+            lastEditedElement = e.target;
+            lastElementInitialHTML = e.target.innerHTML;
+        });
+
+        document.addEventListener('input', function(e) {
+            if (!isVisualLiveEditActive) return;
+            if (e.target.closest('#visual-live-edit-bar') || e.target.closest('#editor-panel-modal')) return;
+
+            const el = e.target;
+            const prevHtml = lastElementInitialHTML;
+
+            clearTimeout(editDebounceTimer);
+            editDebounceTimer = setTimeout(() => {
+                const currentHtml = el.innerHTML;
+                if (prevHtml !== currentHtml) {
+                    visualUndoStack.push({
+                        element: el,
+                        prev: prevHtml,
+                        next: currentHtml
+                    });
+                    if (visualUndoStack.length > 40) visualUndoStack.shift();
+                    visualRedoStack = [];
+                    lastElementInitialHTML = currentHtml;
+                    updateUndoButtonState();
+                }
+            }, 250);
+        });
+
+        // Keyboard shortcut: Ctrl+Z (Undo) and Ctrl+Y / Ctrl+Shift+Z (Redo)
+        document.addEventListener('keydown', function(e) {
+            if (!isVisualLiveEditActive) return;
+            if (e.target && e.target.closest('#editor-panel-modal')) return;
+
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) {
+                e.preventDefault();
+                if (e.shiftKey) {
+                    redoVisualEdit();
+                } else {
+                    undoVisualEdit();
+                }
+            } else if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || e.key === 'Y')) {
+                e.preventDefault();
+                redoVisualEdit();
+            }
+        });
+
+        window.undoVisualEdit = function() {
+            if (!isVisualLiveEditActive) return;
+            clearTimeout(editDebounceTimer);
+
+            // Record any pending unsaved change from the active element before undoing
+            if (lastEditedElement && lastElementInitialHTML !== lastEditedElement.innerHTML) {
+                visualUndoStack.push({
+                    element: lastEditedElement,
+                    prev: lastElementInitialHTML,
+                    next: lastEditedElement.innerHTML
+                });
+                lastElementInitialHTML = lastEditedElement.innerHTML;
+            }
+
+            if (visualUndoStack.length === 0) {
+                if (lastEditedElement) lastEditedElement.focus();
+                document.execCommand('undo');
+                showToast('Tidak ada riwayat perubahan yang bisa di-undo.');
+                return;
+            }
+
+            const action = visualUndoStack.pop();
+            if (action && action.element) {
+                visualRedoStack.push({
+                    element: action.element,
+                    prev: action.prev,
+                    next: action.element.innerHTML
+                });
+                action.element.innerHTML = action.prev;
+                action.element.focus();
+                lastElementInitialHTML = action.prev;
+
+                // Brief glow highlight effect on the restored element
+                action.element.style.outline = '2px dashed #00E5FF';
+                action.element.style.transition = 'outline 0.3s ease';
+                setTimeout(() => {
+                    if (action.element) action.element.style.outline = '';
+                }, 800);
+
+                playCyberTone(587.33, 'sine', 0.12);
+                showToast('↩ Berhasil Undo perubahan teks! [Ctrl+Z]');
+            }
+            updateUndoButtonState();
+        };
+
+        window.redoVisualEdit = function() {
+            if (!isVisualLiveEditActive) return;
+            if (visualRedoStack.length === 0) {
+                showToast('Tidak ada perubahan yang bisa di-redo.');
+                return;
+            }
+
+            const action = visualRedoStack.pop();
+            if (action && action.element) {
+                visualUndoStack.push({
+                    element: action.element,
+                    prev: action.element.innerHTML,
+                    next: action.next
+                });
+                action.element.innerHTML = action.next;
+                action.element.focus();
+                lastElementInitialHTML = action.next;
+
+                // Brief glow highlight effect on the restored element
+                action.element.style.outline = '2px dashed #FF2A85';
+                action.element.style.transition = 'outline 0.3s ease';
+                setTimeout(() => {
+                    if (action.element) action.element.style.outline = '';
+                }, 800);
+
+                playCyberTone(783.99, 'sine', 0.12);
+                showToast('↪ Berhasil Redo teks! [Ctrl+Y]');
+            }
+            updateUndoButtonState();
+        };
 
         window.startVisualLiveEdit = function() {
             closeEditorPanel();
             if (isVisualLiveEditActive) return;
             isVisualLiveEditActive = true;
+            visualUndoStack = [];
+            visualRedoStack = [];
 
             // Make body editable
             document.body.contentEditable = 'true';
@@ -4537,26 +4697,41 @@ int main() {
                 bar = document.createElement('div');
                 bar.id = 'visual-live-edit-bar';
                 bar.contentEditable = 'false';
-                bar.className = 'fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-[9999] bg-[#120B20]/95 border border-cyberRose/60 shadow-[0_10px_35px_rgba(255,42,133,0.5)] backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl flex items-center gap-3 font-mono text-xs text-white';
+                bar.className = 'fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-[9999] bg-[#120B20]/95 border border-cyberRose/60 shadow-[0_10px_35px_rgba(255,42,133,0.5)] backdrop-blur-md px-3 sm:px-5 py-2 sm:py-2.5 rounded-2xl flex flex-wrap items-center justify-center gap-2 sm:gap-3 font-mono text-xs text-white';
                 bar.innerHTML = `
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1.5 shrink-0">
                         <span class="w-2.5 h-2.5 rounded-full bg-cyberRose animate-pulse"></span>
-                        <strong class="text-cyberRose font-bold">MODE EDIT VISUAL AKTIF</strong>
+                        <strong class="text-cyberRose font-bold text-xs">EDIT VISUAL</strong>
                     </div>
-                    <span class="text-mutedLavender text-[11px] hidden md:inline">| Klik teks mana saja di layar untuk diedit atau dihapus</span>
-                    <button type="button" onclick="saveVisualLiveEdit()" class="px-3.5 py-1.5 bg-gradient-to-r from-cyberRose to-electricCyan text-white font-bold rounded-xl hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md">
-                        💾 Simpan
-                    </button>
-                    <button type="button" onclick="stopVisualLiveEdit()" class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-mutedLavender hover:text-white rounded-xl transition-all cursor-pointer">
-                        ✕ Selesai
-                    </button>
+
+                    <div class="flex items-center gap-1 bg-white/5 p-0.5 rounded-xl border border-white/10 shrink-0">
+                        <button id="visual-undo-btn" type="button" onclick="undoVisualEdit()" title="Batalkan Perubahan (Ctrl+Z)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 active:scale-95 text-starlight rounded-lg font-mono text-xs flex items-center gap-1 transition-all cursor-pointer opacity-40">
+                            <span>↩</span>
+                            <span>Undo</span>
+                        </button>
+                        <button id="visual-redo-btn" type="button" onclick="redoVisualEdit()" title="Ulangi Perubahan (Ctrl+Y)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 active:scale-95 text-starlight rounded-lg font-mono text-xs flex items-center gap-1 transition-all cursor-pointer opacity-40">
+                            <span>↪</span>
+                            <span>Redo</span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button type="button" onclick="saveVisualLiveEdit()" class="px-3.5 py-1.5 bg-gradient-to-r from-cyberRose to-electricCyan text-white font-bold rounded-xl hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md flex items-center gap-1">
+                            <span>💾</span>
+                            <span>Simpan</span>
+                        </button>
+                        <button type="button" onclick="stopVisualLiveEdit()" class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-mutedLavender hover:text-white rounded-xl transition-all cursor-pointer">
+                            ✕ Selesai
+                        </button>
+                    </div>
                 `;
                 document.body.appendChild(bar);
             } else {
                 bar.classList.remove('hidden');
             }
 
-            showToast('Mode Edit Visual Aktif! Klik tulisan apa saja di layar untuk mengubah atau menghapusnya. ✨');
+            updateUndoButtonState();
+            showToast('Mode Edit Visual Aktif! Klik tulisan apa saja di layar untuk diedit/dihapus. Gunakan tombol Undo atau Ctrl+Z jika salah hapus! ✨');
             playCyberTone(783.99, 'sine', 0.15);
         };
 
