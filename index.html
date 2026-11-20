@@ -3529,6 +3529,18 @@ int main() {
 
         // Cloud sync receiver (called when other devices push updates)
         window.syncFromCloudData = function(cloudData, isSelf) {
+            // Guard: If we saved edits locally more recently than cloudData, ignore older cloud data to prevent wiping fresh edits on refresh!
+            try {
+                const localSavedAt = parseInt(localStorage.getItem('zizuy_content_last_saved') || '0', 10);
+                if (cloudData && cloudData.lastUpdated && localSavedAt > 0) {
+                    const cloudTime = new Date(cloudData.lastUpdated).getTime();
+                    if (cloudTime < localSavedAt - 2000) {
+                        console.log('Skipping older cloud snapshot in favor of fresh local edits.');
+                        return;
+                    }
+                }
+            } catch (e) {}
+
             let changed = false;
             if (cloudData.content) {
                 if (cloudData.content.romance) {
@@ -4523,74 +4535,87 @@ int main() {
         let isVisualLiveEditActive = false;
         let visualUndoStack = [];
         let visualRedoStack = [];
-        let lastEditedElement = null;
-        let lastElementInitialHTML = '';
-        let editDebounceTimer = null;
+        let pendingEdit = null;
 
         function updateUndoButtonState() {
             const uBtn = document.getElementById('visual-undo-btn');
             const rBtn = document.getElementById('visual-redo-btn');
+            const uCount = document.getElementById('visual-undo-count');
+            const rCount = document.getElementById('visual-redo-count');
+            
             if (uBtn) {
                 if (visualUndoStack.length > 0) {
                     uBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-                    uBtn.classList.add('hover:bg-white/20');
+                    uBtn.classList.add('hover:bg-white/20', 'text-electricCyan');
                     uBtn.title = `Undo (${visualUndoStack.length} riwayat) [Ctrl+Z]`;
+                    if (uCount) {
+                        uCount.textContent = visualUndoStack.length;
+                        uCount.classList.remove('hidden');
+                    }
                 } else {
                     uBtn.classList.add('opacity-40', 'cursor-not-allowed');
-                    uBtn.classList.remove('hover:bg-white/20');
+                    uBtn.classList.remove('hover:bg-white/20', 'text-electricCyan');
                     uBtn.title = 'Tidak ada yang bisa di-undo';
+                    if (uCount) uCount.classList.add('hidden');
                 }
             }
             if (rBtn) {
                 if (visualRedoStack.length > 0) {
                     rBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-                    rBtn.classList.add('hover:bg-white/20');
+                    rBtn.classList.add('hover:bg-white/20', 'text-cyberRose');
                     rBtn.title = `Redo (${visualRedoStack.length} riwayat) [Ctrl+Y]`;
+                    if (rCount) {
+                        rCount.textContent = visualRedoStack.length;
+                        rCount.classList.remove('hidden');
+                    }
                 } else {
                     rBtn.classList.add('opacity-40', 'cursor-not-allowed');
-                    rBtn.classList.remove('hover:bg-white/20');
+                    rBtn.classList.remove('hover:bg-white/20', 'text-cyberRose');
                     rBtn.title = 'Tidak ada yang bisa di-redo';
+                    if (rCount) rCount.classList.add('hidden');
                 }
             }
         }
 
-        // Global listeners for live visual edit undo tracking
-        document.addEventListener('focusin', function(e) {
+        // Capture snapshot before input
+        document.addEventListener('beforeinput', function(e) {
             if (!isVisualLiveEditActive) return;
             if (e.target && (e.target.id === 'visual-live-edit-bar' || e.target.closest('#visual-live-edit-bar') || e.target.closest('#editor-panel-modal'))) return;
-            lastEditedElement = e.target;
-            lastElementInitialHTML = e.target.innerHTML;
+            
+            const target = e.target;
+            pendingEdit = {
+                element: target,
+                beforeHTML: target.innerHTML
+            };
         });
 
+        // Record history on input
         document.addEventListener('input', function(e) {
             if (!isVisualLiveEditActive) return;
             if (e.target.closest('#visual-live-edit-bar') || e.target.closest('#editor-panel-modal')) return;
 
             const el = e.target;
-            const prevHtml = lastElementInitialHTML;
-
-            clearTimeout(editDebounceTimer);
-            editDebounceTimer = setTimeout(() => {
-                const currentHtml = el.innerHTML;
-                if (prevHtml !== currentHtml) {
+            if (pendingEdit && pendingEdit.element === el) {
+                if (pendingEdit.beforeHTML !== el.innerHTML) {
                     visualUndoStack.push({
                         element: el,
-                        prev: prevHtml,
-                        next: currentHtml
+                        beforeHTML: pendingEdit.beforeHTML,
+                        afterHTML: el.innerHTML
                     });
-                    if (visualUndoStack.length > 40) visualUndoStack.shift();
+                    if (visualUndoStack.length > 50) visualUndoStack.shift();
                     visualRedoStack = [];
-                    lastElementInitialHTML = currentHtml;
                     updateUndoButtonState();
                 }
-            }, 250);
+                pendingEdit = { element: el, beforeHTML: el.innerHTML };
+            }
         });
 
-        // Keyboard shortcut: Ctrl+Z (Undo) and Ctrl+Y / Ctrl+Shift+Z (Redo)
+        // Capture Backspace / Delete on selections
         document.addEventListener('keydown', function(e) {
             if (!isVisualLiveEditActive) return;
-            if (e.target && e.target.closest('#editor-panel-modal')) return;
+            if (e.target && (e.target.closest('#visual-live-edit-bar') || e.target.closest('#editor-panel-modal'))) return;
 
+            // Handle Ctrl+Z and Ctrl+Y
             if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) {
                 e.preventDefault();
                 if (e.shiftKey) {
@@ -4598,84 +4623,112 @@ int main() {
                 } else {
                     undoVisualEdit();
                 }
+                return;
             } else if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || e.key === 'Y')) {
                 e.preventDefault();
                 redoVisualEdit();
+                return;
+            }
+
+            // Capture deletions
+            if (e.key === 'Backspace' || e.key === 'Delete') {
+                const sel = window.getSelection();
+                if (sel && sel.rangeCount > 0) {
+                    const range = sel.getRangeAt(0);
+                    const container = (range.commonAncestorContainer.nodeType === 1) ? range.commonAncestorContainer : range.commonAncestorContainer.parentElement;
+                    if (container && !container.closest('#visual-live-edit-bar') && !container.closest('#editor-panel-modal')) {
+                        const beforeHTML = container.innerHTML;
+                        setTimeout(() => {
+                            if (container && beforeHTML !== container.innerHTML) {
+                                visualUndoStack.push({
+                                    element: container,
+                                    beforeHTML: beforeHTML,
+                                    afterHTML: container.innerHTML
+                                });
+                                if (visualUndoStack.length > 50) visualUndoStack.shift();
+                                visualRedoStack = [];
+                                updateUndoButtonState();
+                            }
+                        }, 0);
+                    }
+                }
             }
         });
 
         window.undoVisualEdit = function() {
             if (!isVisualLiveEditActive) return;
-            clearTimeout(editDebounceTimer);
 
-            // Record any pending unsaved change from the active element before undoing
-            if (lastEditedElement && lastElementInitialHTML !== lastEditedElement.innerHTML) {
-                visualUndoStack.push({
-                    element: lastEditedElement,
-                    prev: lastElementInitialHTML,
-                    next: lastEditedElement.innerHTML
-                });
-                lastElementInitialHTML = lastEditedElement.innerHTML;
+            // 1. Try our snapshot stack first for 100% reliable full element restoration
+            if (visualUndoStack.length > 0) {
+                const action = visualUndoStack.pop();
+                if (action && action.element && document.body.contains(action.element)) {
+                    visualRedoStack.push({
+                        element: action.element,
+                        beforeHTML: action.element.innerHTML,
+                        afterHTML: action.afterHTML
+                    });
+                    action.element.innerHTML = action.beforeHTML;
+                    if (typeof action.element.focus === 'function') action.element.focus();
+
+                    // Flash highlight on restored element
+                    action.element.style.outline = '2px dashed #00E5FF';
+                    action.element.style.transition = 'outline 0.3s ease';
+                    setTimeout(() => {
+                        if (action.element) action.element.style.outline = '';
+                    }, 800);
+
+                    playCyberTone(587.33, 'sine', 0.12);
+                    showToast('↩ Teks berhasil dikembalikan (Undo)!');
+                    updateUndoButtonState();
+                    return;
+                }
             }
 
-            if (visualUndoStack.length === 0) {
-                if (lastEditedElement) lastEditedElement.focus();
-                document.execCommand('undo');
-                showToast('Tidak ada riwayat perubahan yang bisa di-undo.');
-                return;
-            }
-
-            const action = visualUndoStack.pop();
-            if (action && action.element) {
-                visualRedoStack.push({
-                    element: action.element,
-                    prev: action.prev,
-                    next: action.element.innerHTML
-                });
-                action.element.innerHTML = action.prev;
-                action.element.focus();
-                lastElementInitialHTML = action.prev;
-
-                // Brief glow highlight effect on the restored element
-                action.element.style.outline = '2px dashed #00E5FF';
-                action.element.style.transition = 'outline 0.3s ease';
-                setTimeout(() => {
-                    if (action.element) action.element.style.outline = '';
-                }, 800);
-
+            // 2. Browser native undo fallback
+            const nativeWorked = document.execCommand('undo');
+            if (nativeWorked) {
                 playCyberTone(587.33, 'sine', 0.12);
-                showToast('↩ Berhasil Undo perubahan teks! [Ctrl+Z]');
+                showToast('↩ Berhasil Undo! [Ctrl+Z]');
+            } else {
+                showToast('Tidak ada riwayat perubahan yang bisa di-undo.');
             }
             updateUndoButtonState();
         };
 
         window.redoVisualEdit = function() {
             if (!isVisualLiveEditActive) return;
-            if (visualRedoStack.length === 0) {
-                showToast('Tidak ada perubahan yang bisa di-redo.');
-                return;
+
+            if (visualRedoStack.length > 0) {
+                const action = visualRedoStack.pop();
+                if (action && action.element && document.body.contains(action.element)) {
+                    visualUndoStack.push({
+                        element: action.element,
+                        beforeHTML: action.element.innerHTML,
+                        afterHTML: action.afterHTML
+                    });
+                    action.element.innerHTML = action.afterHTML;
+                    if (typeof action.element.focus === 'function') action.element.focus();
+
+                    // Flash highlight
+                    action.element.style.outline = '2px dashed #FF2A85';
+                    action.element.style.transition = 'outline 0.3s ease';
+                    setTimeout(() => {
+                        if (action.element) action.element.style.outline = '';
+                    }, 800);
+
+                    playCyberTone(783.99, 'sine', 0.12);
+                    showToast('↪ Redo berhasil diterapkan!');
+                    updateUndoButtonState();
+                    return;
+                }
             }
 
-            const action = visualRedoStack.pop();
-            if (action && action.element) {
-                visualUndoStack.push({
-                    element: action.element,
-                    prev: action.element.innerHTML,
-                    next: action.next
-                });
-                action.element.innerHTML = action.next;
-                action.element.focus();
-                lastElementInitialHTML = action.next;
-
-                // Brief glow highlight effect on the restored element
-                action.element.style.outline = '2px dashed #FF2A85';
-                action.element.style.transition = 'outline 0.3s ease';
-                setTimeout(() => {
-                    if (action.element) action.element.style.outline = '';
-                }, 800);
-
+            const nativeWorked = document.execCommand('redo');
+            if (nativeWorked) {
                 playCyberTone(783.99, 'sine', 0.12);
-                showToast('↪ Berhasil Redo teks! [Ctrl+Y]');
+                showToast('↪ Redo berhasil!');
+            } else {
+                showToast('Tidak ada perubahan yang bisa di-redo.');
             }
             updateUndoButtonState();
         };
@@ -4705,22 +4758,24 @@ int main() {
                     </div>
 
                     <div class="flex items-center gap-1 bg-white/5 p-0.5 rounded-xl border border-white/10 shrink-0">
-                        <button id="visual-undo-btn" type="button" onclick="undoVisualEdit()" title="Batalkan Perubahan (Ctrl+Z)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 active:scale-95 text-starlight rounded-lg font-mono text-xs flex items-center gap-1 transition-all cursor-pointer opacity-40">
+                        <button id="visual-undo-btn" type="button" onmousedown="event.preventDefault()" onclick="undoVisualEdit()" title="Batalkan Perubahan (Ctrl+Z)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 active:scale-95 text-starlight rounded-lg font-mono text-xs flex items-center gap-1 transition-all cursor-pointer opacity-40">
                             <span>↩</span>
                             <span>Undo</span>
+                            <span id="visual-undo-count" class="hidden text-[10px] bg-electricCyan/20 text-electricCyan px-1 rounded-full font-bold"></span>
                         </button>
-                        <button id="visual-redo-btn" type="button" onclick="redoVisualEdit()" title="Ulangi Perubahan (Ctrl+Y)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 active:scale-95 text-starlight rounded-lg font-mono text-xs flex items-center gap-1 transition-all cursor-pointer opacity-40">
+                        <button id="visual-redo-btn" type="button" onmousedown="event.preventDefault()" onclick="redoVisualEdit()" title="Ulangi Perubahan (Ctrl+Y)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 active:scale-95 text-starlight rounded-lg font-mono text-xs flex items-center gap-1 transition-all cursor-pointer opacity-40">
                             <span>↪</span>
                             <span>Redo</span>
+                            <span id="visual-redo-count" class="hidden text-[10px] bg-cyberRose/20 text-cyberRose px-1 rounded-full font-bold"></span>
                         </button>
                     </div>
 
                     <div class="flex items-center gap-1.5 shrink-0">
-                        <button type="button" onclick="saveVisualLiveEdit()" class="px-3.5 py-1.5 bg-gradient-to-r from-cyberRose to-electricCyan text-white font-bold rounded-xl hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md flex items-center gap-1">
+                        <button type="button" onmousedown="event.preventDefault()" onclick="saveVisualLiveEdit()" class="px-3.5 py-1.5 bg-gradient-to-r from-cyberRose to-electricCyan text-white font-bold rounded-xl hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md flex items-center gap-1">
                             <span>💾</span>
                             <span>Simpan</span>
                         </button>
-                        <button type="button" onclick="stopVisualLiveEdit()" class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-mutedLavender hover:text-white rounded-xl transition-all cursor-pointer">
+                        <button type="button" onmousedown="event.preventDefault()" onclick="stopVisualLiveEdit()" class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-mutedLavender hover:text-white rounded-xl transition-all cursor-pointer">
                             ✕ Selesai
                         </button>
                     </div>
@@ -4749,15 +4804,21 @@ int main() {
             if (data) {
                 const getTxt = (id) => {
                     const el = document.getElementById(id);
-                    return el ? el.textContent.trim() : null;
+                    if (!el) return null;
+                    return el.textContent.trim();
                 };
 
+                // 1. Countdown & Gate
                 const lateTxt = getTxt('gate-late-btn-text');
                 if (lateTxt !== null) data.gateLateBtnText = lateTxt;
 
                 const runTxt = getTxt('run-exe-btn-text');
                 if (runTxt !== null) data.gateClickHereBtnText = runTxt;
 
+                const countTxt = getTxt('countdown-note-text');
+                if (countTxt !== null) data.countdownNote = countTxt;
+
+                // 2. Hero & C++
                 const descTxt = getTxt('hero-description');
                 if (descTxt !== null) data.heroDesc = descTxt;
 
@@ -4767,12 +4828,31 @@ int main() {
                 const codeTitleTxt = getTxt('code-card-title');
                 if (codeTitleTxt !== null) data.codeTitle = codeTitleTxt;
 
+                const codeBoxEl = document.querySelector('#code-snippet-box code');
+                if (codeBoxEl) {
+                    data.codeSnippet = codeBoxEl.innerText
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;');
+                }
+
+                const outJokeEl = document.getElementById('compile-output-text');
+                if (outJokeEl) {
+                    if (!data.jokes) data.jokes = [];
+                    data.jokes[0] = outJokeEl.textContent.trim();
+                }
+
+                // 3. Scrapbook
+                const scrapTag = getTxt('scrapbook-tag');
+                if (scrapTag !== null) data.scrapbookTag = scrapTag;
+
                 const scrapTitle = getTxt('scrapbook-title');
                 if (scrapTitle !== null) data.scrapbookTitle = scrapTitle;
 
                 const scrapSub = getTxt('scrapbook-subtitle');
                 if (scrapSub !== null) data.scrapbookSubtitle = scrapSub;
 
+                // 4. Receipt
                 const rStore = getTxt('receipt-store-title');
                 if (rStore !== null) data.receiptStoreTitle = rStore;
 
@@ -4788,6 +4868,26 @@ int main() {
                 const rFoot = getTxt('receipt-footer-text');
                 if (rFoot !== null) data.receiptFooter = rFoot;
 
+                // 5. Polaroids (cards 1, 2, 3)
+                if (data.polaroids) {
+                    [1, 2, 3].forEach((pNum, idx) => {
+                        const b = getTxt(`pol-badge-${pNum}`);
+                        const t = getTxt(`pol-title-${pNum}`);
+                        const s = getTxt(`pol-sub-${pNum}`);
+                        const q = getTxt(`pol-quote-${pNum}`);
+                        if (data.polaroids[idx]) {
+                            if (b !== null) data.polaroids[idx].badge = b;
+                            if (t !== null) data.polaroids[idx].title = t;
+                            if (s !== null) data.polaroids[idx].sub = s;
+                            if (q !== null) data.polaroids[idx].quote = q;
+                        }
+                    });
+                }
+
+                // 6. Quest HUD & Titles
+                const qTag = getTxt('quest-tag-text');
+                if (qTag !== null) data.questTag = qTag;
+
                 const qTitle = getTxt('quest-title-text');
                 if (qTitle !== null) data.questTitle = qTitle;
 
@@ -4797,9 +4897,16 @@ int main() {
                 const qName = getTxt('quest-char-name');
                 if (qName !== null) data.questCharName = qName;
 
+                const qLv = getTxt('quest-char-lv');
+                if (qLv !== null) data.questCharLevel = qLv;
+
+                const qClass = getTxt('quest-char-class');
+                if (qClass !== null) data.questCharClass = qClass;
+
                 const qBuff = getTxt('quest-char-buff');
                 if (qBuff !== null) data.questCharBuff = qBuff;
 
+                // 7. Section 4
                 if (currentAppMode === 'romance' && data.letter) {
                     const lTitle = getTxt('romance-letter-title');
                     if (lTitle !== null) data.letter.title = lTitle;
@@ -4812,23 +4919,43 @@ int main() {
 
                     const lAuthor = getTxt('romance-closing-author');
                     if (lAuthor !== null) data.letter.closingSignature = lAuthor;
+
+                    // Extract all paragraphs from DOM
+                    const paraEls = document.querySelectorAll('#romance-letter-paragraphs .romance-para');
+                    if (paraEls && paraEls.length > 0) {
+                        data.letter.paragraphs = Array.from(paraEls).map(p => p.textContent.trim()).filter(Boolean);
+                    }
                 } else if (currentAppMode === 'friend') {
                     const wTitle = getTxt('wishlist-heading-title');
                     if (wTitle !== null) data.wishlistTitle = wTitle;
 
                     const wSub = getTxt('wishlist-heading-sub');
                     if (wSub !== null) data.wishlistSubtitle = wSub;
+
+                    const wishlistEditor = document.getElementById('zizuy-wishlist-editor');
+                    if (wishlistEditor) {
+                        try {
+                            localStorage.setItem('zizuy_wishlist_content', wishlistEditor.innerHTML);
+                        } catch(e) {}
+                    }
                 }
 
+                // Save to LocalStorage with timestamp
                 try {
                     localStorage.setItem('zizuy_custom_content', JSON.stringify(CONTENT_MODES));
-                } catch (e) {}
+                    localStorage.setItem('zizuy_content_last_saved', String(Date.now()));
+                } catch (e) {
+                    console.error('Failed to save to localStorage:', e);
+                }
 
-                saveToCloudFirestore({ content: CONTENT_MODES, photos: customPhotos });
+                // Immediately upload to Cloud Firestore so it syncs across all devices & stays on refresh
+                if (typeof window._firebaseSaveDoc === 'function') {
+                    window._firebaseSaveDoc({ content: CONTENT_MODES, photos: customPhotos, lastUpdated: new Date().toISOString() });
+                }
             }
 
             playCyberTone(880, 'sine', 0.2);
-            showToast('Perubahan teks visual berhasil disimpan ke perangkat & cloud! 💾✨');
+            showToast('💾 Perubahan visual tersimpan permanen! Tetap ada saat halaman direfresh. ✨');
             stopVisualLiveEdit();
         };
 
