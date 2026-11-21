@@ -1513,6 +1513,127 @@
                 </div>
                 <div class="torn-edge-bottom"></div>
             </div>
+
+            <!-- ===============================================================
+                 KOLOM PESAN, CERITA & UNGKAPAN ZIZUY UNTUK PENOYY (CLOUD SYNC)
+                 Bisa dilihat & dibaca langsung di semua perangkat (HP & Laptop)!
+                 =============================================================== -->
+            <div class="torn-paper-shell mt-10 sm:mt-14">
+                <div class="torn-edge-top"></div>
+                <div class="relative writing-paper-surface p-5 sm:p-10 md:p-14 pl-11 sm:pl-16 overflow-hidden">
+                    <div class="washi-tape w-28 h-5 absolute -top-3.5 left-1/2 -translate-x-1/2 rotate-1 rounded-sm pointer-events-none z-20"></div>
+
+                    <!-- Notebook Punch Holes along Left Margin -->
+                    <div class="absolute left-2.5 sm:left-4 top-10 bottom-10 flex flex-col justify-between pointer-events-none z-10">
+                        <span class="w-3.5 h-3.5 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
+                        <span class="w-3.5 h-3.5 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
+                        <span class="w-3.5 h-3.5 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
+                        <span class="w-3.5 h-3.5 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
+                    </div>
+
+                    <div id="section4-penoyy-msg-view" class="relative z-10">
+                        <!-- Header -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-dashed border-white/20">
+                            <div class="font-mono text-[11px] sm:text-xs text-electricCyan flex items-center gap-2">
+                                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f48c/512.webp" alt="💌" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>💌</span>'">
+                                <span>PESAN_ZIZUY_UNTUK_PENOYY.DOCX</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="penoyy-msg-sync-badge" class="font-mono text-[10px] text-electricCyan bg-electricCyan/10 px-2.5 py-0.5 rounded border border-electricCyan/30 flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-pulse"></span>
+                                    <span>☁️ Tersinkron ke Semua Perangkat</span>
+                                </span>
+                                <span id="penoyy-msg-time-badge" class="font-mono text-[10px] sm:text-xs text-mutedLavender hidden sm:inline">
+                                    Shared Cloud Note
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="mb-4">
+                            <h2 id="penoyy-msg-heading-title" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-1.5">
+                                Pesan, Cerita &amp; Ungkapan Buat <span class="font-hand text-electricCyan text-2xl sm:text-4xl md:text-5xl ml-1">Penoyy!</span>
+                            </h2>
+                            <p id="penoyy-msg-heading-sub" class="font-mono text-[11px] sm:text-xs text-mutedLavender">
+                                Kolom khusus buat kamu nulis cerita, pesan, atau ungkapan apa aja buat aku — otomatis tersimpan &amp; langsung bisa kubaca di perangkatku ✨
+                            </p>
+                        </div>
+
+                        <!-- Mini MS Word Toolbar for Penoyy Message -->
+                        <div class="mini-word-toolbar bg-[#120A1E]/90 border border-white/15 rounded-xl p-1.5 sm:p-2 mb-4 flex flex-wrap items-center gap-1 sm:gap-1.5 shadow-md text-xs font-mono select-none">
+                            <span class="text-[10px] text-mutedLavender uppercase font-bold px-1.5 hidden md:inline">Format:</span>
+
+                            <button type="button" onclick="formatPenoyyMsgDoc('bold')" title="Tebal (Bold)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight font-bold flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+                                <strong>B</strong>
+                            </button>
+                            <button type="button" onclick="formatPenoyyMsgDoc('italic')" title="Miring (Italic)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight italic flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+                                <em>I</em>
+                            </button>
+                            <button type="button" onclick="formatPenoyyMsgDoc('underline')" title="Garis Bawah (Underline)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight underline flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+                                <u>U</u>
+                            </button>
+                            <button type="button" onclick="formatPenoyyMsgDoc('strikeThrough')" title="Coret (Strikethrough)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight line-through flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+                                <s>S</s>
+                            </button>
+
+                            <div class="w-px h-5 bg-white/15 mx-0.5"></div>
+
+                            <button type="button" onclick="formatPenoyyMsgDoc('insertUnorderedList')" title="Daftar Poin (•)" class="px-2 h-7 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight flex items-center gap-1 transition-all hover:scale-105 active:scale-95">
+                                <span>•≡</span>
+                            </button>
+                            <button type="button" onclick="formatPenoyyMsgDoc('insertOrderedList')" title="Daftar Angka (1. 2.)" class="px-2 h-7 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight flex items-center gap-1 transition-all hover:scale-105 active:scale-95">
+                                <span>1≡</span>
+                            </button>
+
+                            <div class="w-px h-5 bg-white/15 mx-0.5"></div>
+
+                            <button type="button" onclick="formatPenoyyMsgColor('#FF2A85')" title="Warna Pink" class="px-2 h-7 sm:h-8 rounded-lg bg-cyberRose/15 hover:bg-cyberRose/30 border border-cyberRose/40 text-cyberRose font-bold flex items-center gap-1 transition-all">
+                                <span class="w-2.5 h-2.5 rounded-full bg-cyberRose"></span>
+                                <span class="hidden sm:inline text-[10px]">Pink</span>
+                            </button>
+                            <button type="button" onclick="formatPenoyyMsgColor('#00E5FF')" title="Warna Cyan" class="px-2 h-7 sm:h-8 rounded-lg bg-electricCyan/15 hover:bg-electricCyan/30 border border-electricCyan/40 text-electricCyan font-bold flex items-center gap-1 transition-all">
+                                <span class="w-2.5 h-2.5 rounded-full bg-electricCyan"></span>
+                                <span class="hidden sm:inline text-[10px]">Cyan</span>
+                            </button>
+                            <button type="button" onclick="formatPenoyyMsgColor('#F4F4F6')" title="Warna Putih" class="px-2 h-7 sm:h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-starlight flex items-center gap-1 transition-all">
+                                <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
+                                <span class="hidden sm:inline text-[10px]">Normal</span>
+                            </button>
+
+                            <div class="w-px h-5 bg-white/15 mx-0.5"></div>
+
+                            <button type="button" onclick="resetPenoyyMsgTemplate()" title="Kosongkan / Reset Pesan" class="px-2.5 h-7 sm:h-8 rounded-lg bg-white/5 hover:bg-rose-500/20 hover:border-rose-500/40 border border-white/10 text-mutedLavender hover:text-rose-300 text-[10px] sm:text-xs flex items-center gap-1 transition-all ml-auto">
+                                <span>↺</span>
+                                <span class="hidden sm:inline">Reset</span>
+                            </button>
+                            <button type="button" onclick="manualSavePenoyyMsg()" title="Kirim & Simpan Pesan ke Penoyy (Semua Perangkat)" class="px-3 h-7 sm:h-8 rounded-lg bg-gradient-to-r from-electricCyan to-nebulaViolet hover:brightness-110 text-white font-bold text-[10px] sm:text-xs flex items-center gap-1.5 shadow-sm transition-all hover:scale-105 active:scale-95">
+                                <span>💌</span>
+                                <span>Kirim &amp; Simpan</span>
+                            </button>
+                        </div>
+
+                        <!-- Editable Ruled Note Area for Message to Penoyy -->
+                        <div id="zizuy-to-penoyy-editor"
+                             contenteditable="true"
+                             spellcheck="false"
+                             class="font-notes outline-none min-h-[280px] sm:min-h-[340px] text-sm sm:text-base md:text-lg text-starlight/95 leading-[32px] sm:leading-[36px] transition-colors focus:ring-1 focus:ring-electricCyan/40 rounded-xl p-3 sm:p-5 bg-transparent cursor-text select-text">
+                            <!-- Populated dynamically by initPenoyyMsgEditor() & synced with Cloud Firestore -->
+                        </div>
+
+                        <!-- Footer Info -->
+                        <div class="mt-4 pt-3 border-t border-dashed border-white/20 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
+                            <span class="flex items-center gap-1.5">
+                                <span>☁️</span>
+                                <span>Tulisan di kolom ini tersinkron otomatis ke semua perangkat sehingga bisa langsung dibaca oleh Penoyy.</span>
+                            </span>
+                            <span id="penoyy-msg-word-count" class="text-cyberRose font-bold">
+                                0 kata
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="torn-edge-bottom"></div>
+            </div>
         </section>
 
         <!-- Footer -->
@@ -5597,11 +5718,161 @@ int main() {
             counter.textContent = `${words} kata`;
         }
 
-        // Initialize editor when DOM is ready
+        /* -----------------------------------------------------------------
+           F-06-B: ZIZUY TO PENOYY SHARED MESSAGE & STORY BOX (CLOUD SYNCED)
+           Visible and synced in real-time across all devices (HP & Laptop)
+           ----------------------------------------------------------------- */
+        const DEFAULT_PENOYY_MSG_TEMPLATE = `
+<p style="margin-bottom: 12px;"><strong style="color: #00E5FF;">💬 Tulis Pesan, Cerita, atau Ungkapanmu Buat Penoyy di Sini:</strong></p>
+<p style="margin-bottom: 8px;">Hai Penoyy! Aku mau nulis pesan dan cerita buat kamu di sini...</p>
+`.trim();
+
+        let penoyyMsgSaveTimer = null;
+
+        function updatePenoyyMsgWordCount() {
+            const editor = document.getElementById('zizuy-to-penoyy-editor');
+            const counter = document.getElementById('penoyy-msg-word-count');
+            if (!editor || !counter) return;
+            const text = editor.innerText || editor.textContent || '';
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            counter.textContent = `${words} kata`;
+        }
+
+        function savePenoyyMsgToCloud(htmlContent, immediate = false) {
+            try {
+                localStorage.setItem('zizuy_msg_to_penoyy_19', htmlContent);
+                localStorage.setItem('zizuy_msg_to_penoyy_saved_at', String(Date.now()));
+            } catch (e) {}
+
+            const badge = document.getElementById('penoyy-msg-sync-badge');
+            if (badge) {
+                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span><span class="text-amber-400">Menyimpan ke Cloud...</span>';
+            }
+
+            clearTimeout(penoyyMsgSaveTimer);
+            const doUpload = async () => {
+                if (typeof window._firebaseSavePenoyyMsg === 'function') {
+                    await window._firebaseSavePenoyyMsg(htmlContent);
+                }
+                if (badge) {
+                    badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-electricCyan"></span><span class="text-electricCyan">☁️ Terkirim ke Semua Perangkat</span>';
+                }
+            };
+
+            if (immediate) {
+                doUpload();
+            } else {
+                penoyyMsgSaveTimer = setTimeout(doUpload, 450);
+            }
+        }
+
+        function initPenoyyMsgEditor() {
+            const editor = document.getElementById('zizuy-to-penoyy-editor');
+            if (!editor) return;
+
+            let saved = null;
+            try {
+                saved = localStorage.getItem('zizuy_msg_to_penoyy_19');
+            } catch (e) {}
+
+            editor.innerHTML = (saved && saved.trim()) ? saved : DEFAULT_PENOYY_MSG_TEMPLATE;
+            updatePenoyyMsgWordCount();
+
+            if (!editor._boundInput) {
+                editor._boundInput = true;
+                editor.addEventListener('input', () => {
+                    updatePenoyyMsgWordCount();
+                    savePenoyyMsgToCloud(editor.innerHTML, false);
+                });
+            }
+        }
+
+        window.syncPenoyyMsgFromCloud = function(cloudDoc, isSelf) {
+            if (!cloudDoc || typeof cloudDoc.html !== 'string') return;
+            const editor = document.getElementById('zizuy-to-penoyy-editor');
+            if (!editor) return;
+
+            // Do not interrupt if user is actively typing in this exact box right now
+            if (document.activeElement === editor && isSelf) return;
+
+            try {
+                const localSavedAt = parseInt(localStorage.getItem('zizuy_msg_to_penoyy_saved_at') || '0', 10);
+                if (cloudDoc.updatedAt && localSavedAt > 0) {
+                    const cloudTime = new Date(cloudDoc.updatedAt).getTime();
+                    if (cloudTime < localSavedAt - 2000) {
+                        return;
+                    }
+                }
+            } catch (e) {}
+
+            if (cloudDoc.html.trim() && editor.innerHTML !== cloudDoc.html) {
+                editor.innerHTML = cloudDoc.html;
+                try {
+                    localStorage.setItem('zizuy_msg_to_penoyy_19', cloudDoc.html);
+                } catch (e) {}
+                updatePenoyyMsgWordCount();
+            }
+
+            if (cloudDoc.updatedAt) {
+                const timeBadge = document.getElementById('penoyy-msg-time-badge');
+                if (timeBadge) {
+                    const dt = new Date(cloudDoc.updatedAt);
+                    const timeStr = dt.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                    timeBadge.textContent = `Diperbarui ${timeStr}`;
+                    timeBadge.classList.remove('hidden');
+                }
+            }
+        };
+
+        window.formatPenoyyMsgDoc = function(cmd, val = null) {
+            const editor = document.getElementById('zizuy-to-penoyy-editor');
+            if (editor) editor.focus();
+            document.execCommand(cmd, false, val);
+            if (editor) {
+                updatePenoyyMsgWordCount();
+                savePenoyyMsgToCloud(editor.innerHTML, false);
+            }
+        };
+
+        window.formatPenoyyMsgColor = function(color) {
+            const editor = document.getElementById('zizuy-to-penoyy-editor');
+            if (editor) editor.focus();
+            document.execCommand('foreColor', false, color);
+            if (editor) {
+                savePenoyyMsgToCloud(editor.innerHTML, false);
+            }
+        };
+
+        window.resetPenoyyMsgTemplate = function() {
+            if (confirm('Yakin ingin mengosongkan/mereset pesan ini ke format awal?')) {
+                const editor = document.getElementById('zizuy-to-penoyy-editor');
+                if (editor) {
+                    editor.innerHTML = DEFAULT_PENOYY_MSG_TEMPLATE;
+                    updatePenoyyMsgWordCount();
+                    savePenoyyMsgToCloud(DEFAULT_PENOYY_MSG_TEMPLATE, true);
+                    showToast('Kolom pesan untuk Penoyy telah direset! 📝');
+                    playCyberTone(523.25, 'sine', 0.15);
+                }
+            }
+        };
+
+        window.manualSavePenoyyMsg = function() {
+            const editor = document.getElementById('zizuy-to-penoyy-editor');
+            if (!editor) return;
+            savePenoyyMsgToCloud(editor.innerHTML, true);
+            playCyberTone(880, 'triangle', 0.18);
+            showToast('💌 Pesan & cerita untuk Penoyy berhasil dikirim & disimpan ke semua perangkat! ✨');
+        };
+
+        // Initialize editors when DOM is ready
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initWishlistEditor);
+            document.addEventListener('DOMContentLoaded', () => {
+                initWishlistEditor();
+                initPenoyyMsgEditor();
+            });
         } else {
             initWishlistEditor();
+            initPenoyyMsgEditor();
         }
 
         // Binary Firefly Canvas in Letter Section (Throttled 30fps Lazy Canvas)
@@ -5824,6 +6095,31 @@ int main() {
             const firebaseApp = initializeApp(firebaseConfig);
             const db = getFirestore(firebaseApp);
             const ZIZUY_DOC_REF = doc(db, 'uangku_data', 'ultah_zizuy_v19');
+            const ZIZUY_MSG_DOC_REF = doc(db, 'uangku_data', 'ultah_zizuy_v19_msg_penoyy');
+
+            // Save function for Zizuy's shared message/story to Penoyy (Synced across all devices)
+            window._firebaseSavePenoyyMsg = async function(htmlContent) {
+                try {
+                    await setDoc(ZIZUY_MSG_DOC_REF, {
+                        html: htmlContent || '',
+                        updatedAt: new Date().toISOString(),
+                        updatedByDevice: myDeviceId
+                    });
+                } catch (err) {
+                    console.warn('Error saving Penoyy message to cloud:', err);
+                }
+            };
+
+            // Real-time listener for Zizuy's message to Penoyy across all devices
+            onSnapshot(ZIZUY_MSG_DOC_REF, (msgSnap) => {
+                if (!msgSnap.exists()) return;
+                const msgData = msgSnap.data();
+                if (msgData && typeof window.syncPenoyyMsgFromCloud === 'function') {
+                    window.syncPenoyyMsgFromCloud(msgData, msgData.updatedByDevice === myDeviceId);
+                }
+            }, (err) => {
+                console.warn('Penoyy message onSnapshot error:', err);
+            });
 
             // Multi-chunk save function so up to 15+ photos sync across HP & Laptop without hitting Firestore 1MB limit
             window._firebaseSaveDoc = async function(extraPayload = {}) {
