@@ -1034,6 +1034,9 @@
                         <div class="torn-edge-bottom"></div>
                     </div>
 
+                    <!-- Mobile-Only Slot: Places Pesan Spesial Ulang Tahun right after Timer Plus and before Zizuy Logic on HP (< 1024px) -->
+                    <div id="mobile-hero-note-slot" class="lg:hidden"></div>
+
                     <!-- Interactive Mini Note Card (Torn Paper) -->
                     <div class="torn-paper-shell max-w-xl">
                         <div class="torn-edge-top"></div>
@@ -6038,7 +6041,29 @@ int main() {
         /* -----------------------------------------------------------------
            WINDOW ONLOAD & RESIZE HANDLERS
            ----------------------------------------------------------------- */
+        function syncHeroNoteResponsivePosition() {
+            const noteWrapper = document.getElementById('hero-note-sticky-wrapper');
+            const mobileSlot = document.getElementById('mobile-hero-note-slot');
+            const desktopRightCol = document.getElementById('hero-timer-right-col');
+            if (!noteWrapper || !mobileSlot || !desktopRightCol) return;
+
+            if (window.innerWidth < 1024) {
+                // On HP / Mobile (< 1024px): Timer Plus -> Pesan Spesial Ulang Tahun -> Zizuy Logic
+                if (noteWrapper.parentElement !== mobileSlot) {
+                    mobileSlot.appendChild(noteWrapper);
+                }
+                desktopRightCol.classList.add('hidden');
+            } else {
+                // On Laptop / Desktop (>= 1024px): Original 2-column layout (100% untouched)
+                desktopRightCol.classList.remove('hidden');
+                if (noteWrapper.parentElement !== desktopRightCol) {
+                    desktopRightCol.appendChild(noteWrapper);
+                }
+            }
+        }
+
         window.addEventListener('resize', () => {
+            syncHeroNoteResponsivePosition();
             if (introActive) initVortexParticles();
             if (mainAppCanvasesActive) {
                 initBgGalaxy();
@@ -6050,6 +6075,7 @@ int main() {
             if (window._appInitialized) return;
             window._appInitialized = true;
 
+            syncHeroNoteResponsivePosition();
             initLoveCursorEngine();
             startBirthdayBgm();
             runPreloaderSequence();
