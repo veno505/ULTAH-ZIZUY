@@ -649,993 +649,7 @@
         </div>
     </div>
 
-    <!-- ===================================================================
-         F-00: PRE-INTRO GALAXY BOOT LOADER (0% -> 100% WITH FADE IN/OUT)
-         =================================================================== -->
-    <section id="pre-loader" class="stage-layer gradient-stage-bg fixed inset-0 z-[60] flex-col justify-center items-center p-6 overflow-hidden select-none">
-        <!-- Soft Ambient Gradient Orb (Pure Radial, Zero Blur Cost) -->
-        <div class="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
-            <div class="w-[380px] sm:w-[540px] h-[380px] sm:h-[540px] rounded-full ambient-orb-rose"></div>
-        </div>
-
-        <div class="relative z-10 w-full max-w-sm flex flex-col items-center text-center">
-            <!-- Soft Orbit Rings & Heart Core -->
-            <div class="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center mb-7">
-                <div class="galaxy-ring-1 absolute inset-0 rounded-full border-2 border-cyberRose/55"></div>
-                <div class="galaxy-ring-2 absolute inset-2 rounded-full border-2 border-electricCyan/55"></div>
-                <div class="absolute inset-5 rounded-full border border-nebulaViolet/45 bg-velvet/95 flex flex-col items-center justify-center shadow-inner">
-                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f496/512.webp" alt="💖" class="noto-3d w-6 h-6 mb-0.5" onerror="this.outerHTML='<span class=\'text-cyberRose text-lg leading-none mb-0.5\'>♥</span>'">
-                    <span id="preloader-percent" class="font-display font-extrabold text-2xl sm:text-3xl text-starlight tracking-tight">0%</span>
-                </div>
-            </div>
-
-            <!-- Warm Scrapbook Tag -->
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/15 font-mono text-[11px] text-electricCyan tracking-wider uppercase mb-3">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyberRose animate-ping"></span>
-                <span>CHAPTER 19 // AZIZAH NAZWA</span>
-            </div>
-
-            <!-- Smooth Progress Bar -->
-            <div class="w-full h-2.5 rounded-full bg-white/10 overflow-hidden p-[1px] border border-white/10 mb-3">
-                <div id="preloader-bar" class="h-full rounded-full bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan transition-[width] duration-75" style="width: 0%"></div>
-            </div>
-
-            <!-- Dynamic Loading Status -->
-            <p id="preloader-status" class="font-mono text-xs text-mutedLavender min-h-[20px]">
-                Menyiapkan lembar kenangan spesial...
-            </p>
-        </div>
-    </section>
-
-    <!-- ===================================================================
-         F-00-B: AESTHETIC BIG COUNTDOWN GATE (BEFORE LOVE INTRO)
-         =================================================================== -->
-    <section id="countdown-gate" hidden class="stage-layer gradient-stage-bg fixed inset-0 z-50 flex-col justify-between items-center p-4 sm:p-7 md:p-8 overflow-hidden select-none">
-        <!-- Falling Shadow Love Rain Canvas -->
-        <canvas id="gate-stars-canvas" class="absolute inset-0 w-full h-full block pointer-events-none"></canvas>
-
-        <!-- Top Status Bar -->
-        <div class="relative z-10 w-full max-w-5xl flex items-center justify-between gap-2 pt-1 font-mono text-xs text-mutedLavender">
-            <div class="flex items-center gap-2 bg-velvet/90 border border-white/15 px-3 py-1.5 rounded-full text-[11px] sm:text-xs shadow-md">
-                <span id="gate-status-dot" class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
-                <span id="gate-status-text" class="text-starlight font-semibold">BIRTHDAY COUNTDOWN // LV.19</span>
-            </div>
-            <div class="flex items-center gap-2 bg-velvet/90 border border-white/15 px-3 py-1.5 rounded-full text-[11px] sm:text-xs shadow-md">
-                <span class="text-electricCyan font-bold">23.11.2026</span>
-                <span class="text-white/30">•</span>
-                <span class="text-starlight">00:00 WIB</span>
-            </div>
-        </div>
-
-        <!-- Center Main Timer Section -->
-        <div class="relative z-10 w-full max-w-3xl flex flex-col items-center text-center my-auto px-2 py-3 sm:py-4">
-            
-            <!-- Dynamic Mode Pill Badge -->
-            <div id="gate-mode-badge" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-cyberRose/15 border border-cyberRose/40 font-mono text-xs sm:text-sm text-cyberRose tracking-wider uppercase mb-3 sm:mb-4">
-                <span class="w-2 h-2 rounded-full bg-cyberRose animate-pulse"></span>
-                <span id="gate-mode-badge-text">MENUNGGU DETIK-DETIK RESMI 19 TAHUN</span>
-            </div>
-
-            <!-- Big Main Heading -->
-            <h1 id="gate-main-heading" class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight tracking-tight leading-tight flex flex-col items-center">
-                <span>Menuju Ulang Tahun Ke-19</span>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyberRose via-[#FF73B3] to-electricCyan mt-0.5">
-                    Azizah Nazwa Novita
-                </span>
-                <span class="font-hand text-3xl sm:text-4xl text-cyberRose -rotate-2 mt-0.5">(Zizuy!)</span>
-            </h1>
-
-            <p id="gate-sub-heading" class="text-xs sm:text-sm md:text-base text-mutedLavender mt-2 max-w-xl leading-relaxed">
-                Kejutannya akan terbuka otomatis tepat saat jarum jam menyentuh 23 November 2026 pukul 00:00:00 WIB.
-            </p>
-
-            <!-- TORN PAPER SHEET TIMER DISPLAY -->
-            <div class="torn-paper-shell w-full max-w-3xl my-4 sm:my-6">
-                <div class="torn-edge-top"></div>
-                <div class="torn-paper-body p-4 sm:p-6 md:p-8 relative">
-                    <div class="washi-tape w-20 sm:w-24 h-4 sm:h-5 absolute -top-3.5 left-1/2 -translate-x-1/2 -rotate-1 rounded-sm pointer-events-none"></div>
-
-                    <div class="flex items-center justify-center gap-1 sm:gap-3 md:gap-4 font-mono">
-                        <!-- Sign Symbol (- or +) -->
-                        <div id="gate-timer-sign" class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-cyberRose glow-rose select-none pr-0.5 sm:pr-1">
-                            -
-                        </div>
-
-                        <!-- Days Box -->
-                        <div class="flex-1 max-w-[65px] sm:max-w-[110px] md:max-w-[130px] flex flex-col items-center bg-[#140E22] border border-white/15 rounded-2xl p-2 sm:p-4 shadow-inner">
-                            <span id="gate-t-days" class="font-display font-extrabold text-2xl sm:text-5xl md:text-6xl text-starlight tracking-tight">00</span>
-                            <span class="text-[9px] sm:text-xs uppercase font-mono tracking-widest text-mutedLavender mt-0.5 sm:mt-1">Hari</span>
-                        </div>
-
-                        <span class="text-lg sm:text-4xl font-bold text-white/30">:</span>
-
-                        <!-- Hours Box -->
-                        <div class="flex-1 max-w-[65px] sm:max-w-[110px] md:max-w-[130px] flex flex-col items-center bg-[#140E22] border border-white/15 rounded-2xl p-2 sm:p-4 shadow-inner">
-                            <span id="gate-t-hours" class="font-display font-extrabold text-2xl sm:text-5xl md:text-6xl text-starlight tracking-tight">00</span>
-                            <span class="text-[9px] sm:text-xs uppercase font-mono tracking-widest text-mutedLavender mt-0.5 sm:mt-1">Jam</span>
-                        </div>
-
-                        <span class="text-lg sm:text-4xl font-bold text-white/30">:</span>
-
-                        <!-- Minutes Box -->
-                        <div class="flex-1 max-w-[65px] sm:max-w-[110px] md:max-w-[130px] flex flex-col items-center bg-[#140E22] border border-white/15 rounded-2xl p-2 sm:p-4 shadow-inner">
-                            <span id="gate-t-mins" class="font-display font-extrabold text-2xl sm:text-5xl md:text-6xl text-starlight tracking-tight">00</span>
-                            <span class="text-[9px] sm:text-xs uppercase font-mono tracking-widest text-mutedLavender mt-0.5 sm:mt-1">Menit</span>
-                        </div>
-
-                        <span class="text-lg sm:text-4xl font-bold text-white/30">:</span>
-
-                        <!-- Seconds Box -->
-                        <div class="flex-1 max-w-[65px] sm:max-w-[110px] md:max-w-[130px] flex flex-col items-center bg-[#140E22] border border-white/15 rounded-2xl p-2 sm:p-4 shadow-inner">
-                            <span id="gate-t-secs" class="font-display font-extrabold text-2xl sm:text-5xl md:text-6xl text-starlight tracking-tight">00</span>
-                            <span class="text-[9px] sm:text-xs uppercase font-mono tracking-widest text-mutedLavender mt-0.5 sm:mt-1">Detik</span>
-                        </div>
-
-                        <!-- Milliseconds ticker -->
-                        <div class="hidden sm:flex flex-col items-center bg-[#140E22]/80 border border-white/10 rounded-xl px-2 py-3 min-w-[42px]">
-                            <span id="gate-t-ms" class="font-mono text-sm md:text-base text-electricCyan font-bold">00</span>
-                            <span class="text-[8px] uppercase tracking-wider text-mutedLavender">MS</span>
-                        </div>
-                    </div>
-
-                    <!-- Live Auto-Unlock Notification Bar -->
-                    <div id="gate-countdown-notice" class="mt-3.5 sm:mt-4 pt-3 border-t border-dashed border-white/15 flex flex-col sm:flex-row items-center justify-center gap-2 font-mono text-[11px] sm:text-xs text-mutedLavender">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/23f3/512.webp" alt="⏳" class="noto-3d w-4 h-4" onerror="this.outerHTML='<span>⏳</span>'">
-                        <span>Terkunci otomatis • Tepat jam 00:00:00 WIB, pintu kejutan langsung terbuka sendiri ✨</span>
-                    </div>
-                </div>
-                <div class="torn-edge-bottom"></div>
-            </div>
-
-            <!-- BUTTON KHUSUS: MUNCUL KETIKA WAKTU SUDAH LEWAT DARI 23 NOVEMBER 00:00 WIB -->
-            <div id="gate-late-container" class="hidden flex-col items-center text-center mt-1 sm:mt-2">
-                <button id="gate-late-enter-btn" type="button" onclick="openLoveIntroGate()" class="spring-btn font-vanilla-btn group relative px-6 sm:px-9 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan font-bold text-xs sm:text-sm md:text-base shadow-[0_10px_30px_rgba(255,42,133,0.4)] hover:scale-105 transition-all flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer">
-                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f496/512.webp" alt="💖" class="noto-3d w-6 h-6" onerror="this.outerHTML='<span class=\'text-xl\'>💖</span>'">
-                    <span id="gate-late-btn-text" class="tracking-wide text-white">yahh sayangg udah lewat jam nya klik disini yachh</span>
-                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp" alt="✨" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span class=\'text-xl\'>✨</span>'">
-                </button>
-                <p class="font-hand text-lg sm:text-2xl text-starlight/90 mt-2">
-                    Klik tombol di atas untuk membuka kejutan ulang tahunmu!
-                </p>
-            </div>
-
-        </div>
-
-        <!-- Bottom Status Area -->
-        <div class="relative z-10 w-full max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left font-mono text-[11px] sm:text-xs text-mutedLavender pb-1">
-            <div class="flex items-center gap-2 bg-velvet/90 border border-white/15 px-3.5 py-1.5 rounded-full">
-                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f337/512.webp" alt="🌷" class="noto-3d w-4 h-4" onerror="this.outerHTML='<span>🌷</span>'">
-                <span>Hujan Bayang Love • Menemani Detik Menuju <strong class="text-electricCyan font-bold">19 Tahun</strong></span>
-            </div>
-
-            <!-- Discreet Simulator Toggle Button -->
-            <button id="gate-toggle-sim-btn" type="button" onclick="toggleGateSimulation()" class="spring-btn px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-mutedLavender hover:text-starlight text-[10px] sm:text-[11px] transition-colors flex items-center gap-1.5 cursor-pointer">
-                <span>⏱️</span>
-                <span id="gate-sim-label">Simulasi: Sudah Lewat 23 Nov (+)</span>
-            </button>
-        </div>
-    </section>
-
-    <!-- ===================================================================
-         F-01: 3D GALAXY & WIDE BINARY HEART INTRO GATE
-         =================================================================== -->
-    <section id="intro-gate" hidden class="stage-layer gradient-stage-bg fixed inset-0 z-50 flex-col justify-between items-center p-5 sm:p-8 overflow-hidden">
-        <!-- Interactive HTML5 Canvas for 60fps 3D Galaxy & Wide Binary Heart -->
-        <canvas id="vortex-canvas" class="absolute inset-0 w-full h-full block"></canvas>
-
-        <!-- Top Status Bar -->
-        <div class="relative z-10 w-full max-w-5xl flex items-center justify-between gap-2 pt-1 font-mono text-xs text-mutedLavender">
-            <div class="flex items-center gap-2 bg-velvet/90 border border-white/15 px-3 py-1.5 rounded-full text-[11px] sm:text-xs shadow-md">
-                <span class="w-2 h-2 rounded-full bg-cyberRose animate-ping"></span>
-                <span class="text-starlight font-medium">Chapter 19</span>
-                <span class="text-white/30">|</span>
-                <span class="text-electricCyan font-semibold">From Penoyy</span>
-            </div>
-            <div class="flex items-center gap-2 bg-velvet/90 border border-white/15 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs shadow-md">
-                <span class="hidden sm:inline">UNTUK:</span>
-                <strong class="text-starlight">ZIZUY</strong>
-                <span class="text-white/30">•</span>
-                <strong class="text-cyberRose">Lv.19</strong>
-            </div>
-        </div>
-
-        <!-- Floating Center-Top Happy Birthday Title -->
-        <div id="intro-hbd-banner" class="relative z-10 pointer-events-none text-center px-4 mt-2 sm:mt-3 transition-all duration-1000 ease-out opacity-0 translate-y-4">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyberRose/15 border border-cyberRose/35 font-mono text-[10px] sm:text-xs text-cyberRose tracking-widest uppercase mb-1 sm:mb-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyberRose animate-ping"></span>
-                <span>23 NOVEMBER 2026 • SPECIAL DAY</span>
-            </div>
-            <h1 class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-cyberRose via-[#FF73B3] to-electricCyan tracking-tight">
-                Happy Birthday!
-            </h1>
-            <p class="font-hand text-xl sm:text-3xl text-starlight mt-0.5 sm:mt-1">
-                Azizah Nazwa Novita (Zizuy) ✨
-            </p>
-        </div>
-
-        <!-- Floating Interaction Hint (Auto-fades out on interaction or after 10s) -->
-        <div id="intro-hint-pill" class="relative z-10 pointer-events-none text-center px-3 mt-1 sm:mt-2 transition-all duration-700 ease-out opacity-0 translate-y-2">
-            <div class="inline-block px-3.5 py-1 rounded-full bg-velvet/85 border border-white/15 font-mono text-[10px] sm:text-[11px] tracking-wider uppercase text-electricCyan shadow-lg">
-                Sentuh / gerakkan kursor untuk memutar hati 3D
-            </div>
-        </div>
-
-        <!-- Bottom Action Gate -->
-        <div class="relative z-10 w-full max-w-md flex flex-col items-center text-center pb-4 sm:pb-6 px-3">
-            <button id="run-exe-btn" type="button" class="spring-btn font-vanilla-btn group relative px-7 sm:px-10 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cyberRose via-[#9333EA] to-electricCyan font-bold text-sm sm:text-base md:text-lg shadow-[0_14px_38px_rgba(255,42,133,0.48),_0_0_24px_rgba(0,229,255,0.28)] border border-white/35 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 cursor-pointer whitespace-nowrap">
-                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f382/512.webp" alt="🎂" class="noto-3d w-6 h-6 shrink-0" onerror="this.outerHTML='<span class=\'text-xl\'>🎂</span>'">
-                <span id="run-exe-btn-text" class="tracking-wide text-white">Click Here Yaa Cantiik</span>
-                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp" alt="✨" class="noto-3d w-5 h-5 shrink-0" onerror="this.outerHTML='<span class=\'text-xl\'>✨</span>'">
-                <span class="font-mono text-white text-base group-hover:translate-x-1.5 transition-transform font-bold">→</span>
-            </button>
-            <span class="font-hand text-base sm:text-xl text-starlight/90 mt-2.5">
-                Dibuat khusus buat ulang tahun ke-19 Zizuy ✨
-            </span>
-        </div>
-    </section>
-
-    <!-- ===================================================================
-         MAIN EXPERIENCE WRAPPER (Rich Gradient Backdrop + Zero Blur Lag)
-         =================================================================== -->
-    <div id="main-app" hidden class="stage-layer relative min-h-screen flex-col w-full max-w-full overflow-x-clip">
-        <!-- Fixed Lightweight 3D Starfield Background -->
-        <canvas id="bg-galaxy-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-60"></canvas>
-        
-        <!-- Soft Ambient Gradient Orbs (Pure Radial Gradient, 0% Blur Lag!) -->
-        <div class="ambient-orb ambient-orb-rose w-[360px] h-[360px] top-12 -left-24"></div>
-        <div class="ambient-orb ambient-orb-violet w-[440px] h-[440px] top-[30%] -right-24"></div>
-        <div class="ambient-orb ambient-orb-cyan w-[380px] h-[380px] bottom-32 -left-20"></div>
-
-        <!-- Sticky Top Navigation Bar (Clean Solid-Translucent, Zero Backdrop Blur Jank) -->
-        <header class="sticky top-0 z-40 bg-[#140C22]/95 border-b border-white/10 shadow-lg">
-            <div class="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-2">
-                <div class="flex items-center gap-2 shrink-0">
-                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f382/512.webp" alt="🎂" class="noto-3d w-5 h-5" onerror="this.outerHTML='<div class=\'w-2.5 h-2.5 rounded-full bg-cyberRose\'></div>'">
-                    <span class="font-display font-bold text-sm sm:text-base tracking-tight text-starlight">
-                        Zizuy<span class="text-cyberRose font-hand text-lg ml-0.5">19</span>
-                    </span>
-                    <span class="hidden md:inline-block text-[11px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-mutedLavender border border-white/10">
-                        23.11.2026
-                    </span>
-                </div>
-
-                <nav class="flex items-center gap-1 sm:gap-2 font-mono text-[11px] sm:text-xs overflow-x-auto no-scrollbar py-1">
-                    <a href="#hero-timer" class="px-2 sm:px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/10 transition-colors whitespace-nowrap">
-                        <span class="sm:hidden">Timer</span>
-                        <span class="hidden sm:inline">01.Timer</span>
-                    </a>
-                    <a href="#scrapbook" class="px-2 sm:px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/10 transition-colors whitespace-nowrap">
-                        <span class="sm:hidden">Struk</span>
-                        <span class="hidden sm:inline">02.Struk&amp;Foto</span>
-                    </a>
-                    <a href="#quest-section" class="px-2 sm:px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/10 transition-colors whitespace-nowrap">
-                        <span class="sm:hidden">Quest</span>
-                        <span class="hidden sm:inline">03.Quest</span>
-                    </a>
-                    <a href="#letter-section" class="px-2 sm:px-2.5 py-1.5 rounded-lg text-mutedLavender hover:text-starlight hover:bg-white/10 transition-colors whitespace-nowrap">
-                        <span class="sm:hidden">Surat</span>
-                        <span class="hidden sm:inline">04.Surat</span>
-                    </a>
-                    <button id="toggle-motion-btn" type="button" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-mutedLavender hover:text-starlight transition-colors flex items-center gap-1 shrink-0 whitespace-nowrap">
-                        <span id="toggle-motion-label">Motion</span>
-                    </button>
-                    <button id="toggle-mode-btn" type="button" onclick="toggleAppMode()" title="Ganti Mode (Santai Bestie / Romance)" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-cyberRose/15 hover:bg-cyberRose/25 border border-cyberRose/40 text-cyberRose transition-all flex items-center gap-1 shrink-0 whitespace-nowrap font-mono">
-                        <span id="toggle-mode-icon">💕</span>
-                        <span id="toggle-mode-text" class="hidden xs:inline">Romance</span>
-                    </button>
-                    <button id="replay-intro-btn" type="button" title="Putar Ulang Hati Biner" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/50 text-cyberRose transition-all flex items-center gap-1 shrink-0 whitespace-nowrap">
-                        <span>♥</span>
-                        <span class="hidden sm:inline">Intro</span>
-                    </button>
-                </nav>
-            </div>
-        </header>
-
-        <!-- ===============================================================
-             SECTION 1: HERO, TORN-PAPER TIMER & WRITING-PAPER NOTE CARD
-             =============================================================== -->
-        <section id="hero-timer" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-12 sm:pb-20 md:pt-16 md:pb-24">
-            <div class="hero-grid-container grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-8 lg:gap-10">
-                
-                <!-- Left Column: Title, Torn-Paper Timer, & Torn-Paper Note Snippet -->
-                <div class="lg:col-span-7 space-y-5 sm:space-y-6 self-start">
-                    
-                    <!-- Quick Mode Switcher Selector -->
-                    <div class="inline-flex max-w-full items-center gap-1.5 p-1 rounded-2xl bg-velvet/95 border border-white/15 text-[11px] sm:text-xs font-mono">
-                        <span class="text-mutedLavender px-2 py-0.5 hidden xs:inline">Mode Ucapan:</span>
-                        <button id="mode-btn-friend" type="button" onclick="setAppMode('friend')" class="px-2.5 sm:px-3 py-1 rounded-xl transition-all duration-300 flex items-center gap-1.5 text-mutedLavender hover:text-starlight">
-                            <span>👥</span>
-                            <span>Santai (Bestie)</span>
-                        </button>
-                        <button id="mode-btn-romance" type="button" onclick="setAppMode('romance')" class="px-2.5 sm:px-3 py-1 rounded-xl transition-all duration-300 flex items-center gap-1.5 bg-cyberRose text-white font-bold">
-                            <span>💕</span>
-                            <span>Romance</span>
-                        </button>
-                    </div>
-
-                    <!-- Dynamic Status Pill -->
-                    <div class="inline-flex max-w-full items-center gap-2 px-3 py-1.5 rounded-full bg-velvet/90 border border-white/10 text-[11px] sm:text-xs">
-                        <span id="hero-status-dot" class="w-2 h-2 rounded-full bg-electricCyan animate-pulse shrink-0"></span>
-                        <span id="hero-status-pill-text" class="font-mono text-electricCyan tracking-wide truncate">
-                            let statusKita = undefined; // tapi prioritas utama
-                        </span>
-                    </div>
-
-                    <!-- Main Heading -->
-                    <div class="space-y-1.5 sm:space-y-2">
-                        <p class="font-mono text-[11px] sm:text-sm uppercase tracking-widest text-mutedLavender flex items-center gap-2">
-                            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.webp" alt="🥳" class="noto-3d w-4 h-4" onerror="this.outerHTML='<span>🥳</span>'">
-                            <span>SPECIAL EDITION • 23 NOVEMBER 2026 • LEVEL 19</span>
-                        </p>
-                        <h1 class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl xl:text-7xl leading-[1.1] sm:leading-[1.05] tracking-tight text-starlight">
-                            Happy 19th,<br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan">
-                                Azizah Nazwa
-                            </span>
-                            <span class="inline-block font-hand text-3xl sm:text-4xl md:text-5xl text-cyberRose -rotate-6 ml-1">
-                                (Zizuy!)
-                            </span>
-                        </h1>
-                    </div>
-
-                    <!-- F-02 TIMER: TORN PAPER RECEIPT CARD DIRECTLY UNDER HAPPY BIRTHDAY -->
-                    <div class="torn-paper-shell max-w-xl">
-                        <div class="torn-edge-top"></div>
-                        <div id="timer-card" class="torn-paper-body p-4 sm:p-6 relative transition-colors duration-500">
-                            <div class="washi-tape-cyan w-20 h-4 absolute -top-3 left-6 -rotate-2 rounded-sm pointer-events-none"></div>
-
-                            <!-- Top Tag -->
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                                <span id="timer-badge" class="inline-flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 rounded-full bg-electricCyan/15 text-electricCyan border border-electricCyan/35">
-                                    <span id="timer-dot" class="w-2 h-2 rounded-full bg-electricCyan animate-ping"></span>
-                                    <span id="timer-badge-text">LEVEL 19 UNLOCKED &amp; RUNNING (+)</span>
-                                </span>
-                                <span class="font-mono text-[10px] sm:text-[11px] text-mutedLavender">
-                                    23.11.2026 // 00:00 WIB
-                                </span>
-                            </div>
-
-                            <!-- Title inside timer -->
-                            <div class="mb-2.5">
-                                <h2 id="timer-heading" class="font-display font-bold text-base sm:text-xl text-starlight flex items-center gap-2">
-                                    <span>Waktu Berjalan Sejak Resmi 19 Tahun</span>
-                                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f31f/512.webp" alt="🌟" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>🌟</span>'">
-                                </h2>
-                                <p id="timer-subtext" class="text-xs text-mutedLavender mt-0.5">
-                                    Count-up real-time sejak 23 November 2026 pukul 00:00 WIB.
-                                </p>
-                            </div>
-
-                            <!-- Main Chrono Display Boxes -->
-                            <div class="bg-[#130D21] border border-white/10 rounded-2xl p-2.5 sm:p-3.5 my-2.5">
-                                <div class="flex items-center justify-center gap-1 sm:gap-2 md:gap-2.5 font-mono">
-                                    <div id="timer-sign" class="text-2xl sm:text-4xl font-bold text-electricCyan glow-cyan select-none pr-0.5 sm:pr-1">
-                                        +
-                                    </div>
-
-                                    <div class="flex flex-col items-center bg-velvet/95 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2 min-w-[48px] sm:min-w-[58px]">
-                                        <span id="t-days" class="font-display font-extrabold text-lg sm:text-2xl md:text-3xl text-starlight">00</span>
-                                        <span class="text-[8px] sm:text-[9px] uppercase tracking-wider text-mutedLavender mt-0.5">Hari</span>
-                                    </div>
-
-                                    <span class="text-sm sm:text-xl font-bold text-white/30">:</span>
-
-                                    <div class="flex flex-col items-center bg-velvet/95 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2 min-w-[48px] sm:min-w-[58px]">
-                                        <span id="t-hours" class="font-display font-extrabold text-lg sm:text-2xl md:text-3xl text-starlight">00</span>
-                                        <span class="text-[8px] sm:text-[9px] uppercase tracking-wider text-mutedLavender mt-0.5">Jam</span>
-                                    </div>
-
-                                    <span class="text-sm sm:text-xl font-bold text-white/30">:</span>
-
-                                    <div class="flex flex-col items-center bg-velvet/95 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2 min-w-[48px] sm:min-w-[58px]">
-                                        <span id="t-mins" class="font-display font-extrabold text-lg sm:text-2xl md:text-3xl text-starlight">00</span>
-                                        <span class="text-[8px] sm:text-[9px] uppercase tracking-wider text-mutedLavender mt-0.5">Menit</span>
-                                    </div>
-
-                                    <span class="text-sm sm:text-xl font-bold text-white/30">:</span>
-
-                                    <div class="flex flex-col items-center bg-velvet/95 border border-white/10 rounded-xl px-1.5 py-1.5 sm:px-3 sm:py-2 min-w-[48px] sm:min-w-[58px]">
-                                        <span id="t-secs" class="font-display font-extrabold text-lg sm:text-2xl md:text-3xl text-electricCyan">00</span>
-                                        <span class="text-[8px] sm:text-[9px] uppercase tracking-wider text-mutedLavender mt-0.5">Detik</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Conditional Late-Open Banner -->
-                            <div id="late-banner" hidden class="discrete-fade rounded-xl bg-electricCyan/10 border border-electricCyan/25 p-2.5 sm:p-3 my-2">
-                                <div class="flex items-start gap-2">
-                                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f388/512.webp" alt="🎈" class="noto-3d w-5 h-5 shrink-0" onerror="this.outerHTML='<span>🎈</span>'">
-                                    <p class="text-[11px] sm:text-xs text-starlight leading-relaxed">
-                                        <strong class="text-electricCyan font-mono">MODE PLUS (+) AKTIF:</strong> <span id="countdown-note-text">Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!</span>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Footer -->
-                            <div class="pt-2.5 border-t border-dashed border-white/15 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
-                                <span class="text-[10px] sm:text-[11px]">Paper Timer • Chapter 19</span>
-                                <span class="inline-flex items-center gap-1.5 text-electricCyan text-[10px] sm:text-[11px] font-semibold">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-pulse"></span>
-                                    <span>REAL-TIME ELAPSED (+)</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="torn-edge-bottom"></div>
-                    </div>
-
-                    <!-- Interactive Mini Note Card (Torn Paper) -->
-                    <div class="torn-paper-shell max-w-xl">
-                        <div class="torn-edge-top"></div>
-                        <div class="torn-paper-body p-3.5 sm:p-5">
-                            <div class="flex items-center justify-between pb-3 mb-3 border-b border-dashed border-white/15 gap-2">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-cyberRose/80"></span>
-                                    <span class="w-2.5 h-2.5 rounded-full bg-nebulaViolet/80"></span>
-                                    <span class="w-2.5 h-2.5 rounded-full bg-electricCyan/80"></span>
-                                    <span id="code-card-title" class="font-mono text-xs text-mutedLavender ml-2">priority_check.js</span>
-                                </div>
-                                <button id="compile-joke-btn" class="spring-btn font-mono text-[10px] sm:text-[11px] px-2.5 py-1 rounded-lg bg-cyberRose/15 text-cyberRose border border-cyberRose/30 hover:bg-cyberRose hover:text-white transition-colors shrink-0">
-                                    Jalankan Test -&gt;
-                                </button>
-                            </div>
-                            <pre class="font-mono text-[11px] sm:text-xs md:text-sm leading-relaxed overflow-x-auto text-starlight/90 no-scrollbar"><code id="code-snippet-box"><span class="text-nebulaViolet">const</span> target = <span class="text-electricCyan">"Azizah Nazwa Novita (Zizuy)"</span>;
-<span class="text-nebulaViolet">let</span> status = <span class="text-cyberRose">undefined</span>; <span class="text-mutedLavender">// ngalir aja dulu</span>
-<span class="text-nebulaViolet">const</span> kenyamananMainBerdua = <span class="text-electricCyan">Infinity</span>;
-
-<span class="text-nebulaViolet">if</span> (target === <span class="text-electricCyan">"Zizuy"</span>) {
-  memory.setPriority(<span class="text-cyberRose">"ALWAYS_NUMBER_ONE"</span>);
-}</code></pre>
-                            <div id="compile-output" hidden class="discrete-fade mt-3 pt-2.5 border-t border-dashed border-white/15 font-mono text-[11px] sm:text-xs text-electricCyan items-center gap-2">
-                                <span>✓ Output:</span>
-                                <span id="compile-output-text">Status memang belum dideklarasikan, tapi Zizuy udah ngabisin 99.9% RAM pikiran!</span>
-                            </div>
-                        </div>
-                        <div class="torn-edge-bottom"></div>
-                    </div>
-                </div>
-
-                <!-- Right Column: TORN WRITING PAPER NOTE CARD (Kertas Tulis Bergaris Khusus Ucapan - Sticky Ikut Turun Menyesuaikan Scroll) -->
-                <div id="hero-timer-right-col" class="lg:col-span-5 pt-3 sm:pt-4 h-full relative">
-                    <div id="hero-note-sticky-wrapper" class="torn-paper-shell lg:sticky lg:top-24 transition-all duration-300">
-                        <div class="torn-edge-top"></div>
-                        <div class="aesthetic-paper-card p-5 sm:p-7 md:p-8 pt-6 sm:pt-7 pl-11 sm:pl-16 relative">
-                            <!-- Notebook Binder Punch Holes on Left Margin -->
-                            <div class="absolute left-2.5 sm:left-4 top-8 bottom-8 flex flex-col justify-between pointer-events-none">
-                                <span class="w-3 h-3 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
-                                <span class="w-3 h-3 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
-                                <span class="w-3 h-3 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
-                                <span class="w-3 h-3 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
-                            </div>
-
-                            <!-- Top Paper Header & Memo Accents -->
-                            <div class="flex items-center justify-between pb-3 mb-3.5 border-b border-dashed border-white/20 gap-2">
-                                <div class="flex items-center gap-2">
-                                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f48c/512.webp" alt="💌" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>💌</span>'">
-                                    <span class="font-mono text-[10px] sm:text-xs font-bold tracking-wider text-cyberRose uppercase">
-                                        KERTAS UCAPAN // UNTUK ZIZUY
-                                    </span>
-                                </div>
-                                <span class="font-mono text-[10px] sm:text-xs text-mutedLavender bg-white/5 px-2 py-0.5 rounded-md border border-white/10">
-                                    23.11.2026
-                                </span>
-                            </div>
-
-                            <!-- Paper Memo Title -->
-                            <div class="space-y-1 mb-4">
-                                <h3 class="font-display font-extrabold text-xl sm:text-2xl text-starlight tracking-tight flex items-center gap-2">
-                                    <span>Pesan Spesial Ulang Tahun</span>
-                                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp" alt="✨" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>✨</span>'">
-                                </h3>
-                                <p class="font-mono text-[11px] sm:text-xs text-mutedLavender">
-                                    Ditulis di selembar kertas catatan untuk awal babak ke-19 kamu.
-                                </p>
-                            </div>
-
-                            <!-- The Prominent Hero Description on Ruled Writing Paper -->
-                            <div class="py-2">
-                                <p id="hero-description" class="font-notes text-sm sm:text-base md:text-lg leading-[30px] sm:leading-[32px] text-slate-100">
-                                    Di antara tumpukan tugas koding Semester 1, algoritma yang kadang bikin pusing, dan jutaan kali pertanyaan "hari ini mau makan di mana?"—web kecil ini sengaja dikompilasi khusus buat merayakan seseorang yang selalu bikin hari-hari belakangan ini jauh lebih seru.
-                                </p>
-                            </div>
-
-                            <!-- Handwritten Warm Closing Note (Font Caveat Preserved!) -->
-                            <div class="mt-5 pt-4 border-t border-dashed border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                                <div>
-                                    <p class="font-hand text-xl sm:text-2xl text-cyberRose leading-tight -rotate-1">
-                                        "Semoga di umur 19 ini, semua doa baikmu dikabulkan satu per satu~"
-                                    </p>
-                                    <p class="font-mono text-[10px] sm:text-[11px] text-mutedLavender/85 mt-1">
-                                        — Penoyy (23 November 2026)
-                                    </p>
-                                </div>
-                                <div class="shrink-0 self-end sm:self-center">
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-cyberRose/15 border border-cyberRose/40 font-mono text-[10px] text-cyberRose font-bold">
-                                        ★ CHAPTER 19
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="torn-edge-bottom"></div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- ===============================================================
-             SECTION 2: DIGITAL SCRAPBOOK — MEMORY RECEIPT (F-03) & POLAROID DECK (F-04)
-             =============================================================== -->
-        <section id="scrapbook" class="reveal-on-scroll relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-24 border-t border-white/5">
-            <!-- Section Header -->
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3 sm:gap-4">
-                <div>
-                    <div class="inline-flex items-center gap-2 font-mono text-[11px] sm:text-xs text-cyberRose uppercase tracking-widest mb-1.5 sm:mb-2">
-                        <span>// 02. UNCOMPILED ARCHIVES</span>
-                    </div>
-                    <h2 class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight">
-                        Struk Main &amp; Scrapbook Kita
-                    </h2>
-                </div>
-                <p class="text-xs sm:text-base text-mutedLavender max-w-md leading-relaxed">
-                    Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.
-                </p>
-            </div>
-
-            <!-- Asymmetric Bento Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                
-                <!-- LEFT: F-03 Semester 1 Memory Receipt -->
-                <div class="lg:col-span-5 flex justify-center">
-                    <div id="receipt-container" class="w-full max-w-sm sm:max-w-md transform -rotate-1 hover:rotate-0 transition-transform duration-500">
-                        <!-- Top Sawtooth Edge -->
-                        <div class="receipt-edge-top"></div>
-
-                        <!-- Receipt Body with Mobile-first padding -->
-                        <div class="receipt-paper px-4 py-5 sm:px-8 sm:py-7 text-starlight font-mono text-xs shadow-2xl relative">
-                            <!-- Washi tape on top -->
-                            <div class="washi-tape w-24 sm:w-28 h-5 sm:h-6 absolute -top-3.5 sm:-top-4 left-1/2 -translate-x-1/2 rotate-2 rounded-sm"></div>
-
-                            <!-- Receipt Header -->
-                            <div class="text-center border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4">
-                                <div id="receipt-store-title" class="text-sm sm:text-lg font-bold tracking-wider text-starlight">
-                                    INFORMATIKA MART // SEM-01
-                                </div>
-                                <div id="receipt-branch" class="text-[10px] sm:text-[11px] text-mutedLavender mt-0.5">
-                                    CABANG JALAN BERDUA • SHIFT MALAM &amp; SIANG
-                                </div>
-                                <div id="receipt-customer" class="text-[10px] sm:text-[11px] text-electricCyan mt-1">
-                                    CUSTOMER: AZIZAH NAZWA NOVITA (ZIZUY)
-                                </div>
-                            </div>
-
-                            <!-- Receipt Metadata -->
-                            <div class="flex justify-between text-[10px] sm:text-[11px] text-mutedLavender mb-3 sm:mb-4">
-                                <span>NO: #ZUY-19-2026</span>
-                                <span id="receipt-cashier">KASIR: ANAK_IT_01</span>
-                            </div>
-
-                            <!-- Line Items (Populated dynamically by setAppMode) -->
-                            <div id="receipt-items-container" class="space-y-2.5 sm:space-y-3 border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4">
-                                <!-- Rendered dynamically -->
-                            </div>
-
-                            <!-- Totals (Populated dynamically by setAppMode) -->
-                            <div id="receipt-totals-container" class="space-y-1.5 border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4 text-[11px] sm:text-xs">
-                                <!-- Rendered dynamically -->
-                            </div>
-
-                            <!-- Interactive Stamp Area -->
-                            <div class="text-center space-y-2.5 sm:space-y-3">
-                                <div id="receipt-stamp" class="inline-block border-2 border-cyberRose text-cyberRose font-mono font-bold text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded -rotate-6 tracking-widest opacity-90">
-                                    ★ VERIFIED LEVEL 19 ★
-                                </div>
-
-                                <!-- Fake Barcode SVG -->
-                                <div class="pt-1.5 flex justify-center opacity-75">
-                                    <svg class="h-8 sm:h-10 w-40 sm:w-48 fill-current text-starlight" viewBox="0 0 200 40">
-                                        <rect x="4" y="2" width="3" height="36"/><rect x="10" y="2" width="1.5" height="36"/><rect x="15" y="2" width="4" height="36"/><rect x="22" y="2" width="2" height="36"/><rect x="28" y="2" width="5" height="36"/><rect x="36" y="2" width="1.5" height="36"/><rect x="40" y="2" width="3" height="36"/><rect x="47" y="2" width="2" height="36"/><rect x="52" y="2" width="6" height="36"/><rect x="61" y="2" width="1.5" height="36"/><rect x="66" y="2" width="3" height="36"/><rect x="72" y="2" width="4" height="36"/><rect x="80" y="2" width="2" height="36"/><rect x="85" y="2" width="5" height="36"/><rect x="93" y="2" width="1.5" height="36"/><rect x="98" y="2" width="4" height="36"/><rect x="105" y="2" width="2" height="36"/><rect x="110" y="2" width="6" height="36"/><rect x="119" y="2" width="2" height="36"/><rect x="124" y="2" width="3" height="36"/><rect x="131" y="2" width="5" height="36"/><rect x="139" y="2" width="1.5" height="36"/><rect x="144" y="2" width="4" height="36"/><rect x="151" y="2" width="2" height="36"/><rect x="156" y="2" width="5" height="36"/><rect x="164" y="2" width="3" height="36"/><rect x="170" y="2" width="1.5" height="36"/><rect x="175" y="2" width="4" height="36"/><rect x="182" y="2" width="2" height="36"/><rect x="188" y="2" width="6" height="36"/>
-                                    </svg>
-                                </div>
-                                <p id="receipt-footer-text" class="text-[10px] sm:text-[11px] text-mutedLavender">
-                                    TERIMA KASIH SUDAH JADI PARTNER MAIN TERBAIK!
-                                </p>
-
-                                <button id="stamp-receipt-btn" class="spring-btn mt-1 w-full py-2 rounded-xl bg-white/5 hover:bg-cyberRose/20 border border-white/10 hover:border-cyberRose/40 text-xs text-starlight font-mono">
-                                    + Beri Stempel Zizuy
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Bottom Sawtooth Edge -->
-                        <div class="receipt-edge-bottom"></div>
-                    </div>
-                </div>
-
-                <!-- RIGHT: F-04 Interactive Polaroid Deck (Draggable & Swipeable) -->
-                <div class="lg:col-span-7 flex flex-col">
-                    <!-- Controls Bar -->
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 mb-3 sm:mb-4 bg-velvet/70 border border-white/10 rounded-2xl p-3 sm:px-4 sm:py-3">
-                        <div class="flex items-center gap-2 font-mono text-[11px] sm:text-xs text-mutedLavender">
-                            <span class="w-2 h-2 rounded-full bg-nebulaViolet shrink-0"></span>
-                            <span>Geser kartu atau ganti foto asli:</span>
-                        </div>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-                            <button id="shuffle-polaroids-btn" class="spring-btn flex-1 sm:flex-initial px-3 py-1.5 rounded-lg bg-cyberRose/15 hover:bg-cyberRose/30 text-cyberRose border border-cyberRose/30 font-mono text-xs text-center">
-                                Ganti Kartu -&gt;
-                            </button>
-                            <button id="reset-polaroids-btn" class="spring-btn px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-mutedLavender border border-white/10 font-mono text-xs">
-                                Rapikan
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Polaroid Interactive Stage -->
-                    <div id="polaroid-stage" class="relative w-full min-h-[420px] sm:min-h-[500px] rounded-3xl bg-velvet/40 border border-white/10 p-3 sm:p-8 flex items-center justify-center overflow-hidden">
-                        <!-- Subtle Grid Background Inside Stage -->
-                        <div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(#8B5CF6 1px, transparent 1px); background-size: 24px 24px;"></div>
-
-                        <!-- Polaroid 1 -->
-                        <div class="polaroid-card absolute w-[230px] sm:w-72 p-3 sm:p-3.5 pb-4 sm:pb-5 rounded-2xl" data-rot="-3" data-x="-12" data-y="-8" style="transform: translate3d(-12px, -8px, 0) rotate(-3deg); z-index: 10;">
-                            <div class="washi-tape-cyan w-16 sm:w-20 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 -rotate-2 rounded-sm pointer-events-none"></div>
-                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-2.5 sm:mb-3 group">
-                                <img id="pol-img-1" src="" alt="Memori 1" class="hidden w-full h-full object-cover pointer-events-none">
-                                <!-- Custom Cyber-Romantic Illustration SVG -->
-                                <div id="pol-svg-1" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#1A102B] via-[#0F172A] to-[#2A0E24] p-3 sm:p-4 text-center">
-                                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-1.5 sm:mb-2 text-cyberRose" viewBox="0 0 64 64" fill="none">
-                                        <path d="M16 36C16 26 24 20 32 20C40 20 48 26 48 36" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"/>
-                                        <circle cx="22" cy="40" r="6" stroke="#FF2A85" stroke-width="2.5"/>
-                                        <circle cx="42" cy="40" r="6" stroke="#FF2A85" stroke-width="2.5"/>
-                                        <path d="M32 10L34 15L39 16L35 19L36 24L32 21L28 24L29 19L25 16L30 15L32 10Z" fill="#8B5CF6"/>
-                                    </svg>
-                                    <span id="pol-title-1" class="font-mono text-[10px] sm:text-[11px] text-electricCyan">Misi Keliling &amp; Cari Angin</span>
-                                    <span id="pol-sub-1" class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">"Tujuan awal ke A, nyampenya ke B"</span>
-                                </div>
-                                <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
-                                    + Foto
-                                    <input type="file" accept="image/*" class="hidden" onchange="replacePolaroidImage(event, 1)">
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between text-[10px] font-mono text-mutedLavender mb-1">
-                                <span>MEM_01.RAW</span>
-                                <span id="pol-badge-1" class="text-cyberRose">♥ FAV</span>
-                            </div>
-                            <p id="pol-quote-1" class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
-                                "Pas bingung mau ke mana tapi yang penting jalan berdua dulu!"
-                            </p>
-                        </div>
-
-                        <!-- Polaroid 2 -->
-                        <div class="polaroid-card absolute w-[230px] sm:w-72 p-3 sm:p-3.5 pb-4 sm:pb-5 rounded-2xl" data-rot="2.5" data-x="12" data-y="10" style="transform: translate3d(12px, 10px, 0) rotate(2.5deg); z-index: 20;">
-                            <div class="washi-tape w-16 sm:w-20 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 rotate-3 rounded-sm pointer-events-none"></div>
-                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-2.5 sm:mb-3">
-                                <img id="pol-img-2" src="" alt="Memori 2" class="hidden w-full h-full object-cover pointer-events-none">
-                                <div id="pol-svg-2" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#121E31] via-[#1B112C] to-[#2D0F28] p-3 sm:p-4 text-center">
-                                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-1.5 sm:mb-2" viewBox="0 0 64 64" fill="none">
-                                        <rect x="14" y="18" width="24" height="30" rx="4" stroke="#FF2A85" stroke-width="2.5"/>
-                                        <path d="M38 24H44C47.3137 24 50 26.6863 50 30C50 33.3137 47.3137 36 44 36H38" stroke="#00E5FF" stroke-width="2.5"/>
-                                        <path d="M22 12C22 12 24 8 26 12C28 16 30 12 30 12" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round"/>
-                                    </svg>
-                                    <span id="pol-title-2" class="font-mono text-[10px] sm:text-[11px] text-cyberRose">Kuliner &amp; Jajan Berdua</span>
-                                    <span id="pol-sub-2" class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Obat paling ampuh habis pusing kuliah</span>
-                                </div>
-                                <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
-                                    + Foto
-                                    <input type="file" accept="image/*" class="hidden" onchange="replacePolaroidImage(event, 2)">
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between text-[10px] font-mono text-mutedLavender mb-1">
-                                <span>MEM_02.RAW</span>
-                                <span id="pol-badge-2" class="text-electricCyan">10/10 SERU</span>
-                            </div>
-                            <p id="pol-quote-2" class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
-                                "Bilangnya 'terserah', tapi pas nyampe tempat makan langsung senyum."
-                            </p>
-                        </div>
-
-                        <!-- Polaroid 3 (Top of Stack) -->
-                        <div class="polaroid-card absolute w-[230px] sm:w-72 p-3 sm:p-3.5 pb-4 sm:pb-5 rounded-2xl" data-rot="-1" data-x="0" data-y="-4" style="transform: translate3d(0px, -4px, 0) rotate(-1deg); z-index: 30;">
-                            <div class="washi-tape w-20 sm:w-24 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 -rotate-1 rounded-sm pointer-events-none"></div>
-                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-2.5 sm:mb-3">
-                                <img id="pol-img-3" src="" alt="Memori 3" class="hidden w-full h-full object-cover pointer-events-none">
-                                <div id="pol-svg-3" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#230E2B] via-[#131129] to-[#0B232E] p-3 sm:p-4 text-center">
-                                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-1.5 sm:mb-2" viewBox="0 0 64 64" fill="none">
-                                        <rect x="10" y="14" width="44" height="30" rx="3" stroke="#00E5FF" stroke-width="2.5"/>
-                                        <path d="M6 48H58" stroke="#8B5CF6" stroke-width="3" stroke-linecap="round"/>
-                                        <path d="M24 25L19 29L24 33" stroke="#FF2A85" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M40 25L45 29L40 33" stroke="#FF2A85" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M34 23L30 35" stroke="#F4F4F6" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                    <span id="pol-title-3" class="font-mono text-[10px] sm:text-[11px] text-nebulaViolet">Pejuang S1 Informatika '26</span>
-                                    <span id="pol-sub-3" class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Semester 1 Core Memory</span>
-                                </div>
-                                <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
-                                    + Foto
-                                    <input type="file" accept="image/*" class="hidden" onchange="replacePolaroidImage(event, 3)">
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between text-[10px] font-mono text-mutedLavender mb-1">
-                                <span>MEM_03.RAW</span>
-                                <span id="pol-badge-3" class="text-cyberRose">LEVEL 19 ♥</span>
-                            </div>
-                            <p id="pol-quote-3" class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
-                                "Partner cerita, partner main, &amp; alasan kenapa Semester 1 nggak ngebosenin."
-                            </p>
-                        </div>
-
-                        <!-- Bottom Helper Caption -->
-                        <div class="absolute bottom-2 sm:bottom-3 inset-x-0 text-center pointer-events-none px-2">
-                            <span class="font-mono text-[10px] sm:text-[11px] text-mutedLavender/80 bg-obsidian/80 px-2.5 py-1 rounded-full border border-white/10">
-                                Tip: Tarik kartu polaroid ke mana aja atau klik "+ Foto"
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- ===============================================================
-             SECTION 3: ZIZUY'S QUEST CHOICE — MINI RPG VISUAL NOVEL (F-05)
-             =============================================================== -->
-        <section id="quest-section" class="reveal-on-scroll relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-24 border-t border-white/10">
-            <!-- Section Header -->
-            <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-                <div class="inline-flex items-center gap-2 font-mono text-[11px] sm:text-xs text-electricCyan uppercase tracking-widest mb-1.5 sm:mb-2">
-                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f381/512.webp" alt="🎁" class="noto-3d w-4 h-4" onerror="this.outerHTML='<span>🎁</span>'">
-                    <span id="quest-tag-text">// 03. MINI QUEST BERHADIAH</span>
-                </div>
-                <h2 id="quest-title-text" class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight">
-                    Zizuy's Quest: Road to Lv.19
-                </h2>
-                <p id="quest-subtitle-text" class="text-xs sm:text-base text-mutedLavender mt-2 leading-relaxed">
-                    Selesaikan 3 babak singkat seputar keseharian kita buat membuka <strong class="text-starlight">Reward Voucher Asli</strong> yang bisa kamu klaim kapan aja!
-                </p>
-            </div>
-
-            <!-- Torn Paper Console Sheet -->
-            <div class="torn-paper-shell">
-                <div class="torn-edge-top"></div>
-                <div class="torn-paper-body p-4 sm:p-8 md:p-10 relative">
-                    <div class="washi-tape w-24 h-5 absolute -top-3.5 left-1/2 -translate-x-1/2 rotate-1 rounded-sm pointer-events-none"></div>
-
-                    <!-- Top Player HUD -->
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 sm:pb-5 mb-5 sm:mb-6 border-b border-dashed border-white/15">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-cyberRose via-nebulaViolet to-electricCyan p-[1.5px] shrink-0">
-                                <div class="w-full h-full bg-[#130D22] rounded-[14px] flex items-center justify-center font-display font-extrabold text-base sm:text-lg text-starlight">
-                                    Z19
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <span id="quest-char-name" class="font-display font-bold text-sm sm:text-lg text-starlight">Azizah Nazwa (Zizuy)</span>
-                                    <span id="quest-char-lv" class="font-mono text-[10px] sm:text-[11px] px-2 py-0.5 rounded bg-cyberRose/20 text-cyberRose border border-cyberRose/30">Lv. 19</span>
-                                </div>
-                                <p class="font-mono text-[11px] sm:text-xs text-mutedLavender mt-0.5">
-                                    <span id="quest-char-class-wrap">Class: <span id="quest-char-class" class="text-electricCyan">S1 Informatika '26</span></span><span id="quest-char-divider"> • </span><span id="quest-char-buff-wrap">Buff: <span id="quest-char-buff" class="text-starlight">Bikin Nyaman +100</span></span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Stage Progress Indicator -->
-                        <div class="flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-xs self-start sm:self-auto">
-                            <span id="step-dot-1" class="px-2.5 sm:px-3 py-1 rounded-full bg-cyberRose text-white font-bold">Stage 1</span>
-                            <span class="text-white/20">-&gt;</span>
-                            <span id="step-dot-2" class="px-2.5 sm:px-3 py-1 rounded-full bg-white/5 text-mutedLavender border border-white/10">Stage 2</span>
-                            <span class="text-white/20">-&gt;</span>
-                            <span id="step-dot-3" class="px-2.5 sm:px-3 py-1 rounded-full bg-white/5 text-mutedLavender border border-white/10">Reward</span>
-                        </div>
-                    </div>
-
-                    <!-- Dynamic Quest Stage Body -->
-                    <div id="quest-body" class="min-h-[240px] sm:min-h-[260px] flex flex-col justify-between">
-                        <!-- Populated dynamically by JS -->
-                    </div>
-                </div>
-                <div class="torn-edge-bottom"></div>
-            </div>
-        </section>
-
-        <!-- ===============================================================
-             SECTION 4: THE UNCOMPILED LETTER ON RULED WRITING PAPER (F-06)
-             =============================================================== -->
-        <section id="letter-section" class="reveal-on-scroll relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-28 border-t border-white/10">
-            <div class="torn-paper-shell">
-                <div class="torn-edge-top"></div>
-                <div class="relative writing-paper-surface p-5 sm:p-10 md:p-14 pl-11 sm:pl-16 overflow-hidden">
-                    <div class="washi-tape-cyan w-28 h-5 absolute -top-3.5 left-1/2 -translate-x-1/2 -rotate-1 rounded-sm pointer-events-none z-20"></div>
-
-                    <!-- Notebook Punch Holes along Left Margin -->
-                    <div class="absolute left-2.5 sm:left-4 top-10 bottom-10 flex flex-col justify-between pointer-events-none z-10">
-                        <span class="w-3.5 h-3.5 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
-                        <span class="w-3.5 h-3.5 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
-                        <span class="w-3.5 h-3.5 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
-                        <span class="w-3.5 h-3.5 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
-                        <span class="w-3.5 h-3.5 rounded-full bg-[#120A1E] border border-white/15 shadow-inner"></span>
-                    </div>
-
-                    <canvas id="firefly-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-45"></canvas>
-
-                    <!-- ==============================================================
-                         VIEW 1: MODE BESTIE -> LEMBAR HARAPAN & EVALUASI DIRI (MINI WORD)
-                         Zizuy yang mengisi sendiri harapan ke depan & evaluasi dirinya!
-                         ============================================================== -->
-                    <div id="section4-friend-view" class="relative z-10">
-                        <!-- Header -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-dashed border-white/20">
-                            <div class="font-mono text-[11px] sm:text-xs text-cyberRose flex items-center gap-2">
-                                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f4dd/512.webp" alt="📝" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>📝</span>'">
-                                <span>LEMBAR_REFLEKSI_HARAPAN_ZIZUY_19.DOCX</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span id="editor-save-badge" class="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/25 flex items-center gap-1.5">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                                    <span>Tersimpan Otomatis</span>
-                                </span>
-                                <span class="font-mono text-[10px] sm:text-xs text-mutedLavender">
-                                    23 November 2026 • Edisi Mandiri
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- Title -->
-                        <div class="mb-4">
-                            <h2 id="wishlist-heading-title" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-1.5">
-                                Catatan Harapan &amp; Evaluasi Diri <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
-                            </h2>
-                            <p id="wishlist-heading-sub" class="font-mono text-[11px] sm:text-xs text-mutedLavender">
-                                Lembar catatan bebas untuk kamu tulis sendiri: harapan masa depan, target umur 19, dan apa aja yang ingin kamu revisi dari sebelumnya ✨
-                            </p>
-                        </div>
-
-                        <!-- Mini MS Word Toolbar -->
-                        <div class="mini-word-toolbar bg-[#120A1E]/90 border border-white/15 rounded-xl p-1.5 sm:p-2 mb-4 flex flex-wrap items-center gap-1 sm:gap-1.5 shadow-md text-xs font-mono select-none">
-                            <span class="text-[10px] text-mutedLavender uppercase font-bold px-1.5 hidden md:inline">Word Mini:</span>
-                            
-                            <!-- Bold -->
-                            <button type="button" onclick="formatWishlistDoc('bold')" title="Tebal (Bold)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight font-bold flex items-center justify-center transition-all hover:scale-105 active:scale-95">
-                                <strong>B</strong>
-                            </button>
-                            <!-- Italic -->
-                            <button type="button" onclick="formatWishlistDoc('italic')" title="Miring (Italic)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight italic flex items-center justify-center transition-all hover:scale-105 active:scale-95">
-                                <em>I</em>
-                            </button>
-                            <!-- Underline -->
-                            <button type="button" onclick="formatWishlistDoc('underline')" title="Garis Bawah (Underline)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight underline flex items-center justify-center transition-all hover:scale-105 active:scale-95">
-                                <u>U</u>
-                            </button>
-                            <!-- StrikeThrough -->
-                            <button type="button" onclick="formatWishlistDoc('strikeThrough')" title="Coret (Strikethrough)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight line-through flex items-center justify-center transition-all hover:scale-105 active:scale-95">
-                                <s>S</s>
-                            </button>
-
-                            <div class="w-px h-5 bg-white/15 mx-0.5"></div>
-
-                            <!-- Bullet List -->
-                            <button type="button" onclick="formatWishlistDoc('insertUnorderedList')" title="Daftar Poin (•)" class="px-2 h-7 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight flex items-center gap-1 transition-all hover:scale-105 active:scale-95">
-                                <span>•≡</span>
-                            </button>
-                            <!-- Numbered List -->
-                            <button type="button" onclick="formatWishlistDoc('insertOrderedList')" title="Daftar Angka (1. 2.)" class="px-2 h-7 sm:h-8 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-starlight flex items-center gap-1 transition-all hover:scale-105 active:scale-95">
-                                <span>1≡</span>
-                            </button>
-
-                            <div class="w-px h-5 bg-white/15 mx-0.5"></div>
-
-                            <!-- Color Highlights -->
-                            <button type="button" onclick="formatWishlistColor('#FF2A85')" title="Warna Pink Cinta" class="px-2 h-7 sm:h-8 rounded-lg bg-cyberRose/15 hover:bg-cyberRose/30 border border-cyberRose/40 text-cyberRose font-bold flex items-center gap-1 transition-all">
-                                <span class="w-2.5 h-2.5 rounded-full bg-cyberRose"></span>
-                                <span class="hidden sm:inline text-[10px]">Pink</span>
-                            </button>
-                            <button type="button" onclick="formatWishlistColor('#00E5FF')" title="Warna Cyan Neon" class="px-2 h-7 sm:h-8 rounded-lg bg-electricCyan/15 hover:bg-electricCyan/30 border border-electricCyan/40 text-electricCyan font-bold flex items-center gap-1 transition-all">
-                                <span class="w-2.5 h-2.5 rounded-full bg-electricCyan"></span>
-                                <span class="hidden sm:inline text-[10px]">Cyan</span>
-                            </button>
-                            <button type="button" onclick="formatWishlistColor('#F4F4F6')" title="Warna Putih Standar" class="px-2 h-7 sm:h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-starlight flex items-center gap-1 transition-all">
-                                <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
-                                <span class="hidden sm:inline text-[10px]">Normal</span>
-                            </button>
-
-                            <div class="w-px h-5 bg-white/15 mx-0.5"></div>
-
-                            <!-- Action buttons -->
-                            <button type="button" onclick="resetWishlistTemplate()" title="Reset ke Template Awal" class="px-2.5 h-7 sm:h-8 rounded-lg bg-white/5 hover:bg-rose-500/20 hover:border-rose-500/40 border border-white/10 text-mutedLavender hover:text-rose-300 text-[10px] sm:text-xs flex items-center gap-1 transition-all ml-auto">
-                                <span>↺</span>
-                                <span class="hidden sm:inline">Reset</span>
-                            </button>
-                            <button type="button" onclick="manualSaveWishlist()" title="Simpan Catatan ke Browser" class="px-3 h-7 sm:h-8 rounded-lg bg-gradient-to-r from-cyberRose to-nebulaViolet hover:brightness-110 text-white font-bold text-[10px] sm:text-xs flex items-center gap-1.5 shadow-sm transition-all hover:scale-105 active:scale-95">
-                                <span>💾</span>
-                                <span>Simpan</span>
-                            </button>
-                        </div>
-
-                        <!-- Editable Ruled Note Area (Font MV Boli preserved, lined paper) -->
-                        <div id="zizuy-wishlist-editor"
-                             contenteditable="true"
-                             spellcheck="false"
-                             class="font-notes outline-none min-h-[380px] sm:min-h-[440px] text-sm sm:text-base md:text-lg text-starlight/95 leading-[32px] sm:leading-[36px] transition-colors focus:ring-1 focus:ring-cyberRose/30 rounded-xl p-3 sm:p-5 bg-transparent cursor-text select-text">
-                            <!-- Populated dynamically by JS with default template or user's saved writing -->
-                        </div>
-
-                        <!-- Footer Info -->
-                        <div class="mt-4 pt-3 border-t border-dashed border-white/20 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
-                            <span class="flex items-center gap-1.5">
-                                <span>💡</span>
-                                <span>Klik langsung di atas tulisan untuk mulai mengetik atau mengedit sesuka hatimu.</span>
-                            </span>
-                            <span id="wishlist-word-count" class="text-electricCyan font-bold">
-                                0 kata
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- ==============================================================
-                         VIEW 2: MODE ROMANCE -> SURAT SPESIAL PENUH PERASAAN DARI PENOYY
-                         Kembali ke surat romantis yang diisi oleh kamu untuk dibaca Zizuy!
-                         ============================================================== -->
-                    <div id="section4-romance-view" class="relative z-10 hidden">
-                        <!-- Header -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-dashed border-white/20">
-                            <div class="font-mono text-[11px] sm:text-xs text-cyberRose flex items-center gap-2">
-                                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f48c/512.webp" alt="💌" class="noto-3d w-5 h-5" onerror="this.outerHTML='<span>💌</span>'">
-                                <span id="romance-letter-file-label">SURAT_UNTUK_ZIZUY_ROMANCE_V19.TXT</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="font-mono text-[10px] text-cyberRose bg-cyberRose/15 px-2.5 py-0.5 rounded-full border border-cyberRose/30 flex items-center gap-1">
-                                    <span>♥</span>
-                                    <span>Edisi Spesial Dari Hati</span>
-                                </span>
-                                <span id="romance-letter-date-label" class="font-mono text-[10px] sm:text-xs text-mutedLavender">
-                                    23 November 2026 • Level 19
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- Greeting -->
-                        <div class="mb-5 sm:mb-6">
-                            <h2 id="romance-letter-title" class="font-display font-extrabold text-xl sm:text-3xl md:text-4xl text-starlight mb-2">
-                                Hai, Azizah Nazwa Novita <span class="font-hand text-cyberRose text-2xl sm:text-4xl md:text-5xl ml-1">Zizuy!</span>
-                            </h2>
-                            <p id="romance-letter-subtitle" class="font-mono text-[11px] sm:text-xs text-mutedLavender">
-                                Ditulis khusus dan tulus dari hati untuk merayakan awal usia 19 tahunmu ✨
-                            </p>
-                        </div>
-
-                        <!-- Romantic Letter Progressive Paragraphs (Font MV Boli) -->
-                        <div id="romance-letter-paragraphs" class="font-notes space-y-4 sm:space-y-5 text-sm sm:text-base md:text-lg text-starlight/95 leading-[32px] sm:leading-[36px]">
-                            <!-- Populated dynamically by initRomanceLetter() -->
-                        </div>
-
-                        <!-- Reveal Next Paragraph Button -->
-                        <div id="romance-reveal-container" class="mt-6 sm:mt-8 pt-5 border-t border-dashed border-white/20 flex flex-col sm:flex-row items-center justify-between gap-3">
-                            <button id="romance-reveal-btn" type="button" onclick="revealNextRomanceParagraph()" class="spring-btn w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-cyberRose via-nebulaViolet to-electricCyan text-white font-bold text-xs sm:text-sm shadow-[0_8px_24px_rgba(255,42,133,0.35)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
-                                <span id="romance-reveal-btn-text">Buka Paragraf Selanjutnya (1/4)</span>
-                                <span>→</span>
-                            </button>
-                            <span id="romance-reveal-hint" class="font-mono text-[11px] text-mutedLavender">
-                                Klik tombol untuk membuka lembar paragraf berikutnya ✨
-                            </span>
-                        </div>
-
-                        <!-- Handwritten Closing Footer (Revealed alongside final paragraph) -->
-                        <div id="romance-closing-footer" class="hidden mt-8 pt-5 border-t border-dashed border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <div>
-                                <p id="romance-closing-quote" class="font-hand text-xl sm:text-2xl text-cyberRose leading-tight -rotate-1">
-                                    "Selalu ada buat kamu, kemarin, hari ini, dan besok~"
-                                </p>
-                                <p id="romance-closing-author" class="font-mono text-[11px] sm:text-xs text-mutedLavender mt-1">
-                                    — Dari Penoyy yang selalu sayang Zizuy (23 November 2026)
-                                </p>
-                            </div>
-                            <div class="shrink-0 self-end sm:self-center">
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyberRose/15 border border-cyberRose/40 font-mono text-xs text-cyberRose font-bold">
-                                    ♥ CHAPTER 19 WITH LOVE
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+    </div>
                 <div class="torn-edge-bottom"></div>
             </div>
         </section>
@@ -1686,18 +700,7 @@
             </div>
 
             <!-- Mode Selector inside Editor -->
-            <div class="px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/10 flex flex-wrap items-center justify-between gap-2.5 bg-obsidian/90">
-                <div class="flex items-center gap-2">
-                    <span class="font-mono text-xs text-mutedLavender hidden xs:inline">Edit Mode:</span>
-                    <div class="inline-flex rounded-xl p-1 bg-white/5 border border-white/10">
-                        <button id="editor-tab-romance" onclick="switchEditorTab('romance')" class="px-2.5 sm:px-3 py-1 rounded-lg font-mono text-xs font-bold transition-all bg-cyberRose/30 text-white border border-cyberRose/50">
-                            💕 Romance
-                        </button>
-                        <button id="editor-tab-friend" onclick="switchEditorTab('friend')" class="px-2.5 sm:px-3 py-1 rounded-lg font-mono text-xs font-medium text-mutedLavender hover:text-starlight transition-all">
-                            👥 Bestie Santai
-                        </button>
-                    </div>
-                </div>
+            
                 <span id="editor-active-target-badge" class="font-mono text-[11px] text-electricCyan">
                     Target: Mode Romance Aktif
                 </span>
@@ -3097,185 +2100,19 @@
         }
 
         /* -----------------------------------------------------------------
-           DUAL MODE SYSTEM: ROMANCE (DEFAULT) VS BESTIE/FRIEND SANTAI
-           Supports zero-cringe friend mode & aesthetic cyber-romance mode
+           CONTENT DATA SYSTEM: SINGLE UNIFIED CLEAN EXPERIENCE
+           Directly displays clean, non-cringe aesthetic birthday page for Zizuy
            ----------------------------------------------------------------- */
-        const DEFAULT_CONTENT_MODES = {
-            romance: {
-                id: 'romance',
-                name: 'Mode Romance',
-                gateLateBtnText: 'yahh sayangg udah lewat jam nya klik disini yachh',
-                gateClickHereBtnText: 'Click Here Yaa Cantiik',
-                countdownNote: 'Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!',
-                statusPill: 'STATUS_HATI: PRIORITAS_UTAMA // AZIZAH NAZWA NOVITA (ZIZUY) V19.0 💕',
-                heroDesc: 'Sebuah persembahan kecil yang sengaja dirancang khusus untuk merayakan seseorang yang bener-bener spesial. Selamat ulang tahun ke-19, Azizah Nazwa Novita (Zizuy). Semoga perjalanan babak ke-19 kamu dipenuhi kebahagiaan manis, tawa yang lepas, dan sejuta momen indah.',
-                codeTitle: '// romance_status.cpp',
-                codeSnippet: `// Babak 19: Kebahagiaan & Rasa Sayang Tanpa Batas
-#include <iostream>
-#include <string>
-
-int main() {
-    std::string manusiaFavorit = "Azizah Nazwa Novita (Zizuy)";
-    int umur = 19;
-    bool selaluSpesial = true;
-    
-    while (selaluSpesial) {
-        std::cout << "Happy 19th Birthday buat orang yang selalu bikin hari-hariku jauh lebih bermakna! 💕" << std::endl;
-        std::cout << "Semoga senyum manismu selalu bersinar lebih terang dari bintang apapun." << std::endl;
-        break;
-    }
-    return 0;
-}`,
-                jokes: [
-                    'Kompilasi Sukses: Kehadiranmu selalu bikin duniaku terasa jauh lebih manis! ✨',
-                    'Warning: Terlalu banyak rasa sayang dan kenyamanan terdeteksi di umur 19! 💖',
-                    'Notice: Semoga setiap impian dan doa baikmu dikabulkan Tuhan satu per satu.',
-                    'Prioritas Utama: Semoga Zizuy jadi orang paling bahagia di dunia!'
-                ],
-                scrapbookTag: '// 02. STATISTIK SEMESTER 1 & SCRAPBOOK',
-                scrapbookTitle: 'Struk Main & Scrapbook Kita',
-                scrapbookSubtitle: 'Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.',
-                receiptStoreTitle: 'INFORMATIKA MART // SEM-01',
-                receiptBranch: 'INFORMATIKA MART // CABANG HATI SPESIAL',
-                receiptCustomer: 'Azizah Nazwa Novita (Zizuy Tersayang)',
-                receiptCashier: 'Penoyy (Yang Selalu Ada Buat Kamu)',
-                receiptItems: [
-                    { name: 'Kenyamanan & Perhatian Tanpa Batas', qty: '1 x', price: 'TAK TERNILAI' },
-                    { name: 'Senyuman Manis Zizuy Bikin Salting', qty: '365 x', price: 'GRATIS' },
-                    { name: 'Selalu Nemenin & Jadi Tempat Cerita', qty: '999 x', price: 'SELAMANYA' },
-                    { name: 'Traktir Kencan Rayain Umur 19 Tahun', qty: '1 x', price: 'LUNAS DI AWAL' }
-                ],
-                receiptTotals: [
-                    { label: 'Subtotal (Momen Berharga)', val: '19 Babak Penuh Cerita' },
-                    { label: 'Pajak Kebahagiaan', val: '0% (Selalu Gratis & Tulus)' },
-                    { label: 'Total Nilai Rasa', val: 'INFINITY LOVE & WISHES', highlight: true }
-                ],
-                stamps: [
-                    '♥ ORANG PALING SPESIAL VERIFIED ♥',
-                    '★ SENYUMAN PALING MANIS DI DUNIA ★',
-                    '♥ PRIORITAS NOMOR SATU SELALU ♥',
-                    '★ SEMOGA BAHAGIA TERUS BARENG AKU ★'
-                ],
-                receiptFooter: '* Terima kasih udah hadir dan bikin hari-hari belakangan ini jauh lebih indah *',
-                polaroids: [
-                    {
-                        badge: 'MOMEN FAVORIT: KULIAH PAGI',
-                        title: 'Senyuman di Kelas',
-                        sub: 'Gedung Kuliah // Jam Pagi',
-                        quote: '"Kuliah yang ngebosenin pun mendadak seru kalau duduknya sebelahan atau bisa ngeliat kamu senyum."'
-                    },
-                    {
-                        badge: 'STATUS: KENANGAN MANIS',
-                        title: 'Muter-Muter Berdua',
-                        sub: 'Sore Hari // Jalan Santai',
-                        quote: '"Bukan tentang tujuannya mau ke mana, tapi tentang siapa yang duduk di samping nemenin sepanjang jalan."'
-                    },
-                    {
-                        badge: 'BABAK KE-19 RESMI TERBUKA',
-                        title: 'Happy 19th Zizuy',
-                        sub: '23 November 2026 // Spesial',
-                        quote: '"Selamat bertambah usia, manusia favoritku. Semoga aku selalu punya tempat buat nemenin kamu di babak-babak berikutnya."'
-                    }
-                ],
-                questTag: '// 03. MINI QUEST BERHADIAH',
-                questTitle: "Zizuy's Quest: Road to Lv.19",
-                questSubtitle: 'Selesaikan 3 babak singkat seputar keseharian kita buat membuka Reward Voucher Asli yang bisa kamu klaim kapan aja!',
-                questCharName: 'Azizah Nazwa (Zizuy)',
-                questCharLevel: 'Lv. 19',
-                questCharClass: "S1 Informatika '26",
-                questCharBuff: 'Bikin Nyaman +100',
-                quest: {
-                    stage1: {
-                        tag: 'STAGE 1 // PERASAAN DI AWAL UMUR 19',
-                        narrative: 'Tepat jam 00:00 WIB di tanggal 23 November, apa hal pertama yang pengen Zizuy rasain pas buka web kejutan ini?',
-                        options: [
-                            {
-                                id: 'A',
-                                text: 'Senyum-senyum sendiri sambil salting bacanya.',
-                                reaction: 'Hehe misi berhasil kalau Zizuy senyum dan salting! Itu tujuan utama web ini dibuat. (+100 Sweetness)'
-                            },
-                            {
-                                id: 'B',
-                                text: 'Ngerasa disayang dan jadi orang paling spesial di dunia.',
-                                reaction: 'Karena kamu memang orang paling spesial di mataku, nggak ada duanya! (+100 Happiness)'
-                            },
-                            {
-                                id: 'C',
-                                text: 'Langsung mikir: "Wah niat banget yang bikin, pasti begadang demi aku".',
-                                reaction: 'Bener banget! Begadang pun rela demi liat kamu bahagia di hari ulang tahunmu. (+100 Dedication)'
-                            }
-                        ]
-                    },
-                    stage2: {
-                        tag: 'STAGE 2 // HAL PALING MEMBEKAS',
-                        narrative: 'Dari semua waktu yang udah kita lewatin bareng, momen mana yang paling bikin Zizuy ngerasa nyaman?',
-                        options: [
-                            {
-                                id: 'A',
-                                text: 'Obrolan santai yang nyambung ke mana-mana sampai lupa waktu.',
-                                reaction: 'Sama! Ngobrol sama kamu tuh selalu bikin lupa waktu karena senyaman itu.'
-                            },
-                            {
-                                id: 'B',
-                                text: 'Waktu jalan berdua nyari makan pas jam kosong kuliah.',
-                                reaction: 'Momen sederhana tapi paling berharga pas bisa duduk bareng nikmatin hari.'
-                            },
-                            {
-                                id: 'C',
-                                text: 'Waktu ngerasa selalu ada orang yang siap nemenin dan peduli.',
-                                reaction: 'Aku akan selalu ada buat nemenin kamu, kapanpun dan dalam situasi apapun.'
-                            }
-                        ]
-                    },
-                    rewards: [
-                        {
-                            id: 'R1',
-                            title: 'Voucher Kencan Makan Malam & Dessert Manis',
-                            badge: 'DITANGGUNG 100% PENUH',
-                            desc: 'Bebas pilih makanan atau cafe favorit Zizuy, ditemenin jalan dan ditraktir sepuasnya kapanpun kamu mau!',
-                            code: 'ZUY19-ROMANCE-DATE'
-                        },
-                        {
-                            id: 'R2',
-                            title: 'Voucher Jalan Berdua Seharian Penuh',
-                            badge: 'VIP COMPANION PASS',
-                            desc: 'Kamu tentukan destinasinya, Penoyy siap nemenin dan antar ke mana aja Zizuy pengen pergi seharian.',
-                            code: 'ZUY19-ROMANCE-TRIP'
-                        },
-                        {
-                            id: 'R3',
-                            title: 'Voucher Support System & Pendengar Setia 24/7',
-                            badge: 'SEUMUR HIDUP',
-                            desc: 'Siap dengerin curhat, jadi temen nugas, atau nemenin kapanpun Zizuy butuh temen bicara tanpa syarat.',
-                            code: 'ZUY19-ALWAYS-THERE'
-                        }
-                    ]
-                },
-                letter: {
-                    fileLabel: 'SURAT_UNTUK_ZIZUY_ROMANCE_V19.TXT',
-                    dateLabel: '23 November 2026 // Edisi Spesial Cinta',
-                    title: 'Hai, Azizah Nazwa Novita Zizuy!',
-                    subtitle: 'Ditulis khusus dan tulus dari hati untuk merayakan awal usia 19 tahunmu ✨',
-                    paragraphs: [
-                        'Selamat ulang tahun yang ke-19 ya, Azizah Nazwa Novita. Rasanya baru kemarin kita mulai kenal dan adaptasi di kampus, tapi sekarang kamu udah resmi menginjak usia 19 tahun. Waktu emang jalan cepet, tapi setiap detik yang dilewatin bareng kamu selalu ninggalin kesan yang nggak gampang dilupain.',
-                        'Di antara tumpukan tugas koding, laprak yang padat, dan pusingnya materi kuliah, punya kamu di hari-hari belakangan ini tuh bener-bener kayak oasis. Makasih ya udah selalu hadir dengan senyum manismu yang nular, tawa kamu yang renyah, dan caramu yang selalu bikin aku ngerasa nyaman dan dihargai.',
-                        'Mungkin aku nggak selalu jago merangkai kata-kata puitis, tapi web kecil ini adalah caraku buat nunjukin kalau keberadaanmu di hidupku itu beneran spesial dan berarti banget. Kamu itu orang yang luar biasa, baik hatinya, dan pantas dapetin semua kebahagiaan terbaik di dunia ini.',
-                        'Di umur 19 ini, doaku buat kamu nggak akan pernah putus: semoga kamu selalu sehat, selalu bahagia, dimudahkan setiap urusannya, dijauhin dari hal-hal yang bikin sedih, dan semoga aku selalu dikasih kesempatan buat nemenin langkahmu ke depan. Happy 19th Birthday, my favorite person! 💕✨'
-                    ],
-                    closingQuote: '"Selalu ada buat kamu, kemarin, hari ini, dan besok~"',
-                    closingSignature: '— Dari Penoyy yang selalu sayang Zizuy (23 November 2026)'
-                }
-            },
-            friend: {
-                id: 'friend',
-                name: 'Mode Bestie Santai',
-                gateLateBtnText: 'yahh udah lewat jam nya, klik disini yuk!',
-                gateClickHereBtnText: 'Click Here Zuy!',
-                countdownNote: 'Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!',
-                statusPill: 'SYSTEM_STATE: BESTIE_MODE_ACTIVE // AZIZAH NAZWA NOVITA (ZIZUY) V19.0',
-                heroDesc: 'Selamat ulang tahun ke-19, Zizuy! Mode santai sesama pejuang S1 Informatika. Nggak ada drama, no alay-alay, cuma doa tulus biar laprak lancar, kodingan nggak error, dan makin sukses di umur 19!',
-                codeTitle: '// bestie_logic.cpp',
-                codeSnippet: `// Mode Bestie Seperjuangan S1 Informatika
+        const DEFAULT_CONTENT = {
+            id: 'main',
+            name: 'Website Zizuy',
+            gateLateBtnText: 'yahh udah lewat jam nya, klik disini yuk!',
+            gateClickHereBtnText: 'Click Here Zuy!',
+            countdownNote: 'Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!',
+            statusPill: 'STATUS: ACTIVE // AZIZAH NAZWA NOVITA (ZIZUY) V19.0 ✨',
+            heroDesc: 'Selamat ulang tahun ke-19, Zizuy! Pejuang S1 Informatika. Nggak perlu ribet dan drama, doa tulus biar kuliah lancar, laprak aman, kodingan nggak error, dan makin sukses di babak ke-19 ini!',
+            codeTitle: '// zizuy_logic.cpp',
+            codeSnippet: `// Seperjuangan S1 Informatika
 #include <iostream>
 #include <string>
 
@@ -3285,187 +2122,191 @@ int main() {
     bool statusTemenDekat = true;
     
     if (statusTemenDekat) {
-        std::cout << "HBD Zizuy ke-19! Sehat selalu & sukses terus bro!" << std::endl;
+        std::cout << "HBD Zizuy ke-19! Sehat selalu & sukses terus!" << std::endl;
         std::cout << "Semoga semester ini IPK aman & laprak kelar tepat waktu!" << std::endl;
     }
     return 0;
 }`,
-                jokes: [
-                    'Status: Temen deket seperjuangan kuliah. No drama, no baper, solid terus! 👊',
-                    'Warning: Deadline laprak mendekat, tapi hari ini Zizuy wajib santai & happy dulu!',
-                    'Build Success: Tingkat kekompakan nugas & jajan = 100%!',
-                    'Process Priority: Doa terbaik buat Zizuy di umur 19 tahun!'
-                ],
-                scrapbookTag: '// 02. STATISTIK SEMESTER 1 & SCRAPBOOK',
-                scrapbookTitle: 'Struk Main & Scrapbook Kita',
-                scrapbookSubtitle: 'Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.',
-                receiptStoreTitle: 'INFORMATIKA MART // SEM-01',
-                receiptBranch: 'WARUNG BESTIE // CABANG TEKNIK INFORMATIKA',
-                receiptCustomer: 'Zizuy (Temen Deket Seperjuangan)',
-                receiptCashier: 'Penoyy (Temen Nugas)',
-                receiptItems: [
-                    { name: 'Curhat Laprak & Tugas Coding', qty: '1 x', price: 'GRATIS' },
-                    { name: 'Muter-Muter Nyari Makan Pas Jam Kosong', qty: '48 x', price: 'PUAS' },
-                    { name: 'Anti Drama & Zero Cringe Policy', qty: '1 x', price: 'PERMANEN' },
-                    { name: 'Doa Sukses & IPK Tinggi Semester 1', qty: '999 x', price: 'LUNAS' }
-                ],
-                receiptTotals: [
-                    { label: 'Subtotal (Umur Zizuy)', val: '19 Tahun Resmi' },
-                    { label: 'Biaya Temenan', val: 'Rp 0 (Solid Selamanya)' },
-                    { label: 'Total Status', val: 'TEMENAN SANTAI NO ALAY', highlight: true }
-                ],
-                stamps: [
-                    '✓ TEMEN DEKET VERIFIED NO DRAMA ✓',
-                    '★ PARTNER NUGAS & JAJAN FAVORIT ★',
-                    '✓ BEBAS WACANA 100% ✓',
-                    '★ SOLID SEPERJUANGAN INFORMATIKA ★'
-                ],
-                receiptFooter: '* Makasih udah jadi temen deket yang asik diajak nugas & ngobrol *',
-                polaroids: [
-                    {
-                        badge: 'STATUS: MAHASISWA TEKNIK',
-                        title: 'Korban Laprak Informatika',
-                        sub: 'Gedung Kuliah // Jam Kosong',
-                        quote: '"Muka ngantuk nahan dosen nerangin algoritma, tapi pas jam kosong langsung semangat cari jajan."'
-                    },
-                    {
-                        badge: 'STATUS: PARTNER KULINER',
-                        title: 'Misi Nyari Makanan',
-                        sub: 'Keliling Kota // Random Abis',
-                        quote: '"Nanya mau makan apa jawabnya \'terserah\', ujung-ujungnya muter 1 jam baru nemu tempat."'
-                    },
-                    {
-                        badge: 'LEVEL: 19 RESMI',
-                        title: 'Zizuy Naik Level 19',
-                        sub: '16 November // Makin Dewasa',
-                        quote: '"Udah 19 tahun nih Zuy, semoga makin pintar, makin santai, dan tugas-tugas kuliah lancar jaya!"'
-                    }
-                ],
-                questTag: '// 03. MINI QUEST BERHADIAH',
-                questTitle: "Zizuy's Quest: Road to Lv.19",
-                questSubtitle: 'Selesaikan 3 babak singkat seputar keseharian kita buat membuka Reward Voucher Asli yang bisa kamu klaim kapan aja!',
-                questCharName: 'Azizah Nazwa (Zizuy)',
-                questCharLevel: 'Lv. 19',
-                questCharClass: "S1 Informatika '26",
-                questCharBuff: 'Solid & Anti Baper +100',
-                quest: {
-                    stage1: {
-                        tag: 'STAGE 1 // DRAMA S1 INFORMATIKA SEMESTER 1',
-                        narrative: 'Senin pagi, jadwal kuliah pemrograman dasar, tapi semalam habis begadang. Apa langkah penyelamatan Zizuy?',
-                        options: [
-                            {
-                                id: 'A',
-                                text: 'Tetap duduk paling depan biar kelihatan rajin.',
-                                reaction: 'Wah, mental baja! Walaupun mata tinggal 5 watt, yang penting dosen lihat Zizuy paling depan. (+50 Respect)'
-                            },
-                            {
-                                id: 'B',
-                                text: 'Cari kursi aman sambil nahan ngantuk.',
-                                reaction: 'Strategi paling realistis anak Informatika! Posisi menentukan ketenangan selama 2 SKS. (+50 Stealth)'
-                            },
-                            {
-                                id: 'C',
-                                text: 'Nunggu jam kosong buat langsung cabut main/jajan.',
-                                reaction: 'Nah ini yang paling ditunggu-tunggu! Begitu dosen bilang kelas selesai cepat, langsung gas cari jajan! (+100 Mood)'
-                            }
-                        ]
-                    },
-                    stage2: {
-                        tag: 'STAGE 2 // MISTERI MAIN BERDUA',
-                        narrative: 'Kita lagi ada waktu luang pas kelar kuliah nih. Pertanyaan paling sulit sedunia pun muncul: "Mau makan/jajan apa Zuy?"',
-                        options: [
-                            {
-                                id: 'A',
-                                text: '"Terserah" (tapi kalau dikasih saran nolak semua).',
-                                reaction: 'Klasik banget! Algoritma "Terserah" ini kompleksitasnya O(∞), tapi seru karena ujungnya ketawa bareng.'
-                            },
-                            {
-                                id: 'B',
-                                text: 'Muter-muter dulu sampai tiba-tiba nemu tempat makan enak.',
-                                reaction: 'Jujur ini bagian paling asik! Nggak jelas tujuannya ke mana, yang penting ngobrol sepanjang jalan.'
-                            },
-                            {
-                                id: 'C',
-                                text: 'Ke tempat langganan yang udah pasti enak dan murah.',
-                                reaction: 'Pilihan aman anak kos/kuliah! Yang penting perut kenyang dan bisa santai ngobrol.'
-                            }
-                        ]
-                    },
-                    rewards: [
+            jokes: [
+                'Status: Temen deket seperjuangan kuliah. No drama, santai dan solid terus! 👊',
+                'Warning: Deadline laprak mendekat, tapi hari ini Zizuy wajib santai & happy dulu!',
+                'Build Success: Tingkat kekompakan nugas & jajan = 100%!',
+                'Process Priority: Doa terbaik buat Zizuy di umur 19 tahun!'
+            ],
+            scrapbookTag: '// 02. STATISTIK SEMESTER 1 & SCRAPBOOK',
+            scrapbookTitle: 'Struk Main & Scrapbook Kita',
+            scrapbookSubtitle: 'Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.',
+            receiptStoreTitle: 'INFORMATIKA MART // SEM-01',
+            receiptBranch: 'CABANG TEKNIK INFORMATIKA',
+            receiptCustomer: 'Zizuy (Azizah Nazwa Novita)',
+            receiptCashier: 'Penoyy',
+            receiptItems: [
+                { name: 'Curhat Laprak & Tugas Coding', qty: '1 x', price: 'GRATIS' },
+                { name: 'Muter-Muter Nyari Makan Pas Jam Kosong', qty: '48 x', price: 'PUAS' },
+                { name: 'Anti Drama Policy', qty: '1 x', price: 'PERMANEN' },
+                { name: 'Doa Sukses & IPK Tinggi Semester 1', qty: '999 x', price: 'LUNAS' }
+            ],
+            receiptTotals: [
+                { label: 'Subtotal (Umur Zizuy)', val: '19 Tahun Resmi' },
+                { label: 'Biaya Temenan', val: 'Rp 0 (Solid Selamanya)' },
+                { label: 'Total Status', val: 'SANTAI NO DRAMA', highlight: true }
+            ],
+            stamps: [
+                '✓ TEMEN DEKET VERIFIED NO DRAMA ✓',
+                '★ PARTNER NUGAS & JAJAN FAVORIT ★',
+                '✓ BEBAS WACANA 100% ✓',
+                '★ SOLID SEPERJUANGAN INFORMATIKA ★'
+            ],
+            receiptFooter: '* Makasih udah jadi temen deket yang asik diajak nugas & ngobrol *',
+            polaroids: [
+                {
+                    badge: 'STATUS: MAHASISWA TEKNIK',
+                    title: 'Korban Laprak Informatika',
+                    sub: 'Gedung Kuliah // Jam Kosong',
+                    quote: '"Muka ngantuk nahan dosen nerangin algoritma, tapi pas jam kosong langsung semangat cari jajan."'
+                },
+                {
+                    badge: 'STATUS: PARTNER KULINER',
+                    title: 'Misi Nyari Makanan',
+                    sub: 'Keliling Kota // Random Abis',
+                    quote: '"Nanya mau makan apa jawabnya \'terserah\', ujung-ujungnya muter 1 jam baru nemu tempat."'
+                },
+                {
+                    badge: 'LEVEL: 19 RESMI',
+                    title: 'Zizuy Naik Level 19',
+                    sub: '23 November // Makin Dewasa',
+                    quote: '"Udah 19 tahun nih Zuy, semoga makin pintar, makin santai, dan tugas-tugas kuliah lancar jaya!"'
+                }
+            ],
+            questTag: '// 03. MINI QUEST BERHADIAH',
+            questTitle: "Zizuy's Quest: Road to Lv.19",
+            questSubtitle: 'Selesaikan 3 babak singkat seputar keseharian kita buat membuka Reward Voucher Asli yang bisa kamu klaim kapan aja!',
+            questCharName: 'Azizah Nazwa (Zizuy)',
+            questCharLevel: 'Lv. 19',
+            questCharClass: "S1 Informatika '26",
+            questCharBuff: 'Solid & Santai +100',
+            quest: {
+                stage1: {
+                    tag: 'STAGE 1 // DRAMA S1 INFORMATIKA SEMESTER 1',
+                    narrative: 'Senin pagi, jadwal kuliah pemrograman dasar, tapi semalam habis begadang. Apa langkah penyelamatan Zizuy?',
+                    options: [
                         {
-                            id: 'R1',
-                            title: 'Voucher Traktir Jajan & Es Kopi',
-                            badge: 'BUFF MOOD +100%',
-                            desc: 'Bebas pilih jajan, es kopi, atau makanan pas kita lagi keluar bareng. Tinggal tunjukin kartu ini ke Penoyy!',
-                            code: 'ZUY19-JAJAN-FREE'
+                            id: 'A',
+                            text: 'Tetap duduk paling depan biar kelihatan rajin.',
+                            reaction: 'Wah, mental baja! Walaupun mata tinggal 5 watt, yang penting dosen lihat Zizuy paling depan. (+50 Respect)'
                         },
                         {
-                            id: 'R2',
-                            title: 'Tiket Jalan Santai Bebas Pilih Tujuan',
-                            badge: 'UNLIMITED PASS',
-                            desc: 'Zizuy yang nentuin rute! Mau kulineran, cari angin, atau muter kota, langsung gas.',
-                            code: 'ZUY19-ROADTRIP-VIP'
+                            id: 'B',
+                            text: 'Cari kursi aman sambil nahan ngantuk.',
+                            reaction: 'Strategi paling realistis anak Informatika! Posisi menentukan ketenangan selama 2 SKS. (+50 Stealth)'
                         },
                         {
-                            id: 'R3',
-                            title: 'Kartu Bantuan Tugas Ngoding 24 Jam',
-                            badge: 'IT SUPPORT BESTIE',
-                            desc: 'Ada tugas C++, error kodingan, atau laprak yang bikin pusing? Klaim kartu ini buat dibantuin sampai kelar!',
-                            code: 'ZUY19-CODING-SOS'
+                            id: 'C',
+                            text: 'Nunggu jam kosong buat langsung cabut main/jajan.',
+                            reaction: 'Nah ini yang paling ditunggu-tunggu! Begitu dosen bilang kelas selesai cepat, langsung gas cari jajan! (+100 Mood)'
                         }
                     ]
                 },
-                wishlistTitle: 'Catatan Harapan & Evaluasi Diri Zizuy!',
-                wishlistSubtitle: 'Lembar catatan bebas untuk kamu tulis sendiri: harapan masa depan, target umur 19, dan apa aja yang ingin kamu revisi dari sebelumnya ✨'
-            }
+                stage2: {
+                    tag: 'STAGE 2 // MISTERI MAIN BERDUA',
+                    narrative: 'Kita lagi ada waktu luang pas kelar kuliah nih. Pertanyaan paling sulit sedunia pun muncul: "Mau makan/jajan apa Zuy?"',
+                    options: [
+                        {
+                            id: 'A',
+                            text: '"Terserah" (tapi kalau dikasih saran nolak semua).',
+                            reaction: 'Klasik banget! Algoritma "Terserah" ini kompleksitasnya O(∞), tapi seru karena ujungnya ketawa bareng.'
+                        },
+                        {
+                            id: 'B',
+                            text: 'Muter-muter dulu sampai tiba-tiba nemu tempat makan enak.',
+                            reaction: 'Jujur ini bagian paling asik! Nggak jelas tujuannya ke mana, yang penting ngobrol sepanjang jalan.'
+                        },
+                        {
+                            id: 'C',
+                            text: 'Ke tempat langganan yang udah pasti enak dan murah.',
+                            reaction: 'Pilihan aman anak kos/kuliah! Yang penting perut kenyang dan bisa santai ngobrol.'
+                        }
+                    ]
+                },
+                rewards: [
+                    {
+                        id: 'R1',
+                        title: 'Voucher Traktir Jajan & Es Kopi',
+                        badge: 'BUFF MOOD +100%',
+                        desc: 'Bebas pilih jajan, es kopi, atau makanan pas kita lagi keluar bareng. Tinggal tunjukin kartu ini ke Penoyy!',
+                        code: 'ZUY19-JAJAN-FREE'
+                    },
+                    {
+                        id: 'R2',
+                        title: 'Tiket Jalan Santai Bebas Pilih Tujuan',
+                        badge: 'UNLIMITED PASS',
+                        desc: 'Zizuy yang nentuin rute! Mau kulineran, cari angin, atau muter kota, langsung gas.',
+                        code: 'ZUY19-ROADTRIP-VIP'
+                    },
+                    {
+                        id: 'R3',
+                        title: 'Kartu Bantuan Tugas Ngoding 24 Jam',
+                        badge: 'IT SUPPORT BESTIE',
+                        desc: 'Ada tugas C++, error kodingan, atau laprak yang bikin pusing? Klaim kartu ini buat dibantuin sampai kelar!',
+                        code: 'ZUY19-CODING-SOS'
+                    }
+                ]
+            },
+            wishlistTitle: 'Catatan Harapan & Evaluasi Diri Zizuy!',
+            wishlistSubtitle: 'Lembar catatan bebas untuk kamu tulis sendiri: harapan masa depan, target umur 19, dan apa aja yang ingin kamu revisi dari sebelumnya ✨'
         };
 
-        let CONTENT_MODES = JSON.parse(JSON.stringify(DEFAULT_CONTENT_MODES));
+        // Initialize active content
+        let CONTENT_DATA = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
         try {
             const savedCustom = localStorage.getItem('zizuy_custom_content');
             if (savedCustom) {
                 const parsed = JSON.parse(savedCustom);
-                if (parsed.romance) {
-                    CONTENT_MODES.romance = Object.assign({}, DEFAULT_CONTENT_MODES.romance, parsed.romance);
-                }
                 if (parsed.friend) {
-                    CONTENT_MODES.friend = Object.assign({}, DEFAULT_CONTENT_MODES.friend, parsed.friend);
+                    CONTENT_DATA = Object.assign({}, DEFAULT_CONTENT, parsed.friend);
+                } else if (parsed.id || parsed.statusPill) {
+                    CONTENT_DATA = Object.assign({}, DEFAULT_CONTENT, parsed);
+                } else if (parsed.romance) {
+                    CONTENT_DATA = Object.assign({}, DEFAULT_CONTENT, parsed.romance);
                 }
             }
         } catch (e) {
             console.warn('Could not restore custom content:', e);
         }
 
-        window.CONTENT_MODES = CONTENT_MODES;
-        window.DEFAULT_CONTENT_MODES = DEFAULT_CONTENT_MODES;
-
-        // Custom Polaroid Photos (Separated per mode: Romance vs Bestie)
-        let customPhotos = {
-            romance: { photo1: '', photo2: '', photo3: '' },
-            friend: { photo1: '', photo2: '', photo3: '' }
+        // Backward compatibility proxies
+        window.CONTENT_DATA = CONTENT_DATA;
+        window.CONTENT_MODES = {
+            main: CONTENT_DATA,
+            friend: CONTENT_DATA,
+            romance: CONTENT_DATA
         };
+        window.DEFAULT_CONTENT_MODES = {
+            main: DEFAULT_CONTENT,
+            friend: DEFAULT_CONTENT,
+            romance: DEFAULT_CONTENT
+        };
+
+        // Custom Polaroid Photos (Flat structure)
+        let customPhotos = { photo1: '', photo2: '', photo3: '' };
         try {
             const savedPhotos = localStorage.getItem('zizuy_custom_photos');
             if (savedPhotos) {
                 const parsed = JSON.parse(savedPhotos);
-                if (parsed.romance || parsed.friend) {
-                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed.romance || {});
-                    customPhotos.friend = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed.friend || {});
-                } else if (parsed.photo1 !== undefined) {
-                    // Migrate legacy flat structure into romance mode
-                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed);
+                if (parsed.photo1 !== undefined) {
+                    customPhotos = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed);
+                } else if (parsed.friend || parsed.romance) {
+                    customPhotos = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed.friend || {}, parsed.romance || {});
                 }
             }
         } catch (e) {}
         window.customPhotos = customPhotos;
 
         function applyPolaroidPhotos() {
-            const activeMode = currentAppMode || 'romance';
-            const modePhotos = (customPhotos && customPhotos[activeMode]) || { photo1: '', photo2: '', photo3: '' };
             [1, 2, 3].forEach(idx => {
                 const imgEl = document.getElementById(`pol-img-${idx}`);
                 const svgEl = document.getElementById(`pol-svg-${idx}`);
-                const photo = modePhotos[`photo${idx}`];
+                const photo = customPhotos[`photo${idx}`];
                 if (imgEl && svgEl) {
                     if (photo) {
                         imgEl.src = photo;
@@ -3481,7 +2322,7 @@ int main() {
         }
         window.applyPolaroidPhotos = applyPolaroidPhotos;
 
-        // Image compression helper (800x800, quality 0.8) for fast cross-device cloud sync
+        // Image compression helper
         function compressImageFile(file, maxWidth = 800, maxHeight = 800, quality = 0.8) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -3518,18 +2359,22 @@ int main() {
 
         // Cloud sync dispatcher
         let cloudSaveDebounce = null;
-        window.saveToCloudFirestore = function(extraPayload = {}) {
+        window.saveToCloudFirestore = function(extraPayload = {}, immediate = false) {
             clearTimeout(cloudSaveDebounce);
-            cloudSaveDebounce = setTimeout(() => {
+            const doSave = () => {
                 if (typeof window._firebaseSaveDoc === 'function') {
                     window._firebaseSaveDoc(extraPayload);
                 }
-            }, 300);
+            };
+            if (immediate) {
+                doSave();
+            } else {
+                cloudSaveDebounce = setTimeout(doSave, 300);
+            }
         };
 
-        // Cloud sync receiver (called when other devices push updates)
+        // Cloud sync receiver
         window.syncFromCloudData = function(cloudData, isSelf) {
-            // Guard: If we saved edits locally more recently than cloudData, ignore older cloud data to prevent wiping fresh edits on refresh!
             try {
                 const localSavedAt = parseInt(localStorage.getItem('zizuy_content_last_saved') || '0', 10);
                 if (cloudData && cloudData.lastUpdated && localSavedAt > 0) {
@@ -3543,25 +2388,20 @@ int main() {
 
             let changed = false;
             if (cloudData.content) {
-                if (cloudData.content.romance) {
-                    CONTENT_MODES.romance = Object.assign({}, DEFAULT_CONTENT_MODES.romance, cloudData.content.romance);
+                const incoming = cloudData.content.friend || cloudData.content.main || cloudData.content.romance || cloudData.content;
+                if (incoming && typeof incoming === 'object') {
+                    CONTENT_DATA = Object.assign({}, DEFAULT_CONTENT, incoming);
+                    window.CONTENT_DATA = CONTENT_DATA;
+                    window.CONTENT_MODES = { main: CONTENT_DATA, friend: CONTENT_DATA, romance: CONTENT_DATA };
                     changed = true;
+                    try {
+                        localStorage.setItem('zizuy_custom_content', JSON.stringify(CONTENT_DATA));
+                    } catch (e) {}
                 }
-                if (cloudData.content.friend) {
-                    CONTENT_MODES.friend = Object.assign({}, DEFAULT_CONTENT_MODES.friend, cloudData.content.friend);
-                    changed = true;
-                }
-                try {
-                    localStorage.setItem('zizuy_custom_content', JSON.stringify(CONTENT_MODES));
-                } catch (e) {}
             }
             if (cloudData.photos) {
-                if (cloudData.photos.romance || cloudData.photos.friend) {
-                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos.romance, cloudData.photos.romance || {});
-                    customPhotos.friend = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos.friend, cloudData.photos.friend || {});
-                } else if (cloudData.photos.photo1 !== undefined) {
-                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos.romance, cloudData.photos);
-                }
+                const incomingPhotos = cloudData.photos.photo1 !== undefined ? cloudData.photos : (cloudData.photos.friend || cloudData.photos.romance || {});
+                customPhotos = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos, incomingPhotos);
                 window.customPhotos = customPhotos;
                 try {
                     localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
@@ -3570,7 +2410,7 @@ int main() {
                 changed = true;
             }
             if (changed) {
-                setAppMode(currentAppMode, false);
+                renderAppContent();
                 const modal = document.getElementById('editor-panel-modal');
                 if (modal && !modal.classList.contains('hidden')) {
                     renderEditorForm();
@@ -3584,16 +2424,8 @@ int main() {
             if (badge) badge.textContent = '☁️ Realtime Cloud Sync Active';
         };
 
-        let currentAppMode = 'romance';
-
-        function setAppMode(mode, showNotification = true) {
-            if (!CONTENT_MODES[mode]) return;
-            currentAppMode = mode;
-            try {
-                localStorage.setItem('zizuy_theme_mode', mode);
-            } catch (e) {}
-
-            const data = CONTENT_MODES[mode];
+        function renderAppContent() {
+            const data = CONTENT_DATA;
 
             function updateTextOrHide(id, text) {
                 const el = document.getElementById(id);
@@ -3606,37 +2438,12 @@ int main() {
                 }
             }
 
-            // 1. Update Navbar Button
-            const navBtn = document.getElementById('toggle-mode-btn');
-            if (navBtn) {
-                if (mode === 'romance') {
-                    navBtn.innerHTML = '<span>💕</span><span class="hidden sm:inline">Mode:</span> Romance';
-                    navBtn.className = 'spring-btn px-2.5 sm:px-3 py-1.5 rounded-full bg-cyberRose/20 text-cyberRose border border-cyberRose/40 font-mono text-[11px] sm:text-xs flex items-center gap-1.5 hover:bg-cyberRose/30 transition-all shadow-[0_0_12px_rgba(255,42,133,0.3)]';
-                } else {
-                    navBtn.innerHTML = '<span>👥</span><span class="hidden sm:inline">Mode:</span> Bestie';
-                    navBtn.className = 'spring-btn px-2.5 sm:px-3 py-1.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40 font-mono text-[11px] sm:text-xs flex items-center gap-1.5 hover:bg-electricCyan/30 transition-all shadow-[0_0_12px_rgba(0,229,255,0.3)]';
-                }
-            }
-
-            // 2. Update Hero Mode Switcher Buttons
-            const btnFriend = document.getElementById('mode-btn-friend');
-            const btnRomance = document.getElementById('mode-btn-romance');
-            if (btnFriend && btnRomance) {
-                if (mode === 'friend') {
-                    btnFriend.className = 'flex-1 py-1.5 sm:py-2 px-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-mono font-bold transition-all bg-electricCyan/20 text-electricCyan border border-electricCyan/50 shadow-[0_0_15px_rgba(0,229,255,0.25)]';
-                    btnRomance.className = 'flex-1 py-1.5 sm:py-2 px-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-mono font-medium text-mutedLavender hover:text-starlight hover:bg-white/5 transition-all';
-                } else {
-                    btnRomance.className = 'flex-1 py-1.5 sm:py-2 px-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-mono font-bold transition-all bg-cyberRose/20 text-cyberRose border border-cyberRose/50 shadow-[0_0_15px_rgba(255,42,133,0.25)]';
-                    btnFriend.className = 'flex-1 py-1.5 sm:py-2 px-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-mono font-medium text-mutedLavender hover:text-starlight hover:bg-white/5 transition-all';
-                }
-            }
-
-            // 3. Countdown & Gate Buttons
+            // 1. Countdown & Gate Buttons
             updateTextOrHide('gate-late-btn-text', data.gateLateBtnText);
             updateTextOrHide('run-exe-btn-text', data.gateClickHereBtnText);
             updateTextOrHide('countdown-note-text', data.countdownNote);
 
-            // 4. Update Hero Section Text & Code
+            // 2. Hero Section
             updateTextOrHide('hero-status-pill-text', data.statusPill);
             updateTextOrHide('hero-description', data.heroDesc);
             updateTextOrHide('code-card-title', data.codeTitle);
@@ -3647,7 +2454,7 @@ int main() {
             const outTxt = document.getElementById('compile-output-text');
             if (outTxt && data.jokes && data.jokes.length > 0) outTxt.textContent = data.jokes[0];
 
-            // 5. Update Scrapbook & Receipt Section
+            // 3. Scrapbook & Receipt Section
             updateTextOrHide('scrapbook-tag', data.scrapbookTag);
             updateTextOrHide('scrapbook-title', data.scrapbookTitle);
             updateTextOrHide('scrapbook-subtitle', data.scrapbookSubtitle);
@@ -3674,7 +2481,7 @@ int main() {
                 totalsContainer.innerHTML = (data.receiptTotals || []).map(t => `
                     <div class="flex justify-between ${t.highlight ? 'text-sm sm:text-base font-bold text-starlight pt-2 border-t border-dashed border-white/20' : 'text-mutedLavender'}">
                         <span>${t.label}</span>
-                        <span class="font-mono ${t.highlight ? (mode === 'friend' ? 'text-electricCyan' : 'text-cyberRose') : 'text-starlight'}">${t.val}</span>
+                        <span class="font-mono ${t.highlight ? 'text-electricCyan' : 'text-starlight'}">${t.val}</span>
                     </div>
                 `).join('');
             }
@@ -3682,7 +2489,7 @@ int main() {
             const stampEl = document.getElementById('receipt-stamp');
             if (stampEl && data.stamps && data.stamps.length > 0) stampEl.textContent = data.stamps[0];
 
-            // 6. Update Polaroids
+            // 4. Update Polaroids
             (data.polaroids || []).forEach((p, idx) => {
                 const num = idx + 1;
                 updateTextOrHide(`pol-badge-${num}`, p.badge);
@@ -3691,7 +2498,7 @@ int main() {
                 updateTextOrHide(`pol-quote-${num}`, p.quote);
             });
 
-            // 7. Update Quest HUD & Titles
+            // 5. Update Quest HUD & Titles
             updateTextOrHide('quest-tag-text', data.questTag);
             updateTextOrHide('quest-title-text', data.questTitle);
             updateTextOrHide('quest-subtitle-text', data.questSubtitle);
@@ -3717,45 +2524,22 @@ int main() {
             questState = { stage: 1, ans1: null, ans2: null, selectedReward: null };
             renderQuestStage();
 
-            // 8. Section 4 Dual View Toggle
+            // 6. Section 4: Lembar Harapan & Evaluasi Diri (Mini Word)
             const friendView = document.getElementById('section4-friend-view');
-            const romanceView = document.getElementById('section4-romance-view');
-            if (mode === 'friend') {
-                if (friendView) friendView.classList.remove('hidden');
-                if (romanceView) romanceView.classList.add('hidden');
-                updateTextOrHide('wishlist-heading-title', data.wishlistTitle);
-                updateTextOrHide('wishlist-heading-sub', data.wishlistSubtitle);
-                initWishlistEditor();
-            } else {
-                if (friendView) friendView.classList.add('hidden');
-                if (romanceView) romanceView.classList.remove('hidden');
-                if (data.letter) {
-                    updateTextOrHide('romance-letter-title', data.letter.title);
-                    updateTextOrHide('romance-letter-subtitle', data.letter.subtitle);
-                    updateTextOrHide('romance-closing-quote', data.letter.closingQuote);
-                    updateTextOrHide('romance-closing-author', data.letter.closingSignature);
-                }
-                initRomanceLetter();
-            }
-            applyPolaroidPhotos();
+            if (friendView) friendView.classList.remove('hidden');
+            updateTextOrHide('wishlist-heading-title', data.wishlistTitle);
+            updateTextOrHide('wishlist-heading-sub', data.wishlistSubtitle);
+            initWishlistEditor();
 
-            // 9. Notifications
-            if (showNotification) {
-                playCyberTone(mode === 'friend' ? 523.25 : 659.25, 'sine', 0.15);
-                showToast(mode === 'friend' ? 'Beralih ke Mode Bestie Santai 👥' : 'Beralih ke Mode Romance Aesthetic 💕');
-            }
+            applyPolaroidPhotos();
         }
 
-        window.setAppMode = setAppMode;
-        window.toggleAppMode = function() {
-            setAppMode(currentAppMode === 'romance' ? 'friend' : 'romance');
-        };
+        window.setAppMode = function() { renderAppContent(); };
+        window.toggleAppMode = function() {};
 
         /* -----------------------------------------------------------------
            VENO'S WORD & CONTENT EDITOR PANEL (SECRET 'V' TRIGGER & LIVE EDIT)
            ----------------------------------------------------------------- */
-        let editorTargetMode = 'romance';
-
         function escapeEditorHtml(str) {
             if (str === undefined || str === null) return '';
             return String(str)
@@ -3767,8 +2551,7 @@ int main() {
         }
 
         window.openEditorPanel = function() {
-            editorTargetMode = currentAppMode || 'romance';
-            switchEditorTab(editorTargetMode);
+            renderEditorForm();
             const modal = document.getElementById('editor-panel-modal');
             if (!modal) return;
             modal.classList.remove('hidden');
@@ -3799,27 +2582,6 @@ int main() {
             }
         };
 
-        window.switchEditorTab = function(mode) {
-            editorTargetMode = mode;
-            const tabRomance = document.getElementById('editor-tab-romance');
-            const tabFriend = document.getElementById('editor-tab-friend');
-            const badge = document.getElementById('editor-active-target-badge');
-
-            if (tabRomance && tabFriend) {
-                if (mode === 'romance') {
-                    tabRomance.className = 'px-2.5 sm:px-3 py-1 rounded-lg font-mono text-xs font-bold transition-all bg-cyberRose/30 text-white border border-cyberRose/50 shadow-[0_0_10px_rgba(255,42,133,0.3)]';
-                    tabFriend.className = 'px-2.5 sm:px-3 py-1 rounded-lg font-mono text-xs font-medium text-mutedLavender hover:text-starlight hover:bg-white/5 transition-all';
-                    if (badge) badge.textContent = 'Target: Mode Romance Aktif';
-                } else {
-                    tabFriend.className = 'px-2.5 sm:px-3 py-1 rounded-lg font-mono text-xs font-bold transition-all bg-electricCyan/30 text-white border border-electricCyan/50 shadow-[0_0_10px_rgba(0,229,255,0.3)]';
-                    tabRomance.className = 'px-2.5 sm:px-3 py-1 rounded-lg font-mono text-xs font-medium text-mutedLavender hover:text-starlight hover:bg-white/5 transition-all';
-                    if (badge) badge.textContent = 'Target: Mode Bestie Aktif';
-                }
-            }
-            renderEditorForm();
-        };
-
-        // Quick helper to empty an input field in the editor
         window.clearEditorField = function(elementId) {
             const el = document.getElementById(elementId);
             if (el) {
@@ -3830,36 +2592,24 @@ int main() {
         };
 
         function renderEditorForm() {
-            const data = CONTENT_MODES[editorTargetMode];
+            const data = CONTENT_DATA;
             const container = document.getElementById('editor-form-container');
             if (!container || !data) return;
 
-            const isRomance = editorTargetMode === 'romance';
             const cleanCode = (data.codeSnippet || '')
                 .replace(/&lt;/g, '<')
                 .replace(/&gt;/g, '>')
                 .replace(/&amp;/g, '&');
 
-            const targetPhotos = (customPhotos && customPhotos[editorTargetMode]) || { photo1: '', photo2: '', photo3: '' };
-
             container.innerHTML = `
-                <!-- Mode Badge Notification & Visual Live Edit Launcher -->
+                <!-- Direct Visual Live Edit Button -->
                 <div class="space-y-3">
-                    <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl ${isRomance ? 'bg-cyberRose/15 border border-cyberRose/40 text-cyberRose' : 'bg-electricCyan/15 border border-electricCyan/40 text-electricCyan'} font-mono text-xs">
-                        <span class="flex items-center gap-2">
-                            <span>${isRomance ? '💕' : '👥'}</span>
-                            <span>Target: <strong class="uppercase">${isRomance ? 'Mode Romance' : 'Mode Bestie'}</strong></span>
-                        </span>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded">Tersimpan khusus untuk mode ini</span>
-                    </div>
-
-                    <!-- Direct Visual Live Edit Button -->
                     <button type="button" onclick="startVisualLiveEdit()" class="w-full py-2.5 px-3 sm:px-4 rounded-xl bg-gradient-to-r from-electricCyan/20 via-nebulaViolet/20 to-cyberRose/20 hover:from-electricCyan/30 hover:to-cyberRose/30 border border-electricCyan/40 text-starlight font-mono text-xs flex items-center justify-between gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer shadow-sm">
                         <span class="flex items-center gap-2 text-left">
                             <span class="text-base shrink-0">✏️</span>
                             <span>
                                 <strong class="text-white block sm:inline">Mode Edit Visual Langsung:</strong>
-                                <span class="text-mutedLavender text-[11px] block sm:inline sm:ml-1">Klik teks mana saja di layar untuk edit/hapus langsung!</span>
+                                <span class="text-mutedLavender text-[11px] block sm:inline sm:ml-1">Klik teks mana saja di layar untuk diedit atau dihapus langsung!</span>
                             </span>
                         </span>
                         <span class="px-2.5 py-1 rounded-lg bg-electricCyan/20 text-electricCyan font-bold text-[10px] shrink-0 border border-electricCyan/30">
@@ -3869,7 +2619,7 @@ int main() {
 
                     <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 font-mono text-[11px] text-mutedLavender flex items-start gap-2">
                         <span class="text-amber-400 shrink-0">💡</span>
-                        <span><strong>Tips Hapus Teks Alay/Berlebihan:</strong> Cukup kosongkan kotak teks atau klik tombol <em>[✕ Kosongkan]</em>. Teks tersebut otomatis hilang dan tidak akan muncul lagi di website!</span>
+                        <span><strong>Tips Hapus Teks:</strong> Cukup kosongkan kotak teks atau klik tombol <em>[✕ Kosongkan]</em>. Teks tersebut otomatis hilang dan tidak akan muncul lagi di website!</span>
                     </div>
                 </div>
 
@@ -3898,7 +2648,7 @@ int main() {
                         </div>
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <label class="font-mono text-[11px] text-mutedLavender">Teks Catatan Countdown (Mode Plus)</label>
+                                <label class="font-mono text-[11px] text-mutedLavender">Teks Catatan Countdown</label>
                                 <button type="button" onclick="clearEditorField('edit-countdownNote')" class="text-[10px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
                             </div>
                             <textarea id="edit-countdownNote" rows="2" 
@@ -4028,11 +2778,9 @@ int main() {
 
                 <!-- 4. Scrapbook & Polaroid -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
-                    <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-white/10">
-                        <div>
-                            <span class="font-mono text-xs font-bold text-starlight uppercase">★ 4. Scrapbook &amp; Foto Polaroid (${isRomance ? 'Mode Romance' : 'Mode Bestie'})</span>
-                            <span class="font-mono text-[10px] text-mutedLavender block sm:inline sm:ml-2">Foto terpisah tiap mode</span>
-                        </div>
+                    <div class="flex items-center justify-between pb-2 border-b border-white/10">
+                        <span class="font-mono text-xs font-bold text-starlight uppercase">★ 4. Scrapbook &amp; Foto Polaroid</span>
+                        <span class="font-mono text-[10px] text-mutedLavender">3 Foto kenangan</span>
                     </div>
                     <!-- Scrapbook Header Texts -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2 border-b border-white/10">
@@ -4063,12 +2811,12 @@ int main() {
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
                         ${(data.polaroids || []).map((p, idx) => {
                             const photoNum = idx + 1;
-                            const curPhoto = targetPhotos[`photo${photoNum}`] || '';
+                            const curPhoto = customPhotos[`photo${photoNum}`] || '';
                             const isDataUrl = curPhoto.startsWith('data:');
                             return `
                                 <div class="p-3.5 bg-black/50 border border-white/10 rounded-xl space-y-2.5">
                                     <div class="flex items-center justify-between">
-                                        <span class="font-mono text-xs text-electricCyan font-bold">Foto #${photoNum} (${isRomance ? 'Romance' : 'Bestie'})</span>
+                                        <span class="font-mono text-xs text-electricCyan font-bold">Foto #${photoNum}</span>
                                         ${curPhoto ? `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40">✓ Foto Aktif</span>` : `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-mutedLavender">SVG Bawaan</span>`}
                                     </div>
 
@@ -4086,7 +2834,7 @@ int main() {
                                             <input type="file" accept="image/*" class="hidden" onchange="handleEditorPhotoUpload(event, ${photoNum})">
                                         </label>
                                         <input type="text" value="${escapeEditorHtml(!isDataUrl ? curPhoto : '')}" placeholder="Atau paste link URL gambar" onchange="handleEditorPhotoUrl(${photoNum}, this.value)" class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-lg px-2 py-1.5 text-[11px] text-starlight focus:outline-none transition-colors">
-                                        ${curPhoto ? `<button type="button" onclick="handleRemovePhoto(${photoNum})" class="w-full py-1 text-[10px] font-mono text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 transition-colors">🗑 Hapus Foto Mode Ini</button>` : ''}
+                                        ${curPhoto ? `<button type="button" onclick="handleRemovePhoto(${photoNum})" class="w-full py-1 text-[10px] font-mono text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 transition-colors">🗑 Hapus Foto</button>` : ''}
                                     </div>
 
                                     <div class="space-y-1.5 pt-2 border-t border-white/10">
@@ -4129,7 +2877,7 @@ int main() {
                     </div>
                 </div>
 
-                <!-- 5. Mini Quest Trivia & Output Respon -->
+                <!-- 5. Mini Quest Trivia & Profil Karakter -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex items-center justify-between pb-2 border-b border-white/10">
                         <span class="font-mono text-xs font-bold text-electricCyan uppercase">★ 5. Mini Quest Trivia &amp; Profil Karakter</span>
@@ -4164,10 +2912,10 @@ int main() {
                         </div>
                         <div>
                             <div class="flex items-center justify-between mb-0.5">
-                                <label class="font-mono text-[10px] text-electricCyan font-bold">Buff Karakter (Kosongkan jika alay)</label>
+                                <label class="font-mono text-[10px] text-electricCyan font-bold">Buff Karakter (Kosongkan jika ingin dihapus)</label>
                                 <button type="button" onclick="clearEditorField('edit-questCharBuff')" class="text-[9px] font-mono text-red-400 hover:text-red-300">[✕ Hapus Buff]</button>
                             </div>
-                            <input id="edit-questCharBuff" type="text" value="${escapeEditorHtml(data.questCharBuff || '')}" placeholder="Contoh: Bikin Nyaman +100 (atau kosongkan)" class="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
+                            <input id="edit-questCharBuff" type="text" value="${escapeEditorHtml(data.questCharBuff || '')}" placeholder="Contoh: Solid & Santai +100" class="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
                         </div>
                     </div>
 
@@ -4240,86 +2988,34 @@ int main() {
                     </div>
                 </div>
 
-                <!-- 6. Surat & Lembar Catatan Paling Bawah (Section 4) -->
+                <!-- 6. Catatan Harapan & Evaluasi Zizuy (Lembar Bawah) -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                        <span class="font-mono text-xs font-bold text-cyberRose uppercase">★ 6. ${isRomance ? 'Surat Cinta Spesial dari Penoyy (Mode Romance)' : 'Catatan Harapan & Evaluasi Zizuy (Mode Bestie)'}</span>
-                        <span class="font-mono text-[10px] text-mutedLavender">${isRomance ? 'Buka per paragraf' : 'Lembar mandiri Zizuy'}</span>
+                        <span class="font-mono text-xs font-bold text-cyberRose uppercase">★ 6. Catatan Harapan &amp; Evaluasi Zizuy (Lembar Bawah)</span>
+                        <span class="font-mono text-[10px] text-mutedLavender">Lembar mandiri Zizuy</span>
                     </div>
 
-                    ${isRomance ? `
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Nama File Surat</label>
-                                <input id="edit-letterFile" type="text" value="${escapeEditorHtml((data.letter && data.letter.fileLabel) || '')}" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs font-mono text-starlight focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Label Tanggal</label>
-                                <input id="edit-letterDate" type="text" value="${escapeEditorHtml((data.letter && data.letter.dateLabel) || '')}" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Judul Sapaan Surat</label>
-                                <input id="edit-letterTitle" type="text" value="${escapeEditorHtml((data.letter && data.letter.title) || '')}" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Subjudul Surat</label>
-                                <input id="edit-letterSubtitle" type="text" value="${escapeEditorHtml((data.letter && data.letter.subtitle) || '')}" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
-                            </div>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Judul Lembar Harapan &amp; Evaluasi</label>
+                            <input id="edit-wishlistTitle" type="text" value="${escapeEditorHtml(data.wishlistTitle || '')}" 
+                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
                         </div>
-
-                        <div class="space-y-2.5 pt-2 border-t border-white/10">
-                            <span class="font-mono text-[11px] text-mutedLavender block">Paragraf Surat (Terbuka bertahap oleh Zizuy):</span>
-                            ${(data.letter && data.letter.paragraphs ? data.letter.paragraphs : []).map((para, idx) => `
-                                <div>
-                                    <div class="flex items-center justify-between mb-0.5">
-                                        <label class="font-mono text-[10px] text-cyberRose">Paragraf #${idx + 1}</label>
-                                        <button type="button" onclick="clearEditorField('edit-letter-para-${idx}')" class="text-[9px] font-mono text-red-400">[✕ Kosongkan]</button>
-                                    </div>
-                                    <textarea id="edit-letter-para-${idx}" rows="3" 
-                                        class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs sm:text-sm text-starlight leading-relaxed focus:outline-none transition-colors">${escapeEditorHtml(para)}</textarea>
-                                </div>
-                            `).join('')}
+                        <div>
+                            <label class="block font-mono text-[11px] text-mutedLavender mb-1">Subjudul Lembar Harapan</label>
+                            <textarea id="edit-wishlistSubtitle" rows="2" 
+                                class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">${escapeEditorHtml(data.wishlistSubtitle || '')}</textarea>
                         </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-white/10">
-                            <div>
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Quote Penutup Tanda Tangan</label>
-                                <input id="edit-closingQuote" type="text" value="${escapeEditorHtml((data.letter && data.letter.closingQuote) || '')}" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Nama Pembuat / Author</label>
-                                <input id="edit-closingAuthor" type="text" value="${escapeEditorHtml((data.letter && data.letter.closingSignature) || '')}" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
-                            </div>
+                        <div class="p-3 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-mutedLavender leading-relaxed">
+                            📝 Isian lembar harapan diketik dan diformat langsung oleh Zizuy di halaman utama menggunakan Mini Word Toolbar (otomatis tersimpan ke browser & cloud).
                         </div>
-                    ` : `
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Judul Lembar Harapan &amp; Evaluasi (Mode Bestie)</label>
-                                <input id="edit-wishlistTitle" type="text" value="${escapeEditorHtml(data.wishlistTitle || '')}" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-mono text-[11px] text-mutedLavender mb-1">Subjudul Lembar Harapan</label>
-                                <textarea id="edit-wishlistSubtitle" rows="2" 
-                                    class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none">${escapeEditorHtml(data.wishlistSubtitle || '')}</textarea>
-                            </div>
-                            <div class="p-3 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-mutedLavender leading-relaxed">
-                                📝 Isian lembar harapan diketik dan diformat langsung oleh Zizuy di halaman utama menggunakan Mini Word Toolbar (otomatis tersimpan).
-                            </div>
-                        </div>
-                    `}
+                    </div>
                 </div>
             `;
         }
 
         window.saveEditorChanges = function() {
-            const data = CONTENT_MODES[editorTargetMode];
+            const data = CONTENT_DATA;
             if (!data) return;
 
             // 1. Countdown & Gate
@@ -4342,13 +3038,10 @@ int main() {
             const elCodeTitle = document.getElementById('edit-codeTitle');
             if (elCodeTitle) data.codeTitle = elCodeTitle.value;
 
-            // Save jokes
             if (!data.jokes) data.jokes = [];
             for (let j = 0; j < 4; j++) {
                 const elJoke = document.getElementById(`edit-joke-${j}`);
-                if (elJoke) {
-                    data.jokes[j] = elJoke.value;
-                }
+                if (elJoke) data.jokes[j] = elJoke.value;
             }
 
             const elCodeSnippet = document.getElementById('edit-codeSnippet');
@@ -4430,7 +3123,6 @@ int main() {
             if (elQCharBuff) data.questCharBuff = elQCharBuff.value;
 
             if (data.quest) {
-                // Stage 1
                 const s1Tag = document.getElementById('edit-q-s1-tag');
                 if (s1Tag && data.quest.stage1) data.quest.stage1.tag = s1Tag.value;
 
@@ -4446,7 +3138,6 @@ int main() {
                     });
                 }
 
-                // Stage 2
                 const s2Tag = document.getElementById('edit-q-s2-tag');
                 if (s2Tag && data.quest.stage2) data.quest.stage2.tag = s2Tag.value;
 
@@ -4462,7 +3153,6 @@ int main() {
                     });
                 }
 
-                // Rewards
                 if (data.quest.rewards) {
                     data.quest.rewards.forEach((rw, idx) => {
                         const t = document.getElementById(`edit-reward-title-${idx}`);
@@ -4473,529 +3163,47 @@ int main() {
                 }
             }
 
-            // 6. Section 4
-            if (editorTargetMode === 'romance' && data.letter) {
-                const elLetterFile = document.getElementById('edit-letterFile');
-                if (elLetterFile) data.letter.fileLabel = elLetterFile.value;
+            // 6. Wishlist Section
+            const elWTitle = document.getElementById('edit-wishlistTitle');
+            if (elWTitle) data.wishlistTitle = elWTitle.value;
 
-                const elLetterDate = document.getElementById('edit-letterDate');
-                if (elLetterDate) data.letter.dateLabel = elLetterDate.value;
+            const elWSub = document.getElementById('edit-wishlistSubtitle');
+            if (elWSub) data.wishlistSubtitle = elWSub.value;
 
-                const elLetterTitle = document.getElementById('edit-letterTitle');
-                if (elLetterTitle) data.letter.title = elLetterTitle.value;
-
-                const elLetterSub = document.getElementById('edit-letterSubtitle');
-                if (elLetterSub) data.letter.subtitle = elLetterSub.value;
-
-                if (data.letter.paragraphs) {
-                    data.letter.paragraphs.forEach((_, idx) => {
-                        const elPara = document.getElementById(`edit-letter-para-${idx}`);
-                        if (elPara) data.letter.paragraphs[idx] = elPara.value;
-                    });
-                }
-
-                const elQuote = document.getElementById('edit-closingQuote');
-                if (elQuote) data.letter.closingQuote = elQuote.value;
-
-                const elAuthor = document.getElementById('edit-closingAuthor');
-                if (elAuthor) data.letter.closingSignature = elAuthor.value;
-            } else if (editorTargetMode === 'friend') {
-                const elWTitle = document.getElementById('edit-wishlistTitle');
-                if (elWTitle) data.wishlistTitle = elWTitle.value;
-
-                const elWSub = document.getElementById('edit-wishlistSubtitle');
-                if (elWSub) data.wishlistSubtitle = elWSub.value;
-            }
-
-            // Save custom content to localStorage
+            // Save to localStorage with timestamp
             try {
-                localStorage.setItem('zizuy_custom_content', JSON.stringify(CONTENT_MODES));
+                localStorage.setItem('zizuy_custom_content', JSON.stringify(CONTENT_DATA));
+                localStorage.setItem('zizuy_content_last_saved', String(Date.now()));
             } catch (e) {
                 console.error('Failed to save to localStorage:', e);
             }
 
-            // Immediately apply to live page
-            setAppMode(currentAppMode, false);
-            applyPolaroidPhotos();
-            if (currentAppMode === 'romance') {
-                initRomanceLetter();
-            }
+            // Apply directly
+            renderAppContent();
 
-            // Broadcast & save to Cloud Firestore across all devices
-            saveToCloudFirestore({ content: CONTENT_MODES, photos: customPhotos });
+            // Cloud Firestore
+            saveToCloudFirestore({ content: CONTENT_DATA, photos: customPhotos }, true);
 
             playCyberTone(880, 'triangle', 0.2);
             showToast('Semua teks & pengaturan berhasil disimpan & diterapkan! ☁️✨');
             closeEditorPanel();
         };
 
-        /* -----------------------------------------------------------------
-           VISUAL LIVE EDIT MODE: KLIK & HAPUS TEKS LANGSUNG DI LAYAR + UNDO/REDO
-           ----------------------------------------------------------------- */
-        let isVisualLiveEditActive = false;
-        let visualUndoStack = [];
-        let visualRedoStack = [];
-        let pendingEdit = null;
-
-        function updateUndoButtonState() {
-            const uBtn = document.getElementById('visual-undo-btn');
-            const rBtn = document.getElementById('visual-redo-btn');
-            const uCount = document.getElementById('visual-undo-count');
-            const rCount = document.getElementById('visual-redo-count');
-            
-            if (uBtn) {
-                if (visualUndoStack.length > 0) {
-                    uBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-                    uBtn.classList.add('hover:bg-white/20', 'text-electricCyan');
-                    uBtn.title = `Undo (${visualUndoStack.length} riwayat) [Ctrl+Z]`;
-                    if (uCount) {
-                        uCount.textContent = visualUndoStack.length;
-                        uCount.classList.remove('hidden');
-                    }
-                } else {
-                    uBtn.classList.add('opacity-40', 'cursor-not-allowed');
-                    uBtn.classList.remove('hover:bg-white/20', 'text-electricCyan');
-                    uBtn.title = 'Tidak ada yang bisa di-undo';
-                    if (uCount) uCount.classList.add('hidden');
-                }
-            }
-            if (rBtn) {
-                if (visualRedoStack.length > 0) {
-                    rBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-                    rBtn.classList.add('hover:bg-white/20', 'text-cyberRose');
-                    rBtn.title = `Redo (${visualRedoStack.length} riwayat) [Ctrl+Y]`;
-                    if (rCount) {
-                        rCount.textContent = visualRedoStack.length;
-                        rCount.classList.remove('hidden');
-                    }
-                } else {
-                    rBtn.classList.add('opacity-40', 'cursor-not-allowed');
-                    rBtn.classList.remove('hover:bg-white/20', 'text-cyberRose');
-                    rBtn.title = 'Tidak ada yang bisa di-redo';
-                    if (rCount) rCount.classList.add('hidden');
-                }
-            }
-        }
-
-        // Capture snapshot before input
-        document.addEventListener('beforeinput', function(e) {
-            if (!isVisualLiveEditActive) return;
-            if (e.target && (e.target.id === 'visual-live-edit-bar' || e.target.closest('#visual-live-edit-bar') || e.target.closest('#editor-panel-modal'))) return;
-            
-            const target = e.target;
-            pendingEdit = {
-                element: target,
-                beforeHTML: target.innerHTML
-            };
-        });
-
-        // Record history on input
-        document.addEventListener('input', function(e) {
-            if (!isVisualLiveEditActive) return;
-            if (e.target.closest('#visual-live-edit-bar') || e.target.closest('#editor-panel-modal')) return;
-
-            const el = e.target;
-            if (pendingEdit && pendingEdit.element === el) {
-                if (pendingEdit.beforeHTML !== el.innerHTML) {
-                    visualUndoStack.push({
-                        element: el,
-                        beforeHTML: pendingEdit.beforeHTML,
-                        afterHTML: el.innerHTML
-                    });
-                    if (visualUndoStack.length > 50) visualUndoStack.shift();
-                    visualRedoStack = [];
-                    updateUndoButtonState();
-                }
-                pendingEdit = { element: el, beforeHTML: el.innerHTML };
-            }
-        });
-
-        // Capture Backspace / Delete on selections
-        document.addEventListener('keydown', function(e) {
-            if (!isVisualLiveEditActive) return;
-            if (e.target && (e.target.closest('#visual-live-edit-bar') || e.target.closest('#editor-panel-modal'))) return;
-
-            // Handle Ctrl+Z and Ctrl+Y
-            if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) {
-                e.preventDefault();
-                if (e.shiftKey) {
-                    redoVisualEdit();
-                } else {
-                    undoVisualEdit();
-                }
-                return;
-            } else if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || e.key === 'Y')) {
-                e.preventDefault();
-                redoVisualEdit();
-                return;
-            }
-
-            // Capture deletions
-            if (e.key === 'Backspace' || e.key === 'Delete') {
-                const sel = window.getSelection();
-                if (sel && sel.rangeCount > 0) {
-                    const range = sel.getRangeAt(0);
-                    const container = (range.commonAncestorContainer.nodeType === 1) ? range.commonAncestorContainer : range.commonAncestorContainer.parentElement;
-                    if (container && !container.closest('#visual-live-edit-bar') && !container.closest('#editor-panel-modal')) {
-                        const beforeHTML = container.innerHTML;
-                        setTimeout(() => {
-                            if (container && beforeHTML !== container.innerHTML) {
-                                visualUndoStack.push({
-                                    element: container,
-                                    beforeHTML: beforeHTML,
-                                    afterHTML: container.innerHTML
-                                });
-                                if (visualUndoStack.length > 50) visualUndoStack.shift();
-                                visualRedoStack = [];
-                                updateUndoButtonState();
-                            }
-                        }, 0);
-                    }
-                }
-            }
-        });
-
-        window.undoVisualEdit = function() {
-            if (!isVisualLiveEditActive) return;
-
-            // 1. Try our snapshot stack first for 100% reliable full element restoration
-            if (visualUndoStack.length > 0) {
-                const action = visualUndoStack.pop();
-                if (action && action.element && document.body.contains(action.element)) {
-                    visualRedoStack.push({
-                        element: action.element,
-                        beforeHTML: action.element.innerHTML,
-                        afterHTML: action.afterHTML
-                    });
-                    action.element.innerHTML = action.beforeHTML;
-                    if (typeof action.element.focus === 'function') action.element.focus();
-
-                    // Flash highlight on restored element
-                    action.element.style.outline = '2px dashed #00E5FF';
-                    action.element.style.transition = 'outline 0.3s ease';
-                    setTimeout(() => {
-                        if (action.element) action.element.style.outline = '';
-                    }, 800);
-
-                    playCyberTone(587.33, 'sine', 0.12);
-                    showToast('↩ Teks berhasil dikembalikan (Undo)!');
-                    updateUndoButtonState();
-                    return;
-                }
-            }
-
-            // 2. Browser native undo fallback
-            const nativeWorked = document.execCommand('undo');
-            if (nativeWorked) {
-                playCyberTone(587.33, 'sine', 0.12);
-                showToast('↩ Berhasil Undo! [Ctrl+Z]');
-            } else {
-                showToast('Tidak ada riwayat perubahan yang bisa di-undo.');
-            }
-            updateUndoButtonState();
-        };
-
-        window.redoVisualEdit = function() {
-            if (!isVisualLiveEditActive) return;
-
-            if (visualRedoStack.length > 0) {
-                const action = visualRedoStack.pop();
-                if (action && action.element && document.body.contains(action.element)) {
-                    visualUndoStack.push({
-                        element: action.element,
-                        beforeHTML: action.element.innerHTML,
-                        afterHTML: action.afterHTML
-                    });
-                    action.element.innerHTML = action.afterHTML;
-                    if (typeof action.element.focus === 'function') action.element.focus();
-
-                    // Flash highlight
-                    action.element.style.outline = '2px dashed #FF2A85';
-                    action.element.style.transition = 'outline 0.3s ease';
-                    setTimeout(() => {
-                        if (action.element) action.element.style.outline = '';
-                    }, 800);
-
-                    playCyberTone(783.99, 'sine', 0.12);
-                    showToast('↪ Redo berhasil diterapkan!');
-                    updateUndoButtonState();
-                    return;
-                }
-            }
-
-            const nativeWorked = document.execCommand('redo');
-            if (nativeWorked) {
-                playCyberTone(783.99, 'sine', 0.12);
-                showToast('↪ Redo berhasil!');
-            } else {
-                showToast('Tidak ada perubahan yang bisa di-redo.');
-            }
-            updateUndoButtonState();
-        };
-
-        window.startVisualLiveEdit = function() {
-            closeEditorPanel();
-            if (isVisualLiveEditActive) return;
-            isVisualLiveEditActive = true;
-            visualUndoStack = [];
-            visualRedoStack = [];
-
-            // Make body editable
-            document.body.contentEditable = 'true';
-            document.body.classList.add('visual-edit-mode-active');
-
-            // Insert floating action bar if not already present
-            let bar = document.getElementById('visual-live-edit-bar');
-            if (!bar) {
-                bar = document.createElement('div');
-                bar.id = 'visual-live-edit-bar';
-                bar.contentEditable = 'false';
-                bar.className = 'fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-[9999] bg-[#120B20]/95 border border-cyberRose/60 shadow-[0_10px_35px_rgba(255,42,133,0.5)] backdrop-blur-md px-3 sm:px-5 py-2 sm:py-2.5 rounded-2xl flex flex-wrap items-center justify-center gap-2 sm:gap-3 font-mono text-xs text-white';
-                bar.innerHTML = `
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <span class="w-2.5 h-2.5 rounded-full bg-cyberRose animate-pulse"></span>
-                        <strong class="text-cyberRose font-bold text-xs">EDIT VISUAL</strong>
-                    </div>
-
-                    <div class="flex items-center gap-1 bg-white/5 p-0.5 rounded-xl border border-white/10 shrink-0">
-                        <button id="visual-undo-btn" type="button" onmousedown="event.preventDefault()" onclick="undoVisualEdit()" title="Batalkan Perubahan (Ctrl+Z)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 active:scale-95 text-starlight rounded-lg font-mono text-xs flex items-center gap-1 transition-all cursor-pointer opacity-40">
-                            <span>↩</span>
-                            <span>Undo</span>
-                            <span id="visual-undo-count" class="hidden text-[10px] bg-electricCyan/20 text-electricCyan px-1 rounded-full font-bold"></span>
-                        </button>
-                        <button id="visual-redo-btn" type="button" onmousedown="event.preventDefault()" onclick="redoVisualEdit()" title="Ulangi Perubahan (Ctrl+Y)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 active:scale-95 text-starlight rounded-lg font-mono text-xs flex items-center gap-1 transition-all cursor-pointer opacity-40">
-                            <span>↪</span>
-                            <span>Redo</span>
-                            <span id="visual-redo-count" class="hidden text-[10px] bg-cyberRose/20 text-cyberRose px-1 rounded-full font-bold"></span>
-                        </button>
-                    </div>
-
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <button type="button" onmousedown="event.preventDefault()" onclick="saveVisualLiveEdit()" class="px-3.5 py-1.5 bg-gradient-to-r from-cyberRose to-electricCyan text-white font-bold rounded-xl hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md flex items-center gap-1">
-                            <span>💾</span>
-                            <span>Simpan</span>
-                        </button>
-                        <button type="button" onmousedown="event.preventDefault()" onclick="stopVisualLiveEdit()" class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-mutedLavender hover:text-white rounded-xl transition-all cursor-pointer">
-                            ✕ Selesai
-                        </button>
-                    </div>
-                `;
-                document.body.appendChild(bar);
-            } else {
-                bar.classList.remove('hidden');
-            }
-
-            updateUndoButtonState();
-            showToast('Mode Edit Visual Aktif! Klik tulisan apa saja di layar untuk diedit/dihapus. Gunakan tombol Undo atau Ctrl+Z jika salah hapus! ✨');
-            playCyberTone(783.99, 'sine', 0.15);
-        };
-
-        window.stopVisualLiveEdit = function() {
-            isVisualLiveEditActive = false;
-            document.body.contentEditable = 'false';
-            document.body.classList.remove('visual-edit-mode-active');
-            const bar = document.getElementById('visual-live-edit-bar');
-            if (bar) bar.classList.add('hidden');
-            showToast('Mode Edit Visual dimatikan.');
-        };
-
-        window.saveVisualLiveEdit = function() {
-            const data = CONTENT_MODES[currentAppMode];
-            if (data) {
-                const getTxt = (id) => {
-                    const el = document.getElementById(id);
-                    if (!el) return null;
-                    return el.textContent.trim();
-                };
-
-                // 1. Countdown & Gate
-                const lateTxt = getTxt('gate-late-btn-text');
-                if (lateTxt !== null) data.gateLateBtnText = lateTxt;
-
-                const runTxt = getTxt('run-exe-btn-text');
-                if (runTxt !== null) data.gateClickHereBtnText = runTxt;
-
-                const countTxt = getTxt('countdown-note-text');
-                if (countTxt !== null) data.countdownNote = countTxt;
-
-                // 2. Hero & C++
-                const descTxt = getTxt('hero-description');
-                if (descTxt !== null) data.heroDesc = descTxt;
-
-                const pillTxt = getTxt('hero-status-pill-text');
-                if (pillTxt !== null) data.statusPill = pillTxt;
-
-                const codeTitleTxt = getTxt('code-card-title');
-                if (codeTitleTxt !== null) data.codeTitle = codeTitleTxt;
-
-                const codeBoxEl = document.querySelector('#code-snippet-box code');
-                if (codeBoxEl) {
-                    data.codeSnippet = codeBoxEl.innerText
-                        .replace(/&/g, '&amp;')
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;');
-                }
-
-                const outJokeEl = document.getElementById('compile-output-text');
-                if (outJokeEl) {
-                    if (!data.jokes) data.jokes = [];
-                    data.jokes[0] = outJokeEl.textContent.trim();
-                }
-
-                // 3. Scrapbook
-                const scrapTag = getTxt('scrapbook-tag');
-                if (scrapTag !== null) data.scrapbookTag = scrapTag;
-
-                const scrapTitle = getTxt('scrapbook-title');
-                if (scrapTitle !== null) data.scrapbookTitle = scrapTitle;
-
-                const scrapSub = getTxt('scrapbook-subtitle');
-                if (scrapSub !== null) data.scrapbookSubtitle = scrapSub;
-
-                // 4. Receipt
-                const rStore = getTxt('receipt-store-title');
-                if (rStore !== null) data.receiptStoreTitle = rStore;
-
-                const rBranch = getTxt('receipt-branch');
-                if (rBranch !== null) data.receiptBranch = rBranch;
-
-                const rCust = getTxt('receipt-customer');
-                if (rCust !== null) data.receiptCustomer = rCust;
-
-                const rCash = getTxt('receipt-cashier');
-                if (rCash !== null) data.receiptCashier = rCash;
-
-                const rFoot = getTxt('receipt-footer-text');
-                if (rFoot !== null) data.receiptFooter = rFoot;
-
-                // 5. Polaroids (cards 1, 2, 3)
-                if (data.polaroids) {
-                    [1, 2, 3].forEach((pNum, idx) => {
-                        const b = getTxt(`pol-badge-${pNum}`);
-                        const t = getTxt(`pol-title-${pNum}`);
-                        const s = getTxt(`pol-sub-${pNum}`);
-                        const q = getTxt(`pol-quote-${pNum}`);
-                        if (data.polaroids[idx]) {
-                            if (b !== null) data.polaroids[idx].badge = b;
-                            if (t !== null) data.polaroids[idx].title = t;
-                            if (s !== null) data.polaroids[idx].sub = s;
-                            if (q !== null) data.polaroids[idx].quote = q;
-                        }
-                    });
-                }
-
-                // 6. Quest HUD & Titles
-                const qTag = getTxt('quest-tag-text');
-                if (qTag !== null) data.questTag = qTag;
-
-                const qTitle = getTxt('quest-title-text');
-                if (qTitle !== null) data.questTitle = qTitle;
-
-                const qSub = getTxt('quest-subtitle-text');
-                if (qSub !== null) data.questSubtitle = qSub;
-
-                const qName = getTxt('quest-char-name');
-                if (qName !== null) data.questCharName = qName;
-
-                const qLv = getTxt('quest-char-lv');
-                if (qLv !== null) data.questCharLevel = qLv;
-
-                const qClass = getTxt('quest-char-class');
-                if (qClass !== null) data.questCharClass = qClass;
-
-                const qBuff = getTxt('quest-char-buff');
-                if (qBuff !== null) data.questCharBuff = qBuff;
-
-                // 7. Section 4
-                if (currentAppMode === 'romance' && data.letter) {
-                    const lTitle = getTxt('romance-letter-title');
-                    if (lTitle !== null) data.letter.title = lTitle;
-
-                    const lSub = getTxt('romance-letter-subtitle');
-                    if (lSub !== null) data.letter.subtitle = lSub;
-
-                    const lQuote = getTxt('romance-closing-quote');
-                    if (lQuote !== null) data.letter.closingQuote = lQuote;
-
-                    const lAuthor = getTxt('romance-closing-author');
-                    if (lAuthor !== null) data.letter.closingSignature = lAuthor;
-
-                    // Extract all paragraphs from DOM
-                    const paraEls = document.querySelectorAll('#romance-letter-paragraphs .romance-para');
-                    if (paraEls && paraEls.length > 0) {
-                        data.letter.paragraphs = Array.from(paraEls).map(p => p.textContent.trim()).filter(Boolean);
-                    }
-                } else if (currentAppMode === 'friend') {
-                    const wTitle = getTxt('wishlist-heading-title');
-                    if (wTitle !== null) data.wishlistTitle = wTitle;
-
-                    const wSub = getTxt('wishlist-heading-sub');
-                    if (wSub !== null) data.wishlistSubtitle = wSub;
-
-                    const wishlistEditor = document.getElementById('zizuy-wishlist-editor');
-                    if (wishlistEditor) {
-                        try {
-                            localStorage.setItem('zizuy_wishlist_content', wishlistEditor.innerHTML);
-                        } catch(e) {}
-                    }
-                }
-
-                // Save to LocalStorage with timestamp
-                try {
-                    localStorage.setItem('zizuy_custom_content', JSON.stringify(CONTENT_MODES));
-                    localStorage.setItem('zizuy_content_last_saved', String(Date.now()));
-                } catch (e) {
-                    console.error('Failed to save to localStorage:', e);
-                }
-
-                // Immediately upload to Cloud Firestore so it syncs across all devices & stays on refresh
-                if (typeof window._firebaseSaveDoc === 'function') {
-                    window._firebaseSaveDoc({ content: CONTENT_MODES, photos: customPhotos, lastUpdated: new Date().toISOString() });
-                }
-            }
-
-            playCyberTone(880, 'sine', 0.2);
-            showToast('💾 Perubahan visual tersimpan permanen! Tetap ada saat halaman direfresh. ✨');
-            stopVisualLiveEdit();
-        };
-
-        window.resetEditorToDefault = function() {
-            if (confirm('Yakin ingin mereset semua kata, ucapan, & foto kembali ke bawaan default?')) {
-                try {
-                    localStorage.removeItem('zizuy_custom_content');
-                    localStorage.removeItem('zizuy_custom_photos');
-                } catch (e) {}
-                CONTENT_MODES = JSON.parse(JSON.stringify(DEFAULT_CONTENT_MODES));
-                window.CONTENT_MODES = CONTENT_MODES;
-                customPhotos = { photo1: '', photo2: '', photo3: '' };
-                window.customPhotos = customPhotos;
-                applyPolaroidPhotos();
-                setAppMode(currentAppMode, false);
-                renderEditorForm();
-                saveToCloudFirestore({ content: CONTENT_MODES, photos: customPhotos });
-                playCyberTone(440, 'sine', 0.15);
-                showToast('Semua teks & foto telah direset ke default bawaan.');
-            }
-        };
-
-        // Photo handlers for Editor Panel (Strictly scoped to editorTargetMode: Romance vs Bestie)
         window.handleEditorPhotoUpload = async function(event, photoNum) {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
             try {
-                const targetMode = editorTargetMode || 'romance';
-                showToast(`Memproses & mengompres Foto #${photoNum} (${targetMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'})...`);
+                showToast(`Memproses & mengompres Foto #${photoNum}...`);
                 const compressedBase64 = await compressImageFile(file, 800, 800, 0.8);
-                if (!customPhotos[targetMode]) customPhotos[targetMode] = { photo1: '', photo2: '', photo3: '' };
-                customPhotos[targetMode][`photo${photoNum}`] = compressedBase64;
+                customPhotos[`photo${photoNum}`] = compressedBase64;
                 window.customPhotos = customPhotos;
                 try {
                     localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
                 } catch (e) {}
                 applyPolaroidPhotos();
                 renderEditorForm();
-                saveToCloudFirestore({ photos: customPhotos });
-                showToast(`Foto #${photoNum} berhasil dipasang untuk ${targetMode === 'romance' ? 'Mode Romance 💕' : 'Mode Bestie 👥'}!`);
+                saveToCloudFirestore({ photos: customPhotos }, true);
+                showToast(`Foto #${photoNum} berhasil dipasang! ✨`);
                 playCyberTone(880, 'triangle', 0.18);
             } catch (err) {
                 console.error('Error uploading photo:', err);
@@ -5004,215 +3212,51 @@ int main() {
         };
 
         window.handleEditorPhotoUrl = function(photoNum, url) {
-            const targetMode = editorTargetMode || 'romance';
-            const trimmed = (url || '').trim();
-            if (!trimmed) return;
-            if (!customPhotos[targetMode]) customPhotos[targetMode] = { photo1: '', photo2: '', photo3: '' };
-            customPhotos[targetMode][`photo${photoNum}`] = trimmed;
+            customPhotos[`photo${photoNum}`] = url.trim();
             window.customPhotos = customPhotos;
             try {
                 localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
             } catch (e) {}
             applyPolaroidPhotos();
             renderEditorForm();
-            saveToCloudFirestore({ photos: customPhotos });
-            showToast(`URL Foto #${photoNum} disimpan untuk ${targetMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'}!`);
+            saveToCloudFirestore({ photos: customPhotos }, true);
+            showToast(`URL Foto #${photoNum} disimpan! ✨`);
             playCyberTone(783.99, 'triangle', 0.14);
         };
 
         window.handleRemovePhoto = function(photoNum) {
-            const targetMode = editorTargetMode || 'romance';
-            if (!customPhotos[targetMode]) customPhotos[targetMode] = { photo1: '', photo2: '', photo3: '' };
-            customPhotos[targetMode][`photo${photoNum}`] = '';
+            customPhotos[`photo${photoNum}`] = '';
             window.customPhotos = customPhotos;
             try {
                 localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
             } catch (e) {}
             applyPolaroidPhotos();
             renderEditorForm();
-            saveToCloudFirestore({ photos: customPhotos });
-            showToast(`Foto #${photoNum} dihapus dari ${targetMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'}.`);
+            saveToCloudFirestore({ photos: customPhotos }, true);
+            showToast(`Foto #${photoNum} dihapus.`);
             playCyberTone(440, 'sine', 0.12);
         };
 
-        window.exportEditorConfig = function() {
-            const jsonStr = JSON.stringify(CONTENT_MODES, null, 2);
-            const tempInput = document.createElement('textarea');
-            tempInput.value = jsonStr;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            playCyberTone(659.25, 'sine', 0.15);
-            showToast('Config JSON berhasil disalin ke clipboard!');
-        };
-
-        // Keyboard Shortcut: Press 'V' or 'v' to open/toggle Editor Panel
-        window.addEventListener('keydown', (e) => {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                if (e.key === 'Escape') {
-                    closeEditorPanel();
-                }
-                return;
-            }
-            if (e.key === 'v' || e.key === 'V') {
-                e.preventDefault();
-                toggleEditorPanel();
-            } else if (e.key === 'Escape') {
-                closeEditorPanel();
-            }
-        });
-
-        // Close on modal backdrop click
-        document.getElementById('editor-panel-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'editor-panel-modal') {
-                closeEditorPanel();
-            }
-        });
-
-        // Hero Code Test Joke Button
-        let jokeIdx = 0;
-        document.getElementById('compile-joke-btn').addEventListener('click', () => {
-            playCyberTone(783.99, 'triangle', 0.14);
-            const outBox = document.getElementById('compile-output');
-            const outTxt = document.getElementById('compile-output-text');
-            showElement(outBox);
-            const jokes = CONTENT_MODES[currentAppMode].jokes;
-            outTxt.textContent = jokes[jokeIdx % jokes.length];
-            jokeIdx++;
-        });
-
-        /* -----------------------------------------------------------------
-           F-03: MEMORY RECEIPT INTERACTION
-           ----------------------------------------------------------------- */
-        let stampIdx = 0;
-        document.getElementById('stamp-receipt-btn').addEventListener('click', () => {
-            playCyberTone(523.25, 'triangle', 0.12);
-            const stamps = CONTENT_MODES[currentAppMode].stamps;
-            stampIdx = (stampIdx + 1) % stamps.length;
-            const stampEl = document.getElementById('receipt-stamp');
-            stampEl.textContent = stamps[stampIdx];
-            stampEl.classList.add('scale-110');
-            setTimeout(() => stampEl.classList.remove('scale-110'), 220);
-            showToast('Stempel struk: ' + stamps[stampIdx]);
-        });
-
-        /* -----------------------------------------------------------------
-           F-04: INTERACTIVE DRAGGABLE POLAROID DECK (Touch & Mouse)
-           ----------------------------------------------------------------- */
-        let topZ = 40;
-        const polaroids = document.querySelectorAll('.polaroid-card');
-
-        polaroids.forEach((card) => {
-            let isDragging = false;
-            let startX = 0;
-            let startY = 0;
-            let currentX = parseFloat(card.getAttribute('data-x')) || 0;
-            let currentY = parseFloat(card.getAttribute('data-y')) || 0;
-            const baseRot = parseFloat(card.getAttribute('data-rot')) || 0;
-
-            function onPointerDown(e) {
-                if (e.target.closest('label') || e.target.tagName === 'INPUT') return;
-                isDragging = true;
-                topZ++;
-                card.style.zIndex = topZ;
-                card.classList.add('dragging');
-
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                startX = clientX - currentX;
-                startY = clientY - currentY;
-            }
-
-            function onPointerMove(e) {
-                if (!isDragging) return;
-                if (e.cancelable) e.preventDefault();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                currentX = clientX - startX;
-                currentY = clientY - startY;
-                const tilt = baseRot + (currentX * 0.03);
-                card.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotate(${tilt}deg) scale(1.03)`;
-            }
-
-            function onPointerUp() {
-                if (!isDragging) return;
-                isDragging = false;
-                card.classList.remove('dragging');
-                card.setAttribute('data-x', currentX);
-                card.setAttribute('data-y', currentY);
-                card.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotate(${baseRot}deg)`;
-            }
-
-            card.addEventListener('mousedown', onPointerDown);
-            window.addEventListener('mousemove', onPointerMove);
-            window.addEventListener('mouseup', onPointerUp);
-
-            card.addEventListener('touchstart', onPointerDown, { passive: true });
-            window.addEventListener('touchmove', onPointerMove, { passive: false });
-            window.addEventListener('touchend', onPointerUp);
-        });
-
-        // Shuffle / Cycle Front Polaroid Button
-        let currentFrontIdx = 0;
-        document.getElementById('shuffle-polaroids-btn').addEventListener('click', () => {
-            playCyberTone(659.25, 'sine', 0.12);
-            topZ++;
-            const card = polaroids[currentFrontIdx % polaroids.length];
-            currentFrontIdx++;
-            const rx = (Math.random() - 0.5) * 40;
-            const ry = (Math.random() - 0.5) * 26;
-            const rRot = (Math.random() - 0.5) * 7;
-            card.setAttribute('data-x', rx);
-            card.setAttribute('data-y', ry);
-            card.setAttribute('data-rot', rRot);
-            card.style.zIndex = topZ;
-            card.style.transform = `translate3d(${rx}px, ${ry}px, 0) rotate(${rRot}deg)`;
-        });
-
-        // Reset Polaroid Positions
-        document.getElementById('reset-polaroids-btn').addEventListener('click', () => {
-            playCyberTone(440, 'sine', 0.12);
-            const defaults = [
-                { x: -28, y: -14, rot: -3.5 },
-                { x: 26, y: 16, rot: 2.8 },
-                { x: 0, y: -4, rot: -1.5 }
-            ];
-            polaroids.forEach((card, i) => {
-                const d = defaults[i];
-                card.setAttribute('data-x', d.x);
-                card.setAttribute('data-y', d.y);
-                card.setAttribute('data-rot', d.rot);
-                card.style.zIndex = 10 + i * 10;
-                card.style.transform = `translate3d(${d.x}px, ${d.y}px, 0) rotate(${d.rot}deg)`;
-            });
-            showToast('Tumpukan polaroid dirapikan kembali!');
-        });
-
-        // Photo Replacement directly on Polaroid Cards (with auto-compression & cloud sync)
         window.replacePolaroidImage = async function(event, index) {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
             try {
-                const activeMode = currentAppMode || 'romance';
-                showToast(`Memproses & mengompres Foto #${index} (${activeMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'})...`);
+                showToast(`Memproses & mengompres Foto #${index}...`);
                 const compressedBase64 = await compressImageFile(file, 800, 800, 0.8);
-                if (!customPhotos[activeMode]) customPhotos[activeMode] = { photo1: '', photo2: '', photo3: '' };
-                customPhotos[activeMode][`photo${index}`] = compressedBase64;
+                customPhotos[`photo${index}`] = compressedBase64;
                 window.customPhotos = customPhotos;
                 try {
                     localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
                 } catch (e) {}
                 applyPolaroidPhotos();
-                saveToCloudFirestore({ photos: customPhotos });
-                showToast(`Foto Polaroid #${index} berhasil dipasang untuk ${activeMode === 'romance' ? 'Mode Romance 💕' : 'Mode Bestie 👥'}!`);
+                saveToCloudFirestore({ photos: customPhotos }, true);
+                showToast(`Foto Polaroid #${index} berhasil dipasang! ✨`);
                 playCyberTone(880, 'triangle', 0.18);
             } catch (err) {
                 console.error('Error replacing polaroid photo:', err);
                 showToast('Gagal memproses file foto.');
             }
         };
-
         /* -----------------------------------------------------------------
            F-05: ZIZUY'S QUEST CHOICE (3-STAGE INTERACTIVE RPG DIALOG)
            ----------------------------------------------------------------- */
@@ -5779,7 +3823,7 @@ int main() {
             try {
                 savedMode = localStorage.getItem('zizuy_theme_mode') || 'romance';
             } catch (e) {}
-            setAppMode(savedMode, false);
+            renderAppContent();
 
             // Apply saved Polaroid Photos
             applyPolaroidPhotos();
