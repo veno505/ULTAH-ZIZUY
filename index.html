@@ -801,12 +801,10 @@
 
         </div>
 
-        <!-- Bottom Status Area -->
-        <div class="relative z-10 w-full max-w-5xl flex flex-col sm:flex-row items-center justify-end gap-2.5 text-center sm:text-left font-mono text-[11px] sm:text-xs text-mutedLavender pb-1">
-            <!-- Discreet Simulator Toggle Button -->
-            <button id="gate-toggle-sim-btn" type="button" onclick="toggleGateSimulation()" class="spring-btn px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-mutedLavender hover:text-starlight text-[10px] sm:text-[11px] transition-colors flex items-center gap-1.5 cursor-pointer">
-                <span>⏱️</span>
-                <span id="gate-sim-label">Simulasi: Sudah Lewat 23 Nov (+)</span>
+        <!-- Bottom Status Area (Simulation button hidden for real countdown test) -->
+        <div class="hidden relative z-10 w-full max-w-5xl flex-col sm:flex-row items-center justify-end gap-2.5 text-center sm:text-left font-mono text-[11px] sm:text-xs text-mutedLavender pb-1">
+            <button id="gate-toggle-sim-btn" type="button" onclick="toggleGateSimulation()" class="hidden">
+                <span id="gate-sim-label">Simulasi</span>
             </button>
         </div>
     </section>
@@ -2185,7 +2183,7 @@
            or shows count-up plus button "yahh sayangg udah lewat jam nya klik disini yachh".
            HIGH PERFORMANCE OPTIMIZED: RAF Culling, 65ms Batched Ticker, Zero Save/Restore.
            ----------------------------------------------------------------- */
-        const TARGET_BIRTHDAY_MS = new Date('2026-11-23T00:00:00+07:00').getTime();
+        const TARGET_BIRTHDAY_MS = new Date('2026-11-21T22:30:00+07:00').getTime();
         let gateSimulationLate = false;
         let hasAutoUnlocked = false;
         let countdownTickerInterval = null;
