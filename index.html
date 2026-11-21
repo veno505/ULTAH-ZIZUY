@@ -1627,7 +1627,11 @@
                         </div>
 
                         <!-- Footer Info -->
-                        <div class="mt-4 pt-3 border-t border-dashed border-white/20 flex flex-wrap items-center justify-end gap-2 text-xs font-mono text-mutedLavender">
+                        <div class="mt-4 pt-3 border-t border-dashed border-white/20 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
+                            <span class="flex items-center gap-1.5">
+                                <span>☁️</span>
+                                <span>Tulisan di kolom ini tersinkron otomatis ke semua perangkat sehingga bisa langsung dibaca oleh Penoyy.</span>
+                            </span>
                             <span id="penoyy-msg-word-count" class="text-cyberRose font-bold">
                                 0 kata
                             </span>
@@ -3284,14 +3288,13 @@ int main() {
                 receiptCustomer: 'Zizuy (Temen Deket Seperjuangan)',
                 receiptCashier: 'Penoyy (Temen Nugas)',
                 receiptItems: [
-                    { name: 'Curhat Laprak & Tugas Coding', qty: '1 x', price: 'GRATIS' },
-                    { name: 'Muter-Muter Nyari Makan Pas Jam Kosong', qty: '48 x', price: 'PUAS' },
-                    { name: 'Anti Drama & Zero Cringe Policy', qty: '1 x', price: 'PERMANEN' },
-                    { name: 'Doa Sukses & IPK Tinggi Semester 1', qty: '999 x', price: 'LUNAS' }
+                    { name: 'Curhat Laprak & Tugas Coding', qty: '', price: 'GRATIS' },
+                    { name: 'Muter-Muter Nyari Makan Pas Jam Kosong', qty: '', price: 'PUAS' },
+                    { name: 'Anti Drama & Zero Cringe Policy', qty: '', price: 'PERMANEN' },
+                    { name: 'Doa Sukses & IPK Tinggi Semester 1', qty: '', price: 'LUNAS' }
                 ],
                 receiptTotals: [
                     { label: 'Subtotal (Umur Zizuy)', val: '19 Tahun Resmi' },
-                    { label: 'Biaya Temenan', val: 'Rp 0 (Solid Selamanya)' },
                     { label: 'Total ALL', val: 'FREE ANYTIME', highlight: true }
                 ],
                 stamps: [
@@ -3822,13 +3825,13 @@ int main() {
                         <span class="text-starlight/90">${item.name}</span>
                         <span class="font-mono ${item.price === 'PRICELESS' || item.price === 'PERMANEN' ? 'text-cyberRose font-bold' : (item.price === 'COMPLIMENTARY' || item.price === 'LUNAS' ? 'text-electricCyan font-bold' : 'text-starlight')} shrink-0">${item.price || ''}</span>
                     </div>
-                    ${item.qty ? `<div class="text-[10px] sm:text-xs text-mutedLavender font-mono -mt-1 sm:-mt-1.5">${item.qty}</div>` : ''}
                 `).join('');
             }
 
             const totalsContainer = document.getElementById('receipt-totals-container');
             if (totalsContainer) {
-                totalsContainer.innerHTML = (data.receiptTotals || []).map(t => `
+                const validTotals = (data.receiptTotals || []).filter(t => t.label !== 'Biaya Temenan');
+                totalsContainer.innerHTML = validTotals.map(t => `
                     <div class="flex justify-between ${t.highlight ? 'text-sm sm:text-base font-bold text-starlight pt-2 border-t border-dashed border-white/20' : 'text-mutedLavender'}">
                         <span>${t.label}</span>
                         <span class="font-mono ${t.highlight ? (mode === 'friend' ? 'text-electricCyan' : 'text-cyberRose') : 'text-starlight'}">${t.val}</span>
@@ -5547,9 +5550,17 @@ int main() {
            ----------------------------------------------------------------- */
         const DEFAULT_WISHLIST_TEMPLATE = `
 <p style="margin-bottom: 12px;"><strong style="color: #FF2A85;">🎯 1. Harapan &amp; Impianku di Usia 19:</strong></p>
-<p style="margin-bottom: 24px;"><br></p>
+<p style="margin-bottom: 8px;">• Kuliah S1 Informatika lancar, IPK aman di atas target, paham logika koding, dan semua tugas laprak kelar tepat waktu tanpa stres begadang.</p>
+<p style="margin-bottom: 8px;">• Diberikan kesehatan lahir batin, rezeki lancar, selalu dikelilingi orang-orang baik, dan makin disayang keluarga &amp; sahabat.</p>
+<p style="margin-bottom: 16px;">• Makin percaya diri, mandiri, bisa mengembangkan skill baru, dan selalu bahagia menikmati setiap proses hidup.</p>
+
 <p style="margin-bottom: 12px;"><strong style="color: #00E5FF;">🔄 2. Hal yang Harus Direvisi &amp; Ditingkatkan dari Tahun Sebelumnya:</strong></p>
-<p style="margin-bottom: 12px;"><br></p>
+<p style="margin-bottom: 8px;">• Kurangi overthinking dan jangan suka menunda pekerjaan atau tugas kuliah sampai deadline mepet.</p>
+<p style="margin-bottom: 8px;">• Perbaiki pola tidur dan jam makan, jangan sering skip sarapan atau begadang yang nggak penting.</p>
+<p style="margin-bottom: 16px;">• Lebih sabar, lebih mencintai diri sendiri, dan nggak gampang insecure sama pencapaian orang lain.</p>
+
+<p style="margin-bottom: 12px;"><strong style="color: #F4F4F6;">💌 3. Pesan Khusus Buat Diri Sendiri di Masa Depan:</strong></p>
+<p style="margin-bottom: 8px;"><em>"Hai Zizuy di masa depan! Ingat ya, kamu sudah berjuang hebat sampai ke titik ini. Jangan pernah ragu sama kemampuan diri sendiri. Tetaplah jadi pribadi yang ceria, tulus, dan selalu tersenyum!"</em></p>
 `.trim();
 
         
@@ -5623,11 +5634,6 @@ int main() {
             let saved = null;
             try {
                 saved = localStorage.getItem('zizuy_wishlist_reflection_19');
-                // Automatically clear old default filler text if it hasn't been customized yet
-                if (saved && (saved.includes('Kuliah S1 Informatika lancar, IPK aman') || saved.includes('3. Pesan Khusus Buat Diri Sendiri'))) {
-                    saved = null;
-                    localStorage.removeItem('zizuy_wishlist_reflection_19');
-                }
             } catch (e) {}
 
             editor.innerHTML = (saved && saved.trim()) ? saved : DEFAULT_WISHLIST_TEMPLATE;
@@ -5723,7 +5729,7 @@ int main() {
            ----------------------------------------------------------------- */
         const DEFAULT_PENOYY_MSG_TEMPLATE = `
 <p style="margin-bottom: 12px;"><strong style="color: #00E5FF;">💬 Tulis Pesan, Cerita, atau Ungkapanmu Buat Penoyy di Sini:</strong></p>
-<p style="margin-bottom: 12px;"><br></p>
+<p style="margin-bottom: 8px;">Hai Penoyy! Aku mau nulis pesan dan cerita buat kamu di sini...</p>
 `.trim();
 
         let penoyyMsgSaveTimer = null;
@@ -5772,10 +5778,6 @@ int main() {
             let saved = null;
             try {
                 saved = localStorage.getItem('zizuy_msg_to_penoyy_19');
-                if (saved && saved.includes('Hai Penoyy! Aku mau nulis pesan dan cerita buat kamu di sini...')) {
-                    saved = null;
-                    localStorage.removeItem('zizuy_msg_to_penoyy_19');
-                }
             } catch (e) {}
 
             editor.innerHTML = (saved && saved.trim()) ? saved : DEFAULT_PENOYY_MSG_TEMPLATE;
@@ -5808,11 +5810,10 @@ int main() {
                 }
             } catch (e) {}
 
-            const cleanedHtml = cloudDoc.html.replace('<p style="margin-bottom: 8px;">Hai Penoyy! Aku mau nulis pesan dan cerita buat kamu di sini...</p>', '<p style="margin-bottom: 12px;"><br></p>');
-            if (cleanedHtml.trim() && editor.innerHTML !== cleanedHtml) {
-                editor.innerHTML = cleanedHtml;
+            if (cloudDoc.html.trim() && editor.innerHTML !== cloudDoc.html) {
+                editor.innerHTML = cloudDoc.html;
                 try {
-                    localStorage.setItem('zizuy_msg_to_penoyy_19', cleanedHtml);
+                    localStorage.setItem('zizuy_msg_to_penoyy_19', cloudDoc.html);
                 } catch (e) {}
                 updatePenoyyMsgWordCount();
             }
