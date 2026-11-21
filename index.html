@@ -3360,20 +3360,51 @@ int main() {
         }
         window.getModePhotoList = getModePhotoList;
 
-        let polaroidTopZ = 40;
+        let polaroidTopZ = 200;
         let polaroidFrontIdx = 0;
 
-        function getPolaroidDefaultTransform(idx) {
+        function getPolaroidStackOffset(queuePos) {
+            if (queuePos === 0) {
+                return { x: 0, y: 0, rot: 0 };
+            }
             const presets = [
-                { x: -16, y: -10, rot: -2.2 },
-                { x: 16, y: 12, rot: 2.0 },
-                { x: 0, y: -4, rot: -0.8 },
-                { x: -22, y: 14, rot: 2.6 },
-                { x: 20, y: -14, rot: -2.4 },
-                { x: -8, y: 8, rot: 1.4 }
+                { x: 14, y: 10, rot: 2.0 },
+                { x: -16, y: -8, rot: -2.2 },
+                { x: -18, y: 12, rot: 2.4 },
+                { x: 18, y: -12, rot: -2.0 },
+                { x: -10, y: 8, rot: 1.5 },
+                { x: 12, y: -6, rot: -1.6 }
             ];
-            return presets[idx % presets.length];
+            return presets[(queuePos - 1) % presets.length];
         }
+
+        function updatePolaroidStackOrder() {
+            const cards = document.querySelectorAll('#polaroid-cards-container .polaroid-card');
+            const total = cards.length;
+            if (!total) return;
+
+            if (polaroidFrontIdx >= total || polaroidFrontIdx < 0) {
+                polaroidFrontIdx = 0;
+            }
+
+            const countBadge = document.getElementById('polaroid-count-badge');
+            if (countBadge) {
+                countBadge.textContent = `Foto ${polaroidFrontIdx + 1} / ${total} Landscape`;
+            }
+
+            cards.forEach((card, idx) => {
+                // queuePos: 0 = front card, 1 = second from front, ..., total-1 = very back card
+                const queuePos = (idx - polaroidFrontIdx + total) % total;
+                const d = getPolaroidStackOffset(queuePos);
+                const z = 100 + (total - queuePos);
+                card.setAttribute('data-x', d.x);
+                card.setAttribute('data-y', d.y);
+                card.setAttribute('data-rot', d.rot);
+                card.style.zIndex = z;
+                card.style.transform = `translate3d(${d.x}px, ${d.y}px, 0) rotate(${d.rot}deg)`;
+            });
+        }
+        window.updatePolaroidStackOrder = updatePolaroidStackOrder;
 
         function bindLandscapeCardDrag(card) {
             let isDragging = false;
@@ -3434,16 +3465,22 @@ int main() {
             const container = document.getElementById('polaroid-cards-container');
             if (!container) return;
 
+            const total = list.length;
+            if (polaroidFrontIdx >= total || polaroidFrontIdx < 0) {
+                polaroidFrontIdx = 0;
+            }
+
             const countBadge = document.getElementById('polaroid-count-badge');
-            if (countBadge) countBadge.textContent = `${list.length} Foto Landscape`;
+            if (countBadge) countBadge.textContent = `Foto ${polaroidFrontIdx + 1} / ${total} Landscape`;
 
             container.innerHTML = list.map((photo, idx) => {
                 const num = idx + 1;
-                const d = getPolaroidDefaultTransform(idx);
+                const queuePos = (idx - polaroidFrontIdx + total) % total;
+                const d = getPolaroidStackOffset(queuePos);
                 const tapeClass = idx % 2 === 0 ? 'washi-tape-cyan -rotate-2' : 'washi-tape rotate-2';
-                const z = 10 + idx * 5;
+                const z = 100 + (total - queuePos);
                 return `
-                    <div class="polaroid-card absolute w-[275px] sm:w-[375px] md:w-[425px] p-2 sm:p-2.5 rounded-2xl shadow-2xl" data-rot="${d.rot}" data-x="${d.x}" data-y="${d.y}" style="transform: translate3d(${d.x}px, ${d.y}px, 0) rotate(${d.rot}deg); z-index: ${z};">
+                    <div class="polaroid-card absolute w-[275px] sm:w-[375px] md:w-[425px] p-2 sm:p-2.5 rounded-2xl shadow-2xl" data-idx="${idx}" data-rot="${d.rot}" data-x="${d.x}" data-y="${d.y}" style="transform: translate3d(${d.x}px, ${d.y}px, 0) rotate(${d.rot}deg); z-index: ${z};">
                         <div class="${tapeClass} w-16 sm:w-20 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 rounded-sm pointer-events-none z-20"></div>
                         <div class="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-obsidian border border-white/15 group">
                             <img id="pol-img-${num}" src="${photo || ''}" alt="Foto ${num}" class="${photo ? '' : 'hidden'} w-full h-full object-cover pointer-events-none select-none">
@@ -3542,19 +3579,32 @@ int main() {
                 } catch (e) {}
             }
             if (cloudData.photos) {
-                if (cloudData.photos.romance || cloudData.photos.friend) {
-                    if (cloudData.photos.romance) customPhotos.romance = normalizeModePhotoObj(cloudData.photos.romance);
-                    if (cloudData.photos.friend) customPhotos.friend = normalizeModePhotoObj(cloudData.photos.friend);
-                } else if (cloudData.photos.photo1 !== undefined || Array.isArray(cloudData.photos.list)) {
-                    customPhotos.friend = normalizeModePhotoObj(cloudData.photos);
-                    customPhotos.romance = normalizeModePhotoObj(cloudData.photos);
+                const localList = getModePhotoList('friend');
+                const localFilled = localList.filter(Boolean).length;
+                const incomingObj = (cloudData.photos.friend || cloudData.photos.romance || cloudData.photos);
+                const incomingNorm = normalizeModePhotoObj(incomingObj);
+                const incomingFilled = (incomingNorm.list || []).filter(Boolean).length;
+
+                if (localFilled > incomingFilled && !cloudData.forceResetPhotos) {
+                    console.log(`Perangkat ini punya ${localFilled} foto (Cloud baru ${incomingFilled}). Mengunggah semua ${localFilled} foto ke Cloud Chunks...`);
+                    if (typeof window._firebaseSaveDoc === 'function') {
+                        setTimeout(() => window._firebaseSaveDoc({ photos: customPhotos }), 400);
+                    }
+                } else {
+                    if (cloudData.photos.romance || cloudData.photos.friend) {
+                        if (cloudData.photos.romance) customPhotos.romance = normalizeModePhotoObj(cloudData.photos.romance);
+                        if (cloudData.photos.friend) customPhotos.friend = normalizeModePhotoObj(cloudData.photos.friend);
+                    } else if (cloudData.photos.photo1 !== undefined || Array.isArray(cloudData.photos.list)) {
+                        customPhotos.friend = normalizeModePhotoObj(cloudData.photos);
+                        customPhotos.romance = normalizeModePhotoObj(cloudData.photos);
+                    }
+                    window.customPhotos = customPhotos;
+                    try {
+                        localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
+                    } catch (e) {}
+                    applyPolaroidPhotos();
+                    changed = true;
                 }
-                window.customPhotos = customPhotos;
-                try {
-                    localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
-                } catch (e) {}
-                applyPolaroidPhotos();
-                changed = true;
             }
             if (changed) {
                 setAppMode(currentAppMode, false);
@@ -4012,13 +4062,16 @@ int main() {
                             <span class="font-mono text-xs font-bold text-starlight uppercase">★ 4. Scrapbook &amp; Foto Landscape</span>
                             <span class="font-mono text-[10px] text-mutedLavender block sm:inline sm:ml-2">Tanpa kata-kata, ukuran landscape, jumlah bebas diatur</span>
                         </div>
-                        <div class="flex items-center gap-1.5">
+                        <div class="flex flex-wrap items-center gap-1.5">
                             <span class="font-mono text-[10px] text-mutedLavender">Jumlah Foto:</span>
                             <button type="button" onclick="changePolaroidCount(-1)" class="w-6 h-6 rounded-lg bg-white/10 hover:bg-white/20 text-starlight font-mono font-bold text-xs flex items-center justify-center border border-white/15">-</button>
                             <span class="px-2.5 py-0.5 rounded-lg bg-electricCyan/20 text-electricCyan border border-electricCyan/40 font-mono font-bold text-xs">${getModePhotoList(editorTargetMode).length}</span>
                             <button type="button" onclick="changePolaroidCount(1)" class="w-6 h-6 rounded-lg bg-white/10 hover:bg-white/20 text-starlight font-mono font-bold text-xs flex items-center justify-center border border-white/15">+</button>
                             <button type="button" onclick="addPolaroidCardSlot()" class="ml-1 px-2.5 py-1 rounded-lg bg-electricCyan/20 hover:bg-electricCyan/30 text-electricCyan border border-electricCyan/40 font-mono font-bold text-[10px] transition-colors">
                                 ➕ Tambah Foto
+                            </button>
+                            <button type="button" onclick="forceSyncAllPhotosToCloud()" class="px-2.5 py-1 rounded-lg bg-cyberRose/20 hover:bg-cyberRose/30 text-cyberRose border border-cyberRose/40 font-mono font-bold text-[10px] transition-colors">
+                                ☁️ Sinkron ke Laptop
                             </button>
                         </div>
                     </div>
@@ -4952,6 +5005,18 @@ int main() {
             saveToCloudFirestore({ photos: customPhotos });
         }
 
+        window.forceSyncAllPhotosToCloud = async function() {
+            const list = getModePhotoList('friend');
+            showToast(`☁️ Mengunggah seluruh ${list.length} foto ke Cloud & Laptop...`);
+            if (typeof window._firebaseSaveDoc === 'function') {
+                await window._firebaseSaveDoc({ photos: customPhotos });
+                playCyberTone(880, 'triangle', 0.18);
+                showToast(`✓ Seluruh ${list.length} foto berhasil disinkronkan ke Laptop/Cloud! ✨`);
+            } else {
+                showToast('Sedang menghubungkan ke Cloud...');
+            }
+        };
+
         window.addPolaroidCardSlot = function() {
             const targetMode = editorTargetMode || 'friend';
             const list = getModePhotoList(targetMode);
@@ -5098,38 +5163,38 @@ int main() {
         /* -----------------------------------------------------------------
            F-04: INTERACTIVE DRAGGABLE POLAROID DECK (Touch & Mouse)
            ----------------------------------------------------------------- */
-        // Shuffle / Cycle Front Polaroid Button (Works dynamically with any number of cards)
+        // Cycle Front Polaroid to the Back (Starts from Foto #1 at the front -> moves to back -> reveals #2, #3, etc.)
         document.getElementById('shuffle-polaroids-btn').addEventListener('click', () => {
             const cards = document.querySelectorAll('#polaroid-cards-container .polaroid-card');
-            if (!cards.length) return;
+            const total = cards.length;
+            if (!total) return;
             playCyberTone(659.25, 'sine', 0.12);
-            polaroidTopZ++;
-            const card = cards[polaroidFrontIdx % cards.length];
-            polaroidFrontIdx++;
-            const rx = (Math.random() - 0.5) * 36;
-            const ry = (Math.random() - 0.5) * 24;
-            const rRot = (Math.random() - 0.5) * 6;
-            card.setAttribute('data-x', rx);
-            card.setAttribute('data-y', ry);
-            card.setAttribute('data-rot', rRot);
-            card.style.zIndex = polaroidTopZ;
-            card.style.transform = `translate3d(${rx}px, ${ry}px, 0) rotate(${rRot}deg)`;
+
+            const outgoingCard = cards[polaroidFrontIdx % total];
+            polaroidFrontIdx = (polaroidFrontIdx + 1) % total;
+
+            if (outgoingCard) {
+                outgoingCard.style.transition = 'transform 0.22s ease-out';
+                outgoingCard.style.transform = 'translate3d(65px, -18px, 0) rotate(5deg) scale(0.96)';
+                setTimeout(() => {
+                    updatePolaroidStackOrder();
+                    setTimeout(() => {
+                        if (outgoingCard) outgoingCard.style.transition = '';
+                    }, 220);
+                }, 140);
+            } else {
+                updatePolaroidStackOrder();
+            }
         });
 
-        // Reset Polaroid Positions
+        // Reset Polaroid Positions (Back to Foto #1 at the front, ordered 1..N from front to back)
         document.getElementById('reset-polaroids-btn').addEventListener('click', () => {
             const cards = document.querySelectorAll('#polaroid-cards-container .polaroid-card');
             if (!cards.length) return;
             playCyberTone(440, 'sine', 0.12);
-            cards.forEach((card, i) => {
-                const d = getPolaroidDefaultTransform(i);
-                card.setAttribute('data-x', d.x);
-                card.setAttribute('data-y', d.y);
-                card.setAttribute('data-rot', d.rot);
-                card.style.zIndex = 10 + i * 5;
-                card.style.transform = `translate3d(${d.x}px, ${d.y}px, 0) rotate(${d.rot}deg)`;
-            });
-            showToast('Tumpukan foto landscape dirapikan kembali!');
+            polaroidFrontIdx = 0;
+            updatePolaroidStackOrder();
+            showToast('Tumpukan foto dirapikan kembali mulai dari Foto #1 di depan!');
         });
 
         // Photo Replacement directly on Polaroid Cards (0-based index)
@@ -5740,7 +5805,7 @@ int main() {
          =================================================================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBRqtDo6I0JRBxV-2Cr4D0W8xRr0rDYXpI",
@@ -5753,43 +5818,98 @@ int main() {
         };
 
         const myDeviceId = 'dev_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+        const CHUNK_SIZE = 3; // Max 3 photos per Firestore document (~350KB < 1MB Firestore limit)
 
         try {
             const firebaseApp = initializeApp(firebaseConfig);
             const db = getFirestore(firebaseApp);
             const ZIZUY_DOC_REF = doc(db, 'uangku_data', 'ultah_zizuy_v19');
 
-            // Expose save function to window
+            // Multi-chunk save function so up to 15+ photos sync across HP & Laptop without hitting Firestore 1MB limit
             window._firebaseSaveDoc = async function(extraPayload = {}) {
                 try {
+                    const photosObj = window.customPhotos || {};
+                    const friendList = (photosObj.friend && Array.isArray(photosObj.friend.list)) ? photosObj.friend.list : [];
+                    const totalPhotos = friendList.length;
+                    const numChunks = Math.max(1, Math.ceil(totalPhotos / CHUNK_SIZE));
+
+                    // Save photo chunks into separate Firestore documents (ultah_zizuy_v19_photos_0 .. N)
+                    const chunkPromises = [];
+                    for (let c = 0; c < numChunks; c++) {
+                        const slice = friendList.slice(c * CHUNK_SIZE, (c + 1) * CHUNK_SIZE);
+                        const chunkRef = doc(db, 'uangku_data', `ultah_zizuy_v19_photos_${c}`);
+                        chunkPromises.push(setDoc(chunkRef, {
+                            chunkIndex: c,
+                            items: slice,
+                            updatedAt: new Date().toISOString()
+                        }));
+                    }
+                    await Promise.all(chunkPromises);
+
+                    // Save main document with lightweight metadata + content (keeps main doc well under 1MB!)
                     const payload = {
                         content: window.CONTENT_MODES || {},
-                        photos: window.customPhotos || {},
+                        photoChunked: true,
+                        photoTotalCount: totalPhotos,
+                        photoChunkCount: numChunks,
+                        photos: {
+                            friend: { list: friendList.slice(0, 2) }
+                        },
                         lastUpdated: new Date().toISOString(),
-                        updatedByDevice: myDeviceId,
-                        ...extraPayload
+                        updatedByDevice: myDeviceId
                     };
-                    await setDoc(ZIZUY_DOC_REF, payload, { merge: true });
+                    if (extraPayload.forceResetPhotos) {
+                        payload.forceResetPhotos = true;
+                    }
+
+                    await setDoc(ZIZUY_DOC_REF, payload);
                     const badge = document.getElementById('cloud-sync-status-badge');
-                    if (badge) badge.textContent = '☁️ Synced to Cloud';
+                    if (badge) badge.textContent = `☁️ Synced (${totalPhotos} Foto)`;
                 } catch (err) {
                     console.warn('Firebase save error:', err);
                 }
             };
 
-            // Real-time listener for incoming updates from any device
-            onSnapshot(ZIZUY_DOC_REF, (snap) => {
-                if (snap.exists()) {
-                    const cloudData = snap.data();
-                    if (cloudData && typeof window.syncFromCloudData === 'function') {
-                        window.syncFromCloudData(cloudData, cloudData.updatedByDevice === myDeviceId);
+            // Real-time listener: reassembles all photo chunks when main doc updates
+            onSnapshot(ZIZUY_DOC_REF, async (snap) => {
+                if (!snap.exists()) return;
+                const cloudData = snap.data();
+                if (!cloudData) return;
+
+                try {
+                    if (cloudData.photoChunked && cloudData.photoChunkCount > 0) {
+                        const numChunks = cloudData.photoChunkCount;
+                        const totalCount = cloudData.photoTotalCount || (numChunks * CHUNK_SIZE);
+                        const chunkReads = [];
+                        for (let c = 0; c < numChunks; c++) {
+                            chunkReads.push(getDoc(doc(db, 'uangku_data', `ultah_zizuy_v19_photos_${c}`)));
+                        }
+                        const chunkSnaps = await Promise.all(chunkReads);
+                        let fullList = [];
+                        chunkSnaps.forEach((cSnap) => {
+                            if (cSnap.exists() && Array.isArray(cSnap.data().items)) {
+                                fullList = fullList.concat(cSnap.data().items);
+                            }
+                        });
+                        if (fullList.length > 0) {
+                            cloudData.photos = {
+                                friend: { list: fullList.slice(0, totalCount) },
+                                romance: { list: fullList.slice(0, totalCount) }
+                            };
+                        }
                     }
+                } catch (chunkErr) {
+                    console.warn('Error fetching photo chunks:', chunkErr);
+                }
+
+                if (typeof window.syncFromCloudData === 'function') {
+                    window.syncFromCloudData(cloudData, cloudData.updatedByDevice === myDeviceId);
                 }
             }, (error) => {
                 console.warn('Firebase onSnapshot error:', error);
             });
 
-            console.log('Firebase Cloud Auto-Sync active on doc: uangku_data/ultah_zizuy_v19');
+            console.log('Firebase Cloud Multi-Chunk Auto-Sync active on doc: uangku_data/ultah_zizuy_v19');
         } catch (e) {
             console.warn('Firebase init exception:', e);
         }
