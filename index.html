@@ -1223,7 +1223,7 @@
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 mb-3 sm:mb-4 bg-velvet/70 border border-white/10 rounded-2xl p-3 sm:px-4 sm:py-3">
                         <div class="flex items-center gap-2 font-mono text-[11px] sm:text-xs text-mutedLavender">
                             <span class="w-2 h-2 rounded-full bg-nebulaViolet shrink-0"></span>
-                            <span>Geser kartu atau ganti foto asli:</span>
+                            <span id="polaroid-count-badge">3 Foto Landscape</span>
                         </div>
                         <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
                             <button id="shuffle-polaroids-btn" class="spring-btn flex-1 sm:flex-initial px-3 py-1.5 rounded-lg bg-cyberRose/15 hover:bg-cyberRose/30 text-cyberRose border border-cyberRose/30 font-mono text-xs text-center">
@@ -1235,104 +1235,13 @@
                         </div>
                     </div>
 
-                    <!-- Polaroid Interactive Stage -->
-                    <div id="polaroid-stage" class="relative w-full min-h-[420px] sm:min-h-[500px] rounded-3xl bg-velvet/40 border border-white/10 p-3 sm:p-8 flex items-center justify-center overflow-hidden">
+                    <!-- Polaroid Interactive Stage (Dynamic Landscape Photos without Text) -->
+                    <div id="polaroid-stage" class="relative w-full min-h-[380px] sm:min-h-[450px] rounded-3xl bg-velvet/40 border border-white/10 p-3 sm:p-8 flex items-center justify-center overflow-hidden">
                         <!-- Subtle Grid Background Inside Stage -->
                         <div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(#8B5CF6 1px, transparent 1px); background-size: 24px 24px;"></div>
 
-                        <!-- Polaroid 1 -->
-                        <div class="polaroid-card absolute w-[230px] sm:w-72 p-3 sm:p-3.5 pb-4 sm:pb-5 rounded-2xl" data-rot="-3" data-x="-12" data-y="-8" style="transform: translate3d(-12px, -8px, 0) rotate(-3deg); z-index: 10;">
-                            <div class="washi-tape-cyan w-16 sm:w-20 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 -rotate-2 rounded-sm pointer-events-none"></div>
-                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-2.5 sm:mb-3 group">
-                                <img id="pol-img-1" src="" alt="Memori 1" class="hidden w-full h-full object-cover pointer-events-none">
-                                <!-- Custom Cyber-Romantic Illustration SVG -->
-                                <div id="pol-svg-1" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#1A102B] via-[#0F172A] to-[#2A0E24] p-3 sm:p-4 text-center">
-                                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-1.5 sm:mb-2 text-cyberRose" viewBox="0 0 64 64" fill="none">
-                                        <path d="M16 36C16 26 24 20 32 20C40 20 48 26 48 36" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"/>
-                                        <circle cx="22" cy="40" r="6" stroke="#FF2A85" stroke-width="2.5"/>
-                                        <circle cx="42" cy="40" r="6" stroke="#FF2A85" stroke-width="2.5"/>
-                                        <path d="M32 10L34 15L39 16L35 19L36 24L32 21L28 24L29 19L25 16L30 15L32 10Z" fill="#8B5CF6"/>
-                                    </svg>
-                                    <span id="pol-title-1" class="font-mono text-[10px] sm:text-[11px] text-electricCyan">Misi Keliling &amp; Cari Angin</span>
-                                    <span id="pol-sub-1" class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">"Tujuan awal ke A, nyampenya ke B"</span>
-                                </div>
-                                <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
-                                    + Foto
-                                    <input type="file" accept="image/*" class="hidden" onchange="replacePolaroidImage(event, 1)">
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between text-[10px] font-mono text-mutedLavender mb-1">
-                                <span>MEM_01.RAW</span>
-                                <span id="pol-badge-1" class="text-cyberRose">♥ FAV</span>
-                            </div>
-                            <p id="pol-quote-1" class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
-                                "Pas bingung mau ke mana tapi yang penting jalan berdua dulu!"
-                            </p>
-                        </div>
-
-                        <!-- Polaroid 2 -->
-                        <div class="polaroid-card absolute w-[230px] sm:w-72 p-3 sm:p-3.5 pb-4 sm:pb-5 rounded-2xl" data-rot="2.5" data-x="12" data-y="10" style="transform: translate3d(12px, 10px, 0) rotate(2.5deg); z-index: 20;">
-                            <div class="washi-tape w-16 sm:w-20 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 rotate-3 rounded-sm pointer-events-none"></div>
-                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-2.5 sm:mb-3">
-                                <img id="pol-img-2" src="" alt="Memori 2" class="hidden w-full h-full object-cover pointer-events-none">
-                                <div id="pol-svg-2" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#121E31] via-[#1B112C] to-[#2D0F28] p-3 sm:p-4 text-center">
-                                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-1.5 sm:mb-2" viewBox="0 0 64 64" fill="none">
-                                        <rect x="14" y="18" width="24" height="30" rx="4" stroke="#FF2A85" stroke-width="2.5"/>
-                                        <path d="M38 24H44C47.3137 24 50 26.6863 50 30C50 33.3137 47.3137 36 44 36H38" stroke="#00E5FF" stroke-width="2.5"/>
-                                        <path d="M22 12C22 12 24 8 26 12C28 16 30 12 30 12" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round"/>
-                                    </svg>
-                                    <span id="pol-title-2" class="font-mono text-[10px] sm:text-[11px] text-cyberRose">Kuliner &amp; Jajan Berdua</span>
-                                    <span id="pol-sub-2" class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Obat paling ampuh habis pusing kuliah</span>
-                                </div>
-                                <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
-                                    + Foto
-                                    <input type="file" accept="image/*" class="hidden" onchange="replacePolaroidImage(event, 2)">
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between text-[10px] font-mono text-mutedLavender mb-1">
-                                <span>MEM_02.RAW</span>
-                                <span id="pol-badge-2" class="text-electricCyan">10/10 SERU</span>
-                            </div>
-                            <p id="pol-quote-2" class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
-                                "Bilangnya 'terserah', tapi pas nyampe tempat makan langsung senyum."
-                            </p>
-                        </div>
-
-                        <!-- Polaroid 3 (Top of Stack) -->
-                        <div class="polaroid-card absolute w-[230px] sm:w-72 p-3 sm:p-3.5 pb-4 sm:pb-5 rounded-2xl" data-rot="-1" data-x="0" data-y="-4" style="transform: translate3d(0px, -4px, 0) rotate(-1deg); z-index: 30;">
-                            <div class="washi-tape w-20 sm:w-24 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 -rotate-1 rounded-sm pointer-events-none"></div>
-                            <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-obsidian border border-white/10 mb-2.5 sm:mb-3">
-                                <img id="pol-img-3" src="" alt="Memori 3" class="hidden w-full h-full object-cover pointer-events-none">
-                                <div id="pol-svg-3" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#230E2B] via-[#131129] to-[#0B232E] p-3 sm:p-4 text-center">
-                                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-1.5 sm:mb-2" viewBox="0 0 64 64" fill="none">
-                                        <rect x="10" y="14" width="44" height="30" rx="3" stroke="#00E5FF" stroke-width="2.5"/>
-                                        <path d="M6 48H58" stroke="#8B5CF6" stroke-width="3" stroke-linecap="round"/>
-                                        <path d="M24 25L19 29L24 33" stroke="#FF2A85" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M40 25L45 29L40 33" stroke="#FF2A85" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M34 23L30 35" stroke="#F4F4F6" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                    <span id="pol-title-3" class="font-mono text-[10px] sm:text-[11px] text-nebulaViolet">Pejuang S1 Informatika '26</span>
-                                    <span id="pol-sub-3" class="text-[9px] sm:text-[10px] text-mutedLavender mt-0.5">Semester 1 Core Memory</span>
-                                </div>
-                                <label class="absolute bottom-2 right-2 px-2 py-1 rounded bg-obsidian/80 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-colors">
-                                    + Foto
-                                    <input type="file" accept="image/*" class="hidden" onchange="replacePolaroidImage(event, 3)">
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between text-[10px] font-mono text-mutedLavender mb-1">
-                                <span>MEM_03.RAW</span>
-                                <span id="pol-badge-3" class="text-cyberRose">LEVEL 19 ♥</span>
-                            </div>
-                            <p id="pol-quote-3" class="font-hand text-lg sm:text-2xl text-starlight leading-snug">
-                                "Partner cerita, partner main, &amp; alasan kenapa Semester 1 nggak ngebosenin."
-                            </p>
-                        </div>
-
-                        <!-- Bottom Helper Caption -->
-                        <div class="absolute bottom-2 sm:bottom-3 inset-x-0 text-center pointer-events-none px-2">
-                            <span class="font-mono text-[10px] sm:text-[11px] text-mutedLavender/80 bg-obsidian/80 px-2.5 py-1 rounded-full border border-white/10">
-                                Tip: Tarik kartu polaroid ke mana aja atau klik "+ Foto"
-                            </span>
+                        <div id="polaroid-cards-container" class="relative w-full h-[320px] sm:h-[380px] flex items-center justify-center">
+                            <!-- Dynamically populated by applyPolaroidPhotos() -->
                         </div>
                     </div>
                 </div>
@@ -3407,45 +3316,152 @@ int main() {
         window.CONTENT_MODES = CONTENT_MODES;
         window.DEFAULT_CONTENT_MODES = DEFAULT_CONTENT_MODES;
 
-        // Custom Polaroid Photos (Separated per mode: Romance vs Bestie)
+        // Custom Polaroid Photos (Dynamic list of landscape photos without text)
         let customPhotos = {
-            romance: { photo1: '', photo2: '', photo3: '' },
-            friend: { photo1: '', photo2: '', photo3: '' }
+            romance: { list: ['', '', ''] },
+            friend: { list: ['', '', ''] }
         };
+
+        function normalizeModePhotoObj(obj) {
+            if (!obj) return { list: ['', '', ''] };
+            if (Array.isArray(obj.list) && obj.list.length > 0) {
+                return { list: obj.list };
+            }
+            if (obj.photo1 !== undefined || obj.photo2 !== undefined || obj.photo3 !== undefined) {
+                return { list: [obj.photo1 || '', obj.photo2 || '', obj.photo3 || ''] };
+            }
+            return { list: ['', '', ''] };
+        }
+
         try {
             const savedPhotos = localStorage.getItem('zizuy_custom_photos');
             if (savedPhotos) {
                 const parsed = JSON.parse(savedPhotos);
                 if (parsed.romance || parsed.friend) {
-                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed.romance || {});
-                    customPhotos.friend = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed.friend || {});
-                } else if (parsed.photo1 !== undefined) {
-                    // Migrate legacy flat structure into romance mode
-                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, parsed);
+                    customPhotos.romance = normalizeModePhotoObj(parsed.romance);
+                    customPhotos.friend = normalizeModePhotoObj(parsed.friend);
+                } else if (parsed.photo1 !== undefined || Array.isArray(parsed.list)) {
+                    customPhotos.friend = normalizeModePhotoObj(parsed);
+                    customPhotos.romance = normalizeModePhotoObj(parsed);
                 }
             }
         } catch (e) {}
         window.customPhotos = customPhotos;
 
+        function getModePhotoList(mode) {
+            const target = mode || currentAppMode || 'friend';
+            if (!customPhotos[target]) {
+                customPhotos[target] = { list: ['', '', ''] };
+            }
+            if (!Array.isArray(customPhotos[target].list) || customPhotos[target].list.length === 0) {
+                customPhotos[target] = normalizeModePhotoObj(customPhotos[target]);
+            }
+            return customPhotos[target].list;
+        }
+        window.getModePhotoList = getModePhotoList;
+
+        let polaroidTopZ = 40;
+        let polaroidFrontIdx = 0;
+
+        function getPolaroidDefaultTransform(idx) {
+            const presets = [
+                { x: -16, y: -10, rot: -2.2 },
+                { x: 16, y: 12, rot: 2.0 },
+                { x: 0, y: -4, rot: -0.8 },
+                { x: -22, y: 14, rot: 2.6 },
+                { x: 20, y: -14, rot: -2.4 },
+                { x: -8, y: 8, rot: 1.4 }
+            ];
+            return presets[idx % presets.length];
+        }
+
+        function bindLandscapeCardDrag(card) {
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0;
+
+            function onPointerDown(e) {
+                if (e.target.closest('label') || e.target.tagName === 'INPUT') return;
+                isDragging = true;
+                polaroidTopZ++;
+                card.style.zIndex = polaroidTopZ;
+                card.classList.add('dragging');
+
+                const currentX = parseFloat(card.getAttribute('data-x')) || 0;
+                const currentY = parseFloat(card.getAttribute('data-y')) || 0;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                startX = clientX - currentX;
+                startY = clientY - currentY;
+            }
+
+            function onPointerMove(e) {
+                if (!isDragging) return;
+                if (e.cancelable) e.preventDefault();
+                const baseRot = parseFloat(card.getAttribute('data-rot')) || 0;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                const nx = clientX - startX;
+                const ny = clientY - startY;
+                card.setAttribute('data-x', nx);
+                card.setAttribute('data-y', ny);
+                const tilt = baseRot + (nx * 0.025);
+                card.style.transform = `translate3d(${nx}px, ${ny}px, 0) rotate(${tilt}deg) scale(1.02)`;
+            }
+
+            function onPointerUp() {
+                if (!isDragging) return;
+                isDragging = false;
+                card.classList.remove('dragging');
+                const cx = parseFloat(card.getAttribute('data-x')) || 0;
+                const cy = parseFloat(card.getAttribute('data-y')) || 0;
+                const baseRot = parseFloat(card.getAttribute('data-rot')) || 0;
+                card.style.transform = `translate3d(${cx}px, ${cy}px, 0) rotate(${baseRot}deg)`;
+            }
+
+            card.addEventListener('mousedown', onPointerDown);
+            window.addEventListener('mousemove', onPointerMove);
+            window.addEventListener('mouseup', onPointerUp);
+
+            card.addEventListener('touchstart', onPointerDown, { passive: true });
+            window.addEventListener('touchmove', onPointerMove, { passive: false });
+            window.addEventListener('touchend', onPointerUp);
+        }
+
         function applyPolaroidPhotos() {
-            const activeMode = currentAppMode || 'romance';
-            const modePhotos = (customPhotos && customPhotos[activeMode]) || { photo1: '', photo2: '', photo3: '' };
-            [1, 2, 3].forEach(idx => {
-                const imgEl = document.getElementById(`pol-img-${idx}`);
-                const svgEl = document.getElementById(`pol-svg-${idx}`);
-                const photo = modePhotos[`photo${idx}`];
-                if (imgEl && svgEl) {
-                    if (photo) {
-                        imgEl.src = photo;
-                        imgEl.classList.remove('hidden');
-                        svgEl.classList.add('hidden');
-                    } else {
-                        imgEl.src = '';
-                        imgEl.classList.add('hidden');
-                        svgEl.classList.remove('hidden');
-                    }
-                }
-            });
+            const activeMode = currentAppMode || 'friend';
+            const list = getModePhotoList(activeMode);
+            const container = document.getElementById('polaroid-cards-container');
+            if (!container) return;
+
+            const countBadge = document.getElementById('polaroid-count-badge');
+            if (countBadge) countBadge.textContent = `${list.length} Foto Landscape`;
+
+            container.innerHTML = list.map((photo, idx) => {
+                const num = idx + 1;
+                const d = getPolaroidDefaultTransform(idx);
+                const tapeClass = idx % 2 === 0 ? 'washi-tape-cyan -rotate-2' : 'washi-tape rotate-2';
+                const z = 10 + idx * 5;
+                return `
+                    <div class="polaroid-card absolute w-[275px] sm:w-[375px] md:w-[425px] p-2 sm:p-2.5 rounded-2xl shadow-2xl" data-rot="${d.rot}" data-x="${d.x}" data-y="${d.y}" style="transform: translate3d(${d.x}px, ${d.y}px, 0) rotate(${d.rot}deg); z-index: ${z};">
+                        <div class="${tapeClass} w-16 sm:w-20 h-4 sm:h-5 absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 rounded-sm pointer-events-none z-20"></div>
+                        <div class="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-obsidian border border-white/15 group">
+                            <img id="pol-img-${num}" src="${photo || ''}" alt="Foto ${num}" class="${photo ? '' : 'hidden'} w-full h-full object-cover pointer-events-none select-none">
+                            <div id="pol-svg-${num}" class="${photo ? 'hidden' : 'flex'} w-full h-full flex-col items-center justify-center bg-gradient-to-br from-[#1A102B] via-[#0F172A] to-[#2A0E24] p-4 text-center">
+                                <span class="text-2xl sm:text-3xl mb-1.5 opacity-80">🖼️</span>
+                                <span class="font-mono text-[10px] sm:text-xs text-mutedLavender">Foto #${num}</span>
+                            </div>
+                            <label class="absolute bottom-2 right-2 px-2.5 py-1 rounded-lg bg-obsidian/85 hover:bg-cyberRose text-[10px] font-mono text-starlight cursor-pointer border border-white/15 transition-all opacity-80 group-hover:opacity-100">
+                                + Foto
+                                <input type="file" accept="image/*" class="hidden" onchange="replacePolaroidImage(event, ${idx})">
+                            </label>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const cards = container.querySelectorAll('.polaroid-card');
+            cards.forEach(c => bindLandscapeCardDrag(c));
         }
         window.applyPolaroidPhotos = applyPolaroidPhotos;
 
@@ -3527,10 +3543,11 @@ int main() {
             }
             if (cloudData.photos) {
                 if (cloudData.photos.romance || cloudData.photos.friend) {
-                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos.romance, cloudData.photos.romance || {});
-                    customPhotos.friend = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos.friend, cloudData.photos.friend || {});
-                } else if (cloudData.photos.photo1 !== undefined) {
-                    customPhotos.romance = Object.assign({ photo1: '', photo2: '', photo3: '' }, customPhotos.romance, cloudData.photos);
+                    if (cloudData.photos.romance) customPhotos.romance = normalizeModePhotoObj(cloudData.photos.romance);
+                    if (cloudData.photos.friend) customPhotos.friend = normalizeModePhotoObj(cloudData.photos.friend);
+                } else if (cloudData.photos.photo1 !== undefined || Array.isArray(cloudData.photos.list)) {
+                    customPhotos.friend = normalizeModePhotoObj(cloudData.photos);
+                    customPhotos.romance = normalizeModePhotoObj(cloudData.photos);
                 }
                 window.customPhotos = customPhotos;
                 try {
@@ -3988,12 +4005,21 @@ int main() {
                     </div>
                 </div>
 
-                <!-- 4. Scrapbook & Polaroid -->
+                <!-- 4. Scrapbook & Foto Landscape (Tanpa Kata-Kata, Jumlah Foto Bisa Custom) -->
                 <div class="space-y-3 bg-obsidian/75 border border-white/10 rounded-2xl p-4 sm:p-5">
                     <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-white/10">
                         <div>
-                            <span class="font-mono text-xs font-bold text-starlight uppercase">★ 4. Scrapbook &amp; Foto Polaroid (${isRomance ? 'Mode Romance' : 'Mode Bestie'})</span>
-                            <span class="font-mono text-[10px] text-mutedLavender block sm:inline sm:ml-2">Foto terpisah tiap mode</span>
+                            <span class="font-mono text-xs font-bold text-starlight uppercase">★ 4. Scrapbook &amp; Foto Landscape</span>
+                            <span class="font-mono text-[10px] text-mutedLavender block sm:inline sm:ml-2">Tanpa kata-kata, ukuran landscape, jumlah bebas diatur</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-mono text-[10px] text-mutedLavender">Jumlah Foto:</span>
+                            <button type="button" onclick="changePolaroidCount(-1)" class="w-6 h-6 rounded-lg bg-white/10 hover:bg-white/20 text-starlight font-mono font-bold text-xs flex items-center justify-center border border-white/15">-</button>
+                            <span class="px-2.5 py-0.5 rounded-lg bg-electricCyan/20 text-electricCyan border border-electricCyan/40 font-mono font-bold text-xs">${getModePhotoList(editorTargetMode).length}</span>
+                            <button type="button" onclick="changePolaroidCount(1)" class="w-6 h-6 rounded-lg bg-white/10 hover:bg-white/20 text-starlight font-mono font-bold text-xs flex items-center justify-center border border-white/15">+</button>
+                            <button type="button" onclick="addPolaroidCardSlot()" class="ml-1 px-2.5 py-1 rounded-lg bg-electricCyan/20 hover:bg-electricCyan/30 text-electricCyan border border-electricCyan/40 font-mono font-bold text-[10px] transition-colors">
+                                ➕ Tambah Foto
+                            </button>
                         </div>
                     </div>
                     <!-- Scrapbook Header Texts -->
@@ -4012,78 +4038,38 @@ int main() {
                             </div>
                             <input id="edit-scrapbookTitle" type="text" value="${escapeEditorHtml(data.scrapbookTitle || '')}" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">
                         </div>
-                        <div class="sm:col-span-2">
-                            <div class="flex items-center justify-between mb-1">
-                                <label class="font-mono text-[10px] text-mutedLavender">Subjudul Penjelasan Scrapbook</label>
-                                <button type="button" onclick="clearEditorField('edit-scrapbookSubtitle')" class="text-[9px] font-mono text-red-400">[✕]</button>
-                            </div>
-                            <textarea id="edit-scrapbookSubtitle" rows="2" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-starlight focus:outline-none">${escapeEditorHtml(data.scrapbookSubtitle || '')}</textarea>
-                        </div>
                     </div>
 
-                    <!-- 3 Polaroid Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-                        ${(data.polaroids || []).map((p, idx) => {
+                    <!-- Dynamic Landscape Photo Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
+                        ${getModePhotoList(editorTargetMode).map((curPhoto, idx) => {
                             const photoNum = idx + 1;
-                            const curPhoto = targetPhotos[`photo${photoNum}`] || '';
-                            const isDataUrl = curPhoto.startsWith('data:');
+                            const isDataUrl = (curPhoto || '').startsWith('data:');
                             return `
                                 <div class="p-3.5 bg-black/50 border border-white/10 rounded-xl space-y-2.5">
                                     <div class="flex items-center justify-between">
-                                        <span class="font-mono text-xs text-electricCyan font-bold">Foto #${photoNum} (${isRomance ? 'Romance' : 'Bestie'})</span>
-                                        ${curPhoto ? `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40">✓ Foto Aktif</span>` : `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-mutedLavender">SVG Bawaan</span>`}
+                                        <span class="font-mono text-xs text-electricCyan font-bold">Foto Landscape #${photoNum}</span>
+                                        <div class="flex items-center gap-1.5">
+                                            ${curPhoto ? `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-electricCyan/20 text-electricCyan border border-electricCyan/40">✓ Terpasang</span>` : `<span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-mutedLavender">Kosong</span>`}
+                                            <button type="button" onclick="deletePolaroidCardSlot(${idx})" title="Hapus Kartu Foto Ini" class="px-1.5 py-0.5 rounded bg-red-500/15 hover:bg-red-500/30 text-red-400 font-mono text-[9px] border border-red-500/25">✕ Hapus Kartu</button>
+                                        </div>
                                     </div>
 
-                                    <div class="relative aspect-[4/3] w-full rounded-lg overflow-hidden bg-black/60 border border-white/15">
-                                        <img id="edit-pol-thumb-${photoNum}" src="${curPhoto}" alt="Preview Foto #${photoNum}" class="${curPhoto ? '' : 'hidden'} w-full h-full object-cover">
+                                    <div class="relative aspect-[16/10] w-full rounded-lg overflow-hidden bg-black/60 border border-white/15">
+                                        <img id="edit-pol-thumb-${photoNum}" src="${curPhoto || ''}" alt="Preview Foto #${photoNum}" class="${curPhoto ? '' : 'hidden'} w-full h-full object-cover">
                                         <div id="edit-pol-thumb-empty-${photoNum}" class="${curPhoto ? 'hidden' : 'flex'} w-full h-full flex-col items-center justify-center p-2 text-center text-mutedLavender">
-                                            <span class="text-2xl mb-1">📷</span>
-                                            <span class="text-[10px] font-mono">Belum ada foto</span>
+                                            <span class="text-2xl mb-1">🖼️</span>
+                                            <span class="text-[10px] font-mono">Belum ada foto landscape</span>
                                         </div>
                                     </div>
 
                                     <div class="space-y-1.5">
                                         <label class="flex items-center justify-center gap-1.5 w-full py-1.5 px-3 rounded-lg bg-electricCyan/15 hover:bg-electricCyan/25 text-electricCyan border border-electricCyan/30 font-mono text-[11px] cursor-pointer transition-colors">
                                             <span>📁 Upload Foto #${photoNum}</span>
-                                            <input type="file" accept="image/*" class="hidden" onchange="handleEditorPhotoUpload(event, ${photoNum})">
+                                            <input type="file" accept="image/*" class="hidden" onchange="handleEditorPhotoUpload(event, ${idx})">
                                         </label>
-                                        <input type="text" value="${escapeEditorHtml(!isDataUrl ? curPhoto : '')}" placeholder="Atau paste link URL gambar" onchange="handleEditorPhotoUrl(${photoNum}, this.value)" class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-lg px-2 py-1.5 text-[11px] text-starlight focus:outline-none transition-colors">
-                                        ${curPhoto ? `<button type="button" onclick="handleRemovePhoto(${photoNum})" class="w-full py-1 text-[10px] font-mono text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 transition-colors">🗑 Hapus Foto Mode Ini</button>` : ''}
-                                    </div>
-
-                                    <div class="space-y-1.5 pt-2 border-t border-white/10">
-                                        <div>
-                                            <div class="flex items-center justify-between mb-0.5">
-                                                <label class="font-mono text-[10px] text-mutedLavender">Badge</label>
-                                                <button type="button" onclick="clearEditorField('edit-pol-badge-${idx}')" class="text-[9px] font-mono text-red-400">[✕]</button>
-                                            </div>
-                                            <input id="edit-pol-badge-${idx}" type="text" value="${escapeEditorHtml(p.badge || '')}" 
-                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
-                                        </div>
-                                        <div>
-                                            <div class="flex items-center justify-between mb-0.5">
-                                                <label class="font-mono text-[10px] text-mutedLavender">Judul</label>
-                                                <button type="button" onclick="clearEditorField('edit-pol-title-${idx}')" class="text-[9px] font-mono text-red-400">[✕]</button>
-                                            </div>
-                                            <input id="edit-pol-title-${idx}" type="text" value="${escapeEditorHtml(p.title || '')}" 
-                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
-                                        </div>
-                                        <div>
-                                            <div class="flex items-center justify-between mb-0.5">
-                                                <label class="font-mono text-[10px] text-mutedLavender">Subjudul</label>
-                                                <button type="button" onclick="clearEditorField('edit-pol-sub-${idx}')" class="text-[9px] font-mono text-red-400">[✕]</button>
-                                            </div>
-                                            <input id="edit-pol-sub-${idx}" type="text" value="${escapeEditorHtml(p.sub || '')}" 
-                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none">
-                                        </div>
-                                        <div>
-                                            <div class="flex items-center justify-between mb-0.5">
-                                                <label class="font-mono text-[10px] text-mutedLavender">Quote Teks</label>
-                                                <button type="button" onclick="clearEditorField('edit-pol-quote-${idx}')" class="text-[9px] font-mono text-red-400">[✕]</button>
-                                            </div>
-                                            <textarea id="edit-pol-quote-${idx}" rows="2" 
-                                                class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-xs text-starlight focus:outline-none leading-snug">${escapeEditorHtml(p.quote || '')}</textarea>
-                                        </div>
+                                        <input type="text" value="${escapeEditorHtml(!isDataUrl ? (curPhoto || '') : '')}" placeholder="Atau paste link URL gambar" onchange="handleEditorPhotoUrl(${idx}, this.value)" class="w-full bg-black/60 border border-white/15 focus:border-electricCyan rounded-lg px-2 py-1.5 text-[11px] text-starlight focus:outline-none transition-colors">
+                                        ${curPhoto ? `<button type="button" onclick="handleRemovePhoto(${idx})" class="w-full py-1 text-[10px] font-mono text-amber-400 hover:text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 rounded-lg border border-amber-500/20 transition-colors">↺ Kosongkan Gambar Ini</button>` : ''}
                                     </div>
                                 </div>
                             `;
@@ -4941,7 +4927,10 @@ int main() {
                 } catch (e) {}
                 CONTENT_MODES = JSON.parse(JSON.stringify(DEFAULT_CONTENT_MODES));
                 window.CONTENT_MODES = CONTENT_MODES;
-                customPhotos = { photo1: '', photo2: '', photo3: '' };
+                customPhotos = {
+                    romance: { list: ['', '', ''] },
+                    friend: { list: ['', '', ''] }
+                };
                 window.customPhotos = customPhotos;
                 applyPolaroidPhotos();
                 setAppMode(currentAppMode, false);
@@ -4952,24 +4941,71 @@ int main() {
             }
         };
 
-        // Photo handlers for Editor Panel (Strictly scoped to editorTargetMode: Romance vs Bestie)
-        window.handleEditorPhotoUpload = async function(event, photoNum) {
+        function persistCustomPhotos() {
+            window.customPhotos = customPhotos;
+            try {
+                localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
+                localStorage.setItem('zizuy_content_last_saved', String(Date.now()));
+            } catch (e) {}
+            applyPolaroidPhotos();
+            renderEditorForm();
+            saveToCloudFirestore({ photos: customPhotos });
+        }
+
+        window.addPolaroidCardSlot = function() {
+            const targetMode = editorTargetMode || 'friend';
+            const list = getModePhotoList(targetMode);
+            if (list.length >= 15) {
+                showToast('Maksimal 15 kartu foto landscape.');
+                return;
+            }
+            list.push('');
+            persistCustomPhotos();
+            playCyberTone(659.25, 'sine', 0.12);
+            showToast(`Kartu Foto Landscape #${list.length} ditambahkan!`);
+        };
+
+        window.deletePolaroidCardSlot = function(idx) {
+            const targetMode = editorTargetMode || 'friend';
+            const list = getModePhotoList(targetMode);
+            if (list.length <= 1) {
+                list[0] = '';
+                persistCustomPhotos();
+                showToast('Minimal harus ada 1 kartu foto (gambar telah dikosongkan).');
+                return;
+            }
+            list.splice(idx, 1);
+            persistCustomPhotos();
+            playCyberTone(440, 'sine', 0.12);
+            showToast(`Kartu Foto #${idx + 1} dihapus (Sisa ${list.length} kartu).`);
+        };
+
+        window.changePolaroidCount = function(delta) {
+            const targetMode = editorTargetMode || 'friend';
+            const list = getModePhotoList(targetMode);
+            const nextLen = list.length + delta;
+            if (nextLen < 1 || nextLen > 15) return;
+            if (delta > 0) {
+                list.push('');
+            } else {
+                list.pop();
+            }
+            persistCustomPhotos();
+            playCyberTone(587.33, 'sine', 0.1);
+            showToast(`Jumlah kartu foto: ${list.length} kartu landscape.`);
+        };
+
+        window.handleEditorPhotoUpload = async function(event, idx) {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
             try {
-                const targetMode = editorTargetMode || 'romance';
-                showToast(`Memproses & mengompres Foto #${photoNum} (${targetMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'})...`);
-                const compressedBase64 = await compressImageFile(file, 800, 800, 0.8);
-                if (!customPhotos[targetMode]) customPhotos[targetMode] = { photo1: '', photo2: '', photo3: '' };
-                customPhotos[targetMode][`photo${photoNum}`] = compressedBase64;
-                window.customPhotos = customPhotos;
-                try {
-                    localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
-                } catch (e) {}
-                applyPolaroidPhotos();
-                renderEditorForm();
-                saveToCloudFirestore({ photos: customPhotos });
-                showToast(`Foto #${photoNum} berhasil dipasang untuk ${targetMode === 'romance' ? 'Mode Romance 💕' : 'Mode Bestie 👥'}!`);
+                const targetMode = editorTargetMode || 'friend';
+                const list = getModePhotoList(targetMode);
+                showToast(`Memproses & mengompres Foto Landscape #${idx + 1}...`);
+                const compressedBase64 = await compressImageFile(file, 960, 720, 0.82);
+                list[idx] = compressedBase64;
+                persistCustomPhotos();
+                showToast(`Foto Landscape #${idx + 1} berhasil dipasang! ✨`);
                 playCyberTone(880, 'triangle', 0.18);
             } catch (err) {
                 console.error('Error uploading photo:', err);
@@ -4977,35 +5013,23 @@ int main() {
             }
         };
 
-        window.handleEditorPhotoUrl = function(photoNum, url) {
-            const targetMode = editorTargetMode || 'romance';
+        window.handleEditorPhotoUrl = function(idx, url) {
+            const targetMode = editorTargetMode || 'friend';
             const trimmed = (url || '').trim();
             if (!trimmed) return;
-            if (!customPhotos[targetMode]) customPhotos[targetMode] = { photo1: '', photo2: '', photo3: '' };
-            customPhotos[targetMode][`photo${photoNum}`] = trimmed;
-            window.customPhotos = customPhotos;
-            try {
-                localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
-            } catch (e) {}
-            applyPolaroidPhotos();
-            renderEditorForm();
-            saveToCloudFirestore({ photos: customPhotos });
-            showToast(`URL Foto #${photoNum} disimpan untuk ${targetMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'}!`);
+            const list = getModePhotoList(targetMode);
+            list[idx] = trimmed;
+            persistCustomPhotos();
+            showToast(`URL Foto Landscape #${idx + 1} disimpan!`);
             playCyberTone(783.99, 'triangle', 0.14);
         };
 
-        window.handleRemovePhoto = function(photoNum) {
-            const targetMode = editorTargetMode || 'romance';
-            if (!customPhotos[targetMode]) customPhotos[targetMode] = { photo1: '', photo2: '', photo3: '' };
-            customPhotos[targetMode][`photo${photoNum}`] = '';
-            window.customPhotos = customPhotos;
-            try {
-                localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
-            } catch (e) {}
-            applyPolaroidPhotos();
-            renderEditorForm();
-            saveToCloudFirestore({ photos: customPhotos });
-            showToast(`Foto #${photoNum} dihapus dari ${targetMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'}.`);
+        window.handleRemovePhoto = function(idx) {
+            const targetMode = editorTargetMode || 'friend';
+            const list = getModePhotoList(targetMode);
+            list[idx] = '';
+            persistCustomPhotos();
+            showToast(`Gambar pada Kartu #${idx + 1} dikosongkan.`);
             playCyberTone(440, 'sine', 0.12);
         };
 
@@ -5074,112 +5098,58 @@ int main() {
         /* -----------------------------------------------------------------
            F-04: INTERACTIVE DRAGGABLE POLAROID DECK (Touch & Mouse)
            ----------------------------------------------------------------- */
-        let topZ = 40;
-        const polaroids = document.querySelectorAll('.polaroid-card');
-
-        polaroids.forEach((card) => {
-            let isDragging = false;
-            let startX = 0;
-            let startY = 0;
-            let currentX = parseFloat(card.getAttribute('data-x')) || 0;
-            let currentY = parseFloat(card.getAttribute('data-y')) || 0;
-            const baseRot = parseFloat(card.getAttribute('data-rot')) || 0;
-
-            function onPointerDown(e) {
-                if (e.target.closest('label') || e.target.tagName === 'INPUT') return;
-                isDragging = true;
-                topZ++;
-                card.style.zIndex = topZ;
-                card.classList.add('dragging');
-
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                startX = clientX - currentX;
-                startY = clientY - currentY;
-            }
-
-            function onPointerMove(e) {
-                if (!isDragging) return;
-                if (e.cancelable) e.preventDefault();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                currentX = clientX - startX;
-                currentY = clientY - startY;
-                const tilt = baseRot + (currentX * 0.03);
-                card.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotate(${tilt}deg) scale(1.03)`;
-            }
-
-            function onPointerUp() {
-                if (!isDragging) return;
-                isDragging = false;
-                card.classList.remove('dragging');
-                card.setAttribute('data-x', currentX);
-                card.setAttribute('data-y', currentY);
-                card.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotate(${baseRot}deg)`;
-            }
-
-            card.addEventListener('mousedown', onPointerDown);
-            window.addEventListener('mousemove', onPointerMove);
-            window.addEventListener('mouseup', onPointerUp);
-
-            card.addEventListener('touchstart', onPointerDown, { passive: true });
-            window.addEventListener('touchmove', onPointerMove, { passive: false });
-            window.addEventListener('touchend', onPointerUp);
-        });
-
-        // Shuffle / Cycle Front Polaroid Button
-        let currentFrontIdx = 0;
+        // Shuffle / Cycle Front Polaroid Button (Works dynamically with any number of cards)
         document.getElementById('shuffle-polaroids-btn').addEventListener('click', () => {
+            const cards = document.querySelectorAll('#polaroid-cards-container .polaroid-card');
+            if (!cards.length) return;
             playCyberTone(659.25, 'sine', 0.12);
-            topZ++;
-            const card = polaroids[currentFrontIdx % polaroids.length];
-            currentFrontIdx++;
-            const rx = (Math.random() - 0.5) * 40;
-            const ry = (Math.random() - 0.5) * 26;
-            const rRot = (Math.random() - 0.5) * 7;
+            polaroidTopZ++;
+            const card = cards[polaroidFrontIdx % cards.length];
+            polaroidFrontIdx++;
+            const rx = (Math.random() - 0.5) * 36;
+            const ry = (Math.random() - 0.5) * 24;
+            const rRot = (Math.random() - 0.5) * 6;
             card.setAttribute('data-x', rx);
             card.setAttribute('data-y', ry);
             card.setAttribute('data-rot', rRot);
-            card.style.zIndex = topZ;
+            card.style.zIndex = polaroidTopZ;
             card.style.transform = `translate3d(${rx}px, ${ry}px, 0) rotate(${rRot}deg)`;
         });
 
         // Reset Polaroid Positions
         document.getElementById('reset-polaroids-btn').addEventListener('click', () => {
+            const cards = document.querySelectorAll('#polaroid-cards-container .polaroid-card');
+            if (!cards.length) return;
             playCyberTone(440, 'sine', 0.12);
-            const defaults = [
-                { x: -28, y: -14, rot: -3.5 },
-                { x: 26, y: 16, rot: 2.8 },
-                { x: 0, y: -4, rot: -1.5 }
-            ];
-            polaroids.forEach((card, i) => {
-                const d = defaults[i];
+            cards.forEach((card, i) => {
+                const d = getPolaroidDefaultTransform(i);
                 card.setAttribute('data-x', d.x);
                 card.setAttribute('data-y', d.y);
                 card.setAttribute('data-rot', d.rot);
-                card.style.zIndex = 10 + i * 10;
+                card.style.zIndex = 10 + i * 5;
                 card.style.transform = `translate3d(${d.x}px, ${d.y}px, 0) rotate(${d.rot}deg)`;
             });
-            showToast('Tumpukan polaroid dirapikan kembali!');
+            showToast('Tumpukan foto landscape dirapikan kembali!');
         });
 
-        // Photo Replacement directly on Polaroid Cards (with auto-compression & cloud sync)
-        window.replacePolaroidImage = async function(event, index) {
+        // Photo Replacement directly on Polaroid Cards (0-based index)
+        window.replacePolaroidImage = async function(event, idx) {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
             try {
-                const activeMode = currentAppMode || 'romance';
-                showToast(`Memproses & mengompres Foto #${index} (${activeMode === 'romance' ? 'Mode Romance' : 'Mode Bestie'})...`);
-                const compressedBase64 = await compressImageFile(file, 800, 800, 0.8);
-                if (!customPhotos[activeMode]) customPhotos[activeMode] = { photo1: '', photo2: '', photo3: '' };
-                customPhotos[activeMode][`photo${index}`] = compressedBase64;
+                const activeMode = currentAppMode || 'friend';
+                const list = getModePhotoList(activeMode);
+                showToast(`Memproses & mengompres Foto Landscape #${idx + 1}...`);
+                const compressedBase64 = await compressImageFile(file, 960, 720, 0.82);
+                list[idx] = compressedBase64;
                 window.customPhotos = customPhotos;
                 try {
                     localStorage.setItem('zizuy_custom_photos', JSON.stringify(customPhotos));
+                    localStorage.setItem('zizuy_content_last_saved', String(Date.now()));
                 } catch (e) {}
                 applyPolaroidPhotos();
                 saveToCloudFirestore({ photos: customPhotos });
-                showToast(`Foto Polaroid #${index} berhasil dipasang untuk ${activeMode === 'romance' ? 'Mode Romance 💕' : 'Mode Bestie 👥'}!`);
+                showToast(`Foto Landscape #${idx + 1} berhasil dipasang! ✨`);
                 playCyberTone(880, 'triangle', 0.18);
             } catch (err) {
                 console.error('Error replacing polaroid photo:', err);
