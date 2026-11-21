@@ -1024,16 +1024,6 @@
                                 </div>
                             </div>
 
-                            <!-- Conditional Late-Open Banner -->
-                            <div id="late-banner" hidden class="discrete-fade rounded-xl bg-electricCyan/10 border border-electricCyan/25 p-2.5 sm:p-3 my-2">
-                                <div class="flex items-start gap-2">
-                                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f388/512.webp" alt="🎈" class="noto-3d w-5 h-5 shrink-0" onerror="this.outerHTML='<span>🎈</span>'">
-                                    <p class="text-[11px] sm:text-xs text-starlight leading-relaxed">
-                                        <strong class="text-electricCyan font-mono">MODE PLUS (+) AKTIF:</strong> <span id="countdown-note-text">Waktu otomatis berjalan maju menghitung detik kebahagiaanmu sejak resmi menginjak usia 19!</span>
-                                    </p>
-                                </div>
-                            </div>
-
                             <!-- Footer -->
                             <div class="pt-2.5 border-t border-dashed border-white/15 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-mutedLavender">
                                 <span class="text-[10px] sm:text-[11px]">Paper Timer • Chapter 19</span>
@@ -1155,13 +1145,11 @@
                     <div class="inline-flex items-center gap-2 font-mono text-[11px] sm:text-xs text-cyberRose uppercase tracking-widest mb-1.5 sm:mb-2">
                         <span>// 02. UNCOMPILED ARCHIVES</span>
                     </div>
-                    <h2 class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight">
+                    <h2 id="scrapbook-title" class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight">
                         Struk Main &amp; Scrapbook Kita
                     </h2>
                 </div>
-                <p class="text-xs sm:text-base text-mutedLavender max-w-md leading-relaxed">
-                    Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.
-                </p>
+                <p id="scrapbook-subtitle" class="hidden text-xs sm:text-base text-mutedLavender max-w-md leading-relaxed"></p>
             </div>
 
             <!-- Asymmetric Bento Grid -->
@@ -1181,7 +1169,7 @@
                             <!-- Receipt Header -->
                             <div class="text-center border-b border-dashed border-white/20 pb-3 sm:pb-4 mb-3 sm:mb-4">
                                 <div id="receipt-store-title" class="text-sm sm:text-lg font-bold tracking-wider text-starlight">
-                                    INFORMATIKA MART // SEM-01
+                                    KANTIN UNIMUS GKB 2
                                 </div>
                                 <div id="receipt-branch" class="text-[10px] sm:text-[11px] text-mutedLavender mt-0.5">
                                     CABANG JALAN BERDUA • SHIFT MALAM &amp; SIANG
@@ -3263,8 +3251,8 @@ int main() {
                 ],
                 scrapbookTag: '// 02. STATISTIK SEMESTER 1 & SCRAPBOOK',
                 scrapbookTitle: 'Struk Main & Scrapbook Kita',
-                scrapbookSubtitle: 'Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.',
-                receiptStoreTitle: 'INFORMATIKA MART // SEM-01',
+                scrapbookSubtitle: '',
+                receiptStoreTitle: 'KANTIN UNIMUS GKB 2',
                 receiptBranch: 'WARUNG BESTIE // CABANG TEKNIK INFORMATIKA',
                 receiptCustomer: 'Zizuy (Temen Deket Seperjuangan)',
                 receiptCashier: 'Penoyy (Temen Nugas)',
@@ -3277,7 +3265,7 @@ int main() {
                 receiptTotals: [
                     { label: 'Subtotal (Umur Zizuy)', val: '19 Tahun Resmi' },
                     { label: 'Biaya Temenan', val: 'Rp 0 (Solid Selamanya)' },
-                    { label: 'Total Status', val: 'TEMENAN SANTAI NO ALAY', highlight: true }
+                    { label: 'Total ALL', val: 'FREE ANYTIME', highlight: true }
                 ],
                 stamps: [
                     '✓ TEMEN DEKET VERIFIED NO DRAMA ✓',
@@ -3385,6 +3373,24 @@ int main() {
             }
         };
 
+        function migrateOldReceiptAndSubtitle(modeObj) {
+            if (!modeObj) return;
+            if (modeObj.receiptStoreTitle === 'INFORMATIKA MART // SEM-01') {
+                modeObj.receiptStoreTitle = 'KANTIN UNIMUS GKB 2';
+            }
+            if (modeObj.scrapbookSubtitle && modeObj.scrapbookSubtitle.includes('Rekap jujur statistik Semester 1')) {
+                modeObj.scrapbookSubtitle = '';
+            }
+            if (Array.isArray(modeObj.receiptTotals)) {
+                modeObj.receiptTotals.forEach(t => {
+                    if (t.label === 'Total Status' || t.val === 'TEMENAN SANTAI NO ALAY') {
+                        t.label = 'Total ALL';
+                        t.val = 'FREE ANYTIME';
+                    }
+                });
+            }
+        }
+
         let CONTENT_MODES = JSON.parse(JSON.stringify(DEFAULT_CONTENT_MODES));
         try {
             const savedCustom = localStorage.getItem('zizuy_custom_content');
@@ -3396,6 +3402,8 @@ int main() {
                 if (parsed.friend) {
                     CONTENT_MODES.friend = Object.assign({}, DEFAULT_CONTENT_MODES.friend, parsed.friend);
                 }
+                migrateOldReceiptAndSubtitle(CONTENT_MODES.romance);
+                migrateOldReceiptAndSubtitle(CONTENT_MODES.friend);
             }
         } catch (e) {
             console.warn('Could not restore custom content:', e);
@@ -3510,10 +3518,12 @@ int main() {
             if (cloudData.content) {
                 if (cloudData.content.romance) {
                     CONTENT_MODES.romance = Object.assign({}, DEFAULT_CONTENT_MODES.romance, cloudData.content.romance);
+                    migrateOldReceiptAndSubtitle(CONTENT_MODES.romance);
                     changed = true;
                 }
                 if (cloudData.content.friend) {
                     CONTENT_MODES.friend = Object.assign({}, DEFAULT_CONTENT_MODES.friend, cloudData.content.friend);
+                    migrateOldReceiptAndSubtitle(CONTENT_MODES.friend);
                     changed = true;
                 }
                 try {
@@ -3968,6 +3978,23 @@ int main() {
                         <input id="edit-receiptFooter" type="text" value="${escapeEditorHtml(data.receiptFooter || '')}" 
                             class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-2 text-xs text-starlight focus:outline-none transition-colors">
                     </div>
+
+                    <!-- Kalimat Stempel Struk (Muncul saat tombol "+ Beri Stempel Zizuy" diklik) -->
+                    <div class="space-y-2 p-3 bg-black/40 border border-white/10 rounded-xl mt-2">
+                        <label class="block font-mono text-[11px] text-cyberRose font-bold">Kalimat Stempel Struk (Bergantian saat tombol "+ Beri Stempel Zizuy" diklik):</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            ${[0, 1, 2, 3].map(sIdx => `
+                                <div>
+                                    <div class="flex items-center justify-between mb-0.5">
+                                        <span class="font-mono text-[10px] text-mutedLavender">Stempel #${sIdx + 1}:</span>
+                                        <button type="button" onclick="clearEditorField('edit-stamp-${sIdx}')" class="text-[9px] font-mono text-red-400 hover:text-red-300">[✕ Kosongkan]</button>
+                                    </div>
+                                    <input id="edit-stamp-${sIdx}" type="text" value="${escapeEditorHtml((data.stamps && data.stamps[sIdx]) || '')}" 
+                                        class="w-full bg-black/60 border border-white/15 focus:border-cyberRose rounded-xl px-3 py-1.5 text-xs font-mono text-starlight focus:outline-none">
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 4. Scrapbook & Polaroid -->
@@ -4327,6 +4354,12 @@ int main() {
 
             const elFoot = document.getElementById('edit-receiptFooter');
             if (elFoot) data.receiptFooter = elFoot.value;
+
+            if (!data.stamps) data.stamps = [];
+            for (let sIdx = 0; sIdx < 4; sIdx++) {
+                const elStamp = document.getElementById(`edit-stamp-${sIdx}`);
+                if (elStamp) data.stamps[sIdx] = elStamp.value;
+            }
 
             // 4. Scrapbook & Polaroids
             const elScrapTag = document.getElementById('edit-scrapbookTag');
@@ -4811,6 +4844,12 @@ int main() {
 
                 const rFoot = getTxt('receipt-footer-text');
                 if (rFoot !== null) data.receiptFooter = rFoot;
+
+                const rStamp = getTxt('receipt-stamp');
+                if (rStamp !== null) {
+                    if (!data.stamps) data.stamps = [];
+                    data.stamps[0] = rStamp;
+                }
 
                 // 5. Polaroids (cards 1, 2, 3)
                 if (data.polaroids) {
