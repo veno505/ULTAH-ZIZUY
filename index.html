@@ -1147,7 +1147,7 @@
                         <span>// 02. UNCOMPILED ARCHIVES</span>
                     </div>
                     <h2 id="scrapbook-title" class="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-starlight">
-                        Struk Main &amp; Scrapbook Kita
+                        Struk Main &amp; Scrapbook
                     </h2>
                 </div>
                 <p id="scrapbook-subtitle" class="hidden text-xs sm:text-base text-mutedLavender max-w-md leading-relaxed"></p>
@@ -3110,7 +3110,7 @@ int main() {
                     'Prioritas Utama: Semoga Zizuy jadi orang paling bahagia di dunia!'
                 ],
                 scrapbookTag: '// 02. STATISTIK SEMESTER 1 & SCRAPBOOK',
-                scrapbookTitle: 'Struk Main & Scrapbook Kita',
+                scrapbookTitle: 'Struk Main & Scrapbook',
                 scrapbookSubtitle: 'Rekap jujur statistik Semester 1 dan tumpukan polaroid yang bisa kamu geser-geser sesuka hati pakai jari atau kursor.',
                 receiptStoreTitle: 'INFORMATIKA MART // SEM-01',
                 receiptBranch: 'INFORMATIKA MART // CABANG HATI SPESIAL',
@@ -3274,7 +3274,7 @@ int main() {
                     'Process Priority: Doa terbaik buat Zizuy di umur 19 tahun!'
                 ],
                 scrapbookTag: '// 02. STATISTIK SEMESTER 1 & SCRAPBOOK',
-                scrapbookTitle: 'Struk Main & Scrapbook Kita',
+                scrapbookTitle: 'Struk Main & Scrapbook',
                 scrapbookSubtitle: '',
                 receiptStoreTitle: 'KANTIN UNIMUS GKB 2',
                 receiptBranch: 'WARUNG BESTIE // CABANG TEKNIK INFORMATIKA',
@@ -3398,6 +3398,9 @@ int main() {
 
         function migrateOldReceiptAndSubtitle(modeObj) {
             if (!modeObj) return;
+            if (modeObj.scrapbookTitle === 'Struk Main & Scrapbook Kita') {
+                modeObj.scrapbookTitle = 'Struk Main & Scrapbook';
+            }
             if (modeObj.receiptStoreTitle === 'INFORMATIKA MART // SEM-01') {
                 modeObj.receiptStoreTitle = 'KANTIN UNIMUS GKB 2';
             }
